@@ -19,6 +19,11 @@ const users = {};
 
 io.on('connection', socket => {
   users[socket.id] = socket;
+  socket.join('nexus');
+
+  socket.on('message', message => {
+    socket.broadcast.to('nexus').emit('message', message);
+  });
 });
 
 server.listen(PORT);
