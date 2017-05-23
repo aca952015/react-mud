@@ -1,0 +1,10 @@
+'use strict';
+
+const initialState = {
+  username: '',
+  password: '',
+};
+
+export default function reducer(state=initialState, action) {
+  return state;
+}
