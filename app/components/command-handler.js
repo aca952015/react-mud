@@ -1,7 +1,6 @@
 'use strict';
 
 import {newMessage} from '../actions/message-actions.js';
-import {newWhisper} from '../actions/message-actions.js';
 
 export const commandHandler = (command, args, props) => {
   if (command === 'say') {
@@ -20,7 +19,7 @@ export const commandHandler = (command, args, props) => {
       target,
       text,
       from: props.username,
-      funcToCall: newWhisper,
+      funcToCall: newMessage,
       emitType: 'whisper'
     };
   }
