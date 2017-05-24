@@ -20,19 +20,25 @@ export default class Home extends Component {
   }
   handleCommand = event => {
     if (event.keyCode === 13) {
-      const message = {
-        from: this.props.username,
-        text: event.target.value
-      };
+      const line = event.target.value.split(' ');
+      const command = line[0].toLowerCase();
+      const args = line.slice(1).join(' ');
 
-      this.props.dispatch(newMessage(message));
-      this.socket.emit('message', message);
+      if (command === 'say') {
+        const message = {
+          from: `${this.props.username} says, `,
+          text: `"${args}"`
+        };
+        this.props.dispatch(newMessage(message));
+        this.socket.emit('message', message);
+      }
+
       event.target.value = '';
     }
   }
   render() {
     const messages = this.props.messages.map((message, index) => <li key={index}>
-      {message.from ? <span>{message.from}: </span> : null}{message.text}</li>);
+      {message.from ? <span>{message.from} </span> : null}{message.text}</li>);
 
     return <div>
       <ul>{messages}</ul>
