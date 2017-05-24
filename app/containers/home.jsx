@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 import {newMessage} from '../actions/message-actions.js';
 import {commandHandler} from '../components/command-handler.js';
 import {whisperProcessor} from '../components/whisper-processor.js';
+import {sayProcessor} from '../components/say-processor.js';
 
 @connect(store => {
   return {
@@ -20,7 +21,7 @@ export default class Home extends Component {
     this.socket.username = this.props.username;
     this.socket.currentRoom = 'nexus';
     this.socket.emit('changeName', this.socket.username);
-    this.socket.on('message', message => this.props.dispatch(newMessage(message)));
+    this.socket.on('message', result => this.props.dispatch(newMessage(sayProcessor(result, this.socket))));
     this.socket.on('whisperSuccess', result => this.props.dispatch(newMessage(whisperProcessor(result, this.socket))));
     this.socket.on('whisperFail', () => this.props.dispatch(newMessage({text: 'I don\'t see that person here.'})));
   }

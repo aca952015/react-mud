@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function(socket) {
+module.exports = function(io, socket) {
   socket.on('message', message => {
-    socket.broadcast.to('nexus').emit('message', message);
+    io.sockets.to('nexus').emit('message', message);
   });
 };
