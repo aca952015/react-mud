@@ -6,6 +6,7 @@ const socketIo = require('socket.io');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackConfig = require('./webpack.config.js');
+const message = require('./sockets/message.js');
 
 const app = express();
 const server = http.createServer(app);
@@ -15,15 +16,15 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(`${__dirname}/build`));
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 
+setInterval(() => io.sockets.emit('tick'), 30000);
+
 const users = {};
 
 io.on('connection', socket => {
   users[socket.id] = socket;
   socket.join('nexus');
 
-  socket.on('message', message => {
-    socket.broadcast.to('nexus').emit('message', message);
-  });
+  message(socket);
 });
 
 server.listen(PORT);
