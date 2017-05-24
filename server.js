@@ -16,6 +16,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(`${__dirname}/build`));
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 
+setInterval(() => io.sockets.emit('tick'), 30000);
+
 const users = {};
 
 io.on('connection', socket => {
