@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import {newMessage} from '../actions/message-actions.js';
+import {commandHandler} from '../components/command-handler.js';
 
 @connect(store => {
   return {
@@ -24,15 +25,10 @@ export default class Home extends Component {
       const command = line[0].toLowerCase();
       const args = line.slice(1).join(' ');
 
-      if (command === 'say') {
-        const message = {
-          from: `${this.props.username} says, `,
-          text: `"${args}"`
-        };
-        this.props.dispatch(newMessage(message));
-        this.socket.emit('message', message);
-      }
+      let result = commandHandler(command, args, this.props);
 
+      this.props.dispatch(newMessage(result));
+      this.socket.emit('message', result);
       event.target.value = '';
     }
   }
