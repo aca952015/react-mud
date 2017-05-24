@@ -1,10 +1,10 @@
 'use strict';
 
 const initialState = {
-  username: `Default_${Math.floor(Math.random() * 500 + 1)}`,
-  password: '',
+  messages: []
 };
 
 export default function reducer(state=initialState, action) {
+  if (action.type === 'NEW_MESSAGE') return {...state, messages: [...state.messages, action.payload]};
   return state;
 }
