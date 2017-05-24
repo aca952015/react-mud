@@ -27,7 +27,7 @@ io.on('connection', socket => {
   socket.join('nexus');
   socket.currentRoom = 'nexus';
 
-  message(socket);
+  message(io, socket);
   changeName(socket);
   whisper(io, socket, users);
 });
