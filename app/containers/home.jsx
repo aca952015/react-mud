@@ -32,7 +32,7 @@ export default class Home extends Component {
 
       let result = commandHandler(command, args, this.props);
 
-      this.props.dispatch(result.funcToCall(result));
+      if (result.funcToCall) this.props.dispatch(result.funcToCall(result));
       this.socket.emit(result.emitType, result);
       event.target.value = '';
     }

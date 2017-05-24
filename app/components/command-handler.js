@@ -19,7 +19,7 @@ export const commandHandler = (command, args, props) => {
       target,
       text,
       from: props.username,
-      funcToCall: newMessage,
+      funcToCall: '',
       emitType: 'whisper'
     };
   }
