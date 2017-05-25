@@ -9,6 +9,7 @@ const webpackConfig = require('./webpack.config.js');
 const message = require('./sockets/message.js');
 const whisper = require('./sockets/whisper.js');
 const changeName = require('./sockets/change-name.js');
+const movement = require('./sockets/movement.js');
 
 const app = express();
 const server = http.createServer(app);
@@ -24,12 +25,13 @@ const users = {};
 
 io.on('connection', socket => {
   users[socket.id] = socket;
-  socket.join('nexus');
-  socket.currentRoom = 'nexus';
+  socket.join('Nexus');
+  socket.currentRoom = 'Nexus';
 
   message(io, socket);
   changeName(socket);
   whisper(io, socket, users);
+  movement(io, socket);
 });
 
 server.listen(PORT);

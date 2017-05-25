@@ -1,7 +1,7 @@
 'use strict';
 
 const initialState = {
-  username: `Default_${Math.floor(Math.random() * 500 + 1)}`,
+  username: `Robot_${Math.floor(Math.random() * 500 + 1)}`,
   password: '',
 };
 
