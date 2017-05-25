@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import {newMessage} from '../actions/message-actions.js';
-import {commandHandler} from '../components/command-handler.js';
-import {whisperProcessor} from '../components/whisper-processor.js';
-import {sayProcessor} from '../components/say-processor.js';
+import {commandHandler} from '../handlers/command-handler.js';
+import {whisperProcessor} from '../processors/whisper-processor.js';
+import {sayProcessor} from '../processors/say-processor.js';
 
 @connect(store => {
   return {
