@@ -8,6 +8,7 @@ import {newMessage} from '../actions/message-actions.js';
 import {commandHandler} from '../handlers/command-handler.js';
 import {whisperProcessor} from '../processors/whisper-processor.js';
 import {sayProcessor} from '../processors/say-processor.js';
+import {moveProcessor} from '../processors/move-processor.js';
 
 @connect(store => {
   return {
@@ -24,7 +25,8 @@ export default class Home extends Component {
     this.socket.on('message', result => this.props.dispatch(newMessage(sayProcessor(result, this.socket))));
     this.socket.on('whisperSuccess', result => this.props.dispatch(newMessage(whisperProcessor(result, this.socket))));
     this.socket.on('whisperFail', () => this.props.dispatch(newMessage({text: 'I don\'t see that person here.'})));
-    this.socket.on('movement', movement => this.props.dispatch(newMessage({text: `${movement.user} moves ${movement.direction}.`})));
+    this.socket.on('movementLeave', movement => this.props.dispatch(newMessage({text: `${movement.username} moves ${movement.direction}.`})));
+    this.socket.on('movementArrive', movement => this.props.dispatch(newMessage(moveProcessor(movement))));
   }
   handleCommand = event => {
     if (event.keyCode === 13) {
@@ -41,7 +43,7 @@ export default class Home extends Component {
   }
   render() {
     const messages = this.props.messages.map((message, index) => {
-      const exits = Object.keys(message.exits).map((exit, i) => <li key={i}>{exit}</li>);
+      const exits = message.exits ? Object.keys(message.exits).map((exit, i) => <li key={i}>{exit}</li>) : null;
       return <li key={index}>
         {message.roomName ?
           <div className="room">

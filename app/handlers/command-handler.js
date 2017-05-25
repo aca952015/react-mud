@@ -4,6 +4,15 @@ import {roomData} from '../data/rooms.js';
 import {newMessage} from '../actions/message-actions.js';
 
 export const commandHandler = (command, args, props, socket) => {
+  const directionsShorthand = {
+    'e': 'east',
+    'w': 'west',
+    'n': 'north',
+    's': 'south',
+    'd': 'down',
+    'u': 'up'
+  };
+
   if (command === 'say') {
     return {
       from: props.username,
@@ -24,12 +33,7 @@ export const commandHandler = (command, args, props, socket) => {
       emitType: 'whisper'
     };
   }
-  if (command === 'e') command = 'east';
-  if (command === 'w') command = 'west';
-  if (command === 'n') command = 'north';
-  if (command === 's') command = 'south';
-  if (command === 'd') command = 'down';
-  if (command === 'u') command = 'up';
+  if (directionsShorthand[command]) command = directionsShorthand[command];
   if (command === 'east' || command === 'north' || command === 'south' || command === 'west' || command === 'up' || command === 'down') {
     if (roomData[socket.currentRoom].exits[command]) {
       let newRoom = roomData[roomData[socket.currentRoom].exits[command]];
@@ -40,6 +44,7 @@ export const commandHandler = (command, args, props, socket) => {
         desc: newRoom.desc,
         exits: newRoom.exits,
         funcToCall: newMessage,
+        text: `You move ${command}.`,
         emitType: 'move'
       };
     }

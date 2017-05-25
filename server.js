@@ -28,10 +28,10 @@ io.on('connection', socket => {
   socket.join('Nexus');
   socket.currentRoom = 'Nexus';
 
-  movement(socket);
   message(io, socket);
   changeName(socket);
   whisper(io, socket, users);
+  movement(io, socket);
 });
 
 server.listen(PORT);
