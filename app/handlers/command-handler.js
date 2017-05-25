@@ -49,7 +49,8 @@ export const commandHandler = (command, args, props, socket) => {
       };
     }
     return {
-      text: 'I don\'t see that exit here.'
+      text: 'I don\'t see that exit here.',
+      funcToCall: newMessage
     };
   }
 };
