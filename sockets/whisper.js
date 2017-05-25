@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = function(io, socket, users) {
-
   socket.on('whisper', result => {
     let whisperTarget = users[Object.keys(users).find(user => {
       if (users[user].username) return users[user].username.toLowerCase() === result.target.toLowerCase();

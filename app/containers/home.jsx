@@ -19,19 +19,20 @@ export default class Home extends Component {
   componentDidMount() {
     this.socket = io('/');
     this.socket.username = this.props.username;
-    this.socket.currentRoom = 'nexus';
+    this.socket.currentRoom = 'Nexus';
     this.socket.emit('changeName', this.socket.username);
     this.socket.on('message', result => this.props.dispatch(newMessage(sayProcessor(result, this.socket))));
     this.socket.on('whisperSuccess', result => this.props.dispatch(newMessage(whisperProcessor(result, this.socket))));
     this.socket.on('whisperFail', () => this.props.dispatch(newMessage({text: 'I don\'t see that person here.'})));
+    this.socket.on('movement', movement => this.props.dispatch(newMessage({text: `${movement.user} moves ${movement.direction}.`})));
   }
   handleCommand = event => {
     if (event.keyCode === 13) {
       const line = event.target.value.split(' ');
       const command = line[0].toLowerCase();
-      const args = line.slice(1).join(' ');
+      const args = line.length > 1 ? line.slice(1).join(' ') : null;
 
-      let result = commandHandler(command, args, this.props);
+      let result = commandHandler(command, args, this.props, this.socket);
 
       if (result.funcToCall) this.props.dispatch(result.funcToCall(result));
       this.socket.emit(result.emitType, result);
