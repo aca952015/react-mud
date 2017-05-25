@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
+import {Room} from '../components/room.jsx';
 import {newMessage} from '../actions/message-actions.js';
 import {commandHandler} from '../handlers/command-handler.js';
 import {whisperProcessor} from '../processors/whisper-processor.js';
@@ -12,7 +13,10 @@ import {sayProcessor} from '../processors/say-processor.js';
 @connect(store => {
   return {
     username: store.user.username,
-    messages: store.messages.messages
+    messages: store.messages.messages,
+    roomName: store.room.roomName,
+    roomDesc: store.room.desc,
+    exits: store.room.exits
   };
 })
 export default class Home extends Component {
@@ -43,6 +47,7 @@ export default class Home extends Component {
       {message.from ? <span>{message.from} </span> : null}{message.text}</li>);
 
     return <div>
+      <Room roomName={this.props.roomName} desc={this.props.roomDesc} exits={this.props.exits} />
       <ul>{messages}</ul>
       <input type="text" placeholder="Enter a command" onKeyUp={this.handleCommand} />
     </div>;
@@ -52,5 +57,8 @@ export default class Home extends Component {
 Home.propTypes = {
   username: PropTypes.string,
   dispatch: PropTypes.func,
-  messages: PropTypes.array
+  messages: PropTypes.array,
+  roomName: PropTypes.string,
+  roomDesc: PropTypes.string,
+  exits: PropTypes.array
 };
