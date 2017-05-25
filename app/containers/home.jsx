@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
-import {Room} from '../components/room.jsx';
 import {newMessage} from '../actions/message-actions.js';
 import {commandHandler} from '../handlers/command-handler.js';
 import {whisperProcessor} from '../processors/whisper-processor.js';
@@ -13,10 +12,7 @@ import {sayProcessor} from '../processors/say-processor.js';
 @connect(store => {
   return {
     username: store.user.username,
-    messages: store.messages.messages,
-    roomName: store.room.roomName,
-    roomDesc: store.room.desc,
-    exits: store.room.exits
+    messages: store.messages.messages
   };
 })
 export default class Home extends Component {
@@ -43,11 +39,23 @@ export default class Home extends Component {
     }
   }
   render() {
-    const messages = this.props.messages.map((message, index) => <li key={index}>
-      {message.from ? <span>{message.from} </span> : null}{message.text}</li>);
+    const messages = this.props.messages.map((message, index) => {
+      const exits = Object.keys(message.exits).map((exit, i) => <li key={i}>{exit}</li>);
+      return <li key={index}>
+        {message.roomName ?
+          <div className="room">
+            <h3>{message.roomName}</h3>
+            <p>{message.desc}</p>
+            <ul>{exits}</ul>
+          </div> : null}
+        {message.text ?
+          <p className="feedback">
+            {message.from ? <span>{message.from} </span> : null}{message.text}
+          </p> : null}
+      </li>;
+    });
 
     return <div>
-      <Room roomName={this.props.roomName} desc={this.props.roomDesc} exits={this.props.exits} />
       <ul>{messages}</ul>
       <input type="text" placeholder="Enter a command" onKeyUp={this.handleCommand} />
     </div>;
@@ -57,8 +65,5 @@ export default class Home extends Component {
 Home.propTypes = {
   username: PropTypes.string,
   dispatch: PropTypes.func,
-  messages: PropTypes.array,
-  roomName: PropTypes.string,
-  roomDesc: PropTypes.string,
-  exits: PropTypes.array
+  messages: PropTypes.array
 };
