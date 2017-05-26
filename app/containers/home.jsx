@@ -23,6 +23,7 @@ export default class Home extends Component {
     this.socket.currentRoom = 'Nexus';
     this.socket.emit('changeName', this.socket.username);
     this.socket.on('message', result => this.props.dispatch(newMessage(sayProcessor(result, this.socket))));
+    this.socket.on('occupants', result => this.props.dispatch(newMessage(result)));
     this.socket.on('whisperSuccess', result => this.props.dispatch(newMessage(whisperProcessor(result, this.socket))));
     this.socket.on('whisperFail', () => this.props.dispatch(newMessage({text: 'I don\'t see that person here.'})));
     this.socket.on('movementLeave', movement => this.props.dispatch(newMessage({text: `${movement.username} moves ${movement.direction}.`})));
@@ -36,8 +37,6 @@ export default class Home extends Component {
 
       let result = commandHandler(command, args, this.props, this.socket);
 
-      console.log(result);
-
       if (result.funcToCall) this.props.dispatch(result.funcToCall(result));
       this.socket.emit(result.emitType, result);
       event.target.value = '';
@@ -46,6 +45,7 @@ export default class Home extends Component {
   render() {
     const messages = this.props.messages.map((message, index) => {
       const exits = message.exits ? Object.keys(message.exits).map((exit, i) => <li key={i}>{exit}</li>) : null;
+      const playerOccupants = message.occupants ? message.occupants.map((player, i) => <li key={i}>{player} is here.</li>) : null;
       return <li key={index}>
         {message.roomName ?
           <div className="room">
@@ -53,6 +53,9 @@ export default class Home extends Component {
             <p>{message.desc}</p>
             <ul>{exits}</ul>
           </div> : null}
+        {message.occupants ? <div className="player-occupants">
+          <ul>{playerOccupants}</ul>
+        </div> : null}
         {message.text ?
           <p className="feedback">
             {message.from ? <span>{message.from} </span> : null}{message.text}

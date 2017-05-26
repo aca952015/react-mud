@@ -21,17 +21,17 @@ app.use(webpackDevMiddleware(webpack(webpackConfig)));
 
 setInterval(() => io.sockets.emit('tick'), 30000);
 
-const users = {};
+const users = [];
 
 io.on('connection', socket => {
-  users[socket.id] = socket;
+  users.push(socket);
   socket.join('Nexus');
   socket.currentRoom = 'Nexus';
 
   message(io, socket);
   changeName(socket);
   whisper(io, socket, users);
-  movement(io, socket);
+  movement(socket, users);
 });
 
 server.listen(PORT);
