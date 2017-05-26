@@ -18,6 +18,7 @@ export default class Home extends Component {
   componentDidMount() {
     this.socket = io('/');
     socketHandlers(this.socket, this.props);
+    window.addEventListener('beforeunload', () => this.socket.emit('disconnect'));
   }
   handleCommand = event => {
     if (event.keyCode === 13) {
