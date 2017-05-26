@@ -9,6 +9,7 @@ export default function socketHandlers(socket, props) {
   socket.username = props.username;
   socket.currentRoom = 'Nexus';
   socket.emit('changeName', socket.username);
+  socket.emit('look');
   socket.on('message', result => props.dispatch(newMessage(sayProcessor(result, socket))));
   socket.on('occupants', result => props.dispatch(newMessage(result)));
   socket.on('whisperSuccess', result => props.dispatch(newMessage(whisperProcessor(result, socket))));
