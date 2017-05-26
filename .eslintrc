@@ -12,7 +12,8 @@
   "globals": {
     "__DEBUG__": false,
     "__API_URL__": false,
-    "document": false
+    "document": false,
+    "window": false
   },
   "env": {
     "es6": true,
