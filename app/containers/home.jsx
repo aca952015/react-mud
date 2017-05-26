@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import {Messages} from '../components/messages.jsx';
 import socketHandlers from '../handlers/socket-handlers.js';
-import {commandHandler} from '../handlers/command-handler.js';
+import commandHandler from '../handlers/command-handler.js';
 
 @connect(store => {
   return {

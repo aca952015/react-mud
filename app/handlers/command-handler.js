@@ -3,7 +3,7 @@
 import {roomData} from '../data/rooms.js';
 import {newMessage} from '../actions/message-actions.js';
 
-export const commandHandler = (command, args, props, socket) => {
+export default function commandHandler(command, args, props, socket) {
   const directionsShorthand = {
     'e': 'east',
     'w': 'west',
@@ -61,4 +61,4 @@ export const commandHandler = (command, args, props, socket) => {
       funcToCall: newMessage
     };
   }
-};
+}
