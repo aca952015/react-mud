@@ -3,21 +3,21 @@
 import {roomData} from '../data/rooms.js';
 import {newMessage} from '../actions/message-actions.js';
 
-export const commandHandler = (command, args, props, socket) => {
+export default function commandHandler(command, args, props, socket) {
   const directionsShorthand = {
     'e': 'east',
     'w': 'west',
     'n': 'north',
     's': 'south',
     'd': 'down',
-    'u': 'up'
+    'u': 'up',
+    'l': 'look'
   };
 
   if (command === 'say') {
     return {
       from: props.username,
       text: args,
-      funcToCall: '',
       emitType: 'message'
     };
   }
@@ -29,7 +29,6 @@ export const commandHandler = (command, args, props, socket) => {
       target,
       text,
       from: props.username,
-      funcToCall: '',
       emitType: 'whisper'
     };
   }
@@ -53,4 +52,13 @@ export const commandHandler = (command, args, props, socket) => {
       funcToCall: newMessage
     };
   }
-};
+  if (command === 'look') {
+    return {
+      roomName: socket.currentRoom,
+      emitType: 'look',
+      desc: roomData[socket.currentRoom].desc,
+      exits: roomData[socket.currentRoom].exits,
+      funcToCall: newMessage
+    };
+  }
+}

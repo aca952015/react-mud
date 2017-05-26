@@ -7,8 +7,9 @@ export const moveProcessor = movement => {
     'west': 'the east.',
     'east': 'the west.',
     'south': 'the north.',
-    'north': 'the south.'
+    'north': 'the south.',
+    'login': 'the nether.'
   };
-  
+
   return {text: `${movement.username} arrives from ${directions[movement.direction]}`};
 };
