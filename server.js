@@ -25,8 +25,6 @@ const users = [];
 
 io.on('connection', socket => {
   users.push(socket);
-  socket.join('Nexus');
-  socket.currentRoom = 'Nexus';
   socket.on('disconnect', () => users.splice(users.indexOf(socket), 1));
 
   message(io, socket);
