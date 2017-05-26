@@ -25,7 +25,10 @@ const users = [];
 
 io.on('connection', socket => {
   users.push(socket);
-  socket.on('disconnect', () => users.splice(users.indexOf(socket), 1));
+  socket.on('disconnect', () => {
+    socket.broadcast.to(socket.currentRoom).emit('message', {text: `${socket.username} vanishes into the nether.`});
+    users.splice(users.indexOf(socket), 1);
+  });
 
   message(io, socket);
   changeName(socket);
