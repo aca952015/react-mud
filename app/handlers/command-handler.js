@@ -10,14 +10,14 @@ export const commandHandler = (command, args, props, socket) => {
     'n': 'north',
     's': 'south',
     'd': 'down',
-    'u': 'up'
+    'u': 'up',
+    'l': 'look'
   };
 
   if (command === 'say') {
     return {
       from: props.username,
       text: args,
-      funcToCall: '',
       emitType: 'message'
     };
   }
@@ -29,7 +29,6 @@ export const commandHandler = (command, args, props, socket) => {
       target,
       text,
       from: props.username,
-      funcToCall: '',
       emitType: 'whisper'
     };
   }
@@ -50,6 +49,15 @@ export const commandHandler = (command, args, props, socket) => {
     }
     return {
       text: 'I don\'t see that exit here.',
+      funcToCall: newMessage
+    };
+  }
+  if (command === 'look') {
+    return {
+      roomName: socket.currentRoom,
+      emitType: 'look',
+      desc: roomData[socket.currentRoom].desc,
+      exits: roomData[socket.currentRoom].exits,
       funcToCall: newMessage
     };
   }
