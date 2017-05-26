@@ -12,7 +12,15 @@ export const roomData = {
     roomName: 'Town Square',
     desc: 'This is the town square.',
     exits: {
-      up: 'Nexus'
+      up: 'Nexus',
+      east: 'Gallows'
+    }
+  },
+  'Gallows': {
+    roomName: 'Gallows',
+    desc: 'People are hanged here.',
+    exits: {
+      west: 'Town Square'
     }
   }
 };
