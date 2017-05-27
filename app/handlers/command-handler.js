@@ -22,4 +22,5 @@ export default function commandHandler(command, args, props, socket) {
     return movementHandler(command, socket);
   }
   if (command === 'look') return lookHandler(socket);
+  if (command === 'who') return {emitType: 'who'};
 }

@@ -8,6 +8,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackConfig = require('./webpack.config.js');
 const message = require('./sockets/message.js');
 const whisper = require('./sockets/whisper.js');
+const who = require('./sockets/who.js');
 const changeName = require('./sockets/change-name.js');
 const movement = require('./sockets/movement.js');
 
@@ -34,6 +35,7 @@ io.on('connection', socket => {
   changeName(socket);
   whisper(io, socket, users);
   movement(socket, users);
+  who(socket, users);
 });
 
 server.listen(PORT);
