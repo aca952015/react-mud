@@ -11,7 +11,7 @@ export default function communicationHandler(command, props, args) {
   if (command === 'whisper') {
     const line = args.split(' ');
     const target = line[0];
-    const text = line.slice(1).join(' ');
+    const text = line.slice(1).join(' ').trim();
     return {
       target,
       text,
