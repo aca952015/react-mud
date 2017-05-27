@@ -6,10 +6,7 @@ const socketIo = require('socket.io');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackConfig = require('./webpack.config.js');
-const message = require('./sockets/message.js');
 const whisper = require('./sockets/whisper.js');
-const who = require('./sockets/who.js');
-const changeName = require('./sockets/change-name.js');
 const movement = require('./sockets/movement.js');
 
 const app = express();
@@ -31,11 +28,11 @@ io.on('connection', socket => {
     users.splice(users.indexOf(socket), 1);
   });
 
-  message(io, socket);
-  changeName(socket);
+  socket.on('message', message => io.sockets.to(socket.currentRoom).emit('message', message));
+  socket.on('changeName', name => socket.username = name);
+  socket.on('who', () => socket.emit('generalMessage', {onlineUsers: users.filter(user => user.username).map(user => `${user.username}`)}));
   whisper(io, socket, users);
   movement(socket, users);
-  who(socket, users);
 });
 
 server.listen(PORT);
