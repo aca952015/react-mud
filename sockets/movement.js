@@ -12,7 +12,7 @@ module.exports = (socket, users) => {
       socket.currentRoom = movement.roomName;
       let occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
                            .map(user => user.username);
-      socket.emit('occupants', {occupants});
+      socket.emit('generalMessage', {occupants});
     }
     socket.broadcast.to(socket.currentRoom).emit('movementArrive', {username: socket.username, direction: movement.direction});
   });
@@ -20,6 +20,6 @@ module.exports = (socket, users) => {
   socket.on('look', () => {
     let occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
                          .map(user => user.username);
-    socket.emit('occupants', {occupants});
+    socket.emit('generalMessage', {occupants});
   });
 };
