@@ -23,8 +23,8 @@ export default class Home extends Component {
   handleCommand = event => {
     if (event.keyCode === 13) {
       const line = event.target.value.split(' ');
-      const command = line[0].toLowerCase();
-      const args = line.length > 1 ? line.slice(1).join(' ') : null;
+      const command = line[0].toLowerCase().trim();
+      const args = line.length > 1 ? line.slice(1).join(' ').trim() : null;
 
       let result = commandHandler(command, args, this.props, this.socket);
 
