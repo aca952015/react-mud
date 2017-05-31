@@ -6,7 +6,5 @@ export default function sayProcessor(result, socket) {
   if (result.from === socket.username) post.from = 'You say, ';
   else post.from = `${result.from} says, `;
 
-  return {
-    text: 'derp'
-  };
+  return post;
 }

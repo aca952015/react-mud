@@ -12,7 +12,8 @@ import commandHandler from '../handlers/command-handler.js';
   return {
     username: store.user.username,
     inventory: store.user.inventory,
-    messages: store.messages.messages
+    messages: store.messages.messages,
+    rooms: store.rooms
   };
 })
 export default class Home extends Component {
@@ -29,7 +30,7 @@ export default class Home extends Component {
 
       let result = commandHandler(command, args, this.props, this.socket);
 
-      if (result.funcsToCall.length) result.funcsToCall.forEach(func => this.props.dispatch(func(result)));
+      if (result.funcsToCall && result.funcsToCall.length) result.funcsToCall.forEach(func => this.props.dispatch(func(result)));
       this.socket.emit(result.emitType, result);
       event.target.value = '';
     }

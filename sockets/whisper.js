@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(io, socket, users) {
+export default function whisper(io, socket, users) {
   socket.on('whisper', result => {
     let whisperTarget = users.find(user => {
       if (user.username) return user.username.toLowerCase() === result.target.toLowerCase();
@@ -10,4 +10,4 @@ module.exports = function(io, socket, users) {
     io.sockets.to(socket.currentRoom).emit('whisperSuccess', {text: result.text, from: socket.username, target: whisperTarget.username});
     return;
   });
-};
+}

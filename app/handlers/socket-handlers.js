@@ -5,6 +5,7 @@ import sayProcessor from '../processors/say-processor.js';
 import whisperProcessor from '../processors/whisper-processor.js';
 import moveProcessor from '../processors/move-processor.js';
 import itemPickUpProcessor from '../processors/item-pickup-processor.js';
+import {updateRooms} from '../actions/room-actions.js';
 
 export default function socketHandlers(socket, props) {
   socket.username = props.username;
@@ -19,4 +20,5 @@ export default function socketHandlers(socket, props) {
   socket.on('movementLeave', movement => movement.username ? props.dispatch(newMessage({text: `${movement.username} moves ${movement.direction}.`})) : null);
   socket.on('movementArrive', movement => props.dispatch(newMessage(moveProcessor(movement))));
   socket.on('pickUpItem', room => props.dispatch(newMessage(itemPickUpProcessor(room, socket))));
+  socket.on('updateRooms', rooms => props.dispatch(updateRooms(rooms)));
 }

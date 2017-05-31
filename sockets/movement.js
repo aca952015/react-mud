@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (socket, users) => {
+export default function movement(socket, users) {
   socket.join('Nexus');
   socket.currentRoom = 'Nexus';
 
@@ -11,7 +11,7 @@ module.exports = (socket, users) => {
       socket.join(movement.roomName);
       socket.currentRoom = movement.roomName;
       let occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
-                           .map(user => user.username);
+      .map(user => user.username);
       socket.emit('generalMessage', {occupants});
     }
     socket.broadcast.to(socket.currentRoom).emit('movementArrive', {username: socket.username, direction: movement.direction});
@@ -19,7 +19,7 @@ module.exports = (socket, users) => {
 
   socket.on('look', () => {
     let occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
-                         .map(user => user.username);
+    .map(user => user.username);
     socket.emit('generalMessage', {occupants});
   });
-};
+}
