@@ -11,6 +11,7 @@ import commandHandler from '../handlers/command-handler.js';
 @connect(store => {
   return {
     username: store.user.username,
+    inventory: store.user.inventory,
     messages: store.messages.messages
   };
 })
@@ -35,7 +36,7 @@ export default class Home extends Component {
   }
   render() {
     return <div>
-      <Messages messages={this.props.messages} />
+      <Messages messages={this.props.messages} inventory={this.props.inventory} />
       <input type="text" placeholder="Enter a command" onKeyUp={this.handleCommand} />
     </div>;
   }
@@ -44,5 +45,6 @@ export default class Home extends Component {
 Home.propTypes = {
   username: PropTypes.string,
   dispatch: PropTypes.func,
-  messages: PropTypes.array
+  messages: PropTypes.array,
+  inventory: PropTypes.array
 };

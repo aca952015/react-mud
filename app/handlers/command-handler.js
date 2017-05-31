@@ -14,7 +14,9 @@ export default function commandHandler(command, args, props, socket) {
     's': 'south',
     'd': 'down',
     'u': 'up',
-    'l': 'look'
+    'l': 'look',
+    'i': 'inventory',
+    'inv': 'inventory'
   };
 
   if (commandShorthand[command]) command = commandShorthand[command];
@@ -33,6 +35,7 @@ export default function commandHandler(command, args, props, socket) {
     if (!args) return {funcsToCall: [newMessage], text: 'Get what?'};
     return getItemHandler(command, args, socket);
   }
+  if (command === 'inventory') return {funcsToCall: [newMessage], inventory: props.inventory};
   return {
     funcsToCall: [newMessage],
     text: 'I\'m not sure what you\'re trying to do.'
