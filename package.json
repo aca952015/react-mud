@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A multi-user text-based adventure game built with React, Redux, and Socket.io.",
   "main": "entry.jsx",
-  "scripts": {},
+  "scripts": {
+    "start": "babel-node server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BatemanVO/react-portfolio.git"
@@ -46,6 +48,7 @@
     "webpack-dev-middleware": "^1.10.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "eslint": "^3.17.1",
     "eslint-plugin-react": "^6.10.0"

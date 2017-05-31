@@ -11,7 +11,9 @@ import commandHandler from '../handlers/command-handler.js';
 @connect(store => {
   return {
     username: store.user.username,
-    messages: store.messages.messages
+    inventory: store.user.inventory,
+    messages: store.messages.messages,
+    rooms: store.rooms
   };
 })
 export default class Home extends Component {
@@ -28,14 +30,14 @@ export default class Home extends Component {
 
       let result = commandHandler(command, args, this.props, this.socket);
 
-      if (result.funcToCall) this.props.dispatch(result.funcToCall(result));
+      if (result.funcsToCall && result.funcsToCall.length) result.funcsToCall.forEach(func => this.props.dispatch(func(result)));
       this.socket.emit(result.emitType, result);
       event.target.value = '';
     }
   }
   render() {
     return <div>
-      <Messages messages={this.props.messages} />
+      <Messages messages={this.props.messages} inventory={this.props.inventory} />
       <input type="text" placeholder="Enter a command" onKeyUp={this.handleCommand} />
     </div>;
   }
@@ -44,5 +46,6 @@ export default class Home extends Component {
 Home.propTypes = {
   username: PropTypes.string,
   dispatch: PropTypes.func,
-  messages: PropTypes.array
+  messages: PropTypes.array,
+  inventory: PropTypes.array
 };

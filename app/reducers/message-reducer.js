@@ -4,7 +4,8 @@ const initialState = {
   messages: [{
     roomName: 'Nexus',
     desc: 'Welcome to the nexus.',
-    exits: {down: 'Town Square'}
+    exits: {down: 'Town Square'},
+    items: []
   }]
 };
 
