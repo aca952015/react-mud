@@ -1,6 +1,6 @@
 'use strict';
 
-export const whisperProcessor = (result, socket) => {
+export default function whisperProcessor(result, socket) {
   let post = {};
   if (result.from === socket.username) {
     post = {
@@ -21,4 +21,4 @@ export const whisperProcessor = (result, socket) => {
   }
 
   return post;
-};
+}

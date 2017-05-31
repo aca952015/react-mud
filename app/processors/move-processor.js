@@ -1,6 +1,6 @@
 'use strict';
 
-export const moveProcessor = movement => {
+export default function moveProcessor(movement) {
   const directions = {
     'up': 'below.',
     'down': 'above.',
@@ -12,4 +12,4 @@ export const moveProcessor = movement => {
   };
 
   return {text: `${movement.username} arrives from ${directions[movement.direction]}`};
-};
+}

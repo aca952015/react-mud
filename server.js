@@ -31,6 +31,7 @@ io.on('connection', socket => {
   socket.on('message', message => io.sockets.to(socket.currentRoom).emit('message', message));
   socket.on('changeName', name => socket.username = name);
   socket.on('who', () => socket.emit('generalMessage', {onlineUsers: users.filter(user => user.username).map(user => `${user.username}`)}));
+  socket.on('pickUpItem', room => socket.broadcast.emit('pickUpItem', {room, from: socket.username}));
   whisper(io, socket, users);
   movement(socket, users);
 });
