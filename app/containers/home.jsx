@@ -28,7 +28,7 @@ export default class Home extends Component {
 
       let result = commandHandler(command, args, this.props, this.socket);
 
-      if (result.funcToCall) this.props.dispatch(result.funcToCall(result));
+      if (result.funcsToCall.length) result.funcsToCall.forEach(func => this.props.dispatch(func(result)));
       this.socket.emit(result.emitType, result);
       event.target.value = '';
     }

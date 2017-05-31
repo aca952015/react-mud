@@ -9,6 +9,6 @@ export default function lookHandler(socket) {
     emitType: 'look',
     desc: roomData[socket.currentRoom].desc,
     exits: roomData[socket.currentRoom].exits,
-    funcToCall: newMessage
+    funcsToCall: [newMessage]
   };
 }

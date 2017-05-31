@@ -13,13 +13,13 @@ export default function movementHandler(command, socket) {
       desc: newRoom.desc,
       exits: newRoom.exits,
       items: newRoom.items,
-      funcToCall: newMessage,
+      funcsToCall: [newMessage],
       text: `You move ${command}.`,
       emitType: 'move'
     };
   }
   return {
     text: 'I don\'t see that exit here.',
-    funcToCall: newMessage
+    funcsToCall: [newMessage]
   };
 }

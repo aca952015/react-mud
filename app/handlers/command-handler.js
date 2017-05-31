@@ -20,8 +20,8 @@ export default function commandHandler(command, args, props, socket) {
   if (commandShorthand[command]) command = commandShorthand[command];
 
   if (command === 'say' || command === 'whisper') {
-    if (command === 'say' && !args) return {funcToCall: newMessage, text: 'Say what?'};
-    if (command === 'whisper' && args.split(' ').length === 1) return {funcToCall: newMessage, text: 'Whisper what to whom? (format: whisper <target> <message>)'};
+    if (command === 'say' && !args) return {funcsToCall: [newMessage], text: 'Say what?'};
+    if (command === 'whisper' && args.split(' ').length === 1) return {funcsToCall: [newMessage], text: 'Whisper what to whom? (format: whisper <target> <message>)'};
     return communicationHandler(command, props, args);
   }
   if (command === 'east' || command === 'north' || command === 'south' || command === 'west' || command === 'up' || command === 'down') {
@@ -30,11 +30,11 @@ export default function commandHandler(command, args, props, socket) {
   if (command === 'look') return lookHandler(socket);
   if (command === 'who') return {emitType: 'who'};
   if (command === 'get') {
-    if (!args) return {funcToCall: newMessage, text: 'Get what?'};
+    if (!args) return {funcsToCall: [newMessage], text: 'Get what?'};
     return getItemHandler(command, args, socket);
   }
   return {
-    funcToCall: newMessage,
+    funcsToCall: [newMessage],
     text: 'I\'m not sure what you\'re trying to do.'
   };
 }
