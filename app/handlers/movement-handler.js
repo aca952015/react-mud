@@ -12,6 +12,7 @@ export default function movementHandler(command, socket) {
       roomName: newRoom.roomName,
       desc: newRoom.desc,
       exits: newRoom.exits,
+      items: newRoom.items,
       funcToCall: newMessage,
       text: `You move ${command}.`,
       emitType: 'move'

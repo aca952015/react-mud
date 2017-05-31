@@ -1,5 +1,7 @@
 'use strict';
 
+import {itemData} from './items.js';
+
 export const roomData = {
   'Nexus': {
     roomName: 'Nexus',
@@ -21,6 +23,7 @@ export const roomData = {
     desc: 'People are hanged here.',
     exits: {
       west: 'Town Square'
-    }
+    },
+    items: [itemData['health potion']]
   }
 };
