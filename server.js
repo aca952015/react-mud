@@ -25,7 +25,6 @@ const users = [];
 
 io.on('connection', socket => {
   users.push(socket);
-  socket.emit('updateRooms', roomData);
   socket.on('disconnect', () => {
     socket.broadcast.to(socket.currentRoom).emit('message', {text: `${socket.username} vanishes into the nether.`});
     users.splice(users.indexOf(socket), 1);
