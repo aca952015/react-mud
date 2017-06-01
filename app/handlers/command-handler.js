@@ -29,7 +29,7 @@ export default function commandHandler(command, args, props, socket) {
   if (command === 'east' || command === 'north' || command === 'south' || command === 'west' || command === 'up' || command === 'down') {
     return movementHandler(command, socket);
   }
-  if (command === 'look') return lookHandler(socket);
+  if (command === 'look') return lookHandler(socket, args);
   if (command === 'who') return {emitType: 'who'};
   if (command === 'get') {
     if (!args) return {funcsToCall: [newMessage], text: 'Get what?'};
