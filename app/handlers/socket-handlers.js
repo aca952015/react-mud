@@ -21,7 +21,6 @@ export default function socketHandlers(socket, props) {
   socket.on('movementArrive', movement => props.dispatch(newMessage(moveProcessor(movement))));
   socket.on('pickUpItem', room => props.dispatch(newMessage(itemPickUpProcessor(room, socket))));
   socket.on('itemPickedUp', itemAndRoom => {
-    console.log(itemAndRoom);
     props.dispatch(newMessage({text: `You pick up ${itemAndRoom.item.short}.`}));
     props.dispatch(getItem(itemAndRoom.item));
   });
