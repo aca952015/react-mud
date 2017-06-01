@@ -12,8 +12,7 @@ import commandHandler from '../handlers/command-handler.js';
   return {
     username: store.user.username,
     inventory: store.user.inventory,
-    messages: store.messages.messages,
-    rooms: store.rooms
+    messages: store.messages.messages
   };
 })
 export default class Home extends Component {
