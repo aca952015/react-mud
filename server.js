@@ -36,7 +36,7 @@ io.on('connection', socket => {
   socket.on('who', () => socket.emit('generalMessage', {onlineUsers: users.filter(user => user.username).map(user => `${user.username}`)}));
   pickUpItem(socket, roomData);
   whisper(io, socket, users);
-  movement(socket, users);
+  movement(socket, users, roomData);
 });
 
 server.listen(PORT);

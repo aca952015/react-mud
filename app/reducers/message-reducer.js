@@ -1,12 +1,7 @@
 'use strict';
 
 const initialState = {
-  messages: [{
-    roomName: 'Nexus',
-    desc: 'Welcome to the nexus.',
-    exits: {down: 'Town Square'},
-    items: []
-  }]
+  messages: []
 };
 
 export default function reducer(state=initialState, action) {

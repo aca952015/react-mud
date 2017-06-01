@@ -1,17 +1,14 @@
 'use strict';
 
 import {newMessage} from '../actions/message-actions.js';
+import {roomData} from '../data/rooms.js';
 
-export default function movementHandler(command, socket, rooms) {
-  if (rooms[socket.currentRoom].exits[command]) {
-    let newRoom = rooms[rooms[socket.currentRoom].exits[command]];
+export default function movementHandler(command, socket) {
+  if (roomData[socket.currentRoom].exits[command]) {
+    let newRoom = roomData[roomData[socket.currentRoom].exits[command]];
     socket.currentRoom = newRoom.roomName;
     return {
       direction: command,
-      roomName: newRoom.roomName,
-      desc: newRoom.desc,
-      exits: newRoom.exits,
-      items: newRoom.items,
       funcsToCall: [newMessage],
       text: `You move ${command}.`,
       emitType: 'move'

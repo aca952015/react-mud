@@ -27,13 +27,13 @@ export default function commandHandler(command, args, props, socket) {
     return communicationHandler(command, props, args);
   }
   if (command === 'east' || command === 'north' || command === 'south' || command === 'west' || command === 'up' || command === 'down') {
-    return movementHandler(command, socket, props.rooms);
+    return movementHandler(command, socket);
   }
-  if (command === 'look') return lookHandler(socket, props.rooms);
+  if (command === 'look') return lookHandler(socket);
   if (command === 'who') return {emitType: 'who'};
   if (command === 'get') {
     if (!args) return {funcsToCall: [newMessage], text: 'Get what?'};
-    return getItemHandler(command, args, socket, props.rooms);
+    return getItemHandler(command, args, socket);
   }
   if (command === 'inventory') return {funcsToCall: [newMessage], inventory: props.inventory};
   return {

@@ -11,7 +11,7 @@ import {Inventory} from './inventory.jsx';
 export const Messages = props => {
   const messages = props.messages.map((message, index) => {
     return <li key={index}>
-        {message.roomName ? <Room message={message}/> : null}
+        {message.room ? <Room message={message}/> : null}
         {message.occupants ? <Occupants message={message}/> : null}
         {message.onlineUsers ? <OnlineUsers message={message}/> : null}
         {message.text ? <Feedback message={message}/> : null}
