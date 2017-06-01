@@ -8,9 +8,9 @@ export default function movement(socket, users, roomInfo) {
     if (movement.direction !== 'login') {
       socket.broadcast.to(socket.currentRoom).emit('movementLeave', {username: socket.username, direction: movement.direction});
       socket.leave(socket.currentRoom);
-      socket.join(movement.roomName);
       let tempRoom = roomInfo[roomInfo[socket.currentRoom].exits[movement.direction]];
       socket.currentRoom = tempRoom.roomName;
+      socket.join(socket.currentRoom);
       let room = {
         roomName: socket.currentRoom,
         desc: tempRoom.desc,
