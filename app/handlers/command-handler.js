@@ -3,7 +3,6 @@
 import communicationHandler from './communication-handler.js';
 import movementHandler from './movement-handler.js';
 import lookHandler from './look-handler.js';
-import getItemHandler from './get-item-handler.js';
 import {newMessage} from '../actions/message-actions.js';
 
 export default function commandHandler(command, args, props, socket) {
@@ -33,7 +32,7 @@ export default function commandHandler(command, args, props, socket) {
   if (command === 'who') return {emitType: 'who'};
   if (command === 'get') {
     if (!args) return {funcsToCall: [newMessage], text: 'Get what?'};
-    return getItemHandler(command, args, socket);
+    return {emitType: 'pickUpItem', item: args};
   }
   if (command === 'inventory') return {funcsToCall: [newMessage], inventory: props.inventory};
   return {

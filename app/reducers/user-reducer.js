@@ -7,6 +7,6 @@ const initialState = {
 };
 
 export default function reducer(state=initialState, action) {
-  if (action.type === 'GET_ITEM') return {...state, inventory: [...state.inventory, action.payload.item]};
+  if (action.type === 'GET_ITEM') return {...state, inventory: [...state.inventory, action.payload]};
   return state;
 }
