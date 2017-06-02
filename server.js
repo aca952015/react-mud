@@ -9,6 +9,7 @@ const webpackConfig = require('./webpack.config.js');
 import whisper from './sockets/whisper.js';
 import movement from './sockets/movement.js';
 import pickUpItem from './sockets/pick-up-item.js';
+import dropItem from './sockets/drop-item.js';
 import {roomData} from './app/data/rooms.js';
 
 const app = express();
@@ -34,6 +35,7 @@ io.on('connection', socket => {
   socket.on('changeName', name => socket.username = name);
   socket.on('who', () => socket.emit('generalMessage', {onlineUsers: users.filter(user => user.username).map(user => `${user.username}`)}));
   pickUpItem(socket, roomData);
+  dropItem(socket, roomData);
   whisper(io, socket, users);
   movement(socket, users, roomData);
 });
