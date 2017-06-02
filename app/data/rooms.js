@@ -12,7 +12,7 @@ export const roomData = {
         locked: false
       }
     },
-    items: [itemData['health potion']]
+    items: [itemData['health potion'], itemData['gallows key']]
   },
   'Town Square': {
     roomName: 'Town Square',
@@ -24,7 +24,8 @@ export const roomData = {
       },
       east: {
         exit: 'Gallows',
-        locked: true
+        locked: true,
+        requiredKey: itemData['gallows key']
       }
     },
     items: []
@@ -35,7 +36,8 @@ export const roomData = {
     exits: {
       west: {
         exit: 'Town Square',
-        locked: true
+        locked: true,
+        requiredKey: itemData['gallows key']
       }
     },
     items: [itemData['health potion']]
