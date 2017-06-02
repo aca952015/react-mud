@@ -7,7 +7,10 @@ export const roomData = {
     roomName: 'Nexus',
     desc: 'Welcome to the nexus.',
     exits: {
-      down: 'Town Square'
+      down: {
+        exit: 'Town Square',
+        locked: false
+      }
     },
     items: [itemData['health potion']]
   },
@@ -15,8 +18,14 @@ export const roomData = {
     roomName: 'Town Square',
     desc: 'This is the town square.',
     exits: {
-      up: 'Nexus',
-      east: 'Gallows'
+      up: {
+        exit: 'Nexus',
+        locked: false
+      },
+      east: {
+        exit: 'Gallows',
+        locked: true
+      }
     },
     items: []
   },
@@ -24,7 +33,10 @@ export const roomData = {
     roomName: 'Gallows',
     desc: 'People are hanged here.',
     exits: {
-      west: 'Town Square'
+      west: {
+        exit: 'Town Square',
+        locked: true
+      }
     },
     items: [itemData['health potion']]
   }
