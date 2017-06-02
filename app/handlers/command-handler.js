@@ -5,6 +5,7 @@ import movementHandler from './movement-handler.js';
 import lookHandler from './look-handler.js';
 import getHandler from './get-handler.js';
 import dropHandler from './drop-handler.js';
+import lockHandler from './lock-handler.js';
 import {newMessage} from '../actions/message-actions.js';
 
 export default function commandHandler(command, args, props, socket) {
@@ -21,6 +22,7 @@ export default function commandHandler(command, args, props, socket) {
   };
 
   if (commandShorthand[command]) command = commandShorthand[command];
+  if (commandShorthand[args]) args = commandShorthand[args];
 
   const helperFunctions = {
     'say': communicationHandler,
@@ -35,6 +37,7 @@ export default function commandHandler(command, args, props, socket) {
     'who': {emitType: 'who'},
     'get': getHandler,
     'drop': dropHandler,
+    'unlock': lockHandler,
     'inventory': {funcsToCall: [newMessage], inventory: props.inventory}
   };
 

@@ -10,6 +10,7 @@ import whisper from './sockets/whisper.js';
 import movement from './sockets/movement.js';
 import pickUpItem from './sockets/pick-up-item.js';
 import dropItem from './sockets/drop-item.js';
+import unlock from './sockets/unlock.js';
 import {roomData} from './app/data/rooms.js';
 
 const app = express();
@@ -38,6 +39,7 @@ io.on('connection', socket => {
   dropItem(socket, roomData);
   whisper(io, socket, users);
   movement(socket, users, roomData);
+  unlock(socket, roomData);
 });
 
 server.listen(PORT);
