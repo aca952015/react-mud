@@ -6,3 +6,10 @@ export function getItem(item) {
     payload: item
   };
 }
+
+export function dropItem(item) {
+  return {
+    type: 'DROP_ITEM',
+    payload: item
+  };
+}
