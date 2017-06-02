@@ -8,7 +8,8 @@ export const roomData = {
     desc: 'Welcome to the nexus.',
     exits: {
       down: 'Town Square'
-    }
+    },
+    items: [itemData['health potion']]
   },
   'Town Square': {
     roomName: 'Town Square',
@@ -16,7 +17,8 @@ export const roomData = {
     exits: {
       up: 'Nexus',
       east: 'Gallows'
-    }
+    },
+    items: []
   },
   'Gallows': {
     roomName: 'Gallows',

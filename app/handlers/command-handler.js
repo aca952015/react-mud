@@ -4,6 +4,7 @@ import communicationHandler from './communication-handler.js';
 import movementHandler from './movement-handler.js';
 import lookHandler from './look-handler.js';
 import getHandler from './get-handler.js';
+import dropHandler from './drop-handler.js';
 import {newMessage} from '../actions/message-actions.js';
 
 export default function commandHandler(command, args, props, socket) {
@@ -33,6 +34,7 @@ export default function commandHandler(command, args, props, socket) {
     'look': lookHandler,
     'who': {emitType: 'who'},
     'get': getHandler,
+    'drop': dropHandler,
     'inventory': {funcsToCall: [newMessage], inventory: props.inventory}
   };
 
