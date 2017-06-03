@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 
 export const Inventory = props => {
   let counts = {};
-  props.inventory.forEach(item => counts[item] = (counts[item] || 0) + 1);
+  props.inventory.forEach(item => counts[item.name] = (counts[item.name] || 0) + 1);
   let inventoryInfo = props.inventory.map(item => {
     let invString = '';
-    if (counts[item] > 1) invString += `(${counts[item]}) `;
+    if (counts[item.name] > 1) invString += `(${counts[item.name]}) `;
     invString += item.short;
     return invString;
   }).reduce((acc, ele) => {
