@@ -8,6 +8,12 @@ const initialState = {
 
 export default function reducer(state=initialState, action) {
   if (action.type === 'GET_ITEM') return {...state, inventory: [...state.inventory, action.payload]};
-  if (action.type === 'DROP_ITEM') return {...state, inventory: state.inventory.filter(ele => ele.name !== action.payload.item.name)};
+  if (action.type === 'DROP_ITEM') {
+    console.log('INVENTORY:', state.inventory, 'INDEX OF ITEM:', state.inventory.indexOf(action.payload.item));
+    let prevItems = state.inventory.slice(0, state.inventory.indexOf(action.payload.item));
+    let endItems = state.inventory.slice(state.inventory.indexOf(action.payload.item) + 1);
+    let newInventory = prevItems.concat(endItems);
+    return {...state, inventory: newInventory};
+  }
   return state;
 }
