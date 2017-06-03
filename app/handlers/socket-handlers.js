@@ -13,6 +13,7 @@ export default function socketHandlers(socket, props) {
   socket.emit('changeName', socket.username);
   socket.emit('look');
   socket.emit('move', {direction: 'login'});
+  socket.on('move', result => socket.currentRoom = result);
   socket.on('message', result => props.dispatch(newMessage(sayProcessor(result, socket))));
   socket.on('generalMessage', result => props.dispatch(newMessage(result)));
   socket.on('whisperSuccess', result => props.dispatch(newMessage(whisperProcessor(result, socket))));

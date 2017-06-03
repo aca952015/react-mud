@@ -4,11 +4,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const Room = props => {
-  const exits = Object.keys(props.message.room.exits).map((exit, i) => <li key={i}>{exit}</li>);
-  const items = props.message.room.items ? props.message.room.items.map((item, i) => <li key={i}>{item.long}</li>) : null;
+  let room = props.message.room;
+  const exits = Object.keys(room.exits).map((exit, i) => <li key={i}>{room.exits[exit].locked ? '(' : null}{exit}{room.exits[exit].locked ? ')' : null}</li>);
+  const items = room.items ? room.items.map((item, i) => <li key={i}>{item.long}</li>) : null;
   return <div className="room">
-    <h3>{props.message.room.roomName}</h3>
-    <p>{props.message.room.desc}</p>
+    <h3>{room.roomName}</h3>
+    <p>{room.desc}</p>
     {items ? <ul>{items}</ul> : null}
     <ul>{exits}</ul>
   </div>;
