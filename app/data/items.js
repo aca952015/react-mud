@@ -12,5 +12,11 @@ export const itemData = {
     short: 'a small black key',
     long: 'A small black key with a simple carving of a noose on it lies here.',
     terms: ['key', 'black', 'small']
+  },
+  'useless key': {
+    name: 'useless key',
+    short: 'a useless key',
+    long: 'A useless key whose teeth have been completely worn off lies here.',
+    terms: ['useless', 'key']
   }
 };

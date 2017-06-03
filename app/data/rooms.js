@@ -28,7 +28,7 @@ export const roomData = {
         requiredKey: itemData['gallows key']
       }
     },
-    items: []
+    items: [itemData['useless key']]
   },
   'Gallows': {
     roomName: 'Gallows',
