@@ -3,10 +3,14 @@
 import {newMessage} from '../actions/message-actions.js';
 
 export default function lockHandler(command, args, socket, props) {
-  if (!args) return {funcsToCall: [newMessage], text: 'Unlock what direction?'};
+  if (!args) {
+    let text = 'Unlock what direction?';
+    if (command === 'lock') text = 'Lock what direction?';
+    return {funcsToCall: [newMessage], text};
+  }
 
   return {
-    emitType: 'unlock',
+    emitType: 'lock',
     inventory: props.inventory,
     direction: args
   };

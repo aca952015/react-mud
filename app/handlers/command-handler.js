@@ -38,6 +38,7 @@ export default function commandHandler(command, args, props, socket) {
     'get': getHandler,
     'drop': dropHandler,
     'unlock': lockHandler,
+    'lock': lockHandler,
     'inventory': {funcsToCall: [newMessage], inventory: props.inventory}
   };
 
