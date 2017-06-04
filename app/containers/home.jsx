@@ -61,7 +61,7 @@ export default class Home extends Component {
   render() {
     return <div>
       <Messages messages={this.props.messages} inventory={this.props.inventory} />
-      <input type="text" placeholder="Enter a command" value={this.props.input} onChange={this.handleChange} onKeyUp={this.handleCommand} />
+      <input type="text" placeholder="Enter a command" value={this.props.input || ''} onChange={this.handleChange} onKeyUp={this.handleCommand} />
     </div>;
   }
 }
