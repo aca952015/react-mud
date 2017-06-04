@@ -31,19 +31,19 @@ export default class Home extends Component {
     if (event.keyCode === 38 || event.keyCode === 40) {
       if (!this.state.prevCommands.length) return;
       if (event.keyCode === 40) {
-        console.log('Hit down');
         if (this.state.index === 1) return this.setState({input: ''});
         this.state.index--;
       }
       this.setState({input: this.state.prevCommands[this.state.prevCommands.length - this.state.index]});
       if (event.keyCode === 38) {
-        console.log('Hit up');
         if (this.state.index === this.state.prevCommands.length) return;
         this.state.index++;
       }
     }
     if (event.keyCode === 13) {
-      this.state.prevCommands.push(event.target.value);
+      let currCommand = event.target.value.toLowerCase();
+      let lastCommand = this.state.prevCommands.length ? this.state.prevCommands[this.state.prevCommands.length - 1].toLowerCase() : null;
+      if (!lastCommand || currCommand !== lastCommand) this.state.prevCommands.push(event.target.value);
       if (this.state.prevCommands.length > 20) this.state.prevCommands.shift();
       this.setState({index: 1});
       const line = event.target.value.split(' ');
