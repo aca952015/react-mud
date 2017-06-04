@@ -47,7 +47,7 @@ export default class Home extends Component {
       if (!lastCommand || currCommand !== lastCommand) this.props.dispatch(updatePrevCommands(this.props.input));
       if (this.props.prevCommands.length > 20) this.props.dispatch(truncatePrevCommands());
       this.props.dispatch(updateCommandIndex(-(this.props.commandIndex)));
-      const line = event.target.value.split(' ');
+      const line = this.props.input.split(' ');
       const command = line[0].toLowerCase().trim();
       const args = line.length > 1 ? line.slice(1).join(' ').trim() : null;
 
