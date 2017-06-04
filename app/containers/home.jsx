@@ -34,6 +34,11 @@ export default class Home extends Component {
         if (this.props.commandIndex > 0) this.props.dispatch(updateCommandIndex(-1));
       }
       if (event.keyCode === 38) {
+        // I'm not happy with the use of Promise.resolves here, as they're effectively
+        // fixing async issues without actually waiting for some sort of response.
+        // They're really just fancy setTimeouts at this point, which is not great.
+        // I've attempted a handful of other solutions and at the moment, this is
+        // the only thing that's working, so it remains until I find a better solution.
         Promise.resolve(this.props.dispatch(updateCommandIndex(1))).then(() => {
           if (this.props.commandIndex > this.props.prevCommands.length) return this.props.dispatch(updateCommandIndex(-1));
         });
