@@ -16,36 +16,35 @@ import commandHandler from '../handlers/command-handler.js';
   };
 })
 export default class Home extends Component {
-  componentWillMount() {
-    this.state = {input: '', prevCommands: [], index: 1};
+  constructor() {
+    super();
+    this.state = {input: '', prevCommands: [], index: 0};
   }
   componentDidMount() {
     this.socket = io('/');
     socketHandlers(this.socket, this.props);
     window.addEventListener('beforeunload', () => this.socket.emit('disconnect'));
   }
-  handleChange = event => {
-    this.setState({input: event.target.value});
-  }
+  handleChange = event => this.setState({input: event.target.value});
   handleCommand = event => {
     if (event.keyCode === 38 || event.keyCode === 40) {
       if (!this.state.prevCommands.length) return;
       if (event.keyCode === 40) {
-        if (this.state.index === 1) return this.setState({input: ''});
+        if (this.state.index === 1) event.target.value = '';
         this.state.index--;
       }
-      this.setState({input: this.state.prevCommands[this.state.prevCommands.length - this.state.index]});
       if (event.keyCode === 38) {
-        if (this.state.index === this.state.prevCommands.length) return;
         this.state.index++;
+        if (this.state.index > this.state.prevCommands.length) return this.state.index--;
       }
+      this.setState({input: this.state.prevCommands[this.state.prevCommands.length - this.state.index]});
     }
     if (event.keyCode === 13) {
       let currCommand = event.target.value.toLowerCase();
       let lastCommand = this.state.prevCommands.length ? this.state.prevCommands[this.state.prevCommands.length - 1].toLowerCase() : null;
       if (!lastCommand || currCommand !== lastCommand) this.state.prevCommands.push(event.target.value);
       if (this.state.prevCommands.length > 20) this.state.prevCommands.shift();
-      this.setState({index: 1});
+      this.setState({index: 0});
       const line = event.target.value.split(' ');
       const command = line[0].toLowerCase().trim();
       const args = line.length > 1 ? line.slice(1).join(' ').trim() : null;
