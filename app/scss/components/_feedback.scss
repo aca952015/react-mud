@@ -1,3 +1,11 @@
 .feedback {
   margin-bottom: 1vh;
+
+  span.source {
+    color: $yellow;
+
+    span {
+      color: $green;
+    }
+  }
 }
