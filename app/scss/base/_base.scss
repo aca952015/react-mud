@@ -6,3 +6,28 @@ a {
     cursor: pointer;
   }
 }
+
+body {
+  height: 100vh;
+  background: linear-gradient($dark-gray, $dark-blue);
+}
+
+h1 {
+  font-size: 3em;
+  text-align: center;
+  background: linear-gradient($dark-gray, $dark-blue);
+  font-family: 'Lucinda Console', Monospace;
+  font-style: italic;
+  color: $white / 2;
+  padding: 2vh 0;
+}
+
+input {
+  background: black;
+  color: $white;
+  font: Monospace;
+  margin: 1vh 1vw;
+  border: 0.3vw ridge $gray;
+  width: 95.4vw;
+  padding: 0 1vw;
+}
