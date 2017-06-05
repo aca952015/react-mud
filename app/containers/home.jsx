@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
-import {Messages} from '../components/messages.jsx';
+import {Messages} from '../containers/messages.jsx';
 import {updateInput, updateCommandIndex, updatePrevCommands, truncatePrevCommands} from '../actions/message-actions.js';
 import socketHandlers from '../handlers/socket-handlers.js';
 import commandHandler from '../handlers/command-handler.js';
