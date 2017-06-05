@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import {Messages} from '../containers/messages.jsx';
-import {updateInput, updateCommandIndex, updatePrevCommands, truncatePrevCommands} from '../actions/message-actions.js';
+import {newMessage, updateInput, updateCommandIndex, updatePrevCommands, truncatePrevCommands} from '../actions/message-actions.js';
 import socketHandlers from '../handlers/socket-handlers.js';
 import commandHandler from '../handlers/command-handler.js';
 
@@ -55,6 +55,7 @@ export default class Home extends Component {
     }
     if (event.keyCode === 13) {
       this.setState({justHitEnter: true});
+      this.props.dispatch(newMessage({playerInput: this.props.input}));
       let currCommand = this.props.input.toLowerCase();
       let lastCommand = this.props.prevCommands.length ? this.props.prevCommands[this.props.prevCommands.length - 1].toLowerCase() : null;
       if (!lastCommand || currCommand !== lastCommand) this.props.dispatch(updatePrevCommands(this.props.input));

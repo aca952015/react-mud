@@ -30,4 +30,8 @@ input {
   border: 0.3vw ridge $gray;
   width: 95.4vw;
   padding: 0 1vw;
+
+  &:focus {
+    outline: none;
+  }
 }
