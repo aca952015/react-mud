@@ -1,0 +1,9 @@
+.messages {
+  background: $black;
+  height: 70vh;
+  overflow: auto;
+  color: $white;
+  border: 7px ridge $gray;
+  font-family: Monospace;
+  padding: 1vw 1vw 2.5vw 1vw;
+}
