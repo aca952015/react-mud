@@ -33,8 +33,8 @@ export const Room = props => {
   return <div className="room">
     <h3>{room.roomName}</h3>
     <p>{room.desc}</p>
-    {items ? <ul>{items}</ul> : null}
-    <ul>{exits}</ul>
+    {items ? <ul id="items">{items}</ul> : null}
+    <ul id="exits">[ {exits} ]</ul>
   </div>;
 };
 

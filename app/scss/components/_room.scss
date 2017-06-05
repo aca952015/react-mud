@@ -1,0 +1,27 @@
+.room {
+  h3 {
+    color: $blue-highlight;
+  }
+
+  p {
+    margin-bottom: 2vh;
+  }
+
+  #items {
+    margin-bottom: 2vh;
+  }
+
+  #exits {
+    color: $blue-highlight;
+    
+    li {
+      display: inline-block;
+      margin-left: 1vw;
+
+      &:first-child {
+        margin: 0;
+      }
+    }
+
+  }
+}
