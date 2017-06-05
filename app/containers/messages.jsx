@@ -19,7 +19,7 @@ export class Messages extends Component {
     this.shouldScroll = this.messageList.scrollHeight - this.messageList.scrollTop === this.initialHeight;
   }
   componentDidUpdate() {
-    if (this.shouldScroll) this.messageList.scrollTop = this.messageList.scrollHeight;
+    if (this.shouldScroll || this.props.justHitEnter) this.messageList.scrollTop = this.messageList.scrollHeight;
   }
 
   render() {
@@ -39,5 +39,6 @@ export class Messages extends Component {
 }
 
 Messages.propTypes = {
-  messages: PropTypes.array
+  messages: PropTypes.array,
+  justHitEnter: PropTypes.bool
 };

@@ -20,12 +20,19 @@ import commandHandler from '../handlers/command-handler.js';
   };
 })
 export default class Home extends Component {
+  constructor() {
+    super();
+    this.state = {justHitEnter: false};
+  }
   componentDidMount() {
     this.socket = io('/');
     socketHandlers(this.socket, this.props);
     window.addEventListener('beforeunload', () => this.socket.emit('disconnect'));
   }
-  handleChange = event => this.props.dispatch(updateInput(event.target.value, this.props.commandIndex));
+  handleChange = event => {
+    this.setState({justHitEnter: false});
+    this.props.dispatch(updateInput(event.target.value, this.props.commandIndex));
+  }
   handleCommand = event => {
     if (event.keyCode === 38 || event.keyCode === 40) {
       if (!this.props.prevCommands.length) return;
@@ -47,6 +54,7 @@ export default class Home extends Component {
       .then(() => this.props.dispatch(updateInput(this.props.prevCommands[this.props.prevCommands.length - this.props.commandIndex])));
     }
     if (event.keyCode === 13) {
+      this.setState({justHitEnter: true});
       let currCommand = this.props.input.toLowerCase();
       let lastCommand = this.props.prevCommands.length ? this.props.prevCommands[this.props.prevCommands.length - 1].toLowerCase() : null;
       if (!lastCommand || currCommand !== lastCommand) this.props.dispatch(updatePrevCommands(this.props.input));
@@ -65,7 +73,7 @@ export default class Home extends Component {
   }
   render() {
     return <div>
-      <Messages messages={this.props.messages} inventory={this.props.inventory} />
+      <Messages justHitEnter={this.state.justHitEnter} messages={this.props.messages} inventory={this.props.inventory} />
       <input type="text" placeholder="Enter a command" value={this.props.input || ''} onChange={this.handleChange} onKeyUp={this.handleCommand} />
     </div>;
   }
