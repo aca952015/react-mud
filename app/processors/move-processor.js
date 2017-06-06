@@ -11,5 +11,7 @@ export default function moveProcessor(movement) {
     'login': 'the nether.'
   };
 
-  return {text: `${movement.username} arrives from ${directions[movement.direction]}`};
+  return {
+    from: movement.username,
+    text: ` arrives from ${directions[movement.direction]}`};
 }

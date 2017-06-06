@@ -15,7 +15,7 @@ export default function reducer(state=initialState, action) {
   if (action.type === 'TRUNCATE_PREV_COMMANDS') {
     let newCommands = state.prevCommands;
     newCommands.shift();
-    return {...state, prevCommands: [newCommands]};
+    return {...state, prevCommands: newCommands};
   }
   return state;
 }
