@@ -15,14 +15,17 @@ import PropTypes from 'prop-types';
 */
 export const Feedback = props => {
   let quotes = false;
-  if (props.message.from && props.message.text !== ' ') {
+  if (props.message.from && props.message.text !== ' ' && props.message.text.indexOf('"') !== -1) {
     props.message.text = props.message.text.replace(/"/g, '');
     quotes = true;
   }
   return <p className="feedback">
-    {props.message.from ? <span className="source">{props.message.from} <span>{props.message.commType}</span></span> : null}
+    {props.message.from ? <span className="source">{props.message.from}
+      {props.message.commType ? <span>{props.message.commType}</span> : null}
+    </span> : null}
     {props.message.target ? <span className="source">{props.message.target}
-    {props.message.text && props.message.text !== ' ' ? <span>, </span> : <span>.</span>}</span> : null}
+      {props.message.text && props.message.text !== ' ' ? <span>, </span> : <span>.</span>}
+    </span> : null}
     {quotes ? <span style={{color: '#0E8250'}}>"</span> : null}{props.message.text}{quotes ? <span style={{color: '#0E8250'}}>"</span> : null}
   </p>;
 };

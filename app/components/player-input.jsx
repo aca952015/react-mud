@@ -10,5 +10,5 @@ export const PlayerInput = props => {
 };
 
 PlayerInput.propTypes = {
-  message: PropTypes.string
+  message: PropTypes.object
 };
