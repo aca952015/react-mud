@@ -5,7 +5,7 @@ import {itemData} from './items.js';
 export const roomData = {
   'Nexus': {
     roomName: 'Nexus',
-    desc: 'Welcome to the nexus.',
+    desc: 'Welcome to the nexus. Type HELP to get a list of commands available.',
     exits: {
       down: {
         exit: 'Town Square',

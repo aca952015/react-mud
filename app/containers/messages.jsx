@@ -6,6 +6,7 @@ import {Room} from '../components/room.jsx';
 import {Occupants} from '../components/occupants.jsx';
 import {OnlineUsers} from '../components/online-users.jsx';
 import {Feedback} from '../components/feedback.jsx';
+import {HelpFile} from '../components/help-file.jsx';
 import {Inventory} from '../components/inventory.jsx';
 import {PlayerInput} from '../components/player-input.jsx';
 
@@ -31,6 +32,7 @@ export class Messages extends Component {
         {message.onlineUsers ? <OnlineUsers message={message}/> : null}
         {message.playerInput ? <PlayerInput message={message}/> : null}
         {message.text ? <Feedback message={message}/> : null}
+        {message.helpObj ? <HelpFile message={message}/> : null}
         {message.inventory ? <Inventory inventory={message.inventory}/> : null}
       </li>;
     });

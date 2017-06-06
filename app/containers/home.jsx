@@ -28,6 +28,7 @@ export default class Home extends Component {
     this.socket = io('/');
     socketHandlers(this.socket, this.props);
     window.addEventListener('beforeunload', () => this.socket.emit('disconnect'));
+    document.querySelector('input').focus();
   }
   handleChange = event => {
     this.setState({justHitEnter: false});
