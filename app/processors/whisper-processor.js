@@ -5,18 +5,26 @@ export default function whisperProcessor(result, socket) {
   if (result.from === socket.username) {
     post = {
       text: `"${result.text}"`,
-      from: result.target.toLowerCase() === socket.username.toLowerCase() ? 'You whisper to yourself, ' : `You whisper to ${result.target}, `
+      from: 'You ',
+      target: result.target,
+      commType: result.target.toLowerCase() === socket.username.toLowerCase() ? 'whisper to yourself, ' : 'whisper to ',
+
     };
   } else if (result.target.toLowerCase() === socket.username.toLowerCase()){
     post = {
       text: `"${result.text}"`,
-      from: `${result.from} whispers to you, `
+      from: result.from,
+      target: 'you',
+      commType: ' whispers to '
     };
   } else {
     post = {
-      text: result.from.toLowerCase() === result.target.toLowerCase() ?
-      `${result.from} whispers something quietly.` :
-      `${result.from} whispers something to ${result.target}.`
+      from: result.from,
+      target: result.target,
+      commType: result.from.toLowerCase() === result.target.toLowerCase() ?
+      ' whispers something quietly.' :
+      ' whispers something to ',
+      text: ' '
     };
   }
 
