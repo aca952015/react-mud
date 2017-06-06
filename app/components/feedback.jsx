@@ -4,14 +4,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /*
-  If the message has a from field, it is either a say or a whisper. If the text field is a single space,
-  then the text field was set in the whisper processor to be a placeholder value indicating that
-  it's a whisper between two third parties, not involving the client.
-  If it's a say or a whisper involving the client, then the quotes are stripped from the text field and
-  re-inserted in spans for proper colorization, instead of injecting HTML into the strings.
-  commType is how the message is delivered - e.g., "says,", "whispers to you," "whisper to," etc.
-  Effectively, these series of conditionals check what kind of message is delivered and format it
-  appropriately, instead of creating several different components.
+  This component has a bit of a complicated conditional structure, but allows the handling of
+  colorization and proper grammar formatting for all player feedback.
+  If the text field has a single space, then it means there basically isn't a text field. However,
+  this component is only rendered if a text field exists, so a single space is effectively a
+  placeholder value that will trigger the rendering of this component when from, commType, and/or
+  target are still necessary (e.g., "So-and-so whispers to themself" or "So-and-so whispers to
+  so-and-so.").
+  First, the logic checks if the message has a from field, that the text is not a single space,
+  and that the text has quotes in it. If so, it is a say or whisper feedback, which will format
+  in a particular manner, stripping out the quotes and replacing them with spans in the JSX so
+  as to avoid injecting HTML into strings directly.
+  The actual JSX checks if there is a from - if so, it means a player is doing some action, so
+  the name needs to be highlighted in the correct color.
+  If there is a commType, then it means there's something like, "says,", "whispers to you," etc.
+  If there is a target, then it means there is a player name again, so it needs to be highlighted,
+  similarly to if there is a from.
+  If the text is not an empty space, then there needs to be a comma - if there isn't actual text,
+  then there needs to be a period.
+  Finally, the text field is displayed, with quotes added and properly colorized in spans if quotes
+  are expected.
 */
 export const Feedback = props => {
   let quotes = false;
