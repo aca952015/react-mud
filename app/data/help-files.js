@@ -18,7 +18,7 @@ export const helpFile = {
   },
   'look': {
     title: 'LOOK (shortcut: L)',
-    text: 'By itself, LOOK or L will show you the room you\'re currently in, as well as any items and occupants. In development: LOOK <target>.'
+    text: 'By itself, LOOK or L will show you the room you\'re currently in, as well as any items and occupants. Items in the room are displayed in the order they originally started in, or in the order they were added (perhaps via the DROP command).'
   },
   'get': {
     title: 'GET <item>',
@@ -35,5 +35,25 @@ export const helpFile = {
   'WHISPER': {
     title: 'WHISPER <target> <message>',
     text: 'Will send a private message to your target, if they are in the same room as you. This will alert your target that you\'ve whispered them a message, and alert everyone else in the room that you\'ve whispered something to that target, though they will not see what it is.'
+  },
+  'INVENTORY': {
+    title: 'INVENTORY (shortcuts: I or INV)',
+    text: 'Will display the contents of your inventory. If you have multiples of the same item, they will be displayed with parenthetical notation. For example, if you have two red potions, you would see "(2) a red potion". Items are tracked in your inventory in the order you picked them up.'
+  },
+  'UNLOCK': {
+    title: 'UNLOCK <direction>',
+    text: 'Some exits are locked, meaning you cannot move through them until they are unlocked. These exits will be displayed with parentheses around them. To unlock an exit, you will need to have the correct key in your inventory. For example, if "a small black key" is needed to unlock the east exit, you would need to have "a small black key" in your inventory, then type UNLOCK EAST or UNLOCK E.'
+  },
+  'LOCK': {
+    title: 'LOCK <direction>',
+    text: 'If an exit has been unlocked, but you want to lock it back up, you can do so by using LOCK <direction> if you have the correct key. For example, if an east exit requires "a small black key" to be unlocked and you are holding "a small black key", you can type LOCK EAST or LOCK E.'
+  },
+  'MOVEMENT': {
+    title: 'UP DOWN EAST WEST NORTH SOUTH (shortcuts: U D E W N S)',
+    text: 'In order to move from one room to the other, you simply type the exit you want to use, typically a cardinal direction. For example, if a room has exits: [ down  east ], you can type DOWN or EAST in order to move in either direction. If an exit has parentheses around it, it is locked and cannot be moved through unless it is unlocked with the correct key.'
+  },
+  'WHO': {
+    title: 'WHO',
+    text: 'Will show you all players currently connected, including yourself.'
   }
 };
