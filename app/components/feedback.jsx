@@ -12,9 +12,9 @@ import PropTypes from 'prop-types';
   target are still necessary (e.g., "So-and-so whispers to themself" or "So-and-so whispers to
   so-and-so.").
   First, the logic checks if the message has a from field, that the text is not a single space,
-  and that the text has quotes in it. If so, it is a say or whisper feedback, which will format
-  in a particular manner, stripping out the quotes and replacing them with spans in the JSX so
-  as to avoid injecting HTML into strings directly.
+  and that the text has a commType. If so, it is a say or whisper feedback, which will format
+  in a particular manner, requiring quotes that are handled in spans with proper
+  colorization.
   The actual JSX checks if there is a from - if so, it means a player is doing some action, so
   the name needs to be highlighted in the correct color.
   If there is a commType, then it means there's something like, "says,", "whispers to you," etc.
@@ -27,10 +27,8 @@ import PropTypes from 'prop-types';
 */
 export const Feedback = props => {
   let quotes = false;
-  if (props.message.from && props.message.text !== ' ' && props.message.text.indexOf('"') !== -1) {
-    props.message.text = props.message.text.replace(/"/g, '');
-    quotes = true;
-  }
+  if (props.message.from && props.message.text !== ' ' && props.message.commType) quotes = true;
+  
   return <p className="feedback">
     {props.message.from ? <span className="source">{props.message.from}
       {props.message.commType ? <span>{props.message.commType}</span> : null}
