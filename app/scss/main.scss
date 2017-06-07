@@ -1,11 +1,12 @@
 @import "./base/reset";
 @import "./theme/vars";
 @import "./base/base";
+@import "./containers/messages";
 @import "./components/feedback";
 @import "./components/inventory";
-@import "./components/messages";
 @import "./components/occupants";
 @import "./components/online-users";
 @import "./components/room";
 @import "./components/player-input";
 @import "./components/help-file";
+@import "./components/prompt";
