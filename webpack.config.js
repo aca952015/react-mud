@@ -30,6 +30,10 @@ module.exports = {
           fallback: 'style-loader',
           use: 'css-loader!sass-loader'
         })
+      },
+      {
+        test: /\.(woff|eot|svg|ttf)$/,
+        loader: 'file-loader?name=fonts/[name].[ext]'
       }
     ]
   },

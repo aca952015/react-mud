@@ -1,5 +1,28 @@
+@font-face {
+  font-family: "Augustus Beveled";
+  src: url("./fonts/Augustus_Beveled.eot?") format("eot"),
+       url("./fonts/Augustus_Beveled.woff") format("woff"),
+       url("./fonts/Augustus_Beveled.ttf") format("truetype"),
+       url("./fonts/Augustus_Beveled.svg#AugustusBeveled") format("svg");
+       font-weight:normal;
+       font-style:normal;
+}
+
 .prompt {
-  background: $light-gray;
+  background: $gray;
   padding: 2vh 2vw;
-  border: 5px #999 outset;
+  border: 5px $light-gray outset;
+
+  span:first-child {
+    font-family: "Augustus Beveled";
+    span {
+      color: $red;
+    }
+  }
+
+  span:last-child {
+    span {
+      color: $blue-deep;
+    }
+  }
 }
