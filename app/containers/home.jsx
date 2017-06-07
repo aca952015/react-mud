@@ -59,7 +59,7 @@ export default class Home extends Component {
       this.props.dispatch(newMessage({playerInput: this.props.input}));
       let currCommand = this.props.input.toLowerCase();
       let lastCommand = this.props.prevCommands.length ? this.props.prevCommands[this.props.prevCommands.length - 1].toLowerCase() : null;
-      if (!lastCommand || currCommand !== lastCommand) this.props.dispatch(updatePrevCommands(this.props.input));
+      if ((!lastCommand || currCommand !== lastCommand) && this.props.input) this.props.dispatch(updatePrevCommands(this.props.input));
       if (this.props.prevCommands.length > 20) this.props.dispatch(truncatePrevCommands());
       this.props.dispatch(updateCommandIndex(-(this.props.commandIndex)));
       const line = this.props.input.split(' ');
