@@ -13,7 +13,8 @@ export const helpFile = {
       'UNLOCK',
       'LOCK',
       'MOVEMENT',
-      'WHO'
+      'WHO',
+      'PREVIOUS_COMMANDS'
     ]
   },
   'look': {
@@ -55,5 +56,9 @@ export const helpFile = {
   'who': {
     title: 'WHO',
     text: 'Will show you all players currently connected, including yourself.'
+  },
+  'previous_commands': {
+    title: 'Cycle through previous commands',
+    text: 'If you have a keyboard available, you can press the up or down arrow keys to cycle through previous input, through your last 20 commands. Entering the same command more than once in a row will count as a single instance of entering input for the purposes of this cycling.'
   }
 };
