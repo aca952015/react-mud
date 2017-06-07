@@ -3,7 +3,15 @@
 const initialState = {
   username: `Robot_${Math.floor(Math.random() * 500 + 1)}`,
   password: '',
-  inventory: []
+  inventory: [],
+  hp: 20,
+  mp: 20,
+  level: 1,
+  str: 18,
+  int: 18,
+  wis: 18,
+  con: 18,
+  dex: 18
 };
 
 export default function reducer(state=initialState, action) {

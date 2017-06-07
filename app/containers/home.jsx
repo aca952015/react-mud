@@ -4,7 +4,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
-import {Messages} from '../containers/messages.jsx';
+import {Messages} from './messages.jsx';
+import {Prompt} from '../components/prompt.jsx';
 import {newMessage, updateInput, updateCommandIndex, updatePrevCommands, truncatePrevCommands} from '../actions/message-actions.js';
 import socketHandlers from '../handlers/socket-handlers.js';
 import commandHandler from '../handlers/command-handler.js';
@@ -16,7 +17,8 @@ import commandHandler from '../handlers/command-handler.js';
     messages: store.messages.messages,
     input: store.messages.input,
     prevCommands: store.messages.prevCommands,
-    commandIndex: store.messages.commandIndex
+    commandIndex: store.messages.commandIndex,
+    character: store.user
   };
 })
 export default class Home extends Component {
@@ -77,6 +79,7 @@ export default class Home extends Component {
     return <div>
       <h1>Tempest</h1>
       <Messages justHitEnter={this.state.justHitEnter} messages={this.props.messages} inventory={this.props.inventory} />
+      <Prompt character={this.props.character} />
       <input type="text" placeholder="Enter a command" value={this.props.input || ''} onChange={this.handleChange} onKeyUp={this.handleCommand} />
     </div>;
   }
@@ -89,5 +92,6 @@ Home.propTypes = {
   inventory: PropTypes.array,
   commandIndex: PropTypes.number,
   prevCommands: PropTypes.array,
-  input: PropTypes.string
+  input: PropTypes.string,
+  character: PropTypes.object
 };
