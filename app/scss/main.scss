@@ -1,3 +1,14 @@
+@font-face {
+  font-family: "Augustus Beveled";
+  src: url("./fonts/Augustus_Beveled.eot?") format("eot"),
+       url("./fonts/Augustus_Beveled.woff") format("woff"),
+       url("./fonts/Augustus_Beveled.ttf") format("truetype"),
+       url("./fonts/Augustus_Beveled.svg#AugustusBeveled") format("svg");
+       font-weight:normal;
+       font-style:normal;
+}
+@import url('https://fonts.googleapis.com/css?family=Special+Elite');
+
 @import "./base/reset";
 @import "./theme/vars";
 @import "./base/base";
