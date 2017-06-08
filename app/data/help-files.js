@@ -14,7 +14,8 @@ export const helpFile = {
       'LOCK',
       'MOVEMENT',
       'WHO',
-      'PREVIOUS_COMMANDS'
+      'PREVIOUS_COMMANDS',
+      'DRINK'
     ]
   },
   'look': {
@@ -60,5 +61,9 @@ export const helpFile = {
   'previous_commands': {
     title: 'Cycle through previous commands',
     text: 'If you have a keyboard available, you can press the up or down arrow keys to cycle through previous input, through your last 20 commands. Entering the same command more than once in a row will count as a single instance of entering input for the purposes of this cycling.'
+  },
+  'drink': {
+    title: 'DRINK <item>',
+    text: 'Will attempt to drink the contents of a specified item in your inventory. For example, if you have a red potion and you type DRINK potion, you will drink the red potion. If you want to specify an item based on the order in your inventory, you can use dot notation to do so. For example, if you have a blue potion and a red potion, you can type DRINK 2.potion to drink the red potion.'
   }
 };
