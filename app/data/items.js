@@ -1,6 +1,6 @@
 'use strict';
 
-import {restoreHealth, restoreMana} from '../actions/item-actions.js';
+import {restoreStat} from '../actions/item-actions.js';
 
 export const itemData = {
   'health potion': {
@@ -9,7 +9,8 @@ export const itemData = {
     long: 'A flask, with a v-shaped bottom and a thin neck, filled with a red liquid, sits on the ground here.',
     terms: ['potion', 'red', 'flask', 'health'],
     drink: {
-      effect: restoreHealth,
+      effect: restoreStat,
+      statToChange: 'hp',
       amount: 10,
       desc: 'A soothing glow passes over you, healing some of your wounds.'
     }
@@ -20,7 +21,8 @@ export const itemData = {
     long: 'A spherical container with a short neck, filled with a blue liquid, sits on the ground here.',
     terms: ['potion', 'blue', 'container', 'mana'],
     drink: {
-      effect: restoreMana,
+      effect: restoreStat,
+      statToChange: 'mp',
       amount: 10,
       desc: 'A cool sensation washes over you, restoring some of your magical energy.'
     }

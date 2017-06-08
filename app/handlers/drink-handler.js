@@ -14,11 +14,11 @@ export default function drinkHandler(command, args, socket, props) {
   if (!itemToDrink.drink) return {funcsToCall: [newMessage], text: 'That isn\'t drinkable.'};
 
   let drinkEffects = itemData[itemToDrink.name].drink;
-  drinkEffects.effect(props.character, drinkEffects.amount);
 
   return {
     funcsToCall: [newMessage, drinkEffects.effect, quietlyAddItem, dropItem],
     amount: drinkEffects.amount,
+    statToChange: drinkEffects.statToChange,
     text: drinkEffects.desc,
     emitType: 'drink',
     item: itemToDrink,
