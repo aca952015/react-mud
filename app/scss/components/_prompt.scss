@@ -8,11 +8,12 @@
     font-family: "Augustus Beveled";
     color: $white;
     display: inline-block;
+    text-shadow: 1px 1px $black;
     margin: 5px 2vw 0 2vw;
 
     span {
       font-size: 1.1em;
-      font-family: "Cabin";
+      font-family: "Acme";
     }
   }
 
