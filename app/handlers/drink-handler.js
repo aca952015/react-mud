@@ -12,7 +12,8 @@ export default function drinkHandler(command, args, socket, props) {
   drinkEffects.effect(props.character, drinkEffects.amount);
 
   return {
-    funcsToCall: [newMessage],
+    funcsToCall: [newMessage, drinkEffects.effect],
+    amount: drinkEffects.amount,
     text: drinkEffects.desc,
     emitType: 'drink',
     from: socket.username,

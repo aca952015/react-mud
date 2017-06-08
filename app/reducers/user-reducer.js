@@ -24,5 +24,15 @@ export default function reducer(state=initialState, action) {
     let newInventory = prevItems.concat(endItems);
     return {...state, inventory: newInventory};
   }
+  if (action.type === 'DRINK_POTION') {
+    let stat = state[action.payload.statToChange];
+    let maxStat = null;
+    if (stat) {
+      maxStat = `max${stat.toUpperCase()}`;
+      stat += action.payload.amount;
+    }
+    if (stat > state[maxStat]) stat = state[maxStat];
+    return {...state, stat};
+  }
   return state;
 }
