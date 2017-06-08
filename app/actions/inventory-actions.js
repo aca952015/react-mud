@@ -13,3 +13,10 @@ export function dropItem(item) {
     payload: item
   };
 }
+
+export function quietAddItem(item) {
+  return {
+    type: 'QUIET_ADD_ITEM',
+    payload: item.quietAdd
+  };
+}

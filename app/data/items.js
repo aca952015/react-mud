@@ -25,6 +25,13 @@ export const itemData = {
       desc: 'A cool sensation washes over you, restoring some of your magical energy.'
     }
   },
+  'empty flask': {
+    name: 'empty flask',
+    short: 'an empty flask',
+    long: 'An empty glass flask sits on the ground here.',
+    terms: ['empty', 'glass', 'flask'],
+    drink: null
+  },
   'gallows key': {
     name: 'gallows key',
     short: 'a small black key',
