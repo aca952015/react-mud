@@ -10,13 +10,20 @@ export function getItem(item) {
 export function dropItem(item) {
   return {
     type: 'DROP_ITEM',
-    payload: item
+    payload: item.item
   };
 }
 
-export function quietAddItem(item) {
+export function quietlyAddItem(item) {
   return {
-    type: 'QUIET_ADD_ITEM',
+    type: 'QUIETLY_ADD_ITEM',
     payload: item.quietAdd
+  };
+}
+
+export function quietlyDestroyItem(item) {
+  return {
+    type: 'QUIETLY_DESTROY_ITEM',
+    payload: item.item
   };
 }
