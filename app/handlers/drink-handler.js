@@ -16,7 +16,6 @@ export default function drinkHandler(command, args, socket, props) {
     amount: drinkEffects.amount,
     text: drinkEffects.desc,
     emitType: 'drink',
-    from: socket.username,
     item: itemToDrink
   };
 }

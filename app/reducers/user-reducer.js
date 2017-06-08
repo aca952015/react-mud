@@ -5,7 +5,7 @@ const initialState = {
   inventory: [],
   hp: 15,
   maxHP: 20,
-  mp: 20,
+  mp: 11,
   maxMP: 20,
   level: 1,
   str: 18,
