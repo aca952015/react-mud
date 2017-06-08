@@ -1,7 +1,7 @@
 'use strict';
 
 import {newMessage} from '../actions/message-actions.js';
-import {quietlyAddItem, quietlyDestroyItem} from '../actions/inventory-actions.js';
+import {quietlyAddItem, dropItem} from '../actions/inventory-actions.js';
 import {itemData} from '../data/items.js';
 
 export default function drinkHandler(command, args, socket, props) {
@@ -17,7 +17,7 @@ export default function drinkHandler(command, args, socket, props) {
   drinkEffects.effect(props.character, drinkEffects.amount);
 
   return {
-    funcsToCall: [newMessage, drinkEffects.effect, quietlyAddItem, quietlyDestroyItem],
+    funcsToCall: [newMessage, drinkEffects.effect, quietlyAddItem, dropItem],
     amount: drinkEffects.amount,
     text: drinkEffects.desc,
     emitType: 'drink',

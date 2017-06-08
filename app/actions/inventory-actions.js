@@ -20,10 +20,3 @@ export function quietlyAddItem(item) {
     payload: item.quietAdd
   };
 }
-
-export function quietlyDestroyItem(item) {
-  return {
-    type: 'QUIETLY_DESTROY_ITEM',
-    payload: item.item
-  };
-}
