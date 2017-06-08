@@ -7,6 +7,7 @@ import getHandler from './get-handler.js';
 import dropHandler from './drop-handler.js';
 import lockHandler from './lock-handler.js';
 import helpHandler from './help-handler.js';
+import drinkHandler from './drink-handler.js';
 import {newMessage} from '../actions/message-actions.js';
 
 export default function commandHandler(command, args, props, socket) {
@@ -41,6 +42,7 @@ export default function commandHandler(command, args, props, socket) {
     'unlock': lockHandler,
     'lock': lockHandler,
     'help': helpHandler,
+    'drink': drinkHandler,
     'inventory': {funcsToCall: [newMessage], inventory: props.inventory}
   };
 

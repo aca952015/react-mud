@@ -10,6 +10,13 @@ export function getItem(item) {
 export function dropItem(item) {
   return {
     type: 'DROP_ITEM',
-    payload: item
+    payload: item.item
+  };
+}
+
+export function quietlyAddItem(item) {
+  return {
+    type: 'QUIETLY_ADD_ITEM',
+    payload: item.quietAdd
   };
 }
