@@ -24,15 +24,15 @@ export default function reducer(state=initialState, action) {
     return {...state, inventory: newInventory};
   }
   if (action.type === 'DRINK_POTION') {
+    let newState = {...state};
     let stat = state[action.payload.statToChange];
     let maxStat = null;
     if (stat) {
       maxStat = `max${action.payload.statToChange.toUpperCase()}`;
       stat += action.payload.amount;
       if (stat > state[maxStat]) stat = state[maxStat];
+      newState[action.payload.statToChange] = stat;
     }
-    let newState = {...state};
-    newState[action.payload.statToChange] = stat;
     return newState;
   }
   return state;
