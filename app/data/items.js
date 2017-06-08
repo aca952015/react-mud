@@ -1,6 +1,6 @@
 'use strict';
 
-import {restoreHealth, restoreMana} from '../item-actions.js';
+import {restoreHealth, restoreMana} from '../actions/item-actions.js';
 
 export const itemData = {
   'health potion': {

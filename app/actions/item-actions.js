@@ -5,7 +5,7 @@ export function restoreHealth(amount) {
     type: 'DRINK_POTION',
     payload: {
       statToChange: 'hp',
-      amount
+      amount: amount.amount
     }
   };
 }
@@ -15,7 +15,7 @@ export function restoreMana(amount) {
     type: 'DRINK_POTION',
     payload: {
       statToChange: 'mp',
-      amount
+      amount: amount.amount
     }
   };
 }

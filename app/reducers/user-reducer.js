@@ -2,9 +2,8 @@
 
 const initialState = {
   username: `Robot_${Math.floor(Math.random() * 500 + 1)}`,
-  password: '',
   inventory: [],
-  hp: 20,
+  hp: 15,
   maxHP: 20,
   mp: 20,
   maxMP: 20,
@@ -28,11 +27,13 @@ export default function reducer(state=initialState, action) {
     let stat = state[action.payload.statToChange];
     let maxStat = null;
     if (stat) {
-      maxStat = `max${stat.toUpperCase()}`;
+      maxStat = `max${action.payload.statToChange.toUpperCase()}`;
       stat += action.payload.amount;
+      if (stat > state[maxStat]) stat = state[maxStat];
     }
-    if (stat > state[maxStat]) stat = state[maxStat];
-    return {...state, stat};
+    let newState = {...state};
+    newState[action.payload.statToChange] = stat;
+    return newState;
   }
   return state;
 }
