@@ -13,7 +13,7 @@ export default function socketHandlers(socket, props) {
   socket.description = props.character.description;
   socket.emit('changeName', socket.username);
   socket.emit('changeDescription', socket.description);
-  socket.emit('look');
+  socket.emit('look', {target: null});
   socket.emit('move', {direction: 'login'});
   socket.on('move', result => socket.currentRoom = result);
   socket.on('message', result => props.dispatch(newMessage(sayProcessor(result, socket))));

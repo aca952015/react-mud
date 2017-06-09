@@ -42,7 +42,8 @@ export const roomData = {
     },
     items: [itemData['health potion']],
     examines: [{
-      terms: 'gallows',
+      name: 'the gallows',
+      terms: ['gallows'],
       description: 'It\'s a gallows, with a short noose hanging from it.'
     }]
   }
