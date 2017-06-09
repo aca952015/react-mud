@@ -22,7 +22,7 @@ export default function lookHandler(socket, users, roomInfo) {
     if (lookTarget) {
       let foundItem = room.items.find(item => item.terms.includes(args));
       if (!foundItem) return socket.emit('generalMessage', {text: 'I don\'t see that here.'});
-      return socket.emit('generalMessage', {text: foundItem.desc});
+      return socket.emit('generalMessage', {text: foundItem.description});
     }
 
     lookTarget = occupants.find(player => player.username.toLowerCase() === args);
