@@ -26,7 +26,10 @@ export default function lookHandler(socket, users, roomInfo) {
     }
 
     lookTarget = occupants.find(player => player.username.toLowerCase() === args);
-    if (lookTarget) return socket.emit('generalMessage', {text: lookTarget.description});
+    if (lookTarget) {
+      lookTarget.emit('generalMessage', {from: socket.username, text: ' ', commType: ' looks at ', target: 'you'});
+      return socket.emit('generalMessage', {text: lookTarget.description});
+    }
 
     lookTarget = room.examines.find(examine => examine.terms.includes(args));
     if (!lookTarget) return socket.emit('generalMessage', {text: lookTarget.description});

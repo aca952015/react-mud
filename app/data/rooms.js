@@ -40,6 +40,10 @@ export const roomData = {
         requiredKey: itemData['gallows key']
       }
     },
-    items: [itemData['health potion']]
+    items: [itemData['health potion']],
+    examines: [{
+      terms: 'gallows',
+      description: 'It\'s a gallows, with a short noose hanging from it.'
+    }]
   }
 };
