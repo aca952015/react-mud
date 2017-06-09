@@ -1,10 +1,12 @@
 'use strict';
 
-import {itemData} from '../app/data/items.js';
-
 export default function look(socket, users, roomInfo) {
   socket.on('look', args => {
-    args = args.toLowerCase();
+    function showMeTheDescription(target) {
+      socket.emit('generalMessage', {text: target.description});
+    }
+
+    if (args) args = args.target.toLowerCase();
     let room = {
       roomName: socket.currentRoom,
       desc: roomInfo[socket.currentRoom].desc,
@@ -18,21 +20,18 @@ export default function look(socket, users, roomInfo) {
 
     if (!args) return socket.emit('generalMessage', {occupants, room});
 
-    let lookTarget = itemData[args];
+    let lookTarget = room.items.find(item => item.terms.includes(args));
+    if (lookTarget) return showMeTheDescription(lookTarget);
+
+    lookTarget = occupants.find(player => player.toLowerCase() === args);
     if (lookTarget) {
-      let foundItem = room.items.find(item => item.terms.includes(args));
-      if (!foundItem) return socket.emit('generalMessage', {text: 'I don\'t see that here.'});
-      return socket.emit('generalMessage', {text: foundItem.description});
+      let player = users.find(user => user.username === lookTarget);
+      player.emit('generalMessage', {from: socket.username, text: ' ', commType: ' looks at ', target: 'you'});
+      return showMeTheDescription(player);
     }
 
-    lookTarget = occupants.find(player => player.username.toLowerCase() === args);
-    if (lookTarget) {
-      lookTarget.emit('generalMessage', {from: socket.username, text: ' ', commType: ' looks at ', target: 'you'});
-      return socket.emit('generalMessage', {text: lookTarget.description});
-    }
-
-    lookTarget = room.examines.find(examine => examine.terms.includes(args));
-    if (!lookTarget) return socket.emit('generalMessage', {text: lookTarget.description});
+    lookTarget = room.examines ? room.examines.find(examine => examine.terms.includes(args)) : null;
+    if (lookTarget) return showMeTheDescription(lookTarget);
 
     return socket.emit('generalMessage', {text: 'I don\'t see that here.'});
   });
