@@ -2,7 +2,6 @@
 
 import communicationHandler from './communication-handler.js';
 import movementHandler from './movement-handler.js';
-import lookHandler from './look-handler.js';
 import getHandler from './get-handler.js';
 import dropHandler from './drop-handler.js';
 import lockHandler from './lock-handler.js';
@@ -35,7 +34,7 @@ export default function commandHandler(command, args, props, socket) {
     'south': movementHandler,
     'up': movementHandler,
     'down': movementHandler,
-    'look': lookHandler,
+    'look': {emitType: 'look', target: args},
     'who': {emitType: 'who'},
     'get': getHandler,
     'drop': dropHandler,

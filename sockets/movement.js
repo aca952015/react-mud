@@ -26,16 +26,4 @@ export default function movement(socket, users, roomInfo) {
     }
     socket.broadcast.to(socket.currentRoom).emit('movementArrive', {username: socket.username, direction: movement.direction});
   });
-
-  socket.on('look', () => {
-    let room = {
-      roomName: socket.currentRoom,
-      desc: roomInfo[socket.currentRoom].desc,
-      exits: roomInfo[socket.currentRoom].exits,
-      items: roomInfo[socket.currentRoom].items
-    };
-    let occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
-    .map(user => user.username);
-    socket.emit('generalMessage', {occupants, room});
-  });
 }
