@@ -10,8 +10,10 @@ import {getItem} from '../actions/inventory-actions.js';
 export default function socketHandlers(socket, props) {
   socket.username = props.username;
   socket.currentRoom = 'Nexus';
+  socket.description = props.character.description;
   socket.emit('changeName', socket.username);
-  socket.emit('look');
+  socket.emit('changeDescription', socket.description);
+  socket.emit('look', {target: null});
   socket.emit('move', {direction: 'login'});
   socket.on('move', result => socket.currentRoom = result);
   socket.on('message', result => props.dispatch(newMessage(sayProcessor(result, socket))));

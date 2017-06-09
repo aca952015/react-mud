@@ -8,6 +8,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 const webpackConfig = require('./webpack.config.js');
 import whisper from './sockets/whisper.js';
 import movement from './sockets/movement.js';
+import look from './sockets/look.js';
 import pickUpItem from './sockets/pick-up-item.js';
 import dropItem from './sockets/drop-item.js';
 import unlock from './sockets/unlock.js';
@@ -34,9 +35,11 @@ io.on('connection', socket => {
 
   socket.on('message', message => io.sockets.to(socket.currentRoom).emit('message', message));
   socket.on('changeName', name => socket.username = name);
+  socket.on('changeDescription', desc => socket.description = desc);
   socket.on('drink', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, text: ` drinks ${item.item.short}.`}));
   socket.on('who', () => socket.emit('generalMessage', {onlineUsers: users.filter(user => user.username).map(user => `${user.username}`)}));
   pickUpItem(socket, roomData);
+  look(socket, users, roomData);
   dropItem(socket, roomData);
   whisper(io, socket, users);
   movement(socket, users, roomData);

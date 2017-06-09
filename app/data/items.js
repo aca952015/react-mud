@@ -13,7 +13,8 @@ export const itemData = {
       statToChange: 'hp',
       amount: 10,
       desc: 'A soothing glow passes over you, healing some of your wounds.'
-    }
+    },
+    description: 'This is a placeholder description for a health potion.'
   },
   'mana potion': {
     name: 'mana potion',
@@ -25,34 +26,39 @@ export const itemData = {
       statToChange: 'mp',
       amount: 10,
       desc: 'A cool sensation washes over you, restoring some of your magical energy.'
-    }
+    },
+    description: 'This is a placeholder description for a mana potion.'
   },
   'empty flask': {
     name: 'empty flask',
     short: 'an empty flask',
     long: 'An empty glass flask sits on the ground here.',
     terms: ['empty', 'glass', 'flask'],
-    drink: null
+    drink: null,
+    description: 'This is a placeholder description for an empty flask.'
   },
   'gallows key': {
     name: 'gallows key',
     short: 'a small black key',
     long: 'A small black key with a simple carving of a noose on it lies here.',
     terms: ['key', 'black', 'small'],
-    drink: null
+    drink: null,
+    description: 'This is a placeholder description for a gallows key.'
   },
   'useless key': {
     name: 'useless key',
     short: 'a useless key',
     long: 'A useless key whose teeth have been completely worn off lies here.',
     terms: ['useless', 'key'],
-    drink: null
+    drink: null,
+    description: 'This is a placeholder description for a useless key.'
   },
   'tester key': {
     name: 'tester key',
     short: 'a tester\'s key',
     long: 'A key with divine engravings on it lies here.',
     terms: ['tester', 'tester\'s', 'key'],
-    drink: null
+    drink: null,
+    description: 'This is a placeholder description for a tester key.'
   }
 };

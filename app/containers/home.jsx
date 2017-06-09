@@ -78,7 +78,10 @@ export default class Home extends Component {
   render() {
     return <div>
       <h1>Tempest</h1>
-      <Messages justHitEnter={this.state.justHitEnter} messages={this.props.messages} inventory={this.props.inventory} />
+      <Messages username={this.props.username} 
+        justHitEnter={this.state.justHitEnter}
+        messages={this.props.messages}
+        inventory={this.props.inventory} />
       <Prompt character={this.props.character} />
       <input type="text" placeholder="Enter a command" value={this.props.input || ''} onChange={this.handleChange} onKeyUp={this.handleCommand} />
     </div>;

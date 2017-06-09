@@ -15,12 +15,17 @@ export const helpFile = {
       'MOVEMENT',
       'WHO',
       'PREVIOUS_COMMANDS',
-      'DRINK'
+      'DRINK',
+      'EXAMINE'
     ]
   },
   'look': {
-    title: 'LOOK (shortcut: L)',
-    text: 'By itself, LOOK or L will show you the room you\'re currently in, as well as any items and occupants. Items in the room are displayed in the order they originally started in, or in the order they were added (perhaps via the DROP command).'
+    title: 'LOOK <target> (shortcut: L)',
+    text: 'By itself, LOOK or L will show you the room you\'re currently in, as well as any items and occupants. Items in the room are displayed in the order they originally started in, or in the order they were added (perhaps via the DROP command). If you specify a target, look will show you the description of either the player you looked at, the item in the room you looked at, or specially hidden objects in the room (usually hinted at in a room\'s description). If you want to look at something in your inventory, use the EXAMINE command (help EXAMINE). You can look at a specific object if there are multiples of it in the room using dot notation, such as LOOK 2.key or LOOK 3.potion to look at the second key in the room or the third potion.'
+  },
+  'examine': {
+    title: 'EXAMINE <target> (shortcut: EX)',
+    text: 'Will show you the description of an item in your inventory. If you want to look at an item in the room, use the LOOK command (help LOOK). You can examine a specific item in your inventory if you have multiples by using dot notation, such as EX 2.key or EX 3.potion to look at the second key in the room or the third potion.'
   },
   'get': {
     title: 'GET <item>',
