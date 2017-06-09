@@ -7,6 +7,7 @@ import dropHandler from './drop-handler.js';
 import lockHandler from './lock-handler.js';
 import helpHandler from './help-handler.js';
 import drinkHandler from './drink-handler.js';
+import examineHandler from './examine-handler.js';
 import {newMessage} from '../actions/message-actions.js';
 
 export default function commandHandler(command, args, props, socket) {
@@ -19,7 +20,8 @@ export default function commandHandler(command, args, props, socket) {
     'u': 'up',
     'l': 'look',
     'i': 'inventory',
-    'inv': 'inventory'
+    'inv': 'inventory',
+    'ex': 'examine'
   };
 
   if (commandShorthand[command]) command = commandShorthand[command];
@@ -42,7 +44,8 @@ export default function commandHandler(command, args, props, socket) {
     'lock': lockHandler,
     'help': helpHandler,
     'drink': drinkHandler,
-    'inventory': {funcsToCall: [newMessage], inventory: props.inventory}
+    'inventory': {funcsToCall: [newMessage], inventory: props.inventory},
+    'examine': examineHandler
   };
 
   if (helperFunctions[command]) {
