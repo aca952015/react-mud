@@ -1,8 +1,8 @@
 'use strict';
 
-import {itemData} from './app/data/items.js';
+import {itemData} from '../app/data/items.js';
 
-export default function lookHandler(socket, users, roomInfo) {
+export default function look(socket, users, roomInfo) {
   socket.on('look', args => {
     args = args.toLowerCase();
     let room = {

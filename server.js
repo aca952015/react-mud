@@ -35,6 +35,7 @@ io.on('connection', socket => {
 
   socket.on('message', message => io.sockets.to(socket.currentRoom).emit('message', message));
   socket.on('changeName', name => socket.username = name);
+  socket.on('changeDescription', desc => socket.description = desc);
   socket.on('drink', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, text: ` drinks ${item.item.short}.`}));
   socket.on('who', () => socket.emit('generalMessage', {onlineUsers: users.filter(user => user.username).map(user => `${user.username}`)}));
   pickUpItem(socket, roomData);
