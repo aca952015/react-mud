@@ -20,13 +20,19 @@ export default class CommandInput extends Component {
     super(props);
   }
   handleCommand = event => {
+    // If the user hits up or down, they're trying to cycle through previous commands.
     if (event.keyCode === 38 || event.keyCode === 40) {
       if (!this.props.prevCommands.length) return;
+      // If they hit down and they're on the last command entered, clear out the input.
+      // Otherwise, decrement the index and show that command.
       if (event.keyCode === 40) {
         if (this.props.commandIndex === 1) this.props.dispatch(updateInput(''));
         if (this.props.commandIndex > 0) this.props.dispatch(updateCommandIndex(-1));
       }
       if (event.keyCode === 38) {
+        // If they hit up, increment the index. If they go over the number of indexes
+        // available, go back to the previous index. Otherwise, show that command.
+
         // I'm not happy with the use of Promise.resolves here, as they're effectively
         // fixing async issues without actually waiting for some sort of response.
         // They're really just fancy setTimeouts at this point, which is not great.
@@ -39,13 +45,26 @@ export default class CommandInput extends Component {
       Promise.resolve()
       .then(() => this.props.dispatch(updateInput(this.props.prevCommands[this.props.prevCommands.length - this.props.commandIndex])));
     }
+    // If the user hits enter
     if (event.keyCode === 13) {
+      // changeEnterStatus refers to the parent Home component and deals with how the
+      // Messages component scrolls down to the bottom of its overflow. If justHitEnter
+      // is true, that component is scrolled to its bottom.
       this.props.changeEnterStatus(true);
       this.props.dispatch(newMessage({playerInput: this.props.input}));
+
+      // If the last command entered is the same as the current command, don't update
+      // prevCommands. Otherwise, push it to the prevCommands array.
       let currCommand = this.props.input.toLowerCase();
       let lastCommand = this.props.prevCommands.length ? this.props.prevCommands[this.props.prevCommands.length - 1].toLowerCase() : null;
       if ((!lastCommand || currCommand !== lastCommand) && this.props.input) this.props.dispatch(updatePrevCommands(this.props.input));
+
+      // If there are more than 20 prevCommands, truncate the array.
       if (this.props.prevCommands.length > 20) this.props.dispatch(truncatePrevCommands());
+
+      // If the user had been pressing up or down to look through previous commands,
+      // but then cleared out the input and entered something else, set the commandIndex
+      // back to 0.
       this.props.dispatch(updateCommandIndex(-(this.props.commandIndex)));
       const line = this.props.input.split(' ');
       const command = line[0].toLowerCase().trim();

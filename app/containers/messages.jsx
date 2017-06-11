@@ -16,6 +16,10 @@ export default class Messages extends Component {
     super(props);
   }
   componentDidMount() {
+    // These component mounting and updating methods check if the scrollbar needs to be
+    // moved down or locked in place. The user can scroll through previous messages
+    // without having the scrollbar automatically scroll to the bottom, which is checked
+    // by comparing scrollHeight and scrollTop.
     this.initialHeight = this.messageList.scrollHeight;
   }
   componentWillUpdate() {

@@ -24,9 +24,6 @@ export default function commandHandler(command, args, props, socket) {
     'ex': 'examine'
   };
 
-  if (commandShorthand[command]) command = commandShorthand[command];
-  if (commandShorthand[args]) args = commandShorthand[args];
-
   const helperFunctions = {
     'say': communicationHandler,
     'whisper': communicationHandler,
@@ -47,6 +44,9 @@ export default function commandHandler(command, args, props, socket) {
     'inventory': {funcsToCall: [newMessage], inventory: props.inventory},
     'examine': examineHandler
   };
+
+  if (commandShorthand[command]) command = commandShorthand[command];
+  if (commandShorthand[args]) args = commandShorthand[args];
 
   if (helperFunctions[command]) {
     if (typeof(helperFunctions[command]) === 'object') return helperFunctions[command];
