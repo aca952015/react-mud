@@ -33,7 +33,7 @@ export default function look(socket, users, roomInfo) {
       lookTarget = occupants.find(player => player.toLowerCase() === args.target);
       if (lookTarget) {
         let player = users.find(user => user.username === lookTarget);
-        socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, lookType: ' looks at ', feedback: ' ', target: lookTarget});
+        socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, interaction: ' looks at ', feedback: ' ', target: lookTarget});
         return showMeTheDescription(player);
       }
 
