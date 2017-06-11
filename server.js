@@ -33,7 +33,7 @@ io.on('connection', socket => {
     users.splice(users.indexOf(socket), 1);
   });
 
-  socket.on('say', message => io.sockets.to(socket.currentRoom).emit('say', message));
+  socket.on('say', message => socket.broadcast.to(socket.currentRoom).emit('say', {...message, commType: ' says, '}));
   socket.on('changeName', name => socket.username = name);
   socket.on('changeDescription', desc => socket.description = desc);
   socket.on('drink', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, text: ` drinks ${item.item.short}.`}));

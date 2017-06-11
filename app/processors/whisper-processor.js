@@ -4,7 +4,7 @@ export default function whisperProcessor(result, socket) {
   let post = {};
   let toYourself = result.target.toLowerCase() === socket.username.toLowerCase();
   let sameTarget = result.from.toLowerCase() === result.target.toLowerCase();
-  
+
   if (result.from === socket.username) {
     post = {
       text: result.text,
@@ -26,8 +26,7 @@ export default function whisperProcessor(result, socket) {
       target: sameTarget ? null : result.target,
       commType: sameTarget ?
       ' whispers something quietly.' :
-      ' whispers something to ',
-      text: ' '
+      ' whispers something to '
     };
   }
 
