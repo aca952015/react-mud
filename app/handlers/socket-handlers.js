@@ -15,7 +15,6 @@ export default function socketHandlers(socket, props) {
   socket.emit('look', {target: null});
   socket.emit('move', {direction: 'login'});
   socket.on('move', result => socket.currentRoom = result);
-  socket.on('say', result => props.dispatch(newMessage(result)));
   socket.on('generalMessage', result => props.dispatch(newMessage(result)));
   socket.on('whisperSuccess', result => props.dispatch(newMessage(whisperProcessor(result, socket))));
   socket.on('whisperFail', () => props.dispatch(newMessage({feedback: 'I don\'t see that person here.'})));
