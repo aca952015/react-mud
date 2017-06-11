@@ -11,7 +11,7 @@ export default function pickUpItem(socket, roomData) {
     let roomItems = roomData[socket.currentRoom].items;
     let tempItem = index > 0 ? roomItems.filter(_item => _item.terms.includes(itemShort.toLowerCase()))[index] :
                                roomItems.find(_item => _item.terms.includes(itemShort.toLowerCase()));
-    if (!tempItem) return socket.emit('message', {text: 'I don\'t see that item here.'});
+    if (!tempItem) return socket.emit('generalMessage', {text: 'I don\'t see that item here.'});
     let room = {
       item: tempItem,
       pickRoom: socket.currentRoom

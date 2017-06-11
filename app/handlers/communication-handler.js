@@ -8,7 +8,7 @@ export default function communicationHandler(command, args, socket, props) {
     return {
       from: props.username,
       text: args,
-      emitType: 'message'
+      emitType: 'say'
     };
   }
   if (command === 'whisper') {
