@@ -10,7 +10,7 @@ import {HelpFile} from '../components/help-file.jsx';
 import {Inventory} from '../components/inventory.jsx';
 import {PlayerInput} from '../components/player-input.jsx';
 
-export class Messages extends Component {
+export default class Messages extends Component {
   constructor(props) {
     super(props);
   }
