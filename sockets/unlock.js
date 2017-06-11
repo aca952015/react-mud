@@ -12,9 +12,9 @@ export default function unlock(socket, roomData) {
 
   socket.on('lock', keyInfo => {
     let exit = roomData[socket.currentRoom].exits[keyInfo.direction];
-    if (!exit) return socket.emit('generalMessage', {text: 'I don\'t see that exit here.'});
+    if (!exit) return socket.emit('generalMessage', {feedback: 'I don\'t see that exit here.'});
     let correctKey = keyInfo.inventory.find(item => item.name === exit.requiredKey.name);
-    if (!correctKey) return socket.emit('generalMessage', {text: 'You don\'t have the correct key to do that.'});
+    if (!correctKey) return socket.emit('generalMessage', {feedback: 'You don\'t have the correct key to do that.'});
     exit.locked = !exit.locked;
     let targetRoom = roomData[socket.currentRoom].exits[keyInfo.direction].exit;
     let targetExits = roomData[targetRoom].exits;
@@ -22,7 +22,7 @@ export default function unlock(socket, roomData) {
     oppositeExit.locked = !oppositeExit.locked;
     let action = 'lock';
     if (!oppositeExit.locked) action = 'unlock';
-    socket.emit('generalMessage', {text: `You ${action} the door to the ${keyInfo.direction}.`});
-    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {text: `${socket.username} ${action}s the door to the ${keyInfo.direction}`});
+    socket.emit('generalMessage', {feedback: `You ${action} the door to the ${keyInfo.direction}.`});
+    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} ${action}s the door to the ${keyInfo.direction}`});
   });
 }
