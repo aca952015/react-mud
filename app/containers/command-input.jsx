@@ -62,9 +62,8 @@ export default class CommandInput extends Component {
       // If there are more than 20 prevCommands, truncate the array.
       if (this.props.prevCommands.length > 20) this.props.dispatch(truncatePrevCommands());
 
-      // If the user had been pressing up or down to look through previous commands,
-      // but then cleared out the input and entered something else, set the commandIndex
-      // back to 0.
+      // Since the command just entered will now be the last command and the user will have
+      // a different list of commands to cycle through, reset the index back to 0.
       this.props.dispatch(updateCommandIndex(-(this.props.commandIndex)));
       const line = this.props.input.split(' ');
       const command = line[0].toLowerCase().trim();
