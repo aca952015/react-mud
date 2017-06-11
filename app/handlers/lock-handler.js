@@ -4,9 +4,9 @@ import {newMessage} from '../actions/message-actions.js';
 
 export default function lockHandler(command, args, socket, props) {
   if (!args) {
-    let text = 'Unlock what direction?';
-    if (command === 'lock') text = 'Lock what direction?';
-    return {funcsToCall: [newMessage], text};
+    let feedback = 'Unlock what direction?';
+    if (command === 'lock') feedback = 'Lock what direction?';
+    return {funcsToCall: [newMessage], feedback};
   }
 
   return {

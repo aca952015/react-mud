@@ -55,6 +55,6 @@ export default function commandHandler(command, args, props, socket) {
 
   return {
     funcsToCall: [newMessage],
-    text: 'I\'m not sure what you\'re trying to do.'
+    feedback: 'I\'m not sure what you\'re trying to do.'
   };
 }

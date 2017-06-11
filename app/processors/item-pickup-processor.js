@@ -8,6 +8,6 @@ export default function ItemPickUpProcessor(room, socket) {
   if (socket.currentRoom !== room.room.pickRoom) return {};
   return {
     from: room.from,
-    text: ` picks up ${room.room.item.short}.`
+    feedback: ` picks up ${room.room.item.short}.`
   };
 }
