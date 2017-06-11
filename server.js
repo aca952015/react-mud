@@ -29,14 +29,14 @@ const users = [];
 io.on('connection', socket => {
   users.push(socket);
   socket.on('disconnect', () => {
-    socket.broadcast.to(socket.currentRoom).emit('message', {text: `${socket.username} vanishes into the nether.`});
+    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {text: `${socket.username} vanishes into the nether.`});
     users.splice(users.indexOf(socket), 1);
   });
 
-  socket.on('message', message => io.sockets.to(socket.currentRoom).emit('message', message));
+  socket.on('say', message => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {...message, commType: ' says, '}));
   socket.on('changeName', name => socket.username = name);
   socket.on('changeDescription', desc => socket.description = desc);
-  socket.on('drink', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, text: ` drinks ${item.item.short}.`}));
+  socket.on('drink', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` drinks ${item.item.short}.`}));
   socket.on('who', () => socket.emit('generalMessage', {onlineUsers: users.filter(user => user.username).map(user => `${user.username}`)}));
   pickUpItem(socket, roomData);
   look(socket, users, roomData);

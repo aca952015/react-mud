@@ -13,5 +13,5 @@ export default function moveProcessor(movement) {
 
   return {
     from: movement.username,
-    text: ` arrives from ${directions[movement.direction]}`};
+    feedback: ` arrives from ${directions[movement.direction]}`};
 }

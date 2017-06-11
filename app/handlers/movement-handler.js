@@ -11,7 +11,7 @@ export default function movementHandler(command, args, socket) {
     };
   }
   return {
-    text: 'I don\'t see that exit here.',
+    feedback: 'I don\'t see that exit here.',
     funcsToCall: [newMessage]
   };
 }

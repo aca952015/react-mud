@@ -5,7 +5,7 @@ export default function dropItem(socket, roomData) {
     roomData[socket.currentRoom].items.push(item.item);
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
       from: socket.username,
-      text: ` drops ${item.item.short}.`
+      feedback: ` drops ${item.item.short}.`
     });
   });
 }
