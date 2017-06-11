@@ -32,7 +32,7 @@ export default class Messages extends Component {
         {message.occupants ? <Occupants message={message}/> : null}
         {message.onlineUsers ? <OnlineUsers message={message}/> : null}
         {message.playerInput ? <PlayerInput message={message}/> : null}
-        {message.commType ? <Communication message={message}/> : null}
+        {message.commType ? <Communication username={this.props.username} message={message}/> : null}
         {message.feedback ? <Feedback username={this.props.username} message={message}/> : null}
         {message.helpObj ? <HelpFile message={message}/> : null}
         {message.inventory ? <Inventory inventory={message.inventory}/> : null}
