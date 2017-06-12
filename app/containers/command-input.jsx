@@ -6,16 +6,17 @@ import PropTypes from 'prop-types';
 import {updateInput, updateCommandIndex, newMessage, updatePrevCommands, truncatePrevCommands} from '../actions/message-actions.js';
 import commandHandler from '../handlers/command-handler.js';
 
-@connect(store => {
+function mapStateToProps(state) {
   return {
-    commandIndex: store.messages.commandIndex,
-    prevCommands: store.messages.prevCommands,
-    input: store.messages.input,
-    username: store.user.username,
-    inventory: store.user.inventory
+    commandIndex: state.messages.commandIndex,
+    prevCommands: state.messages.prevCommands,
+    input: state.messages.input,
+    username: state.user.username,
+    inventory: state.user.inventory
   };
-})
-export default class CommandInput extends Component {
+}
+
+export class CommandInput extends Component {
   constructor(props) {
     super(props);
   }
@@ -83,6 +84,8 @@ export default class CommandInput extends Component {
     </div>;
   }
 }
+
+export default connect(mapStateToProps)(CommandInput);
 
 CommandInput.propTypes = {
   dispatch: PropTypes.func,

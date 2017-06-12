@@ -10,16 +10,17 @@ import {Prompt} from '../components/prompt.jsx';
 import {updateInput} from '../actions/message-actions.js';
 import socketHandlers from '../handlers/socket-handlers.js';
 
-@connect(store => {
+function mapStateToProps(state) {
   return {
-    username: store.user.username,
-    messages: store.messages.messages,
-    inventory: store.user.inventory,
-    character: store.user,
-    commandIndex: store.messages.commandIndex
+    messages: state.messages.messages,
+    commandIndex: state.messages.commandIndex,
+    username: state.user.username,
+    inventory: state.user.inventory,
+    character: state.user
   };
-})
-export default class Home extends Component {
+}
+
+export class Home extends Component {
   constructor() {
     super();
     this.state = {justHitEnter: false};
@@ -51,6 +52,8 @@ export default class Home extends Component {
     </div>;
   }
 }
+
+export default connect(mapStateToProps)(Home);
 
 Home.propTypes = {
   username: PropTypes.string,
