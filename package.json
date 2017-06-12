@@ -4,7 +4,8 @@
   "description": "A multi-user text-based adventure game built with React, Redux, and Socket.io.",
   "main": "entry.jsx",
   "scripts": {
-    "start": "babel-node server.js"
+    "start": "babel-node server.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -51,7 +52,11 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
+    "babel-jest": "^20.0.3",
+    "enzyme": "^2.8.2",
     "eslint": "^3.17.1",
-    "eslint-plugin-react": "^6.10.0"
+    "eslint-plugin-react": "^6.10.0",
+    "jest": "^20.0.4",
+    "react-test-renderer": "^15.5.4"
   }
 }
