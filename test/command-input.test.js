@@ -3,7 +3,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import sinon from 'sinon';
-import {newMessage} from '../app/actions/message-actions.js';
+import {newMessage, updatePrevCommands} from '../app/actions/message-actions.js';
 import {CommandInput} from '../app/containers/command-input.jsx';
 
 describe('<CommandInput />', () => {
@@ -26,6 +26,7 @@ describe('<CommandInput />', () => {
     commandInput.find('input').simulate('keyUp', {keyCode: 13});
     expect(handleCommandSpy.called).toEqual(true);
     expect(props.dispatch.calledWith(newMessage({playerInput: props.input}))).toEqual(true);
+    expect(props.dispatch.calledWith(updatePrevCommands(props.input))).toEqual(true);
     expect(props.changeEnterStatus.calledWith(true)).toEqual(true);
   });
 });
