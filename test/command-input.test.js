@@ -41,4 +41,11 @@ describe('<CommandInput />', () => {
     expect(props.socket.emit.calledWith('say', result)).toEqual(true);
     expect(props.dispatch.calledWith(updateInput(''))).toEqual(true);
   });
+
+  it ('should not call updatePrevCommands if the command is the same', () => {
+    props.dispatch = sinon.spy();
+    props.prevCommands = [props.input];
+    commandInput.find('input').simulate('keyUp', {keyCode: 13});
+    expect(props.dispatch.calledWith(updatePrevCommands(props.input))).toEqual(false);
+  });
 });
