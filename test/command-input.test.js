@@ -3,7 +3,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import sinon from 'sinon';
-import {newMessage, updatePrevCommands} from '../app/actions/message-actions.js';
+import {newMessage, updatePrevCommands, updateCommandIndex} from '../app/actions/message-actions.js';
 import {CommandInput} from '../app/containers/command-input.jsx';
 
 describe('<CommandInput />', () => {
@@ -15,7 +15,7 @@ describe('<CommandInput />', () => {
     input: 'say Test input',
     dispatch: sinon.spy(),
     prevCommands: [],
-    tester: false
+    commandIndex: 0
   };
 
   const commandInput = shallow(<CommandInput {...props} />);
@@ -27,6 +27,7 @@ describe('<CommandInput />', () => {
     expect(handleCommandSpy.called).toEqual(true);
     expect(props.dispatch.calledWith(newMessage({playerInput: props.input}))).toEqual(true);
     expect(props.dispatch.calledWith(updatePrevCommands(props.input))).toEqual(true);
+    expect(props.dispatch.calledWith(updateCommandIndex(-(props.commandIndex)))).toEqual(true);
     expect(props.changeEnterStatus.calledWith(true)).toEqual(true);
   });
 });
