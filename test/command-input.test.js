@@ -3,7 +3,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import sinon from 'sinon';
-import {newMessage, updatePrevCommands, updateCommandIndex, updateInput} from '../app/actions/message-actions.js';
+import {newMessage, updatePrevCommands, updateCommandIndex, updateInput, truncatePrevCommands} from '../app/actions/message-actions.js';
 import {CommandInput} from '../app/containers/command-input.jsx';
 
 describe('<CommandInput />', () => {
@@ -14,7 +14,7 @@ describe('<CommandInput />', () => {
     },
     input: 'say Test input',
     dispatch: sinon.spy(),
-    prevCommands: [],
+    prevCommands: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21'],
     commandIndex: 0,
     username: 'Tester'
   };
@@ -40,9 +40,10 @@ describe('<CommandInput />', () => {
     expect(props.dispatch.calledWith(newMessage(result))).toEqual(true);
     expect(props.socket.emit.calledWith('say', result)).toEqual(true);
     expect(props.dispatch.calledWith(updateInput(''))).toEqual(true);
+    expect(props.dispatch.calledWith(truncatePrevCommands())).toEqual(true);
   });
 
-  it ('should not call updatePrevCommands if the command is the same', () => {
+  it('should not call updatePrevCommands if the command is the same', () => {
     props.dispatch = sinon.spy();
     props.prevCommands = [props.input];
     commandInput.find('input').simulate('keyUp', {keyCode: 13});
