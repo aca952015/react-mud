@@ -3,7 +3,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import sinon from 'sinon';
-import {newMessage, updatePrevCommands, updateCommandIndex} from '../app/actions/message-actions.js';
+import {newMessage, updatePrevCommands, updateCommandIndex, updateInput} from '../app/actions/message-actions.js';
 import {CommandInput} from '../app/containers/command-input.jsx';
 
 describe('<CommandInput />', () => {
@@ -39,5 +39,6 @@ describe('<CommandInput />', () => {
     expect(props.dispatch.calledWith(updateCommandIndex(-(props.commandIndex)))).toEqual(true);
     expect(props.dispatch.calledWith(newMessage(result))).toEqual(true);
     expect(props.socket.emit.calledWith('say', result)).toEqual(true);
+    expect(props.dispatch.calledWith(updateInput(''))).toEqual(true);
   });
 });
