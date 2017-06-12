@@ -7,21 +7,25 @@ import {CommandInput} from '../app/containers/command-input.jsx';
 
 describe('<CommandInput />', () => {
   const props = {
-    changeEnterStatus: function() {},
+    changeEnterStatus: function(bool) {
+      props.tester = bool;
+    },
     socket: {
       emit: function() {}
     },
     input: 'say Test input',
     dispatch: function() {},
-    prevCommands: []
+    prevCommands: [],
+    tester: false
   };
 
   const commandInput = shallow(<CommandInput {...props} />);
-  const spy = sinon.spy(commandInput.instance(), 'handleCommand');
+  const handleCommandSpy = sinon.spy(commandInput.instance(), 'handleCommand');
   commandInput.instance().forceUpdate();
 
   it('should call handleCommand when enter is pressed', () => {
     commandInput.find('input').simulate('keyUp', {keyCode: 13});
-    expect(spy.called).toEqual(true);
+    expect(handleCommandSpy.called).toEqual(true);
+    expect(props.tester).toEqual(true);
   });
 });
