@@ -15,7 +15,8 @@ describe('<CommandInput />', () => {
     input: 'say Test input',
     dispatch: sinon.spy(),
     prevCommands: [],
-    commandIndex: 0
+    commandIndex: 0,
+    username: 'Tester'
   };
 
   const commandInput = shallow(<CommandInput {...props} />);
@@ -25,9 +26,16 @@ describe('<CommandInput />', () => {
   it('should call the correct functions when enter is pressed', () => {
     commandInput.find('input').simulate('keyUp', {keyCode: 13});
     expect(handleCommandSpy.called).toEqual(true);
+    expect(props.changeEnterStatus.calledWith(true)).toEqual(true);
     expect(props.dispatch.calledWith(newMessage({playerInput: props.input}))).toEqual(true);
     expect(props.dispatch.calledWith(updatePrevCommands(props.input))).toEqual(true);
     expect(props.dispatch.calledWith(updateCommandIndex(-(props.commandIndex)))).toEqual(true);
-    expect(props.changeEnterStatus.calledWith(true)).toEqual(true);
+    expect(props.dispatch.calledWith(newMessage({
+      from: props.username,
+      text: 'Test input',
+      emitType: 'say',
+      funcsToCall: [newMessage],
+      commType: ' say, '
+    }))).toEqual(true);
   });
 });
