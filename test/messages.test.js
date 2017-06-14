@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import sinon from 'sinon';
 import {mount} from 'enzyme';
 import Messages from '../app/containers/messages.jsx';
 
@@ -19,6 +18,7 @@ describe('<Messages />', () => {
     messageComponent = mount(<Messages {...props} />);
     expect(messageComponent.find('Room').length).toEqual(0);
     expect(messageComponent.find('Occupants').length).toEqual(0);
+    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
   });
 
   it('should render only a Room child with a room message', () => {
@@ -40,9 +40,10 @@ describe('<Messages />', () => {
     messageComponent = mount(<Messages {...props} />);
     expect(messageComponent.find('Room').length).toEqual(1);
     expect(messageComponent.find('Occupants').length).toEqual(0);
+    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
   });
 
-  it('should render an Occupants child with an occupants message', () => {
+  it('should render only an Occupants child with an occupants message', () => {
     props = {
       messages: [{
         occupants: ['tester']
@@ -51,5 +52,18 @@ describe('<Messages />', () => {
     messageComponent = mount(<Messages {...props} />);
     expect(messageComponent.find('Occupants').length).toEqual(1);
     expect(messageComponent.find('Room').length).toEqual(0);
+    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
+  });
+
+  it('should render only an OnlineUsers child with an onlineUsers message', () => {
+    props = {
+      messages: [{
+        onlineUsers: ['tester']
+      }]
+    };
+    messageComponent = mount(<Messages {...props} />);
+    expect(messageComponent.find('OnlineUsers').length).toEqual(1);
+    expect(messageComponent.find('Room').length).toEqual(0);
+    expect(messageComponent.find('Occupants').length).toEqual(0);
   });
 });
