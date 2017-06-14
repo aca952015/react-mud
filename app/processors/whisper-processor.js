@@ -11,7 +11,6 @@ export default function whisperProcessor(result, socket) {
       from: 'You ',
       target: toYourself ? null : result.target,
       commType: toYourself ? 'whisper to yourself, ' : 'whisper to ',
-
     };
   } else if (toYourself){
     post = {
