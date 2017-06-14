@@ -17,10 +17,11 @@ describe('<Messages />', () => {
 
   it('should not render any children', () => {
     messageComponent = mount(<Messages {...props} />);
-    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Room').length).toEqual(0);
+    expect(messageComponent.find('Occupants').length).toEqual(0);
   });
 
-  it('should render a Room child with a room message', () => {
+  it('should render only a Room child with a room message', () => {
     props = {
       messages: [{
         room: {
@@ -37,7 +38,8 @@ describe('<Messages />', () => {
       }]
     };
     messageComponent = mount(<Messages {...props} />);
-    expect(messageComponent.find('Room').props().message.room.roomName).toEqual('Test room');
+    expect(messageComponent.find('Room').length).toEqual(1);
+    expect(messageComponent.find('Occupants').length).toEqual(0);
   });
 
   it('should render an Occupants child with an occupants message', () => {
@@ -47,6 +49,7 @@ describe('<Messages />', () => {
       }]
     };
     messageComponent = mount(<Messages {...props} />);
-    expect(messageComponent.find('Occupants').props().message.occupants[0]).toEqual('tester');
+    expect(messageComponent.find('Occupants').length).toEqual(1);
+    expect(messageComponent.find('Room').length).toEqual(0);
   });
 });
