@@ -39,4 +39,14 @@ describe('<Messages />', () => {
     messageComponent = mount(<Messages {...props} />);
     expect(messageComponent.find('Room').props().message.room.roomName).toEqual('Test room');
   });
+
+  it('should render an Occupants child with an occupants message', () => {
+    props = {
+      messages: [{
+        occupants: ['tester']
+      }]
+    };
+    messageComponent = mount(<Messages {...props} />);
+    expect(messageComponent.find('Occupants').props().message.occupants[0]).toEqual('tester');
+  });
 });
