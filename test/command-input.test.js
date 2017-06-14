@@ -57,8 +57,15 @@ describe('<CommandInput />', () => {
     expect(props.dispatch.calledWith(updateCommandIndex(1))).toEqual(true);
   });
 
-  it('should update prevCommands by decrementing 1 when down is pressed', () => {
+  it('should update input to an empty string when commandIndex is 1 and down is pressed', () => {
     commandInput.find('input').simulate('keyUp', {keyCode: 40});
     expect(props.dispatch.calledWith(updateInput(''))).toEqual(true);
+  });
+
+  it('should update input by decrementing prevCommands by 1 when down is pressed', () => {
+    props.commandIndex = 2;
+    commandInput = shallow(<CommandInput {...props} />);
+    commandInput.find('input').simulate('keyUp', {keyCode: 40});
+    expect(props.dispatch.calledWith(updateCommandIndex(-1))).toEqual(true);
   });
 });
