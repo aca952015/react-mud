@@ -19,6 +19,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Room').length).toEqual(0);
     expect(messageComponent.find('Occupants').length).toEqual(0);
     expect(messageComponent.find('OnlineUsers').length).toEqual(0);
+    expect(messageComponent.find('PlayerInput').length).toEqual(0);
   });
 
   it('should render only a Room child with a room message', () => {
@@ -41,6 +42,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Room').length).toEqual(1);
     expect(messageComponent.find('Occupants').length).toEqual(0);
     expect(messageComponent.find('OnlineUsers').length).toEqual(0);
+    expect(messageComponent.find('PlayerInput').length).toEqual(0);
   });
 
   it('should render only an Occupants child with an occupants message', () => {
@@ -53,6 +55,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Occupants').length).toEqual(1);
     expect(messageComponent.find('Room').length).toEqual(0);
     expect(messageComponent.find('OnlineUsers').length).toEqual(0);
+    expect(messageComponent.find('PlayerInput').length).toEqual(0);
   });
 
   it('should render only an OnlineUsers child with an onlineUsers message', () => {
@@ -63,6 +66,20 @@ describe('<Messages />', () => {
     };
     messageComponent = mount(<Messages {...props} />);
     expect(messageComponent.find('OnlineUsers').length).toEqual(1);
+    expect(messageComponent.find('Room').length).toEqual(0);
+    expect(messageComponent.find('Occupants').length).toEqual(0);
+    expect(messageComponent.find('PlayerInput').length).toEqual(0);
+  });
+
+  it('should render only a PlayerInput child with a playerInput message', () => {
+    props = {
+      messages: [{
+        playerInput: 'Say hello'
+      }]
+    };
+    messageComponent = mount(<Messages {...props} />);
+    expect(messageComponent.find('PlayerInput').length).toEqual(1);
+    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
     expect(messageComponent.find('Room').length).toEqual(0);
     expect(messageComponent.find('Occupants').length).toEqual(0);
   });
