@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {mount} from 'enzyme';
+import {shallow} from 'enzyme';
 import Messages from '../app/containers/messages.jsx';
 
 describe('<Messages />', () => {
@@ -15,7 +15,7 @@ describe('<Messages />', () => {
 
 
   it('should not render any children', () => {
-    messageComponent = mount(<Messages {...props} />);
+    messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Room').length).toEqual(0);
     expect(messageComponent.find('Occupants').length).toEqual(0);
     expect(messageComponent.find('OnlineUsers').length).toEqual(0);
@@ -42,7 +42,7 @@ describe('<Messages />', () => {
         }
       }]
     };
-    messageComponent = mount(<Messages {...props} />);
+    messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Room').length).toEqual(1);
     expect(messageComponent.find('Occupants').length).toEqual(0);
     expect(messageComponent.find('OnlineUsers').length).toEqual(0);
@@ -59,7 +59,7 @@ describe('<Messages />', () => {
         occupants: ['tester']
       }]
     };
-    messageComponent = mount(<Messages {...props} />);
+    messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Occupants').length).toEqual(1);
     expect(messageComponent.find('Room').length).toEqual(0);
     expect(messageComponent.find('OnlineUsers').length).toEqual(0);
@@ -76,7 +76,7 @@ describe('<Messages />', () => {
         onlineUsers: ['tester']
       }]
     };
-    messageComponent = mount(<Messages {...props} />);
+    messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('OnlineUsers').length).toEqual(1);
     expect(messageComponent.find('Room').length).toEqual(0);
     expect(messageComponent.find('Occupants').length).toEqual(0);
@@ -93,7 +93,7 @@ describe('<Messages />', () => {
         playerInput: 'Say hello'
       }]
     };
-    messageComponent = mount(<Messages {...props} />);
+    messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('PlayerInput').length).toEqual(1);
     expect(messageComponent.find('OnlineUsers').length).toEqual(0);
     expect(messageComponent.find('Room').length).toEqual(0);
@@ -113,7 +113,7 @@ describe('<Messages />', () => {
       }],
       username: 'tester'
     };
-    messageComponent = mount(<Messages {...props} />);
+    messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Communication').length).toEqual(1);
     expect(messageComponent.find('PlayerInput').length).toEqual(0);
     expect(messageComponent.find('OnlineUsers').length).toEqual(0);
@@ -130,7 +130,7 @@ describe('<Messages />', () => {
         feedback: 'Wat'
       }]
     };
-    messageComponent = mount(<Messages {...props} />);
+    messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Feedback').length).toEqual(1);
     expect(messageComponent.find('Communication').length).toEqual(0);
     expect(messageComponent.find('PlayerInput').length).toEqual(0);
@@ -150,7 +150,7 @@ describe('<Messages />', () => {
         }
       }]
     };
-    messageComponent = mount(<Messages {...props} />);
+    messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('HelpFile').length).toEqual(1);
     expect(messageComponent.find('Feedback').length).toEqual(0);
     expect(messageComponent.find('Communication').length).toEqual(0);
@@ -167,7 +167,7 @@ describe('<Messages />', () => {
         inventory: []
       }]
     };
-    messageComponent = mount(<Messages {...props} />);
+    messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Inventory').length).toEqual(1);
     expect(messageComponent.find('HelpFile').length).toEqual(0);
     expect(messageComponent.find('Feedback').length).toEqual(0);
