@@ -30,4 +30,18 @@ describe('drinkHandler', () => {
       });
     });
   });
+
+  describe('Targeting a valid item in the user\'s inventory', () => {
+    it('should drink the targeted item', () => {
+      expect(drinkHandler('drink', 'potion', null, props)).toEqual({
+        funcsToCall: [newMessage, itemData['health potion'].drink.effect, quietlyAddItem, dropItem],
+        amount: itemData['health potion'].drink.amount,
+        statToChange: itemData['health potion'].drink.statToChange,
+        feedback: itemData['health potion'].drink.desc,
+        emitType: 'drink',
+        item: itemData['health potion'],
+        quietAdd: itemData['empty flask']
+      });
+    });
+  });
 });
