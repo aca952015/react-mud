@@ -15,4 +15,22 @@ describe('<Inventory />', () => {
     expect(inventory.find('h3').text()).toEqual('You are carrying:');
     expect(inventory.find('li').text()).toEqual('Nothing');
   });
+
+  it('should render each unique item in the inventory as a separate li', () => {
+    props = {
+      inventory: [
+        {
+          name: 'Item 1',
+          short: 'Item 1 short'
+        },
+        {
+          name: 'Item 2',
+          short: 'Item 2 short'
+        }
+      ]
+    };
+    inventory = shallow(<Inventory {...props} />);
+    expect(inventory.find('li').at(0).text()).toEqual(props.inventory[0].short);
+    expect(inventory.find('li').at(1).text()).toEqual(props.inventory[1].short);
+  });
 });
