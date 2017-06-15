@@ -42,4 +42,15 @@ describe('<Feedback />', () => {
     expect(feedback.find('span').at(1).text()).toEqual(props.message.interaction);
     expect(feedback.find('span').at(2).text()).toEqual(props.message.feedback);
   });
+
+  it('should render from, interaction, target, and feedback if all exist', () => {
+    props = {
+      username: 'TestR',
+      message: {
+        from: 'tester',
+        interaction: ' looks at ',
+        target: 'TestR',
+      }
+    };
+  });
 });
