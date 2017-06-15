@@ -40,4 +40,13 @@ describe('message reducer', () => {
       });
     });
   });
+
+  describe('With an UPDATE_PREV_COMMANDS action', () => {
+    it('should return the current state, with the prevCommands updated with the payload', () => {
+      expect(reducer(initialState, {type: 'UPDATE_PREV_COMMANDS', payload: 'say Hello'})).toEqual({
+        ...initialState,
+        prevCommands: ['say Hello']
+      });
+    });
+  });
 });
