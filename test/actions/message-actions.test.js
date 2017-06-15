@@ -20,4 +20,10 @@ describe('message actions', () => {
       expect(updateCommandIndex(1)).toEqual({type: 'UPDATE_COMMAND_INDEX', payload: 1});
     });
   });
+
+  describe('updatePrevCommands', () => {
+    it('should return a type of UPDATE_PREV_COMMANDS and a payload of whatever got passed in', () => {
+      expect(updatePrevCommands('Yo')).toEqual({type: 'UPDATE_PREV_COMMANDS', payload: 'Yo'});
+    });
+  });
 });
