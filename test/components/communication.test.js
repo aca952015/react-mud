@@ -85,4 +85,21 @@ describe('<Communication />', () => {
     expect(comms.find('span.comm-type').at(1).text()).toEqual(', ');
     expect(comms.find('span').at(5).text()).toEqual(`\"${props.message.text}\"`);
   });
+
+  it('should render \'So-and-so whispers something to so-and-so\' when the user is a third party', () => {
+    props = {
+      username: 'ThirdDude',
+      message: {
+        from: 'TestR',
+        target: 'tester',
+        commType: ' whispers something to '
+      }
+    };
+    comms = shallow(<Communication {...props} />);
+    expect(comms.find('span.source').at(0).text()).toEqual(props.message.from);
+    expect(comms.find('span.comm-type').first().text()).toEqual(props.message.commType);
+    expect(comms.find('span.source').at(1).text()).toEqual(props.message.target);
+    expect(comms.find('span.comm-type').at(1).text()).toEqual('.');
+    expect(comms.find('span').at(5).text()).toEqual('');
+  });
 });
