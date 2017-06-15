@@ -8,4 +8,10 @@ describe('message actions', () => {
       expect(newMessage('Boyyyy')).toEqual({type: 'NEW_MESSAGE', payload: 'Boyyyy'});
     });
   });
+
+  describe('updateInput', () => {
+    it('should return a type of UPDATE_INPUT and a payload of whatever got passed in', () => {
+      expect(updateInput('Ayy')).toEqual({type: 'UPDATE_INPUT', payload: 'Ayy'});
+    });
+  });
 });
