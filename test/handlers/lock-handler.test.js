@@ -14,4 +14,13 @@ describe('lockHandler', () => {
       });
     });
   });
+
+  describe('With no args and a command of lock', () => {
+    it('should return an error object with the feedback "Lock what direction?"', () => {
+      expect(lockHandler('lock')).toEqual({
+        ...returnObj,
+        feedback: 'Lock what direction?'
+      });
+    });
+  });
 });
