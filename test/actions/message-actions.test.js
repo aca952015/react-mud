@@ -26,4 +26,10 @@ describe('message actions', () => {
       expect(updatePrevCommands('Yo')).toEqual({type: 'UPDATE_PREV_COMMANDS', payload: 'Yo'});
     });
   });
+
+  describe('truncatePrevCommands', () => {
+    it('should return a type of TRUNCATE_PREV_COMMANDS', () => {
+      expect(truncatePrevCommands()).toEqual({type: 'TRUNCATE_PREV_COMMANDS'});
+    });
+  });
 });
