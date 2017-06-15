@@ -14,9 +14,9 @@ describe('<Occupants />', () => {
   let occupants = shallow(<Occupants {...props} />);
 
   it('should display a list of occupants other than the user as a ul', () => {
-    expect(occupants.find('li').children('span').at(0).text()).toEqual('SomeDude');
-    expect(occupants.find('li').children('span').at(1).text()).toEqual('Tester');
-    expect(occupants.find('li').at(0).text()).toEqual('SomeDude is here.');
-    expect(occupants.find('li').at(1).text()).toEqual('Tester is here.');
+    expect(occupants.find('li').children('span').at(0).text()).toEqual(props.message.occupants[0]);
+    expect(occupants.find('li').children('span').at(1).text()).toEqual(props.message.occupants[1]);
+    expect(occupants.find('li').at(0).text()).toEqual(`${props.message.occupants[0]} is here.`);
+    expect(occupants.find('li').at(1).text()).toEqual(`${props.message.occupants[1]} is here.`);
   });
 });
