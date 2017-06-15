@@ -42,4 +42,14 @@ describe('user reducer', () => {
       });
     });
   });
+
+  describe('With a DROP_ITEM action', () => {
+    let tempInventory = ['item1', 'item2', 'item1'];
+    it('should splice the item out of the inventory', () => {
+      expect(reducer({...initialState, inventory: tempInventory}, {type: 'DROP_ITEM', payload: 'item1'})).toEqual({
+        ...initialState,
+        inventory: ['item2', 'item1']
+      });
+    });
+  });
 });
