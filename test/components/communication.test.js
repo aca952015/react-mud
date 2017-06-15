@@ -47,6 +47,24 @@ describe('<Communication />', () => {
     comms = shallow(<Communication {...props} />);
     expect(comms.find('span.source').childAt(0).text()).toEqual(props.message.from);
     expect(comms.find('span.comm-type').first().text()).toEqual(props.message.commType);
-    expect(comms.find('span span').at(2).text()).toEqual(`\"${props.message.text}\"`);
+    expect(comms.find('span').at(2).text()).toEqual(`\"${props.message.text}\"`);
+  });
+
+  it('should render \'You whisper to <target>, "Message"\' when a user enters "whisper <target> <message>"', () => {
+    props = {
+      username: 'TestR',
+      message: {
+        from: 'You ',
+        target: 'SomeDude',
+        commType: 'whisper to ',
+        text: 'Dude.'
+      }
+    };
+    comms = shallow(<Communication {...props} />);
+    expect(comms.find('span.source').at(0).text()).toEqual(props.message.from);
+    expect(comms.find('span.comm-type').first().text()).toEqual(props.message.commType);
+    expect(comms.find('span.source').at(1).text()).toEqual(props.message.target);
+    expect(comms.find('span.comm-type').at(1).text()).toEqual(', ');
+    expect(comms.find('span').at(5).text()).toEqual(`\"${props.message.text}\"`);
   });
 });
