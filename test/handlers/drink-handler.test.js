@@ -44,4 +44,13 @@ describe('drinkHandler', () => {
       });
     });
   });
+
+  describe('Targeting a valid item not in the user\'s inventory', () => {
+    it('should return feedback of "You aren\'t carrying that."', () => {
+      expect(drinkHandler('drink', 'potion', null, {inventory: []})).toEqual({
+        ...returnObj,
+        feedback: 'You aren\'t carrying that.'
+      });
+    });
+  });
 });
