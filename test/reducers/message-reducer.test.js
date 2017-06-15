@@ -49,4 +49,13 @@ describe('message reducer', () => {
       });
     });
   });
+
+  describe('With a TRUNCATE_PREV_COMMANDS action', () => {
+    it('should remove the first element in the prevCommands array', () => {
+      expect(reducer({...initialState, prevCommands: ['1','2','3','4','5','6','7']}, {type: 'TRUNCATE_PREV_COMMANDS'})).toEqual({
+        ...initialState,
+        prevCommands: ['2','3','4','5','6','7']
+      });
+    });
+  });
 });
