@@ -102,4 +102,23 @@ describe('<Communication />', () => {
     expect(comms.find('span.comm-type').at(1).text()).toEqual('.');
     expect(comms.find('span').at(5).text()).toEqual('');
   });
+
+  it('should render \'You whisper to yourself, "Message"\' when the user enters "whisper <user> <message>"', () => {
+    props = {
+      username: 'TestR',
+      message: {
+        from: 'You ',
+        target: null,
+        commType: ' whisper to yourself, ',
+        text: 'Ayy'
+      }
+    };
+    comms = shallow(<Communication {...props} />);
+    expect(comms.find('span.source').at(0).text()).toEqual(props.message.from);
+    expect(comms.find('span.comm-type').first().text()).toEqual(props.message.commType);
+    expect(comms.find('span.source').at(1).node).toEqual(undefined);
+    expect(comms.find('span.comm-type').at(1).text()).toEqual('"');
+    expect(comms.find('span.comm-type').at(2).text()).toEqual('"');
+    expect(comms.find('span').at(4).text()).toEqual(props.message.text);
+  });
 });
