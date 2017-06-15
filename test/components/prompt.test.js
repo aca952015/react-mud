@@ -20,4 +20,10 @@ describe('<Prompt />', () => {
     expect(prompt.find('p').first().children('span').at(1).text()).toEqual(' / ');
     expect(prompt.find('p').first().children('span').last().text()).toEqual(props.character.maxHP);
   });
+
+  it('should display a P tag containing spans with the current and max MP values', () => {
+    expect(prompt.find('p').at(1).children('span').first().text()).toEqual(props.character.mp);
+    expect(prompt.find('p').at(1).children('span').at(1).text()).toEqual(' / ');
+    expect(prompt.find('p').at(1).children('span').last().text()).toEqual(props.character.maxMP);
+  });
 });
