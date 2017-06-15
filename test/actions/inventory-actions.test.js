@@ -8,4 +8,10 @@ describe('inventory actions', () => {
       expect(getItem({someItem: 'yep'})).toEqual({type: 'GET_ITEM', payload: {someItem: 'yep'}});
     });
   });
+
+  describe('dropItem', () => {
+    it('should return an object with type DROP_ITEM and payload of the item property', () => {
+      expect(dropItem({item: 'yep'})).toEqual({type: 'DROP_ITEM', payload: 'yep'});
+    });
+  });
 });
