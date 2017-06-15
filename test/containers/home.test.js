@@ -3,8 +3,8 @@
 import React from 'react';
 import sinon from 'sinon';
 import {shallow} from 'enzyme';
-import {updateInput} from '../app/actions/message-actions.js';
-import {Home} from '../app/containers/home.jsx';
+import {updateInput} from '../../app/actions/message-actions.js';
+import {Home} from '../../app/containers/home.jsx';
 
 describe('<Home />', () => {
   let props = {

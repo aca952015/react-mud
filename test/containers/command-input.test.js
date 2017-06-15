@@ -3,8 +3,8 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import sinon from 'sinon';
-import {newMessage, updatePrevCommands, updateCommandIndex, updateInput, truncatePrevCommands} from '../app/actions/message-actions.js';
-import {CommandInput} from '../app/containers/command-input.jsx';
+import {newMessage, updatePrevCommands, updateCommandIndex, updateInput, truncatePrevCommands} from '../../app/actions/message-actions.js';
+import {CommandInput} from '../../app/containers/command-input.jsx';
 
 describe('<CommandInput />', () => {
   let props, commandInput;

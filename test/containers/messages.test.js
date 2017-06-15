@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {shallow} from 'enzyme';
-import Messages from '../app/containers/messages.jsx';
+import Messages from '../../app/containers/messages.jsx';
 
 describe('<Messages />', () => {
   let props, messageComponent;

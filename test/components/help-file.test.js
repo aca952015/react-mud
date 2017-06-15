@@ -2,8 +2,8 @@
 
 import React from 'react';
 import {shallow} from 'enzyme';
-import {HelpFile} from '../app/components/help-file.jsx';
-import {helpFile} from '../app/data/help-files.js';
+import {HelpFile} from '../../app/components/help-file.jsx';
+import {helpFile} from '../../app/data/help-files.js';
 
 describe('<HelpFile /> with the say help file', () => {
   const message = {};
