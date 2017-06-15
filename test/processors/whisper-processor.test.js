@@ -18,4 +18,20 @@ describe('whisperProcessor', () => {
       });
     });
   });
+
+  describe('If the whisperer is the user and they\'re whispering to themself', () => {
+    it('should return a whisper object with the appropriate fields', () => {
+      let result = {
+        from :'TestR',
+        target: 'TestR',
+        text: 'Ayy'
+      };
+      expect(whisperProcessor(result, {username: 'TestR'})).toEqual({
+        text: result.text,
+        from: 'You ',
+        target: null,
+        commType: 'whisper to yourself, '
+      });
+    });
+  });
 });
