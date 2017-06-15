@@ -15,4 +15,13 @@ describe('examineHandler', () => {
       expect(examineHandler('examine')).toEqual({...returnObj, feedback: 'Examine what?'});
     });
   });
+
+  describe('With dot notation targeting', () => {
+    it('should return an examine object with the correct item', () => {
+      expect(examineHandler('examine', '2.potion', null, props)).toEqual({
+        ...returnObj,
+        feedback: itemData['health potion'].description
+      });
+    });
+  });
 });
