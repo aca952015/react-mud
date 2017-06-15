@@ -52,4 +52,13 @@ describe('user reducer', () => {
       });
     });
   });
+
+  describe('With a DRINK_POTION action', () => {
+    it('should update the user\'s appropriate stat with the payload\'s amount', () => {
+      expect(reducer(initialState, {type: 'DRINK_POTION', payload: {statToChange: 'hp', amount: 10}})).toEqual({
+        ...initialState,
+        hp: 20
+      });
+    });
+  });
 });
