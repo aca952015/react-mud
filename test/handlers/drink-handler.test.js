@@ -53,4 +53,13 @@ describe('drinkHandler', () => {
       });
     });
   });
+
+  describe('Targeting an invalid item', () => {
+    it('should return feedback of "That isn\'t drinkable."', () => {
+      expect(drinkHandler('drink', 'key', null, props)).toEqual({
+        ...returnObj,
+        feedback: 'That isn\'t drinkable.'
+      });
+    });
+  });
 });
