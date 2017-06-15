@@ -33,4 +33,13 @@ describe('examineHandler', () => {
       });
     });
   });
+
+  describe('With a valid target that the user isn\'t carrying', () => {
+    it('should return an error object with the feedback "You aren\'t carrying that."', () => {
+      expect(examineHandler('examine', 'sword', null, props)).toEqual({
+        ...returnObj,
+        feedback: 'You aren\'t carrying that.'
+      });
+    });
+  });
 });
