@@ -77,4 +77,26 @@ describe('<Room />', () => {
     expect(room.find('ul').first().children('li').at(0).text()).toEqual(props.message.room.items[0].long);
     expect(room.find('ul').first().children('li').at(1).text()).toEqual(props.message.room.items[1].long);
   });
+
+  it('should render (#) for items that have multiples in the room', () => {
+    props = {
+      message: {
+        room: {
+          roomName: 'Test room',
+          desc: 'Test room desc',
+          exits: {
+            up: {
+              exit: 'Blah',
+              locked: false
+            }
+          },
+          items: [itemData['health potion'], itemData['mana potion'], itemData['health potion']]
+        }
+      }
+    };
+    room = shallow(<Room {...props} />);
+    expect(room.find('ul').first().children('li').at(0).text()).toEqual(`(2) ${props.message.room.items[0].long}`);
+    expect(room.find('ul').first().children('li').at(1).text()).toEqual(props.message.room.items[1].long);
+    expect(room.find('ul').first().children('li').at(2).node).toEqual(undefined);
+  });
 });
