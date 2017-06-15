@@ -58,4 +58,20 @@ describe('<Feedback />', () => {
     expect(feedback.find('span').children('span').at(0).text()).toEqual('you');
     expect(feedback.find('span').children('span').at(1).text()).toEqual('.');
   });
+
+  it('should render \'So-and-so <interaction> <target>\' if the user is a third party to an interaction', () => {
+    props = {
+      username: 'TestR',
+      message: {
+        from: 'Dude',
+        target: 'tester',
+        interaction: ' looks at '
+      }
+    };
+    feedback = shallow(<Feedback {...props} />);
+    expect(feedback.find('span').at(0).text()).toEqual(props.message.from);
+    expect(feedback.find('span').at(1).text()).toEqual(props.message.interaction);
+    expect(feedback.find('span').children('span').at(0).text()).toEqual(props.message.target);
+    expect(feedback.find('span').children('span').at(1).text()).toEqual('.');
+  });
 });
