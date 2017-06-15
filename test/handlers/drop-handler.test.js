@@ -27,4 +27,15 @@ describe('dropHandler', () => {
       });
     });
   });
+
+  describe('With normal targeting', () => {
+    it('should return a drop object with the right item', () => {
+      expect(dropHandler('drop', '3.potion', null, props)).toEqual({
+        emitType: 'drop',
+        item: itemData['health potion'],
+        funcsToCall: [newMessage, dropItem],
+        feedback: `You drop ${itemData['health potion'].short}.`
+      });
+    });
+  });
 });
