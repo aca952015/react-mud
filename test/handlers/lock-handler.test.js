@@ -23,4 +23,14 @@ describe('lockHandler', () => {
       });
     });
   });
+
+  describe('With args', () => {
+    it('should return a lock emit object to be handled by the server', () => {
+      expect(lockHandler('unlock', 'east', null, {inventory: []})).toEqual({
+        emitType: 'lock',
+        inventory: [],
+        direction: 'east'
+      });
+    });
+  });
 });
