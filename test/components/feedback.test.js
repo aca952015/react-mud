@@ -28,4 +28,18 @@ describe('<Feedback />', () => {
     expect(feedback.find('span').at(0).text()).toEqual(props.message.from);
     expect(feedback.find('span').at(1).text()).toEqual(props.message.feedback);
   });
+
+  it('should render from, feedback, and interaction if all exist', () => {
+    props = {
+      message: {
+        from: 'tester',
+        interaction: ' does something ',
+        feedback: 'with this feedback.'
+      }
+    };
+    feedback = shallow(<Feedback {...props} />);
+    expect(feedback.find('span').at(0).text()).toEqual(props.message.from);
+    expect(feedback.find('span').at(1).text()).toEqual(props.message.interaction);
+    expect(feedback.find('span').at(2).text()).toEqual(props.message.feedback);
+  });
 });
