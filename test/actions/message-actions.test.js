@@ -14,4 +14,10 @@ describe('message actions', () => {
       expect(updateInput('Ayy')).toEqual({type: 'UPDATE_INPUT', payload: 'Ayy'});
     });
   });
+
+  describe('updateCommandIndex', () => {
+    it('should return a type of UPDATE_COMMAND_INDEX and a payload of whatever got passed in', () => {
+      expect(updateCommandIndex(1)).toEqual({type: 'UPDATE_COMMAND_INDEX', payload: 1});
+    });
+  });
 });
