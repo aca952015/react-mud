@@ -31,4 +31,13 @@ describe('message reducer', () => {
       });
     });
   });
+
+  describe('With an UPDATE_COMMAND_INDEX action', () => {
+    it('should return the current state, with the commandIndex updated with the payload', () => {
+      expect(reducer(initialState, {type: 'UPDATE_COMMAND_INDEX', payload: 1})).toEqual({
+        ...initialState,
+        commandIndex: 1
+      });
+    });
+  });
 });
