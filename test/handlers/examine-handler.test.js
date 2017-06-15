@@ -24,4 +24,13 @@ describe('examineHandler', () => {
       });
     });
   });
+
+  describe('With normal targeting', () => {
+    it('should return an examine object with the correct item', () => {
+      expect(examineHandler('examine', 'key', null, props)).toEqual({
+        ...returnObj,
+        feedback: itemData['gallows key'].description
+      });
+    });
+  });
 });
