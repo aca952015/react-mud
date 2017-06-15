@@ -34,4 +34,19 @@ describe('<Communication />', () => {
     expect(comms.find('span.comm-type').first().text()).toEqual(props.message.commType);
     expect(comms.find('span span').at(2).text()).toEqual(`\"${props.message.text}\"`);
   });
+
+  it('should render \'So-and-so says, "Message"\' to other users in the room when a user enters "say <message>"', () => {
+    props = {
+      username: 'TestR',
+      message: {
+        from: 'tester',
+        commType: ' says, ',
+        text: 'Ayy'
+      }
+    };
+    comms = shallow(<Communication {...props} />);
+    expect(comms.find('span.source').childAt(0).text()).toEqual(props.message.from);
+    expect(comms.find('span.comm-type').first().text()).toEqual(props.message.commType);
+    expect(comms.find('span span').at(2).text()).toEqual(`\"${props.message.text}\"`);
+  });
 });
