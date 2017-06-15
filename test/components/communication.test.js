@@ -121,4 +121,20 @@ describe('<Communication />', () => {
     expect(comms.find('span.comm-type').at(2).text()).toEqual('"');
     expect(comms.find('span').at(4).text()).toEqual(props.message.text);
   });
+
+  it('should render \'So-and-so whisper something quietly.\' when the user is a third party to a self whisper', () => {
+    props = {
+      username: 'TestR',
+      message: {
+        from: 'tester',
+        commType: ' whispers something quietly.'
+      }
+    };
+    comms = shallow(<Communication {...props} />);
+    expect(comms.find('span.source').at(0).text()).toEqual(props.message.from);
+    expect(comms.find('span.comm-type').first().text()).toEqual(props.message.commType);
+    expect(comms.find('span.source').at(1).node).toEqual(undefined);
+    expect(comms.find('span.comm-type').at(1).node).toEqual(undefined);
+    expect(comms.find('span').at(4).node).toEqual(undefined);
+  });
 });
