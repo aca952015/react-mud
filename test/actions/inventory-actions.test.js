@@ -14,4 +14,10 @@ describe('inventory actions', () => {
       expect(dropItem({item: 'yep'})).toEqual({type: 'DROP_ITEM', payload: 'yep'});
     });
   });
+
+  describe('quietlyAddItem', () => {
+    it('should return an object with type QUIETLY_ADD_ITEM and payload of the quietAdd property', () => {
+      expect(quietlyAddItem({item: 'dude', quietAdd: 'ayyy'})).toEqual({type: 'QUIETLY_ADD_ITEM', payload: 'ayyy'});
+    });
+  });
 });
