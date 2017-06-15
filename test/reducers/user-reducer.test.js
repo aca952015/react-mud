@@ -24,4 +24,13 @@ describe('user reducer', () => {
     tempReducer.username = initialState.username;
     expect(tempReducer).toEqual(initialState);
   });
+
+  describe('With a GET_ITEM action', () => {
+    it('should update the inventory with the payload', () => {
+      expect(reducer(initialState, {type: 'GET_ITEM', payload: 'some item'})).toEqual({
+        ...initialState,
+        inventory: ['some item']
+      });
+    });
+  });
 });
