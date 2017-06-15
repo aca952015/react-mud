@@ -33,4 +33,13 @@ describe('user reducer', () => {
       });
     });
   });
+
+  describe('With a QUIETLY_ADD_ITEM action', () => {
+    it('should update the inventory with the payload', () => {
+      expect(reducer(initialState, {type: 'GET_ITEM', payload: 'some item'})).toEqual({
+        ...initialState,
+        inventory: ['some item']
+      });
+    });
+  });
 });
