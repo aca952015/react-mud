@@ -15,10 +15,19 @@ describe('message reducer', () => {
   });
 
   describe('With a NEW_MESSAGE action', () => {
-    it('should return the initial state, with the messages array updated with the payload', () => {
+    it('should return the current state, with the messages array updated with the payload', () => {
       expect(reducer(undefined, {type: 'NEW_MESSAGE', payload: 'New message'})).toEqual({
         ...initialState,
         messages: ['New message']
+      });
+    });
+  });
+
+  describe('With an UPDATE_INPUT action', () => {
+    it('should return the current state, with the input updated with the payload', () => {
+      expect(reducer(initialState, {type: 'UPDATE_INPUT', payload: 's'})).toEqual({
+        ...initialState,
+        input: 's'
       });
     });
   });
