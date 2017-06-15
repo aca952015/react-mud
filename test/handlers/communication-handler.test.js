@@ -31,5 +31,14 @@ describe('communicationHandler', () => {
     it('should also return an error object if no args are given', () => {
       expect(communicationHandler('whisper')).toEqual({...returnObj, feedback: 'Whisper what to whom? (format: whisper <target> <message>)'});
     });
+
+    it('should return a whisper object with correct args', () => {
+      expect(communicationHandler('whisper', 'duder hello', null, props)).toEqual({
+        target: 'duder',
+        text: 'hello',
+        from: props.username,
+        emitType: 'whisper'
+      });
+    });
   });
 });
