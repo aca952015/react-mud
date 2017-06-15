@@ -38,4 +38,13 @@ describe('dropHandler', () => {
       });
     });
   });
+
+  describe('With a valid item that the user doesn\'t have', () => {
+    it('should return an error object with the feedback "You don\'t seem to be carrying that"', () => {
+      expect(dropHandler('drop', 'key', null, props)).toEqual({
+        ...returnObj,
+        feedback: 'You don\'t seem to be carrying that.'
+      });
+    });
+  });
 });
