@@ -43,7 +43,7 @@ describe('<Feedback />', () => {
     expect(feedback.find('span').at(2).text()).toEqual(props.message.feedback);
   });
 
-  it('should render from, interaction, target, and feedback if all exist', () => {
+  it('should render from, interaction, and target if all exist', () => {
     props = {
       username: 'TestR',
       message: {
@@ -52,5 +52,10 @@ describe('<Feedback />', () => {
         target: 'TestR',
       }
     };
+    feedback = shallow(<Feedback {...props} />);
+    expect(feedback.find('span').at(0).text()).toEqual(props.message.from);
+    expect(feedback.find('span').at(1).text()).toEqual(props.message.interaction);
+    expect(feedback.find('span').children('span').at(0).text()).toEqual('you');
+    expect(feedback.find('span').children('span').at(1).text()).toEqual('.');
   });
 });
