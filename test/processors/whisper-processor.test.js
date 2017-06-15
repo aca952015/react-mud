@@ -34,4 +34,20 @@ describe('whisperProcessor', () => {
       });
     });
   });
+
+  describe('If the whisperer is another user, targeting the user', () => {
+    it('should return a whisper object with the appropriate fields', () => {
+      let result = {
+        from: 'TestR',
+        target: 'tester',
+        text: 'Ayy'
+      };
+      expect(whisperProcessor(result, {username: 'tester'})).toEqual({
+        text: result.text,
+        from: result.from,
+        target: 'you',
+        commType: ' whispers to '
+      });
+    });
+  });
 });
