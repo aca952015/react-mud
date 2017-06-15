@@ -26,4 +26,13 @@ describe('helpHandler', () => {
       });
     });
   });
+
+  describe('With args, but an invalid help file', () => {
+    it('should return an error object with the feedback "I don\'t have a help file for that."', () => {
+      expect(helpHandler('help', 'derp')).toEqual({
+        ...returnObj,
+        feedback: 'I don\'t have a help file for that.'
+      });
+    });
+  });
 });
