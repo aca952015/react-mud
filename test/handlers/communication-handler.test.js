@@ -22,4 +22,14 @@ describe('communicationHandler', () => {
       });
     });
   });
+
+  describe('Whisper', () => {
+    it('should return an error object if no target or message is given', () => {
+      expect(communicationHandler('whisper', 'hello')).toEqual({...returnObj, feedback: 'Whisper what to whom? (format: whisper <target> <message>)'});
+    });
+
+    it('should also return an error object if no args are given', () => {
+      expect(communicationHandler('whisper')).toEqual({...returnObj, feedback: 'Whisper what to whom? (format: whisper <target> <message>)'});
+    });
+  });
 });
