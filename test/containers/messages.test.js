@@ -13,17 +13,16 @@ describe('<Messages />', () => {
     done();
   });
 
-
   it('should not render any children', () => {
     messageComponent = shallow(<Messages {...props} />);
-    expect(messageComponent.find('Room').length).toEqual(0);
-    expect(messageComponent.find('Occupants').length).toEqual(0);
-    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
-    expect(messageComponent.find('PlayerInput').length).toEqual(0);
-    expect(messageComponent.find('Communication').length).toEqual(0);
-    expect(messageComponent.find('Feedback').length).toEqual(0);
-    expect(messageComponent.find('HelpFile').length).toEqual(0);
-    expect(messageComponent.find('Inventory').length).toEqual(0);
+    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('Feedback').node).toEqual(undefined);
+    expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Inventory').node).toEqual(undefined);
   });
 
   it('should render only a Room child with a room message', () => {
@@ -44,13 +43,13 @@ describe('<Messages />', () => {
     };
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Room').length).toEqual(1);
-    expect(messageComponent.find('Occupants').length).toEqual(0);
-    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
-    expect(messageComponent.find('PlayerInput').length).toEqual(0);
-    expect(messageComponent.find('Communication').length).toEqual(0);
-    expect(messageComponent.find('Feedback').length).toEqual(0);
-    expect(messageComponent.find('HelpFile').length).toEqual(0);
-    expect(messageComponent.find('Inventory').length).toEqual(0);
+    expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('Feedback').node).toEqual(undefined);
+    expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Inventory').node).toEqual(undefined);
   });
 
   it('should render only an Occupants child with an occupants message', () => {
@@ -61,13 +60,13 @@ describe('<Messages />', () => {
     };
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Occupants').length).toEqual(1);
-    expect(messageComponent.find('Room').length).toEqual(0);
-    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
-    expect(messageComponent.find('PlayerInput').length).toEqual(0);
-    expect(messageComponent.find('Communication').length).toEqual(0);
-    expect(messageComponent.find('Feedback').length).toEqual(0);
-    expect(messageComponent.find('HelpFile').length).toEqual(0);
-    expect(messageComponent.find('Inventory').length).toEqual(0);
+    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('Feedback').node).toEqual(undefined);
+    expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Inventory').node).toEqual(undefined);
   });
 
   it('should render only an OnlineUsers child with an onlineUsers message', () => {
@@ -78,13 +77,13 @@ describe('<Messages />', () => {
     };
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('OnlineUsers').length).toEqual(1);
-    expect(messageComponent.find('Room').length).toEqual(0);
-    expect(messageComponent.find('Occupants').length).toEqual(0);
-    expect(messageComponent.find('PlayerInput').length).toEqual(0);
-    expect(messageComponent.find('Communication').length).toEqual(0);
-    expect(messageComponent.find('Feedback').length).toEqual(0);
-    expect(messageComponent.find('HelpFile').length).toEqual(0);
-    expect(messageComponent.find('Inventory').length).toEqual(0);
+    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('Feedback').node).toEqual(undefined);
+    expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Inventory').node).toEqual(undefined);
   });
 
   it('should render only a PlayerInput child with a playerInput message', () => {
@@ -95,13 +94,13 @@ describe('<Messages />', () => {
     };
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('PlayerInput').length).toEqual(1);
-    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
-    expect(messageComponent.find('Room').length).toEqual(0);
-    expect(messageComponent.find('Occupants').length).toEqual(0);
-    expect(messageComponent.find('Communication').length).toEqual(0);
-    expect(messageComponent.find('Feedback').length).toEqual(0);
-    expect(messageComponent.find('HelpFile').length).toEqual(0);
-    expect(messageComponent.find('Inventory').length).toEqual(0);
+    expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('Feedback').node).toEqual(undefined);
+    expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Inventory').node).toEqual(undefined);
   });
 
   it('should render only a Communication child with a commType message', () => {
@@ -115,13 +114,13 @@ describe('<Messages />', () => {
     };
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Communication').length).toEqual(1);
-    expect(messageComponent.find('PlayerInput').length).toEqual(0);
-    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
-    expect(messageComponent.find('Room').length).toEqual(0);
-    expect(messageComponent.find('Occupants').length).toEqual(0);
-    expect(messageComponent.find('Feedback').length).toEqual(0);
-    expect(messageComponent.find('HelpFile').length).toEqual(0);
-    expect(messageComponent.find('Inventory').length).toEqual(0);
+    expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('Feedback').node).toEqual(undefined);
+    expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Inventory').node).toEqual(undefined);
   });
 
   it('should render only a Feedback child with a feedback message', () => {
@@ -132,13 +131,13 @@ describe('<Messages />', () => {
     };
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Feedback').length).toEqual(1);
-    expect(messageComponent.find('Communication').length).toEqual(0);
-    expect(messageComponent.find('PlayerInput').length).toEqual(0);
-    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
-    expect(messageComponent.find('Room').length).toEqual(0);
-    expect(messageComponent.find('Occupants').length).toEqual(0);
-    expect(messageComponent.find('HelpFile').length).toEqual(0);
-    expect(messageComponent.find('Inventory').length).toEqual(0);
+    expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Inventory').node).toEqual(undefined);
   });
 
   it('should render only a HelpFile child with a helpObj message', () => {
@@ -152,13 +151,13 @@ describe('<Messages />', () => {
     };
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('HelpFile').length).toEqual(1);
-    expect(messageComponent.find('Feedback').length).toEqual(0);
-    expect(messageComponent.find('Communication').length).toEqual(0);
-    expect(messageComponent.find('PlayerInput').length).toEqual(0);
-    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
-    expect(messageComponent.find('Room').length).toEqual(0);
-    expect(messageComponent.find('Occupants').length).toEqual(0);
-    expect(messageComponent.find('Inventory').length).toEqual(0);
+    expect(messageComponent.find('Feedback').node).toEqual(undefined);
+    expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('Inventory').node).toEqual(undefined);
   });
 
   it('should render only an Inventory child with an inventory message', () => {
@@ -169,12 +168,12 @@ describe('<Messages />', () => {
     };
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Inventory').length).toEqual(1);
-    expect(messageComponent.find('HelpFile').length).toEqual(0);
-    expect(messageComponent.find('Feedback').length).toEqual(0);
-    expect(messageComponent.find('Communication').length).toEqual(0);
-    expect(messageComponent.find('PlayerInput').length).toEqual(0);
-    expect(messageComponent.find('OnlineUsers').length).toEqual(0);
-    expect(messageComponent.find('Room').length).toEqual(0);
-    expect(messageComponent.find('Occupants').length).toEqual(0);
+    expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Feedback').node).toEqual(undefined);
+    expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Occupants').node).toEqual(undefined);
   });
 });
