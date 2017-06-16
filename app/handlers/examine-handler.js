@@ -3,6 +3,7 @@
 import {newMessage} from '../actions/message-actions.js';
 
 export default function examineHandler(command, args, socket, props) {
+  if (!args) return {funcsToCall: [newMessage], feedback: 'Examine what?'};
   let splitArgs = args.split('.');
   let index = splitArgs.length > 1 ? splitArgs[0] - 1 : 0;
   let foundItem = index > 0 ? props.inventory.filter(item => item.terms.includes(splitArgs[1]))[index] :
