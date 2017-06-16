@@ -53,12 +53,18 @@ describe('user reducer', () => {
     });
   });
 
-  describe('With a DRINK_POTION action', () => {
+  describe('With a DRINK_POTION action and a valid stat', () => {
     it('should update the user\'s appropriate stat with the payload\'s amount', () => {
       expect(reducer(initialState, {type: 'DRINK_POTION', payload: {statToChange: 'hp', amount: 10}})).toEqual({
         ...initialState,
         hp: 20
       });
+    });
+  });
+
+  describe('With a DRINK_POTION action and no stat to change', () => {
+    it('should just return the initialState', () => {
+      expect(reducer(initialState, {type: 'DRINK_POTION', payload: {effect: 'buff'}})).toEqual(initialState);
     });
   });
 });
