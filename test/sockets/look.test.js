@@ -80,4 +80,15 @@ describe('look', () => {
       });
     });
   });
+
+  describe('With the user seeing another player look at an item', () => {
+    it('should show "player1 looks at <item short>."', done => {
+      player1.emit('look', {target: 'potion'});
+      player2.on('generalMessage', res => {
+        expect(res.from).toEqual('player1');
+        expect(res.feedback).toEqual(` looks at ${itemData['health potion'].short}.`);
+        done();
+      });
+    });
+  });
 });
