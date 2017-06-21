@@ -92,4 +92,14 @@ describe('socketHandlers', () => {
       });
     });
   });
+
+  describe('pickUpItem', () => {
+    it('should dispatch a newMessage with an itemPickUpProcessor', done => {
+      player2.emit('pickUpItem', {item: 'potion'});
+      player1.on('pickUpItem', res => {
+        expect(props.dispatch.calledWith(newMessage(itemPickUpProcessor(res, player1)))).toEqual(true);
+        done();
+      });
+    });
+  });
 });
