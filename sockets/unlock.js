@@ -21,6 +21,7 @@ export default function unlock(socket, roomData) {
   socket.on('lock', keyInfo => {
     let exit = roomData[socket.currentRoom].exits[keyInfo.direction];
     if (!exit) return socket.emit('generalMessage', {feedback: 'I don\'t see that exit here.'});
+    if (!exit.requiredKey) return socket.emit('generalMessage', {feedback: 'That exit has nothing to lock.'});
     let correctKey = keyInfo.inventory.find(item => item.name === exit.requiredKey.name);
     if (!correctKey) return socket.emit('generalMessage', {feedback: 'You don\'t have the correct key to do that.'});
     exit.locked = !exit.locked;

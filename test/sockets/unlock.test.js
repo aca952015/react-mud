@@ -62,4 +62,14 @@ describe('Unlock', () => {
       });
     });
   });
+
+  describe('Unlocking an invalid exit', () => {
+    it('should return feedback of not seeing that exit', done => {
+      player1.emit('lock', {direction: 'west', inventory: [itemData['secret key']]});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('I don\'t see that exit here.');
+        done();
+      });
+    });
+  });
 });
