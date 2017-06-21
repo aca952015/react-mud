@@ -113,4 +113,15 @@ describe('socketHandlers', () => {
       });
     });
   });
+
+  describe('itemPickedUp', () => {
+    it('should dispatch a newMessage and a getItem', done => {
+      player1.emit('pickUpItem', {item: 'potion'});
+      player1.on('itemPickedUp', res => {
+        expect(props.dispatch.calledWith(newMessage({feedback: `You pick up ${res.item.short}.`}))).toEqual(true);
+        expect(props.dispatch.calledWith(getItem(res.item))).toEqual(true);
+        done();
+      });
+    });
+  });
 });
