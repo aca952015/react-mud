@@ -82,4 +82,14 @@ describe('socketHandlers', () => {
       });
     });
   });
+
+  describe('movementLeave', () => {
+    it('should dispatch a newMessage with a from and feedback', done => {
+      player2.emit('move', {direction: 'down'});
+      player1.on('movementLeave', res => {
+        expect(props.dispatch.calledWith(newMessage({from: res.username, feedback: ` moves ${res.direction}.`}))).toEqual(true);
+        done();
+      });
+    });
+  });
 });
