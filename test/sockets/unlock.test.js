@@ -51,5 +51,15 @@ describe('Unlock', () => {
         });
       });
     });
+
+    describe('With the incorrect key', () => {
+      it('should return feedback of not having the right key', done => {
+        player2.emit('lock', {direction: 'up', inventory: []});
+        player2.on('generalMessage', res => {
+          expect(res.feedback).toEqual('You don\'t have the correct key to do that.');
+          done();
+        });
+      });
+    });
   });
 });
