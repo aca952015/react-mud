@@ -7,27 +7,23 @@ import {roomData} from '../../app/data/rooms.js';
 import {itemData} from '../../app/data/items.js';
 
 describe('look', () => {
-  let player1, player2, player3, url = 'http://0.0.0.0:5000';
+  let player1, player2, url = 'http://0.0.0.0:5000';
   require('../lib/test-server.js');
 
   beforeEach(done => {
     player1 = io.connect(url, ioOptions);
     player2 = io.connect(url, ioOptions);
-    player3 = io.connect(url, ioOptions);
-    player3.on('connect', () => {
+    player2.on('connect', () => {
       player1.emit('changeName', 'player1');
       player1.emit('changeDescription', 'player1 desc');
       player2.emit('changeName', 'player2');
       player2.emit('changeDescription', 'player2 desc');
-      player3.emit('changeName', 'player3');
-      player3.emit('changeDescription', 'player3 desc');
       done();
     });
   });
   afterEach(done => {
     player1.disconnect();
     player2.disconnect();
-    player3.disconnect();
     done();
   });
 
