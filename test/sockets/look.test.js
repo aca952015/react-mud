@@ -48,11 +48,23 @@ describe('look', () => {
     });
   });
 
-  describe('With a player as a target', () => {
+  describe('With the user looking at a player', () => {
     it('should show player1 the description of player2', done => {
       player1.emit('look', {target: 'player2'});
       player1.on('generalMessage', res => {
         expect(res.feedback).toEqual('player2 desc');
+        done();
+      });
+    });
+  });
+
+  describe('With the user being looked at by a player', () => {
+    it('should show "player1 looks at player2"', done => {
+      player1.emit('look', {target: 'player2'});
+      player2.on('generalMessage', res => {
+        expect(res.from).toEqual('player1');
+        expect(res.interaction).toEqual(' looks at ');
+        expect(res.target).toEqual('player2');
         done();
       });
     });
