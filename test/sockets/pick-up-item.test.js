@@ -34,7 +34,7 @@ describe('pickUpItem', () => {
     describe('With a valid item in the room', () => {
       describe('The user picking the item up', () => {
         it('should return an itemPickedUp event', done => {
-          player1.emit('pickUpItem', {item: 'potion'});
+          player1.emit('pickUpItem', {item: '2.potion'});
           player1.on('itemPickedUp', res => {
             let expected = itemData['health potion'];
             delete expected.drink.effect;
@@ -47,13 +47,23 @@ describe('pickUpItem', () => {
 
       describe('Users seeing a player pick an item up', () => {
         it('should return a pickUpItem event', done => {
-          player1.emit('pickUpItem', {item: 'potion'});
+          player1.emit('pickUpItem', {item: '2.potion'});
           player2.on('pickUpItem', res => {
             expect(res.room.pickRoom).toEqual('Nexus');
-            expect(res.room.item.short).toEqual(itemData['health potion'].short);
+            expect(res.room.item.short).toEqual(itemData['mana potion'].short);
             expect(res.from).toEqual('player1');
             done();
           });
+        });
+      });
+    });
+
+    describe('With an invalid item in the room', () => {
+      it('should return a feedback of not seeing the item', done => {
+        player1.emit('pickUpItem', {item: '4.key'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('I don\'t see that item here.');
+          done();
         });
       });
     });
