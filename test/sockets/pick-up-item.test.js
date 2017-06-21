@@ -78,4 +78,17 @@ describe('pickUpItem', () => {
       });
     });
   });
+
+  describe('Without dot notation', () => {
+    it('should return a pickUpItem event', done => {
+      player1.emit('pickUpItem', {item: 'potion'});
+      player1.on('itemPickedUp', res => {
+        let expected = itemData['health potion'];
+        delete expected.drink.effect;
+        expect(res.item).toEqual(expected);
+        expect(res.pickRoom).toEqual('Nexus');
+        done();
+      });
+    });
+  });
 });
