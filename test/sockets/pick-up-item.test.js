@@ -67,5 +67,15 @@ describe('pickUpItem', () => {
         });
       });
     });
+
+    describe('With a valid item, but one that isn\'t in the room', () => {
+      it('should return a feedback of not seeing the item', done => {
+        player1.emit('pickUpItem', {item: 'gallows'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('I don\'t see that item here.');
+          done();
+        });
+      });
+    });
   });
 });
