@@ -2,15 +2,12 @@
 
 import io from 'socket.io-client';
 import {itemData} from '../../app/data/items.js';
+import {ioOptions} from '../lib/io-options.js';
 import closeServer from '../lib/test-server.js';
 
 describe('Drop item', () => {
   let socket, socket2;
-  let ioOptions = {
-    'reconnection delay': 0,
-    'reopen delay': 0,
-    'force new connection': true
-  };
+  
   beforeEach(done => {
     require('../lib/test-server.js');
     socket = io.connect('http://0.0.0.0:5000', ioOptions);
