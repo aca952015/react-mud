@@ -91,4 +91,14 @@ describe('look', () => {
       });
     });
   });
+
+  describe('With the user looking at an examine', () => {
+    it('should show player1 the examine description', done => {
+      player1.emit('look', {target: 'test'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual(roomData['Nexus'].examines[0].description);
+        done();
+      });
+    });
+  });
 });

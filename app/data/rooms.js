@@ -12,7 +12,12 @@ export const roomData = {
         locked: false
       }
     },
-    items: [itemData['health potion'], itemData['gallows key'], itemData['health potion'], itemData['tester key'], itemData['mana potion']]
+    items: [itemData['health potion'], itemData['gallows key'], itemData['health potion'], itemData['tester key'], itemData['mana potion']],
+    examines: [{
+      name: 'test examine',
+      terms: ['test'],
+      description: 'This is a test description. Why are you even looking at test?'
+    }]
   },
   'Town Square': {
     roomName: 'Town Square',
