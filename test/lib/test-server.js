@@ -4,6 +4,7 @@ let io = require('socket.io').listen(5000);
 import dropItem from '../../sockets/drop-item.js';
 import look from '../../sockets/look.js';
 import movement from '../../sockets/movement.js';
+import pickUpItem from '../../sockets/pick-up-item.js';
 import {roomData} from '../../app/data/rooms.js';
 
 const users = [];
@@ -17,6 +18,7 @@ io.sockets.on('connection', function(socket) {
   dropItem(socket, roomData);
   look(socket, users, roomData);
   movement(socket, users, roomData);
+  pickUpItem(socket, roomData);
 });
 
 export default function closeServer() {

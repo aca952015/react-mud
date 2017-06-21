@@ -2,7 +2,7 @@
 
 import io from 'socket.io-client';
 import closeServer from '../lib/test-server.js';
-import {ioOptions} from '../lib/io-options';
+import ioOptions from '../lib/io-options';
 import {roomData} from '../../app/data/rooms.js';
 
 describe('movement', () => {

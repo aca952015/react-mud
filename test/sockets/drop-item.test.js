@@ -2,7 +2,7 @@
 
 import io from 'socket.io-client';
 import {itemData} from '../../app/data/items.js';
-import {ioOptions} from '../lib/io-options.js';
+import ioOptions from '../lib/io-options.js';
 import closeServer from '../lib/test-server.js';
 
 describe('Drop item', () => {
