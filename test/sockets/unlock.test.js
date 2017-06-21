@@ -40,6 +40,16 @@ describe('Unlock', () => {
           });
         });
       });
+
+      describe('To other players in the room', () => {
+        it('should return feedback of the player locking the door', done => {
+          player1.emit('lock', {direction: 'up', inventory: [itemData['secret key']]});
+          player2.on('generalMessage', res => {
+            expect(res.feedback).toEqual('player1 locks the door above.');
+            done();
+          });
+        });
+      });
     });
   });
 });
