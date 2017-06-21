@@ -13,7 +13,8 @@ addons:
 env:
   - CXX=g++-4.8
 sudo: required
-before_script:
-  - npm i
 script:
   - npm test
+after_script:
+  - npm run test-coverage
+  - 'cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js'
