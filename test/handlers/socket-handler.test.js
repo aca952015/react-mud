@@ -42,4 +42,14 @@ describe('socketHandlers', () => {
       });
     });
   });
+
+  describe('generalMessage', () => {
+    it('should dispatch a newMessage with the result', done => {
+      player.emit('lock', {direction: 'down'});
+      player.on('generalMessage', res => {
+        expect(props.dispatch.calledWith(newMessage(res))).toEqual(true);
+        done();
+      });
+    });
+  });
 });
