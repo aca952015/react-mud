@@ -15,7 +15,14 @@ io.sockets.on('connection', function(socket) {
   users.push(socket);
   socket.currentRoom = 'Nexus';
   socket.join('Nexus');
-  socket.on('changeName', name => socket.username = name);
+  socket.on('changeName', name => {
+    if (name === 'alien') {
+      socket.currentRoom = 'Town Square';
+      socket.leave('Nexus');
+      socket.join('Town Square');
+    }
+    socket.username = name;
+  });
   socket.on('changeDescription', desc => socket.description = desc);
   dropItem(socket, roomData);
   look(socket, users, roomData);
