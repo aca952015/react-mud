@@ -3,6 +3,7 @@
 import io from 'socket.io-client';
 import closeServer from '../lib/test-server.js';
 import {ioOptions} from '../lib/io-options';
+import {roomData} from '../../app/data/rooms.js';
 
 describe('movement', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
@@ -35,6 +36,35 @@ describe('movement', () => {
       player2.on('movementArrive', res => {
         expect(res.username).toEqual('player1');
         expect(res.direction).toEqual('login');
+        done();
+      });
+    });
+  });
+
+  describe('A user moving in a valid, unlocked direction', () => {
+    it('should emit a move event with the new room name', done => {
+      player1.emit('move', {direction: 'down'});
+      player1.on('move', res => {
+        expect(res).toEqual('Town Square');
+        done();
+      });
+    });
+
+    it('should emit a generalMessage event with feedback, occupants, and room', done => {
+      player1.emit('move', {direction: 'down'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('You move down.');
+        expect(res.occupants).toEqual([]);
+        expect(res.room).toEqual(roomData['Town Square']);
+        done();
+      });
+    });
+
+    it('should emit a movementLeave event to other users in the room', done => {
+      player1.emit('move', {direction: 'down'});
+      player2.on('movementLeave', res => {
+        expect(res.username).toEqual('player1');
+        expect(res.direction).toEqual('down');
         done();
       });
     });
