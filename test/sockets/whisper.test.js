@@ -6,6 +6,7 @@ import ioOptions from '../lib/io-options.js';
 
 describe('Whisper', () => {
   let player1, player2, alien, url = 'http://0.0.0.0:5000';
+  require('../lib/test-server.js');
 
   beforeEach(done => {
     player1 = io.connect(url, ioOptions);

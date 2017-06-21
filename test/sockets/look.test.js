@@ -33,13 +33,13 @@ describe('look', () => {
   });
 
   describe('Without a target', () => {
-    it('should show player1 the room\'s description and occupants of player2 and player3', done => {
+    it('should show player1 the room\'s description and occupants of player2', done => {
       player1.emit('look', {target: undefined});
       player1.on('generalMessage', res => {
         expect(res.room.roomName).toEqual(roomData['Nexus'].roomName);
         expect(res.room.desc).toEqual(roomData['Nexus'].desc);
         expect(res.room.exits).toEqual(roomData['Nexus'].exits);
-        expect(res.occupants).toEqual(['player2', 'player3']);
+        expect(res.occupants).toEqual(['player2']);
         done();
       });
     });
@@ -104,6 +104,26 @@ describe('look', () => {
       player2.on('generalMessage', res => {
         expect(res.feedback).toEqual(` looks at ${roomData['Nexus'].examines[0].name}.`);
         expect(res.from).toEqual('player1');
+        done();
+      });
+    });
+  });
+
+  describe('Using dot notation', () => {
+    it('should show a health potion description', done => {
+      player1.emit('look', {target: '2.potion'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual(itemData['health potion'].description);
+        done();
+      });
+    });
+  });
+
+  describe('At an invalid item', () => {
+    it('should say "I don\'t see that here."', done => {
+      player1.emit('look', {target: 'turtle'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('I don\'t see that here.');
         done();
       });
     });
