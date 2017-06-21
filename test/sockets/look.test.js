@@ -7,16 +7,19 @@ import {roomData} from '../../app/data/rooms.js';
 
 describe('look', () => {
   let player1, player2, player3, url = 'http://0.0.0.0:5000';
+  require('../lib/test-server.js');
 
   beforeEach(done => {
-    require('../lib/test-server.js');
     player1 = io.connect(url, ioOptions);
     player2 = io.connect(url, ioOptions);
     player3 = io.connect(url, ioOptions);
     player3.on('connect', () => {
       player1.emit('changeName', 'player1');
+      player1.emit('changeDescription', 'player1 desc');
       player2.emit('changeName', 'player2');
+      player2.emit('changeDescription', 'player2 desc');
       player3.emit('changeName', 'player3');
+      player3.emit('changeDescription', 'player3 desc');
       done();
     });
   });
@@ -24,6 +27,10 @@ describe('look', () => {
     player1.disconnect();
     player2.disconnect();
     player3.disconnect();
+    done();
+  });
+
+  afterAll(done => {
     closeServer();
     done();
   });
@@ -36,6 +43,16 @@ describe('look', () => {
         expect(res.room.desc).toEqual(roomData['Nexus'].desc);
         expect(res.room.exits).toEqual(roomData['Nexus'].exits);
         expect(res.occupants).toEqual(['player2', 'player3']);
+        done();
+      });
+    });
+  });
+
+  describe('With a player as a target', () => {
+    it('should show player1 the description of player2', done => {
+      player1.emit('look', {target: 'player2'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('player2 desc');
         done();
       });
     });
