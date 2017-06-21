@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options';
 import {roomData} from '../../app/data/rooms.js';
+import {itemData} from '../../app/data/items.js';
 
 describe('look', () => {
   let player1, player2, player3, url = 'http://0.0.0.0:5000';
@@ -65,6 +66,16 @@ describe('look', () => {
         expect(res.from).toEqual('player1');
         expect(res.interaction).toEqual(' looks at ');
         expect(res.target).toEqual('player2');
+        done();
+      });
+    });
+  });
+
+  describe('With the user looking at an item', () => {
+    it('should show the item\'s description', done => {
+      player1.emit('look', {target: 'potion'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual(itemData['health potion'].description);
         done();
       });
     });
