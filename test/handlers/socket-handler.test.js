@@ -93,6 +93,17 @@ describe('socketHandlers', () => {
     });
   });
 
+  describe('movementArrive', () => {
+    it('should dispatch a newMessage with a moveProcessor', done => {
+      player2.emit('move', {direction: 'down'});
+      player2.emit('move', {direction: 'up'});
+      player1.on('movementArrive', res => {
+        expect(props.dispatch.calledWith(newMessage(moveProcessor(res)))).toEqual(true);
+        done();
+      });
+    });
+  });
+
   describe('pickUpItem', () => {
     it('should dispatch a newMessage with an itemPickUpProcessor', done => {
       player2.emit('pickUpItem', {item: 'potion'});
