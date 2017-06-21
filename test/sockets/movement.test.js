@@ -69,4 +69,14 @@ describe('movement', () => {
       });
     });
   });
+
+  describe('A user moving in a valid, but locked direction', () => {
+    it('should return feedback that the direction is locked', done => {
+      player1.emit('move', {direction: 'up'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('That way is locked.');
+        done();
+      });
+    });
+  });
 });
