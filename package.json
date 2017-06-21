@@ -1,7 +1,7 @@
 {
   "name": "react-mud",
   "version": "1.0.0",
-  "description": "A multi-user text-based adventure game built with React, Redux, and Socket.io.",
+  "description": "A multi-user text-based adventure game (MUD) built with React, Redux, and Socket.io.",
   "main": "entry.jsx",
   "scripts": {
     "start": "babel-node server.js",
