@@ -45,6 +45,14 @@ export const itemData = {
     drink: null,
     description: 'This is a placeholder description for a gallows key.'
   },
+  'secret key': {
+    name: 'secret key',
+    short: 'THE SECRET KEY',
+    long: 'A key with the creator\'s symbol on it is lying on the ground here.',
+    terms: ['key', 'secret', 'creator'],
+    drink: null,
+    description: 'This is a secret key! You should not be holding it.'
+  },
   'useless key': {
     name: 'useless key',
     short: 'a useless key',

@@ -7,12 +7,34 @@ export const roomData = {
     roomName: 'Nexus',
     desc: 'Welcome to the nexus. Type HELP to get a list of commands available.',
     exits: {
+      up: {
+        exit: 'Secret Room',
+        locked: true,
+        requiredKey: itemData['secret key']
+      },
       down: {
         exit: 'Town Square',
         locked: false
       }
     },
-    items: [itemData['health potion'], itemData['gallows key'], itemData['health potion'], itemData['tester key'], itemData['mana potion']]
+    items: [itemData['health potion'], itemData['gallows key'], itemData['health potion'], itemData['tester key'], itemData['mana potion']],
+    examines: [{
+      name: 'test examine',
+      terms: ['test'],
+      description: 'This is a test description. Why are you even looking at test?'
+    }]
+  },
+  'Secret Room': {
+    roomName: 'Secret Room',
+    desc: 'This room is a secret. You shouldn\'t be here.',
+    exits: {
+      down: {
+        exit: 'Nexus',
+        locked: true,
+        requiredKey: itemData['secret key']
+      }
+    },
+    items: []
   },
   'Town Square': {
     roomName: 'Town Square',
