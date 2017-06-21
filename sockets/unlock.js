@@ -9,6 +9,14 @@ export default function unlock(socket, roomData) {
     'south': 'north',
     'north': 'south'
   };
+  let lockDirections = {
+    'east': 'to the east',
+    'west': 'to the west',
+    'up': 'above',
+    'down': 'below',
+    'south': 'to the south',
+    'north': 'to the north'
+  };
 
   socket.on('lock', keyInfo => {
     let exit = roomData[socket.currentRoom].exits[keyInfo.direction];
@@ -22,7 +30,7 @@ export default function unlock(socket, roomData) {
     oppositeExit.locked = !oppositeExit.locked;
     let action = 'lock';
     if (!oppositeExit.locked) action = 'unlock';
-    socket.emit('generalMessage', {feedback: `You ${action} the door to the ${keyInfo.direction}.`});
+    socket.emit('generalMessage', {feedback: `You ${action} the door ${lockDirections[keyInfo.direction]}.`});
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} ${action}s the door to the ${keyInfo.direction}`});
   });
 }
