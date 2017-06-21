@@ -72,4 +72,14 @@ describe('Unlock', () => {
       });
     });
   });
+
+  describe('Unlocking an exit that isn\'t lockable', () => {
+    it('should return feedback of the exit not being lockable', done => {
+      player1.emit('lock', {direction: 'down', inventory: [itemData['secret key']]});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('That exit has nothing to lock.');
+        done();
+      });
+    });
+  });
 });
