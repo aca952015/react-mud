@@ -79,4 +79,16 @@ describe('movement', () => {
       });
     });
   });
+
+  describe('Seeing another player arrive', () => {
+    it('should return a movementArrive event', done => {
+      player2.emit('move', {direction: 'down'});
+      player2.emit('move', {direction: 'up'});
+      player1.on('movementArrive', res => {
+        expect(res.username).toEqual('player2');
+        expect(res.direction).toEqual('up');
+        done();
+      });
+    });
+  });
 });
