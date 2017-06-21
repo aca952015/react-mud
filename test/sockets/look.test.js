@@ -101,4 +101,15 @@ describe('look', () => {
       });
     });
   });
+
+  describe('With the user seeing a player look at an examine', () => {
+    it('should show "player1 looks at <examine name>."', done => {
+      player1.emit('look', {target: 'test'});
+      player2.on('generalMessage', res => {
+        expect(res.feedback).toEqual(` looks at ${roomData['Nexus'].examines[0].name}.`);
+        expect(res.from).toEqual('player1');
+        done();
+      });
+    });
+  });
 });
