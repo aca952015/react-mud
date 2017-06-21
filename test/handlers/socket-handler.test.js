@@ -72,4 +72,14 @@ describe('socketHandlers', () => {
       });
     });
   });
+
+  describe('whisperFail', () => {
+    it('should dispatch a newMessage with the feedback "I don\'t see that person here."', done => {
+      player1.emit('whisper', {target: 'Bob'});
+      player1.on('whisperFail', () => {
+        expect(props.dispatch.calledWith(newMessage({feedback: 'I don\'t see that person here.'}))).toEqual(true);
+        done();
+      });
+    });
+  });
 });
