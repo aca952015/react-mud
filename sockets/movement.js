@@ -18,10 +18,11 @@ export default function movement(socket, users, roomInfo) {
         exits: tempRoom.exits,
         items: tempRoom.items
       };
+      let mobs = tempRoom.mobs ? tempRoom.mobs : null;
       let occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
       .map(user => user.username);
       socket.emit('move', socket.currentRoom);
-      socket.emit('generalMessage', {feedback: `You move ${movement.direction}.`, occupants, room});
+      socket.emit('generalMessage', {feedback: `You move ${movement.direction}.`, occupants, room, mobs});
     }
     socket.broadcast.to(socket.currentRoom).emit('movementArrive', {username: socket.username, direction: movement.direction});
   });

@@ -17,6 +17,8 @@ export default function look(socket, users, roomInfo) {
     let occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
     .map(user => user.username);
 
+    let mobs = roomInfo[socket.currentRoom].mobs;
+
     if (args.target) {
       args.target = args.target.toLowerCase();
 
@@ -24,6 +26,15 @@ export default function look(socket, users, roomInfo) {
       let lookTarget = splitArgs.length > 1 ?
                        room.items.filter(item => item.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :
                        room.items.find(item => item.terms.includes(args.target));
+
+      if (lookTarget) {
+        socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.short}.`});
+        return showMeTheDescription(lookTarget);
+      }
+
+      lookTarget = splitArgs.length > 1 ?
+                   roomInfo[socket.currentRoom].mobs.filter(mob => mob.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :
+                   roomInfo[socket.currentRoom].mobs.find(mob => mob.terms.includes(args.target));
 
       if (lookTarget) {
         socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.short}.`});
@@ -46,6 +57,6 @@ export default function look(socket, users, roomInfo) {
       return socket.emit('generalMessage', {feedback: 'I don\'t see that here.'});
     }
 
-    socket.emit('generalMessage', {occupants, room});
+    socket.emit('generalMessage', {occupants, room, mobs});
   });
 }

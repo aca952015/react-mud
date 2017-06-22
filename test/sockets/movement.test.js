@@ -50,12 +50,16 @@ describe('movement', () => {
       });
     });
 
-    it('should emit a generalMessage event with feedback, occupants, and room', done => {
+    it('should emit a generalMessage event with feedback, occupants, mobs, and room', done => {
       player1.emit('move', {direction: 'down'});
       player1.on('generalMessage', res => {
+        let townSquare = roomData['Town Square'];
         expect(res.feedback).toEqual('You move down.');
         expect(res.occupants).toEqual([]);
-        expect(res.room).toEqual(roomData['Town Square']);
+        expect(res.room.name).toEqual(townSquare.name);
+        expect(res.room.desc).toEqual(townSquare.desc);
+        expect(res.room.exits).toEqual(townSquare.exits);
+        expect(res.mobs).toEqual(townSquare.mobs);
         done();
       });
     });
