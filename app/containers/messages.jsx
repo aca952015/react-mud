@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Room} from '../components/room.jsx';
 import {Occupants} from '../components/occupants.jsx';
+import {Mobs} from '../components/mobs.jsx';
 import {OnlineUsers} from '../components/online-users.jsx';
 import {Feedback} from '../components/feedback.jsx';
 import {Communication} from '../components/communication.jsx';
@@ -32,12 +33,13 @@ export default class Messages extends Component {
   render() {
     const messages = this.props.messages.map((message, index) => {
       return <li key={index}>
+        {message.playerInput ? <PlayerInput message={message}/> : null}
+        {message.feedback || message.interaction ? <Feedback username={this.props.username} message={message}/> : null}
         {message.room ? <Room message={message}/> : null}
         {message.occupants ? <Occupants message={message}/> : null}
+        {message.mobs ? <Mobs message={message}/> : null}
         {message.onlineUsers ? <OnlineUsers message={message}/> : null}
-        {message.playerInput ? <PlayerInput message={message}/> : null}
         {message.commType ? <Communication username={this.props.username} message={message}/> : null}
-        {message.feedback || message.interaction ? <Feedback username={this.props.username} message={message}/> : null}
         {message.helpObj ? <HelpFile message={message}/> : null}
         {message.inventory ? <Inventory inventory={message.inventory}/> : null}
       </li>;

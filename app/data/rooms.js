@@ -1,6 +1,7 @@
 'use strict';
 
 import {itemData} from './items.js';
+import {mobData} from './mobs.js';
 
 export const roomData = {
   'Nexus': {
@@ -22,7 +23,8 @@ export const roomData = {
       name: 'test examine',
       terms: ['test'],
       description: 'This is a test description. Why are you even looking at test?'
-    }]
+    }],
+    mobs: []
   },
   'Secret Room': {
     roomName: 'Secret Room',
@@ -34,7 +36,8 @@ export const roomData = {
         requiredKey: itemData['secret key']
       }
     },
-    items: []
+    items: [],
+    mobs: []
   },
   'Town Square': {
     roomName: 'Town Square',
@@ -50,7 +53,8 @@ export const roomData = {
         requiredKey: itemData['gallows key']
       }
     },
-    items: [itemData['useless key']]
+    items: [itemData['useless key']],
+    mobs: [mobData['bat']]
   },
   'Gallows': {
     roomName: 'Gallows',
@@ -67,6 +71,7 @@ export const roomData = {
       name: 'the gallows',
       terms: ['gallows'],
       description: 'It\'s a gallows, with a short noose hanging from it.'
-    }]
+    }],
+    mobs: []
   }
 };
