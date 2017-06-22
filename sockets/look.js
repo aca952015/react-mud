@@ -11,7 +11,7 @@ export default function look(socket, users, roomInfo) {
       desc: roomInfo[socket.currentRoom].desc,
       exits: roomInfo[socket.currentRoom].exits,
       items: roomInfo[socket.currentRoom].items,
-      examines: roomInfo[socket.currentRoom].examines ? roomInfo[socket.currentRoom].examines : null,
+      examines: roomInfo[socket.currentRoom].examines ? roomInfo[socket.currentRoom].examines : null
     };
 
     let occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
