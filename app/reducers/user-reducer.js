@@ -9,6 +9,7 @@ const initialState = {
   mp: 11,
   maxMP: 20,
   level: 1,
+  atk: 5,
   str: 18,
   int: 18,
   wis: 18,
