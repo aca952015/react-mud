@@ -24,7 +24,7 @@ export const roomData = {
       terms: ['test'],
       description: 'This is a test description. Why are you even looking at test?'
     }],
-    mobs: []
+    mobs: [mobData['bat'], mobData['bat']]
   },
   'Secret Room': {
     roomName: 'Secret Room',
@@ -54,7 +54,7 @@ export const roomData = {
       }
     },
     items: [itemData['useless key']],
-    mobs: [mobData['bat']]
+    mobs: [mobData['bat'], mobData['bat']]
   },
   'Gallows': {
     roomName: 'Gallows',

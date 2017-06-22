@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options';
 import {roomData} from '../../app/data/rooms.js';
+import {mobData} from '../../app/data/mobs.js';
 import {itemData} from '../../app/data/items.js';
 
 describe('look', () => {
@@ -88,6 +89,27 @@ describe('look', () => {
     });
   });
 
+  describe('With the user looking at a mob', () => {
+    it('should show the bat\'s description', done => {
+      player1.emit('look', {target: 'bat'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual(mobData['bat'].description);
+        done();
+      });
+    });
+  });
+
+  describe('With the user seeing a player look at a mob', () => {
+    it('should show "player1 looks at <mob short>".', done => {
+      player1.emit('look', {target: 'bat'});
+      player2.on('generalMessage', res => {
+        expect(res.from).toEqual('player1');
+        expect(res.feedback).toEqual(` looks at ${mobData['bat'].short}.`);
+        done();
+      });
+    });
+  });
+
   describe('With the user looking at an examine', () => {
     it('should show player1 the examine description', done => {
       player1.emit('look', {target: 'test'});
@@ -110,11 +132,23 @@ describe('look', () => {
   });
 
   describe('Using dot notation', () => {
-    it('should show a health potion description', done => {
-      player1.emit('look', {target: '2.potion'});
-      player1.on('generalMessage', res => {
-        expect(res.feedback).toEqual(itemData['health potion'].description);
-        done();
+    describe('For an item', () => {
+      it('should show a health potion description', done => {
+        player1.emit('look', {target: '2.potion'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual(itemData['health potion'].description);
+          done();
+        });
+      });
+    });
+
+    describe('For a mob', () => {
+      it('should show the mob\'s description', done => {
+        player1.emit('look', {target: '2.bat'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual(mobData['bat'].description);
+          done();
+        });
       });
     });
   });
