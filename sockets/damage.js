@@ -11,11 +11,15 @@ export default function damage(socket, roomData) {
       roomData[socket.currentRoom].mobs.splice(roomData[socket.currentRoom].mobs.indexOf(target), 1);
       socket.emit('generalMessage', {feedback: `You've slain ${target.short}!`});
       socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} has slain ${target.short}!`});
-      return socket.emit('slayEnemy', target);
+      socket.emit('slayEnemy', target);
     }
-    socket.emit('damage', {
-      enemy: target,
-      damage: target.atk
-    });
+    for (let i = 0; i < roomData[socket.currentRoom].mobs.length; i++) {
+      if (roomData[socket.currentRoom].mobs[i].combat.targets.includes(socket.username)) {
+        socket.emit('damage', {
+          enemy: target,
+          damage: target.atk
+        });
+      }
+    }
   });
 }
