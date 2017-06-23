@@ -12,6 +12,8 @@ import look from './sockets/look.js';
 import pickUpItem from './sockets/pick-up-item.js';
 import dropItem from './sockets/drop-item.js';
 import unlock from './sockets/unlock.js';
+import kill from './sockets/kill.js';
+import damage from './sockets/damage.js';
 import {roomData} from './app/data/rooms.js';
 
 const app = express();
@@ -23,6 +25,7 @@ app.use(express.static(`${__dirname}/build`));
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 
 setInterval(() => io.sockets.emit('tick'), 30000);
+setInterval(() => io.sockets.emit('combatTick'), 2000);
 
 const users = [];
 
@@ -44,6 +47,8 @@ io.on('connection', socket => {
   whisper(io, socket, users);
   movement(socket, users, roomData);
   unlock(socket, roomData);
+  kill(socket, roomData);
+  damage(socket, roomData);
 });
 
 server.listen(PORT);

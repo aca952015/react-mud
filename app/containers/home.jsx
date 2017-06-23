@@ -8,6 +8,7 @@ import Messages from './messages.jsx';
 import CommandInput from './command-input.jsx';
 import {Prompt} from '../components/prompt.jsx';
 import {updateInput} from '../actions/message-actions.js';
+import combatProcessor from '../processors/combat-processor.js';
 import socketHandlers from '../handlers/socket-handlers.js';
 
 function mapStateToProps(state) {
@@ -16,7 +17,8 @@ function mapStateToProps(state) {
     commandIndex: state.messages.commandIndex,
     username: state.user.username,
     inventory: state.user.inventory,
-    character: state.user
+    character: state.user,
+    combat: state.user.combat
   };
 }
 
@@ -30,6 +32,9 @@ export class Home extends Component {
     socketHandlers(this.socket, this.props);
     window.addEventListener('beforeunload', () => this.socket.emit('disconnect'));
     document.querySelector('input').focus();
+    this.socket.on('combatTick', () => {
+      if (this.props.combat.active) combatProcessor(this.socket, this.props);
+    });
   }
   handleChange = event => {
     this.setState({justHitEnter: false});
@@ -61,5 +66,6 @@ Home.propTypes = {
   messages: PropTypes.array,
   inventory: PropTypes.array,
   character: PropTypes.object,
-  commandIndex: PropTypes.number
+  commandIndex: PropTypes.number,
+  combat: PropTypes.object
 };

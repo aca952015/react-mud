@@ -9,6 +9,10 @@ export const mobData = {
     terms: ['small', 'bat'],
     hp: 5,
     atk: 2,
-    def: 0
+    def: 0,
+    combat: {
+      active: false,
+      target: null
+    }
   }
 };
