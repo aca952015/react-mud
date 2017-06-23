@@ -11,7 +11,7 @@ export default function kill(socket, roomData) {
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} moves to attack ${target.short}.`});
     target.combat = {
       active: true,
-      target: socket.username
+      targets: [...target.combat.targets, socket.username]
     };
   });
 }

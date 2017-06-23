@@ -23,7 +23,7 @@ const mobData = {
     def: 0,
     combat: {
       active: false,
-      target: null
+      targets: []
     }
   }
 };

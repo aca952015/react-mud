@@ -2,7 +2,7 @@
 
 import {newMessage} from '../actions/message-actions.js';
 import {getItem} from '../actions/inventory-actions.js';
-import {enterCombat, damageUser, endCombat} from '../actions/combat-actions.js';
+import {enterCombat, damageUser, slayEnemy} from '../actions/combat-actions.js';
 import whisperProcessor from '../processors/whisper-processor.js';
 import moveProcessor from '../processors/move-processor.js';
 import itemPickUpProcessor from '../processors/item-pickup-processor.js';
@@ -34,6 +34,7 @@ export default function socketHandlers(homeCtx) {
     props.dispatch(getItem(itemAndRoom.item));
   });
   socket.on('enterCombat', target => {
+    if (homeCtx.props.combat.targets.find(mob => mob.id === target.id)) return props.dispatch(newMessage({feedback: `You're already fighting ${target.short}!`}));
     props.dispatch(newMessage({feedback: `You move to attack ${target.short}.`}));
     props.dispatch(enterCombat(target));
   });
@@ -41,7 +42,7 @@ export default function socketHandlers(homeCtx) {
     props.dispatch(damageUser(dmgObj.damage));
     props.dispatch(newMessage({feedback: `${dmgObj.enemy.short} damages you for ${dmgObj.damage}.`}));
   });
-  socket.on('endCombat', () => props.dispatch(endCombat()));
+  socket.on('slayEnemy', enemy => props.dispatch(slayEnemy(enemy)));
   socket.on('combatTick', () => {
     // For some reason, props does not actually update accordingly with the state of the Home
     // component. The current state can only be correctly referred to by using homeCtx.props instead of

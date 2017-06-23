@@ -14,8 +14,9 @@ export function damageUser(damage) {
   };
 }
 
-export function endCombat() {
+export function slayEnemy(target) {
   return {
-    type: 'END_COMBAT'
+    type: 'SLAY_ENEMY',
+    payload: target
   };
 }
