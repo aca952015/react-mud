@@ -2,7 +2,7 @@
 
 export default function damage(socket, roomData) {
   socket.on('damage', dmgObj => {
-    let target = roomData[socket.currentRoom].mobs.find(mob => mob.short === dmgObj.enemy.short);
+    let target = roomData[socket.currentRoom].mobs.find(mob => mob.id === dmgObj.enemy.id);
     target.hp -= dmgObj.damage;
     if (target.hp < 1) {
       roomData[socket.currentRoom].mobs.splice(roomData[socket.currentRoom].mobs.indexOf(target, 1));

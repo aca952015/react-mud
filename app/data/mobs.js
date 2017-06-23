@@ -1,7 +1,19 @@
 'use strict';
 
-export const mobData = {
+export default function newMob(mobName) {
+  class Mob {
+    constructor(properties) {
+      Object.keys(properties).forEach(prop => this[prop] = properties[prop]);
+    }
+  }
+
+  return new Mob(mobData[mobName]);
+}
+
+
+const mobData = {
   'bat': {
+    id: Math.floor(Math.random() * 1000000000),
     name: 'The Goddamn Bat', // http://tvtropes.org/pmwiki/pmwiki.php/Main/GoddamnedBats for the reference
     description: 'It\'s a bat. It\'s here for testing.',
     short: 'a small bat',
@@ -16,3 +28,5 @@ export const mobData = {
     }
   }
 };
+
+console.log(newMob('bat'));
