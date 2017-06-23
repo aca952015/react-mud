@@ -8,6 +8,7 @@ export default function kill(socket, roomData) {
                                         roomData[socket.currentRoom].mobs.find(mob => mob.terms.includes(targetObject.target));
     if (!target) return socket.emit('generalMessage', {feedback: 'I don\'t see that enemy here.'});
     socket.emit('enterCombat', target);
+    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} moves to attack ${target.short}.`});
     target.combat = {
       active: true,
       target: socket.username

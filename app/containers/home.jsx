@@ -8,7 +8,6 @@ import Messages from './messages.jsx';
 import CommandInput from './command-input.jsx';
 import {Prompt} from '../components/prompt.jsx';
 import {updateInput} from '../actions/message-actions.js';
-import combatProcessor from '../processors/combat-processor.js';
 import socketHandlers from '../handlers/socket-handlers.js';
 
 function mapStateToProps(state) {
@@ -29,12 +28,9 @@ export class Home extends Component {
   }
   componentDidMount() {
     this.socket = io('/');
-    socketHandlers(this.socket, this.props);
+    socketHandlers(this);
     window.addEventListener('beforeunload', () => this.socket.emit('disconnect'));
     document.querySelector('input').focus();
-    this.socket.on('combatTick', () => {
-      if (this.props.combat.active) combatProcessor(this.socket, this.props);
-    });
   }
   handleChange = event => {
     this.setState({justHitEnter: false});
