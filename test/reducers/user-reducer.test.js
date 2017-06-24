@@ -84,4 +84,18 @@ describe('user reducer', () => {
       });
     });
   });
+
+  describe('SLAY_ENEMY', () => {
+    describe('If it\'s the last enemy', () => {
+      it('should remove that enemy from the targets array and change combat to false', () => {
+        expect(reducer({
+          ...initialState,
+          combat: {
+            active: true,
+            targets: [{id: 1}]
+          }
+        }, {type: 'SLAY_ENEMY', payload: {id: 1}})).toEqual(initialState);
+      });
+    });
+  });
 });
