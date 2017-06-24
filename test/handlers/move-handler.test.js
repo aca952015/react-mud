@@ -4,9 +4,19 @@ import {newMessage} from '../../app/actions/message-actions.js';
 import movementHandler from '../../app/handlers/movement-handler.js';
 
 describe('movementHandler', () => {
+  let props = {
+    currentRoom: 'Nexus',
+    combat: {
+      targets: null,
+      active: false
+    }
+  };
+  let socket = {
+    currentRoom: 'Nexus'
+  };
   describe('With a valid exit', () => {
     it('should return a move object for the server to handle', () => {
-      expect(movementHandler('down', null, {currentRoom: 'Nexus'})).toEqual({
+      expect(movementHandler('down', null, socket, props)).toEqual({
         direction: 'down',
         emitType: 'move'
       });
@@ -15,10 +25,28 @@ describe('movementHandler', () => {
 
   describe('With an invalid exit', () => {
     it('should return an error object with feedback of "I don\'t see that exit here."', () => {
-      expect(movementHandler('east', null, {currentRoom: 'Nexus'})).toEqual({
+      expect(movementHandler('east', null, socket, props)).toEqual({
         funcsToCall: [newMessage],
         feedback: 'I don\'t see that exit here.'
       });
+    });
+  });
+
+  describe('In combat', () => {
+    it('should return that the user can\'t move while in combat', () => {
+      props = {
+        ...props,
+        combat: {
+          targets: [{
+            short: 'Duder'
+          }],
+          active: true
+        }
+      };
+
+      expect(movementHandler('down', null, socket, props)).toEqual({
+        funcsToCall: [newMessage],
+        feedback: `You're busy fighting ${props.combat.targets[0].short}!`});
     });
   });
 });
