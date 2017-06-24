@@ -2,13 +2,13 @@
 
 import React from 'react';
 import {shallow} from 'enzyme';
-import {mobData} from '../../app/data/mobs.js';
+import newMob from '../../app/data/mobs.js';
 import {Mobs} from '../../app/components/mobs.jsx';
 
 describe('<Mobs />', () => {
   let props = {
     message: {
-      mobs: [mobData['bat']]
+      mobs: [newMob('bat')]
     }
   };
 
