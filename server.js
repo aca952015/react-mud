@@ -14,6 +14,7 @@ import dropItem from './sockets/drop-item.js';
 import unlock from './sockets/unlock.js';
 import kill from './sockets/kill.js';
 import damage from './sockets/damage.js';
+import mobTargetSelector from './sockets/mob-target-selector.js';
 import {roomData} from './app/data/rooms.js';
 
 const app = express();
@@ -25,9 +26,13 @@ app.use(express.static(`${__dirname}/build`));
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 
 setInterval(() => io.sockets.emit('tick'), 30000);
-setInterval(() => io.sockets.emit('combatTick'), 2000);
+setInterval(() => {
+  io.sockets.emit('combatTick');
+  mobTargetSelector(mobsInCombat, users);
+}, 2000);
 
 const users = [];
+const mobsInCombat = [];
 
 io.on('connection', socket => {
   users.push(socket);
@@ -47,8 +52,8 @@ io.on('connection', socket => {
   whisper(io, socket, users);
   movement(socket, users, roomData);
   unlock(socket, roomData);
-  kill(socket, roomData);
-  damage(socket, roomData);
+  kill(socket, roomData, mobsInCombat);
+  damage(socket, roomData, mobsInCombat);
 });
 
 server.listen(PORT);
