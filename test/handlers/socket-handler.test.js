@@ -24,7 +24,7 @@ describe('socketHandlers', () => {
     },
     combat: {
       active: true,
-      targets: [{id: 1, short: 'Test mob'}]
+      targets: [{id: 1, target: 'Some test thing'}]
     }
   };
   beforeEach(done => {
@@ -140,11 +140,21 @@ describe('socketHandlers', () => {
         player1.emit('kill', {target: 'bat'});
         player1.on('enterCombat', res => {
           let bat = newMob('bat');
-          delete bat.id;
-          delete res.id;
+          bat.id = res.id;
+          props.combat.targets.push(res);
           expect(res).toEqual(bat);
           expect(props.dispatch.calledWith(newMessage({feedback: `You move to attack ${bat.short}.`}))).toEqual(true);
           expect(props.dispatch.calledWith(enterCombat(bat))).toEqual(true);
+          done();
+        });
+      });
+    });
+
+    describe('If the user is already fighting the target', () => {
+      it('should return the mob is already being fought', done => {
+        player1.emit('kill', {target: 'bat'});
+        player1.on('enterCombat', () => {
+          expect(props.dispatch.calledWith((newMessage({feedback: 'You\'re already fighting a small bat!'})))).toEqual(true);
           done();
         });
       });
