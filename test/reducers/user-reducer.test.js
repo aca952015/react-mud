@@ -97,5 +97,24 @@ describe('user reducer', () => {
         }, {type: 'SLAY_ENEMY', payload: {id: 1}})).toEqual(initialState);
       });
     });
+
+    describe('If it isn\'t the last enemy', () => {
+      it('should remove that enemy from the targets array, but keep combat active', () => {
+        expect(reducer({
+          ...initialState,
+          combat: {
+            active: true,
+            targets: [{id: 1}, {id: 2}]
+          }
+        }, {type: 'SLAY_ENEMY', payload: {id:1}}))
+        .toEqual({
+          ...initialState,
+          combat: {
+            active: true,
+            targets: [{id: 2}]
+          }
+        });
+      });
+    });
   });
 });
