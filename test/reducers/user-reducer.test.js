@@ -117,4 +117,10 @@ describe('user reducer', () => {
       });
     });
   });
+
+  describe('DAMAGE_USER', () => {
+    it('should reduce the user\'s HP by the damage in the payload', () => {
+      expect(reducer(initialState, {type: 'DAMAGE_USER', payload: 2})).toEqual({...initialState, hp: 13});
+    });
+  });
 });
