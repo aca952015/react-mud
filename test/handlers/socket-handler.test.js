@@ -3,6 +3,7 @@
 import io from 'socket.io-client';
 import sinon from 'sinon';
 import socketHandlers from '../../app/handlers/socket-handlers.js';
+import newMob from '../../app/data/mobs.js';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 import {newMessage} from '../../app/actions/message-actions.js';
@@ -19,6 +20,10 @@ describe('socketHandlers', () => {
     dispatch: sinon.spy(),
     character: {
       description: 'Test description'
+    },
+    combat: {
+      active: true,
+      targets: [{id: 1, short: 'Test mob'}]
     }
   };
   beforeEach(done => {
@@ -27,7 +32,10 @@ describe('socketHandlers', () => {
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
-      socketHandlers(player1, props);
+      socketHandlers({
+        socket: player1,
+        props
+      });
       done();
     });
   });
@@ -121,6 +129,21 @@ describe('socketHandlers', () => {
         expect(props.dispatch.calledWith(newMessage({feedback: `You pick up ${res.item.short}.`}))).toEqual(true);
         expect(props.dispatch.calledWith(getItem(res.item))).toEqual(true);
         done();
+      });
+    });
+  });
+
+  describe('enterCombat', () => {
+    describe('If the user is not already fighting the target', () => {
+      it('should return the mob being attacked', done => {
+        player1.emit('kill', {target: 'bat'});
+        player1.on('enterCombat', res => {
+          let bat = newMob('bat');
+          delete bat.id;
+          delete res.id;
+          expect(res).toEqual(bat);
+          done();
+        });
       });
     });
   });
