@@ -7,6 +7,7 @@ import newMob from '../../app/data/mobs.js';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 import {newMessage} from '../../app/actions/message-actions.js';
+import {enterCombat} from '../../app/actions/combat-actions.js';
 import whisperProcessor from '../../app/processors/whisper-processor.js';
 import moveProcessor from '../../app/processors/move-processor.js';
 import itemPickUpProcessor from '../../app/processors/item-pickup-processor.js';
@@ -142,6 +143,8 @@ describe('socketHandlers', () => {
           delete bat.id;
           delete res.id;
           expect(res).toEqual(bat);
+          expect(props.dispatch.calledWith(newMessage({feedback: `You move to attack ${bat.short}.`}))).toEqual(true);
+          expect(props.dispatch.calledWith(enterCombat(bat))).toEqual(true);
           done();
         });
       });
