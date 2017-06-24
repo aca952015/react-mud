@@ -26,6 +26,14 @@ io.sockets.on('connection', function(socket) {
     }
     socket.username = name;
   });
+  socket.on('testDamage', () => {
+    socket.emit('damage', {
+      damage: 1,
+      enemy: {
+        short: 'Tester'
+      }
+    });
+  });
   socket.on('changeDescription', desc => socket.description = desc);
   dropItem(socket, roomData);
   look(socket, users, roomData);
