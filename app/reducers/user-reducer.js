@@ -41,9 +41,7 @@ export default function reducer(state=initialState, action) {
     }
     return newState;
   }
-  if (action.type === 'ENTER_COMBAT') {
-    return {...state, combat: {active: true, targets: [...state.combat.targets, action.payload]}};
-  }
+  if (action.type === 'ENTER_COMBAT') return {...state, combat: {active: true, targets: [...state.combat.targets, action.payload]}};
   if (action.type === 'SLAY_ENEMY') {
     let slainEnemy = state.combat.targets.find(enemy => enemy.id === action.payload.id);
     let prevTargets = state.combat.targets.slice(0, state.combat.targets.indexOf(slainEnemy));
