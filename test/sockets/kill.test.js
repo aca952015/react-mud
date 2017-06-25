@@ -67,5 +67,15 @@ describe('Kill', () => {
         });
       });
     });
+
+    describe('On an enemy that doesn\'t exist', () => {
+      it('should return a feedback of not seeing that enemy', done => {
+        player1.emit('kill', {target: '3.bat'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('I don\'t see that enemy here.');
+          done();
+        });
+      });
+    });
   });
 });
