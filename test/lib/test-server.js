@@ -9,6 +9,7 @@ import unlock from '../../sockets/unlock.js';
 import kill from '../../sockets/kill.js';
 import damage from '../../sockets/damage.js';
 import whisper from '../../sockets/whisper.js';
+import mobTargetSelector from '../../sockets/mob-target-selector.js';
 import {roomData} from '../../app/data/rooms.js';
 
 const users = [];
@@ -34,6 +35,7 @@ io.sockets.on('connection', function(socket) {
       }
     });
   });
+  socket.on('testMobSelector', () => mobTargetSelector(mobsInCombat, users));
   socket.on('changeDescription', desc => socket.description = desc);
   dropItem(socket, roomData);
   look(socket, users, roomData);
