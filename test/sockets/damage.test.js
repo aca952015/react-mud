@@ -57,7 +57,8 @@ describe('damage', () => {
       // to make sure that the target no longer exists.
       player1.emit('damage', {...dmgObj, damage: 5});
       player1.emit('damage', dmgObj);
-      player1.on('endCombat', () => {
+      player1.on('endCombat', id => {
+        expect(id).toEqual(dmgObj.enemy.id);
         done();
       });
     });

@@ -3,7 +3,7 @@
 export default function damage(socket, roomData, mobsInCombat) {
   socket.on('damage', dmgObj => {
     let target = roomData[socket.currentRoom].mobs.find(mob => mob.id === dmgObj.enemy.id);
-    if (!target) return socket.emit('endCombat');
+    if (!target) return socket.emit('endCombat', dmgObj.enemy.id);
     target.hp -= dmgObj.damage;
     socket.emit('generalMessage', {feedback: `You deal ${dmgObj.damage} damage to ${target.short}.`});
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} deals ${dmgObj.damage} damage to ${target.short}.`});

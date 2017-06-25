@@ -49,4 +49,5 @@ export default function socketHandlers(homeCtx) {
     // assigning homeCtx.props to a variable and using that.
     if (homeCtx.props.combat.active) combatProcessor(socket, homeCtx.props);
   });
+  socket.on('endCombat', id => props.dispatch(slayEnemy({id})));
 }
