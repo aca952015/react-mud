@@ -8,4 +8,10 @@ describe('combat actions', () => {
       expect(enterCombat('ayy')).toEqual({type: 'ENTER_COMBAT', payload: 'ayy'});
     });
   });
+
+  describe('damageUser', () => {
+    it('should return a type of DAMAGE_USER and a payload of what got passed in', () => {
+      expect(damageUser(2)).toEqual({type: 'DAMAGE_USER', payload: 2});
+    });
+  });
 });
