@@ -181,4 +181,14 @@ describe('socketHandlers', () => {
       });
     });
   });
+
+  describe('endCombat', () => {
+    it('should dispatch slayEnemy with the ID returned', done => {
+      player1.emit('damage', {enemy: props.combat.targets[1], damage: 10});
+      player1.on('endCombat', id => {
+        expect(props.dispatch.calledWith(slayEnemy({id}))).toEqual(true);
+        done();
+      });
+    });
+  });
 });
