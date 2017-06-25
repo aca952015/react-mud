@@ -12,7 +12,8 @@ function mapStateToProps(state) {
     prevCommands: state.messages.prevCommands,
     input: state.messages.input,
     username: state.user.username,
-    inventory: state.user.inventory
+    inventory: state.user.inventory,
+    combat: state.user.combat
   };
 }
 

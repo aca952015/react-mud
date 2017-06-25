@@ -12,12 +12,16 @@ describe('user reducer', () => {
     mp: 11,
     maxMP: 20,
     level: 1,
-    atk: 5,
+    atk: 2,
     str: 18,
     int: 18,
     wis: 18,
     con: 18,
-    dex: 18
+    dex: 18,
+    combat: {
+      active: false,
+      targets: []
+    }
   };
 
   it('should return the initialState with no information', () => {
@@ -66,6 +70,57 @@ describe('user reducer', () => {
   describe('With a DRINK_POTION action and no stat to change', () => {
     it('should just return the initialState', () => {
       expect(reducer(initialState, {type: 'DRINK_POTION', payload: {effect: 'buff'}})).toEqual(initialState);
+    });
+  });
+
+  describe('With an ENTER_COMBAT action', () => {
+    it('should return a new combat object with active true and the targets array updated', () => {
+      expect(reducer(initialState, {type: 'ENTER_COMBAT', payload: 'Some test target'})).toEqual({
+        ...initialState,
+        combat: {
+          active: true,
+          targets: ['Some test target']
+        }
+      });
+    });
+  });
+
+  describe('SLAY_ENEMY', () => {
+    describe('If it\'s the last enemy', () => {
+      it('should remove that enemy from the targets array and change combat to false', () => {
+        expect(reducer({
+          ...initialState,
+          combat: {
+            active: true,
+            targets: [{id: 1}]
+          }
+        }, {type: 'SLAY_ENEMY', payload: {id: 1}})).toEqual(initialState);
+      });
+    });
+
+    describe('If it isn\'t the last enemy', () => {
+      it('should remove that enemy from the targets array, but keep combat active', () => {
+        expect(reducer({
+          ...initialState,
+          combat: {
+            active: true,
+            targets: [{id: 1}, {id: 2}]
+          }
+        }, {type: 'SLAY_ENEMY', payload: {id:1}}))
+        .toEqual({
+          ...initialState,
+          combat: {
+            active: true,
+            targets: [{id: 2}]
+          }
+        });
+      });
+    });
+  });
+
+  describe('DAMAGE_USER', () => {
+    it('should reduce the user\'s HP by the damage in the payload', () => {
+      expect(reducer(initialState, {type: 'DAMAGE_USER', payload: 2})).toEqual({...initialState, hp: 13});
     });
   });
 });

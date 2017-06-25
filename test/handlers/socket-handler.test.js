@@ -3,9 +3,11 @@
 import io from 'socket.io-client';
 import sinon from 'sinon';
 import socketHandlers from '../../app/handlers/socket-handlers.js';
+import newMob from '../../app/data/mobs.js';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 import {newMessage} from '../../app/actions/message-actions.js';
+import {enterCombat, damageUser, slayEnemy} from '../../app/actions/combat-actions.js';
 import whisperProcessor from '../../app/processors/whisper-processor.js';
 import moveProcessor from '../../app/processors/move-processor.js';
 import itemPickUpProcessor from '../../app/processors/item-pickup-processor.js';
@@ -19,6 +21,10 @@ describe('socketHandlers', () => {
     dispatch: sinon.spy(),
     character: {
       description: 'Test description'
+    },
+    combat: {
+      active: true,
+      targets: [{id: 1, target: 'Some test thing'}]
     }
   };
   beforeEach(done => {
@@ -27,7 +33,10 @@ describe('socketHandlers', () => {
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
-      socketHandlers(player1, props);
+      socketHandlers({
+        socket: player1,
+        props
+      });
       done();
     });
   });
@@ -120,6 +129,64 @@ describe('socketHandlers', () => {
       player1.on('itemPickedUp', res => {
         expect(props.dispatch.calledWith(newMessage({feedback: `You pick up ${res.item.short}.`}))).toEqual(true);
         expect(props.dispatch.calledWith(getItem(res.item))).toEqual(true);
+        done();
+      });
+    });
+  });
+
+  describe('enterCombat', () => {
+    describe('If the user is not already fighting the target', () => {
+      it('should return the mob being attacked', done => {
+        player1.emit('kill', {target: 'bat'});
+        player1.on('enterCombat', res => {
+          let bat = newMob('bat');
+          bat.id = res.id;
+          props.combat.targets.push(res);
+          expect(res).toEqual(bat);
+          expect(props.dispatch.calledWith(newMessage({feedback: `You move to attack ${bat.short}.`}))).toEqual(true);
+          expect(props.dispatch.calledWith(enterCombat(bat))).toEqual(true);
+          done();
+        });
+      });
+    });
+
+    describe('If the user is already fighting the target', () => {
+      it('should return the mob is already being fought', done => {
+        player1.emit('kill', {target: 'bat'});
+        player1.on('enterCombat', () => {
+          expect(props.dispatch.calledWith((newMessage({feedback: 'You\'re already fighting a small bat!'})))).toEqual(true);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('damage', () => {
+    it('should dispatch damageUser and newMessage', done => {
+      player1.emit('testDamage');
+      player1.on('damage', dmgObj => {
+        expect(props.dispatch.calledWith(damageUser(dmgObj.damage))).toEqual(true);
+        expect(props.dispatch.calledWith((newMessage({feedback: `${dmgObj.enemy.short} damages you for ${dmgObj.damage}.`})))).toEqual(true);
+        done();
+      });
+    });
+  });
+
+  describe('slayEnemy', () => {
+    it('should dispatch slayEnemy with the target', done => {
+      player1.emit('damage', {enemy: props.combat.targets[1], damage: 10});
+      player1.on('slayEnemy', res => {
+        expect(props.dispatch.calledWith(slayEnemy(res))).toEqual(true);
+        done();
+      });
+    });
+  });
+
+  describe('endCombat', () => {
+    it('should dispatch slayEnemy with the ID returned', done => {
+      player1.emit('damage', {enemy: props.combat.targets[1], damage: 10});
+      player1.on('endCombat', id => {
+        expect(props.dispatch.calledWith(slayEnemy({id}))).toEqual(true);
         done();
       });
     });

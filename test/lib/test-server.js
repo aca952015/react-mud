@@ -6,10 +6,14 @@ import look from '../../sockets/look.js';
 import movement from '../../sockets/movement.js';
 import pickUpItem from '../../sockets/pick-up-item.js';
 import unlock from '../../sockets/unlock.js';
+import kill from '../../sockets/kill.js';
+import damage from '../../sockets/damage.js';
 import whisper from '../../sockets/whisper.js';
+import mobTargetSelector from '../../sockets/mob-target-selector.js';
 import {roomData} from '../../app/data/rooms.js';
 
 const users = [];
+const mobsInCombat = [];
 
 io.sockets.on('connection', function(socket) {
   users.push(socket);
@@ -23,6 +27,15 @@ io.sockets.on('connection', function(socket) {
     }
     socket.username = name;
   });
+  socket.on('testDamage', () => {
+    socket.emit('damage', {
+      damage: 1,
+      enemy: {
+        short: 'Tester'
+      }
+    });
+  });
+  socket.on('testMobSelector', () => mobTargetSelector(mobsInCombat, users));
   socket.on('changeDescription', desc => socket.description = desc);
   dropItem(socket, roomData);
   look(socket, users, roomData);
@@ -30,6 +43,8 @@ io.sockets.on('connection', function(socket) {
   pickUpItem(socket, roomData);
   unlock(socket, roomData);
   whisper(io, socket, users);
+  kill(socket, roomData, mobsInCombat);
+  damage(socket, roomData, mobsInCombat);
 });
 
 export default function closeServer() {

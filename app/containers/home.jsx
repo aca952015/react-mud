@@ -16,7 +16,8 @@ function mapStateToProps(state) {
     commandIndex: state.messages.commandIndex,
     username: state.user.username,
     inventory: state.user.inventory,
-    character: state.user
+    character: state.user,
+    combat: state.user.combat
   };
 }
 
@@ -27,7 +28,7 @@ export class Home extends Component {
   }
   componentDidMount() {
     this.socket = io('/');
-    socketHandlers(this.socket, this.props);
+    socketHandlers(this);
     window.addEventListener('beforeunload', () => this.socket.emit('disconnect'));
     document.querySelector('input').focus();
   }
@@ -61,5 +62,6 @@ Home.propTypes = {
   messages: PropTypes.array,
   inventory: PropTypes.array,
   character: PropTypes.object,
-  commandIndex: PropTypes.number
+  commandIndex: PropTypes.number,
+  combat: PropTypes.object
 };

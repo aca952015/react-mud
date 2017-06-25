@@ -9,12 +9,16 @@ const initialState = {
   mp: 11,
   maxMP: 20,
   level: 1,
-  atk: 5,
+  atk: 2,
   str: 18,
   int: 18,
   wis: 18,
   con: 18,
-  dex: 18
+  dex: 18,
+  combat: {
+    active: false,
+    targets: []
+  }
 };
 
 export default function reducer(state=initialState, action) {
@@ -37,5 +41,15 @@ export default function reducer(state=initialState, action) {
     }
     return newState;
   }
+  if (action.type === 'ENTER_COMBAT') return {...state, combat: {active: true, targets: [...state.combat.targets, action.payload]}};
+  if (action.type === 'SLAY_ENEMY') {
+    let slainEnemy = state.combat.targets.find(enemy => enemy.id === action.payload.id);
+    let prevTargets = state.combat.targets.slice(0, state.combat.targets.indexOf(slainEnemy));
+    let endTargets = state.combat.targets.slice(state.combat.targets.indexOf(slainEnemy) + 1);
+    let newTargets = prevTargets.concat(endTargets);
+    if (!newTargets.length) return {...state, combat: {targets: [], active: false}};
+    return {...state, combat: {targets: newTargets, active: true}};
+  }
+  if (action.type === 'DAMAGE_USER') return {...state, hp: state.hp - action.payload};
   return state;
 }

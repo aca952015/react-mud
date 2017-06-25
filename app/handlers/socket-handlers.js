@@ -1,12 +1,16 @@
 'use strict';
 
 import {newMessage} from '../actions/message-actions.js';
+import {getItem} from '../actions/inventory-actions.js';
+import {enterCombat, damageUser, slayEnemy} from '../actions/combat-actions.js';
 import whisperProcessor from '../processors/whisper-processor.js';
 import moveProcessor from '../processors/move-processor.js';
 import itemPickUpProcessor from '../processors/item-pickup-processor.js';
-import {getItem} from '../actions/inventory-actions.js';
+import combatProcessor from '../processors/combat-processor.js';
 
-export default function socketHandlers(socket, props) {
+export default function socketHandlers(homeCtx) {
+  let socket = homeCtx.socket;
+  let props = homeCtx.props;
   socket.username = props.username;
   socket.currentRoom = 'Nexus';
   socket.description = props.character.description;
@@ -29,4 +33,21 @@ export default function socketHandlers(socket, props) {
     props.dispatch(newMessage({feedback: `You pick up ${itemAndRoom.item.short}.`}));
     props.dispatch(getItem(itemAndRoom.item));
   });
+  socket.on('enterCombat', target => {
+    if (homeCtx.props.combat.targets.find(mob => mob.id === target.id)) return props.dispatch(newMessage({feedback: `You're already fighting ${target.short}!`}));
+    props.dispatch(newMessage({feedback: `You move to attack ${target.short}.`}));
+    props.dispatch(enterCombat(target));
+  });
+  socket.on('damage', dmgObj => {
+    props.dispatch(damageUser(dmgObj.damage));
+    props.dispatch(newMessage({feedback: `${dmgObj.enemy.short} damages you for ${dmgObj.damage}.`}));
+  });
+  socket.on('slayEnemy', enemy => props.dispatch(slayEnemy(enemy)));
+  socket.on('combatTick', () => {
+    // For some reason, props does not actually update accordingly with the state of the Home
+    // component. The current state can only be correctly referred to by using homeCtx.props instead of
+    // assigning homeCtx.props to a variable and using that.
+    if (homeCtx.props.combat.active) combatProcessor(socket, homeCtx.props);
+  });
+  socket.on('endCombat', id => props.dispatch(slayEnemy({id})));
 }
