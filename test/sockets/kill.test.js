@@ -40,12 +40,29 @@ describe('Kill', () => {
   });
 
   describe('With dot notation', () => {
+    let bat = newMob('bat');
     describe('On an enemy that exists', () => {
       it('should return an enterCombat event', done => {
         player1.emit('kill', {target: '2.bat'});
         player1.on('enterCombat', res => {
-          let bat = newMob('bat');
           expect(res).toEqual({...bat, id: res.id});
+          done();
+        });
+      });
+    });
+
+    describe('On an enemy already in combat with another user', () => {
+      it('should return an enterCombat event', done => {
+        player2.emit('kill', {target: '2.bat'});
+        player2.on('enterCombat', res => {
+          expect(res).toEqual({
+            ...bat,
+            id: res.id,
+            combat: {
+              active: true,
+              targets: ['player1']
+            }
+          });
           done();
         });
       });
