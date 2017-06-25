@@ -7,9 +7,9 @@ import closeServer from '../lib/test-server.js';
 
 describe('Drop item', () => {
   let socket, socket2;
+  require('../lib/test-server.js');
 
   beforeEach(done => {
-    require('../lib/test-server.js');
     socket = io.connect('http://0.0.0.0:5000', ioOptions);
     socket2 = io.connect('http://0.0.0.0:5000', ioOptions);
     socket2.on('connect', () => {

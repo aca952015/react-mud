@@ -7,6 +7,7 @@ import newMob from '../../app/data/mobs.js';
 
 describe('Kill', () => {
   let player1, player2;
+  require('../lib/test-server.js');
   let bat = newMob('bat');
 
   beforeEach(done => {
