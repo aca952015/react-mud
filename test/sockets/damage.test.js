@@ -40,4 +40,14 @@ describe('damage', () => {
       });
     });
   });
+
+  describe('With enough damage to kill the target', () => {
+    it('should emit a slayEnemy event', done => {
+      player1.emit('damage', dmgObj);
+      player1.on('slayEnemy', res => {
+        expect({...res, combat: {...res.combat, targets: ['player1']}}).toEqual({...dmgObj.enemy, hp: -1});
+        done();
+      });
+    });
+  });
 });
