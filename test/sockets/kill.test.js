@@ -7,6 +7,7 @@ import newMob from '../../app/data/mobs.js';
 
 describe('Kill', () => {
   let player1, player2;
+  let bat = newMob('bat');
 
   beforeEach(done => {
     player1 = io.connect('http://0.0.0.0:5000', ioOptions);
@@ -40,7 +41,6 @@ describe('Kill', () => {
   });
 
   describe('With dot notation', () => {
-    let bat = newMob('bat');
     describe('On an enemy that exists', () => {
       it('should return an enterCombat event', done => {
         player1.emit('kill', {target: '2.bat'});
@@ -75,6 +75,16 @@ describe('Kill', () => {
           expect(res.feedback).toEqual('I don\'t see that enemy here.');
           done();
         });
+      });
+    });
+  });
+
+  describe('With normal targeting', () => {
+    it('should return an enterCombat event', done => {
+      player1.emit('kill', {target: 'bat'});
+      player1.on('enterCombat', res => {
+        expect(res).toEqual({...bat, id: res.id});
+        done();
       });
     });
   });
