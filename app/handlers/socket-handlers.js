@@ -35,7 +35,13 @@ export default function socketHandlers(homeCtx) {
   });
   socket.on('enterCombat', target => {
     if (homeCtx.props.combat.targets.find(mob => mob.id === target.id)) return props.dispatch(newMessage({feedback: `You're already fighting ${target.short}!`}));
-    props.dispatch(newMessage({feedback: `You move to attack ${target.short}.`}));
+    props.dispatch(newMessage({
+      combatLog: {
+        from: 'You',
+        interaction: ' move to attack ',
+        target: target.short
+      }
+    }));
     props.dispatch(enterCombat(target));
   });
   socket.on('damage', dmgObj => {
