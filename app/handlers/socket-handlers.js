@@ -37,9 +37,13 @@ export default function socketHandlers(homeCtx) {
     if (homeCtx.props.combat.targets.find(mob => mob.id === target.id)) return props.dispatch(newMessage({feedback: `You're already fighting ${target.short}!`}));
     props.dispatch(newMessage({
       combatLog: {
-        from: 'You',
+        from: {
+          friendly: 'You'
+        },
         interaction: ' move to attack ',
-        target: `${target.short}`,
+        target: {
+          enemy: target.short
+        },
         punctuation: '.'
       }
     }));
@@ -47,7 +51,20 @@ export default function socketHandlers(homeCtx) {
   });
   socket.on('damage', dmgObj => {
     props.dispatch(damageUser(dmgObj.damage));
-    props.dispatch(newMessage({feedback: `${dmgObj.enemy.short} damages you for ${dmgObj.damage}.`}));
+    props.dispatch(newMessage({
+      combatLog: {
+        from: {
+          enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
+        },
+        pre: ' deals ',
+        damage: dmgObj.damage,
+        post: ' damage to ',
+        target: {
+          friendly: 'you'
+        },
+        punctuation: '.'
+      }
+    }));
   });
   socket.on('slayEnemy', enemy => props.dispatch(slayEnemy(enemy)));
   socket.on('combatTick', () => {

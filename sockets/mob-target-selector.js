@@ -10,6 +10,19 @@ export default function mobTargetSelector(mobsInCombat, users) {
       damage: mobsInCombat[i].atk
     });
     let mob = mobsInCombat[i];
-    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${mob.short} deals ${mob.atk} damage to ${socket.username}.`});
+    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
+      combatLog: {
+        from: {
+          enemy: `${mob.short[0].toUpperCase()}${mob.short.slice(1)}`
+        },
+        pre: ' deals ',
+        damage: mob.atk,
+        post: ' damage to ',
+        target: {
+          friendly: socket.username
+        },
+        punctuation: '.'
+      }
+    });
   }
 }

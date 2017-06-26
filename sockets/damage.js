@@ -7,31 +7,56 @@ export default function damage(socket, roomData, mobsInCombat) {
     target.hp -= dmgObj.damage;
     socket.emit('generalMessage', {
       combatLog: {
-        from: 'You',
+        from: {
+          friendly: 'You'
+        },
         pre: ' deal ',
         damage: dmgObj.damage,
         post: ' damage to ',
-        target: `${target.short}`,
+        target: {
+          enemy: target.short
+        },
         punctuation: '.'
       }
     });
-    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} deals ${dmgObj.damage} damage to ${target.short}.`});
+    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
+      combatLog: {
+        from: {
+          friendly: socket.username
+        },
+        pre: ' deals ',
+        damage: dmgObj.damage,
+        post: ' damage to ',
+        target: {
+          enemy: target.short
+        },
+        punctuation: '.'
+      }
+    });
     if (target.hp < 1) {
       mobsInCombat.splice(mobsInCombat.indexOf(mobsInCombat.find(mob => mob.id === target.id)), 1);
       roomData[socket.currentRoom].mobs.splice(roomData[socket.currentRoom].mobs.indexOf(target), 1);
       socket.emit('generalMessage', {
         combatLog: {
-          from: 'You',
+          from: {
+            friendly: 'You'
+          },
           interaction: ' have slain ',
-          target: `${target.short}`,
+          target: {
+            enemy: target.short
+          },
           punctuation: '!'
         }
       });
       socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
         combatLog: {
-          from: socket.username,
+          from: {
+            friendly: socket.username
+          },
           interaction: ' has slain ',
-          target: `${target.short}`,
+          target: {
+            enemy: target.short
+          },
           punctuation: '!'
         }
       });

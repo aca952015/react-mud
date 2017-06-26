@@ -1,11 +1,11 @@
 .combat-log {
   margin-bottom: 1vh;
 
-  .from {
+  .from-friendly, .target-friendly {
     color: $blue-deep;
   }
 
-  .target, .damage {
+  .target-enemy, .from-enemy, .damage {
     color: $red;
   }
 }
