@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {shallow} from 'enzyme';
+import newMob from '../../app/data/mobs.js';
 import Messages from '../../app/containers/messages.jsx';
 
 describe('<Messages />', () => {
@@ -17,6 +18,8 @@ describe('<Messages />', () => {
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Room').node).toEqual(undefined);
     expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('Mobs').node).toEqual(undefined);
+    expect(messageComponent.find('CombatLog').node).toEqual(undefined);
     expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
     expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
     expect(messageComponent.find('Communication').node).toEqual(undefined);
@@ -45,6 +48,8 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Room').length).toEqual(1);
     expect(messageComponent.find('Occupants').node).toEqual(undefined);
     expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('Mobs').node).toEqual(undefined);
+    expect(messageComponent.find('CombatLog').node).toEqual(undefined);
     expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
     expect(messageComponent.find('Communication').node).toEqual(undefined);
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
@@ -62,6 +67,8 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Occupants').length).toEqual(1);
     expect(messageComponent.find('Room').node).toEqual(undefined);
     expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('Mobs').node).toEqual(undefined);
+    expect(messageComponent.find('CombatLog').node).toEqual(undefined);
     expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
     expect(messageComponent.find('Communication').node).toEqual(undefined);
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
@@ -80,6 +87,8 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Room').node).toEqual(undefined);
     expect(messageComponent.find('Occupants').node).toEqual(undefined);
     expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('Mobs').node).toEqual(undefined);
+    expect(messageComponent.find('CombatLog').node).toEqual(undefined);
     expect(messageComponent.find('Communication').node).toEqual(undefined);
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
     expect(messageComponent.find('HelpFile').node).toEqual(undefined);
@@ -96,6 +105,8 @@ describe('<Messages />', () => {
     expect(messageComponent.find('PlayerInput').length).toEqual(1);
     expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
     expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Mobs').node).toEqual(undefined);
+    expect(messageComponent.find('CombatLog').node).toEqual(undefined);
     expect(messageComponent.find('Occupants').node).toEqual(undefined);
     expect(messageComponent.find('Communication').node).toEqual(undefined);
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
@@ -116,6 +127,8 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Communication').length).toEqual(1);
     expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
     expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('Mobs').node).toEqual(undefined);
+    expect(messageComponent.find('CombatLog').node).toEqual(undefined);
     expect(messageComponent.find('Room').node).toEqual(undefined);
     expect(messageComponent.find('Occupants').node).toEqual(undefined);
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
@@ -133,6 +146,8 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Feedback').length).toEqual(1);
     expect(messageComponent.find('Communication').node).toEqual(undefined);
     expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('Mobs').node).toEqual(undefined);
+    expect(messageComponent.find('CombatLog').node).toEqual(undefined);
     expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
     expect(messageComponent.find('Room').node).toEqual(undefined);
     expect(messageComponent.find('Occupants').node).toEqual(undefined);
@@ -153,6 +168,8 @@ describe('<Messages />', () => {
     expect(messageComponent.find('HelpFile').length).toEqual(1);
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
     expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('Mobs').node).toEqual(undefined);
+    expect(messageComponent.find('CombatLog').node).toEqual(undefined);
     expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
     expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
     expect(messageComponent.find('Room').node).toEqual(undefined);
@@ -168,6 +185,50 @@ describe('<Messages />', () => {
     };
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Inventory').length).toEqual(1);
+    expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Feedback').node).toEqual(undefined);
+    expect(messageComponent.find('Mobs').node).toEqual(undefined);
+    expect(messageComponent.find('CombatLog').node).toEqual(undefined);
+    expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Occupants').node).toEqual(undefined);
+  });
+
+  it('should render only a Mobs child with a mobs message', () => {
+    props = {
+      messages: [{
+        mobs: [newMob('bat')]
+      }]
+    };
+    messageComponent = shallow(<Messages {...props} />);
+    expect(messageComponent.find('Mobs').length).toEqual(1);
+    expect(messageComponent.find('Inventory').node).toEqual(undefined);
+    expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Feedback').node).toEqual(undefined);
+    expect(messageComponent.find('CombatLog').node).toEqual(undefined);
+    expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Occupants').node).toEqual(undefined);
+  });
+
+  it('should render only a CombatLog child with a combatLog message', () => {
+    props = {
+      messages: [{
+        combatLog: {
+          from: 'You',
+          interaction: ' do some stuff to ',
+          target: 'a test target'
+        }
+      }]
+    };
+    messageComponent = shallow(<Messages {...props} />);
+    expect(messageComponent.find('CombatLog').length).toEqual(1);
+    expect(messageComponent.find('Mobs').node).toEqual(undefined);
+    expect(messageComponent.find('Inventory').node).toEqual(undefined);
     expect(messageComponent.find('HelpFile').node).toEqual(undefined);
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
     expect(messageComponent.find('Communication').node).toEqual(undefined);
