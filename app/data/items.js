@@ -2,6 +2,17 @@
 
 import {restoreStat} from '../actions/item-actions.js';
 
+class Item {
+  constructor(properties) {
+    Object.keys(properties).forEach(property => this[property] = properties[property]);
+    this.id = Math.floor(Math.random() * 1000000000);
+  }
+}
+
+export default function newItem(itemName) {
+  return new Item(itemData[itemName]);
+}
+
 export const itemData = {
   'health potion': {
     name: 'health potion',
@@ -27,7 +38,7 @@ export const itemData = {
       amount: 10,
       desc: 'A cool sensation washes over you, restoring some of your magical energy.'
     },
-    description: 'This is a placeholder description for a mana potion.'
+    description: 'This is still a placeholder description for a mana potion.'
   },
   'empty flask': {
     name: 'empty flask',

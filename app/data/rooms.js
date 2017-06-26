@@ -1,6 +1,6 @@
 'use strict';
 
-import {itemData} from './items.js';
+import newItem, {itemData} from './items.js';
 import newMob from './mobs.js';
 
 export const roomData = {
@@ -18,7 +18,7 @@ export const roomData = {
         locked: false
       }
     },
-    items: [itemData['health potion'], itemData['gallows key'], itemData['health potion'], itemData['tester key'], itemData['mana potion']],
+    items: [newItem('health potion'), newItem('gallows key'), newItem('health potion'), newItem('tester key'), newItem('mana potion')],
     examines: [{
       name: 'test examine',
       terms: ['test'],
@@ -53,7 +53,7 @@ export const roomData = {
         requiredKey: itemData['gallows key']
       }
     },
-    items: [itemData['useless key']],
+    items: [newItem('useless key')],
     mobs: [newMob('bat'), newMob('bat')]
   },
   'Gallows': {
@@ -66,7 +66,7 @@ export const roomData = {
         requiredKey: itemData['gallows key']
       }
     },
-    items: [itemData['health potion']],
+    items: [newItem('health potion')],
     examines: [{
       name: 'the gallows',
       terms: ['gallows'],

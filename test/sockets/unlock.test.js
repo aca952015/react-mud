@@ -3,7 +3,7 @@
 import io from 'socket.io-client';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
-import {itemData} from '../../app/data/items.js';
+import newItem from '../../app/data/items.js';
 
 describe('Unlock', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
@@ -34,7 +34,7 @@ describe('Unlock', () => {
     describe('With the correct key', () => {
       describe('To the user', () => {
         it('should return a feedback of unlocking the door', done => {
-          player1.emit('lock', {direction: 'up', inventory: [itemData['secret key']]});
+          player1.emit('lock', {direction: 'up', inventory: [newItem('secret key')]});
           player1.on('generalMessage', res => {
             expect(res.feedback).toEqual('You unlock the door above.');
             done();
@@ -44,7 +44,7 @@ describe('Unlock', () => {
 
       describe('To other players in the room', () => {
         it('should return feedback of the player locking the door', done => {
-          player1.emit('lock', {direction: 'up', inventory: [itemData['secret key']]});
+          player1.emit('lock', {direction: 'up', inventory: [newItem('secret key')]});
           player2.on('generalMessage', res => {
             expect(res.feedback).toEqual('player1 locks the door above.');
             done();
@@ -66,7 +66,7 @@ describe('Unlock', () => {
 
   describe('Unlocking an invalid exit', () => {
     it('should return feedback of not seeing that exit', done => {
-      player1.emit('lock', {direction: 'west', inventory: [itemData['secret key']]});
+      player1.emit('lock', {direction: 'west', inventory: [newItem('secret key')]});
       player1.on('generalMessage', res => {
         expect(res.feedback).toEqual('I don\'t see that exit here.');
         done();
@@ -76,7 +76,7 @@ describe('Unlock', () => {
 
   describe('Unlocking an exit that isn\'t lockable', () => {
     it('should return feedback of the exit not being lockable', done => {
-      player1.emit('lock', {direction: 'down', inventory: [itemData['secret key']]});
+      player1.emit('lock', {direction: 'down', inventory: [newItem('secret key')]});
       player1.on('generalMessage', res => {
         expect(res.feedback).toEqual('That exit has nothing to lock.');
         done();

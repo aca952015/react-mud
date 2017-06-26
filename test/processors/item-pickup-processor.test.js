@@ -1,17 +1,18 @@
 'use strict';
 
 import itemPickUpProcessor from '../../app/processors/item-pickup-processor.js';
-import {itemData} from '../../app/data/items.js';
+import newItem from '../../app/data/items.js';
 
 describe('itemPickUpProcessor', () => {
   let room = {
     room: {
       from: 'TestR',
       pickRoom: 'Nexus',
-      roomItems: [itemData['health potion'], itemData['gallows key']],
-      item: itemData['health potion']
+      roomItems: [newItem('health potion'), newItem('gallows key')],
     }
   };
+  room.room.item = room.room.roomItems[0];
+  
   describe('The user is not in the same room', () => {
     it('should return an empty object', () => {
       expect(itemPickUpProcessor(room, {currentRoom: 'Gallows'})).toEqual({});

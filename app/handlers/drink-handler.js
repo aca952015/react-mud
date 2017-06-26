@@ -2,7 +2,7 @@
 
 import {newMessage} from '../actions/message-actions.js';
 import {quietlyAddItem, dropItem} from '../actions/inventory-actions.js';
-import {itemData} from '../data/items.js';
+import newItem, {itemData} from '../data/items.js';
 
 export default function drinkHandler(command, args, socket, props) {
   if (!args) return {funcsToCall: [newMessage], feedback: 'Drink what?'};
@@ -22,6 +22,6 @@ export default function drinkHandler(command, args, socket, props) {
     feedback: drinkEffects.desc,
     emitType: 'drink',
     item: itemToDrink,
-    quietAdd: itemData['empty flask']
+    quietAdd: newItem('empty flask')
   };
 }

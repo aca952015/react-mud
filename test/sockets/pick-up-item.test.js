@@ -3,7 +3,7 @@
 import io from 'socket.io-client';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
-import {itemData} from '../../app/data/items.js';
+import newItem, {itemData} from '../../app/data/items.js';
 
 describe('pickUpItem', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
@@ -36,9 +36,9 @@ describe('pickUpItem', () => {
         it('should return an itemPickedUp event', done => {
           player1.emit('pickUpItem', {item: '2.potion'});
           player1.on('itemPickedUp', res => {
-            let expected = itemData['health potion'];
+            let expected = newItem('health potion');
             delete expected.drink.effect;
-            expect(res.item).toEqual(expected);
+            expect(res.item).toEqual({...expected, id: res.item.id});
             expect(res.pickRoom).toEqual('Nexus');
             done();
           });
@@ -83,9 +83,9 @@ describe('pickUpItem', () => {
     it('should return a pickUpItem event', done => {
       player1.emit('pickUpItem', {item: 'potion'});
       player1.on('itemPickedUp', res => {
-        let expected = itemData['health potion'];
+        let expected = newItem('health potion');
         delete expected.drink.effect;
-        expect(res.item).toEqual(expected);
+        expect(res.item).toEqual({...expected, id: res.item.id});
         expect(res.pickRoom).toEqual('Nexus');
         done();
       });

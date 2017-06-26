@@ -19,6 +19,10 @@ export const helpFile = {
       'EXAMINE'
     ]
   },
+  'kill': {
+    title: 'KILL <target>',
+    text: 'Will initiate combat with the targeted enemy. Must be used on an enemy in the same room as you. You can initiate combat with as many enemies in a room at a time as you want. Once you\'ve initiated combat, you cannot move to another room until combat is over. Dot notation can be used if you want to target a specific enemy - for example, if a room contains two "a small bat"s, you can KILL 2.BAT to target the second one.'
+  },
   'look': {
     title: 'LOOK <target> (shortcut: L)',
     text: 'By itself, LOOK or L will show you the room you\'re currently in, as well as any items and occupants. Items in the room are displayed in the order they originally started in, or in the order they were added (perhaps via the DROP command). If you specify a target, look will show you the description of either the player you looked at, the item in the room you looked at, or specially hidden objects in the room (usually hinted at in a room\'s description). If you want to look at something in your inventory, use the EXAMINE command (help EXAMINE). You can look at a specific object if there are multiples of it in the room using dot notation, such as LOOK 2.key or LOOK 3.potion to look at the second key in the room or the third potion.'
