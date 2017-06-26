@@ -38,7 +38,7 @@ export const itemData = {
       amount: 10,
       desc: 'A cool sensation washes over you, restoring some of your magical energy.'
     },
-    description: 'This is a placeholder description for a mana potion.'
+    description: 'This is still a placeholder description for a mana potion.'
   },
   'empty flask': {
     name: 'empty flask',
