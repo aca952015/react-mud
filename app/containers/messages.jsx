@@ -9,6 +9,7 @@ import {OnlineUsers} from '../components/online-users.jsx';
 import {Feedback} from '../components/feedback.jsx';
 import {Communication} from '../components/communication.jsx';
 import {HelpFile} from '../components/help-file.jsx';
+import {CombatLog} from '../components/combat-log.jsx';
 import {Inventory} from '../components/inventory.jsx';
 import {PlayerInput} from '../components/player-input.jsx';
 
@@ -38,6 +39,7 @@ export default class Messages extends Component {
         {message.room ? <Room message={message}/> : null}
         {message.occupants ? <Occupants message={message}/> : null}
         {message.mobs ? <Mobs message={message}/> : null}
+        {message.combatLog ? <CombatLog message={message}/> : null}
         {message.onlineUsers ? <OnlineUsers message={message}/> : null}
         {message.commType ? <Communication username={this.props.username} message={message}/> : null}
         {message.helpObj ? <HelpFile message={message}/> : null}

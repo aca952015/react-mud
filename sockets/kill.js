@@ -13,6 +13,17 @@ export default function kill(socket, roomData, mobsInCombat) {
       targets: [...target.combat.targets, socket.username]
     };
     if (!mobsInCombat.find(mob => mob.id === target.id)) mobsInCombat.push(target);
-    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} moves to attack ${target.short}.`});
+    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
+      combatLog: {
+        from: {
+          friendly: socket.username
+        },
+        interaction: ' moves to attack ',
+        target: {
+          enemy: target.short
+        },
+        punctuation: '.'
+      }
+    });
   });
 }
