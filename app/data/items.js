@@ -2,14 +2,14 @@
 
 import {restoreStat} from '../actions/item-actions.js';
 
-export default function newItem(itemName) {
-  class Item {
-    constructor(properties) {
-      Object.keys(properties).forEach(property => this[property] = properties[property]);
-      this.id = Math.floor(Math.random() * 1000000000);
-    }
+class Item {
+  constructor(properties) {
+    Object.keys(properties).forEach(property => this[property] = properties[property]);
+    this.id = Math.floor(Math.random() * 1000000000);
   }
+}
 
+export default function newItem(itemName) {
   return new Item(itemData[itemName]);
 }
 

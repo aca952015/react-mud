@@ -1,13 +1,13 @@
 'use strict';
 
-export default function newMob(mobName) {
-  class Mob {
-    constructor(properties) {
-      Object.keys(properties).forEach(prop => this[prop] = properties[prop]);
-      this.id = Math.floor(Math.random() * 1000000000);
-    }
+class Mob {
+  constructor(properties) {
+    Object.keys(properties).forEach(prop => this[prop] = properties[prop]);
+    this.id = Math.floor(Math.random() * 1000000000);
   }
+}
 
+export default function newMob(mobName) {
   return new Mob(mobData[mobName]);
 }
 
