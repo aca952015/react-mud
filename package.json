@@ -5,8 +5,8 @@
   "main": "entry.jsx",
   "scripts": {
     "start": "babel-node server.js",
-    "test": "jest",
-    "test-coverage": "jest --coverage"
+    "test": "jest --runInBand",
+    "test-coverage": "jest --runInBand --coverage"
   },
   "repository": {
     "type": "git",
