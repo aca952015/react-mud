@@ -9,9 +9,10 @@ describe('itemPickUpProcessor', () => {
       from: 'TestR',
       pickRoom: 'Nexus',
       roomItems: [newItem('health potion'), newItem('gallows key')],
-      item: room.roomItems[0]
     }
   };
+  room.room.item = room.room.roomItems[0];
+  
   describe('The user is not in the same room', () => {
     it('should return an empty object', () => {
       expect(itemPickUpProcessor(room, {currentRoom: 'Gallows'})).toEqual({});

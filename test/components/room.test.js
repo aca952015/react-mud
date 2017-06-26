@@ -69,7 +69,7 @@ describe('<Room />', () => {
               locked: false
             }
           },
-          items: [newItem('health potion'), newItem('health potion')]
+          items: [newItem('health potion'), newItem('mana potion')]
         }
       }
     };
