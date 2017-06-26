@@ -17,7 +17,8 @@ export default function kill(socket, roomData, mobsInCombat) {
       combatLog: {
         from: socket.username,
         interaction: ' moves to attack ',
-        target: `${target.short}.`
+        target: `${target.short}`,
+        punctuation: '.'
       }
     });
   });

@@ -8,8 +8,16 @@ export const CombatLog = props => {
   return <div className="combat-log">
     <p>
       <span className="from">{combatLog.from}</span>
-      <span>{combatLog.interaction}</span>
+      {combatLog.interaction ? <span>{combatLog.interaction}</span> : null}
+      {combatLog.damage ?
+        <span>
+          <span>{combatLog.pre}</span>
+          <span className="damage">{combatLog.damage}</span>
+          <span>{combatLog.post}</span>
+        </span>
+      : null}
       <span className="target">{combatLog.target}</span>
+      <span>{combatLog.punctuation}</span>
     </p>
   </div>;
 };

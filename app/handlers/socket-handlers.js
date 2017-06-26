@@ -39,7 +39,8 @@ export default function socketHandlers(homeCtx) {
       combatLog: {
         from: 'You',
         interaction: ' move to attack ',
-        target: `${target.short}.`
+        target: `${target.short}`,
+        punctuation: '.'
       }
     }));
     props.dispatch(enterCombat(target));
