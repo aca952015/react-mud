@@ -26,6 +26,10 @@ describe('<CombatLog />', () => {
 
     it('should contain the text "You do some stuff to test target."', () => {
       expect(combatLog.find('p').text()).toEqual('You do some stuff to test target.');
+      expect(combatLog.find('.from-friendly').text()).toEqual('You');
+      expect(combatLog.find('span').at(1).text()).toEqual(' do some stuff to ');
+      expect(combatLog.find('.target-enemy').text()).toEqual('test target');
+      expect(combatLog.find('span').last().text()).toEqual('.');
     });
   });
 });
