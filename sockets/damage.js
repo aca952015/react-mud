@@ -10,8 +10,20 @@ export default function damage(socket, roomData, mobsInCombat) {
     if (target.hp < 1) {
       mobsInCombat.splice(mobsInCombat.indexOf(mobsInCombat.find(mob => mob.id === target.id)), 1);
       roomData[socket.currentRoom].mobs.splice(roomData[socket.currentRoom].mobs.indexOf(target), 1);
-      socket.emit('generalMessage', {feedback: `You've slain ${target.short}!`});
-      socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} has slain ${target.short}!`});
+      socket.emit('generalMessage', {
+        combatLog: {
+          from: 'You',
+          interaction: ' have slain ',
+          target: `${target.short}!`
+        }
+      });
+      socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
+        combatLog: {
+          from: socket.username,
+          interaction: ' has slain ',
+          target: `${target.short}!`
+        }
+      });
       socket.emit('slayEnemy', target);
       socket.broadcast.to(socket.currentRoom).emit('slayEnemy', target);
     }

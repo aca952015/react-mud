@@ -9,7 +9,7 @@ export const CombatLog = props => {
     <p>
       <span className="from">{combatLog.from}</span>
       <span>{combatLog.interaction}</span>
-      <span className="target">{combatLog.target}</span>.
+      <span className="target">{combatLog.target}</span>
     </p>
   </div>;
 };
