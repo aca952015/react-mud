@@ -52,6 +52,9 @@ describe('<CombatLog />', () => {
       combatLog = shallow(<CombatLog {...props} />);
 
       expect(combatLog.find('p').text()).toEqual('Some dude targets you.');
+      expect(combatLog.find('.from-enemy').text()).toEqual('Some dude');
+      expect(combatLog.find('.target-friendly').text()).toEqual('you');
+      expect(combatLog.find('span').at(1).text()).toEqual(' targets ');
     });
   });
 
