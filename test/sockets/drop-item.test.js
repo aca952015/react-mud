@@ -1,7 +1,7 @@
 'use strict';
 
 import io from 'socket.io-client';
-import {itemData} from '../../app/data/items.js';
+import newItem, {itemData} from '../../app/data/items.js';
 import ioOptions from '../lib/io-options.js';
 import closeServer from '../lib/test-server.js';
 
@@ -30,7 +30,7 @@ describe('Drop item', () => {
   it('should return a drop object with the username and a drop feedback', done => {
     socket.emit('changeName', 'tester');
     socket2.emit('changeName', 'TestR');
-    socket.emit('drop', {item: itemData['health potion']});
+    socket.emit('drop', {item: newItem('health potion')});
     socket2.on('generalMessage', res => {
       expect(res.from).toEqual('tester');
       expect(res.feedback).toEqual(` drops ${itemData['health potion'].short}.`);

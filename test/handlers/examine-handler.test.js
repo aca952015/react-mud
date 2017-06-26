@@ -2,12 +2,12 @@
 
 import {newMessage} from '../../app/actions/message-actions.js';
 import examineHandler from '../../app/handlers/examine-handler.js';
-import {itemData} from '../../app/data/items.js';
+import newItem, {itemData} from '../../app/data/items.js';
 
 describe('examineHandler', () => {
   let returnObj = {funcsToCall: [newMessage]};
   let props = {
-    inventory: [itemData['health potion'], itemData['gallows key'], itemData['health potion']]
+    inventory: [newItem('health potion'), newItem('gallows key'), newItem('health potion')]
   };
 
   describe('With no args', () => {

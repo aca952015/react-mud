@@ -3,7 +3,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import {Room} from '../../app/components/room.jsx';
-import {itemData} from '../../app/data/items.js';
+import newItem from '../../app/data/items.js';
 
 describe('<Room />', () => {
   let props, room;
@@ -69,7 +69,7 @@ describe('<Room />', () => {
               locked: false
             }
           },
-          items: [itemData['health potion'], itemData['mana potion']]
+          items: [newItem('health potion'), newItem('health potion')]
         }
       }
     };
@@ -90,7 +90,7 @@ describe('<Room />', () => {
               locked: false
             }
           },
-          items: [itemData['health potion'], itemData['mana potion'], itemData['health potion']]
+          items: [newItem('health potion'), newItem('mana potion'), newItem('health potion')]
         }
       }
     };
