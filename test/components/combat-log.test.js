@@ -50,8 +50,32 @@ describe('<CombatLog />', () => {
         }
       };
       combatLog = shallow(<CombatLog {...props} />);
-      
+
       expect(combatLog.find('p').text()).toEqual('Some dude targets you.');
+    });
+  });
+
+  describe('With damage from user -> target', () => {
+    it('should contain the text "You deal 2 damage to target."', () => {
+      props = {
+        message: {
+          combatLog: {
+            from: {
+              friendly: 'You'
+            },
+            pre: ' deal ',
+            damage: 2,
+            post: ' damage to ',
+            target: {
+              enemy: 'target'
+            },
+            punctuation: '.'
+          }
+        }
+      };
+      combatLog = shallow(<CombatLog {...props} />);
+
+      expect(combatLog.find('p').text()).toEqual('You deal 2 damage to target.');
     });
   });
 });
