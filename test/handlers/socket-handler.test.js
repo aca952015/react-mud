@@ -143,7 +143,18 @@ describe('socketHandlers', () => {
           bat.id = res.id;
           props.combat.targets.push(res);
           expect(res).toEqual(bat);
-          expect(props.dispatch.calledWith(newMessage({feedback: `You move to attack ${bat.short}.`}))).toEqual(true);
+          expect(props.dispatch.calledWith(newMessage({
+            combatLog: {
+              from: {
+                friendly: 'You'
+              },
+              interaction: ' move to attack ',
+              target: {
+                enemy: bat.short
+              },
+              punctuation: '.'
+            }
+          }))).toEqual(true);
           expect(props.dispatch.calledWith(enterCombat(bat))).toEqual(true);
           done();
         });
@@ -166,7 +177,20 @@ describe('socketHandlers', () => {
       player1.emit('testDamage');
       player1.on('damage', dmgObj => {
         expect(props.dispatch.calledWith(damageUser(dmgObj.damage))).toEqual(true);
-        expect(props.dispatch.calledWith((newMessage({feedback: `${dmgObj.enemy.short} damages you for ${dmgObj.damage}.`})))).toEqual(true);
+        expect(props.dispatch.calledWith((newMessage({
+          combatLog: {
+            from: {
+              enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
+            },
+            pre: ' deals ',
+            damage: dmgObj.damage,
+            post: ' damage to ',
+            target: {
+              friendly: 'you'
+            },
+            punctuation: '.'
+          }
+        })))).toEqual(true);
         done();
       });
     });
