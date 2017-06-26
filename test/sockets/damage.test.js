@@ -35,7 +35,20 @@ describe('damage', () => {
     it('should only emit a generalMessage response with damage feedback', done => {
       player1.emit('damage', dmgObj);
       player1.on('generalMessage', res => {
-        expect(res.feedback).toEqual('You deal 3 damage to a small bat.');
+        expect(res).toEqual({
+          combatLog: {
+            from: {
+              friendly: 'You'
+            },
+            pre: ' deal ',
+            damage: dmgObj.damage,
+            post: ' damage to ',
+            target: {
+              enemy: dmgObj.enemy.short
+            },
+            punctuation: '.'
+          }
+        });
         done();
       });
     });
