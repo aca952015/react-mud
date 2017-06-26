@@ -39,7 +39,20 @@ describe('combatProcessor', () => {
   it('should emit a damage event and receive a generalMessage response', done => {
     combatProcessor(player1, props);
     player1.on('generalMessage', res => {
-      expect(res.feedback).toEqual('You deal 2 damage to a small bat.');
+      expect(res).toEqual({
+        combatLog: {
+          from: {
+            friendly: 'You'
+          },
+          pre: ' deal ',
+          damage: props.character.atk,
+          post: ' damage to ',
+          target: {
+            enemy: 'a small bat'
+          },
+          punctuation: '.'
+        }
+      });
       done();
     });
   });
