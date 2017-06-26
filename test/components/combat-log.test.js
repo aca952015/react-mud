@@ -108,6 +108,11 @@ describe('<CombatLog />', () => {
       combatLog = shallow(<CombatLog {...props} />);
 
       expect(combatLog.find('p').text()).toEqual('Target deals 2 damage to you.');
+      expect(combatLog.find('.from-enemy').text()).toEqual('Target');
+      expect(combatLog.find('.target-friendly').text()).toEqual('you');
+      expect(combatLog.find('span').children('span').first().text()).toEqual(' deals ');
+      expect(combatLog.find('span').children('span').at(1).text()).toEqual('2');
+      expect(combatLog.find('span').children('span').at(2).text()).toEqual(' damage to ');
     });
   });
 });
