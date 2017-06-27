@@ -30,3 +30,13 @@ export function addToContainer(result) {
     }
   };
 }
+
+export function getFromContainer(result) {
+  return {
+    type: 'GET_FROM_CONTAINER',
+    payload: {
+      item: result.item,
+      container: result.container
+    }
+  };
+}
