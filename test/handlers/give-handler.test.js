@@ -3,6 +3,7 @@
 import giveHandler from '../../app/handlers/give-handler.js';
 import newItem from '../../app/data/items.js';
 import {newMessage} from '../../app/actions/message-actions.js';
+import {dropItem} from '../../app/actions/inventory-actions.js';
 
 describe('giveHandler', () => {
   let props = {inventory: [newItem('health potion')]};
@@ -32,6 +33,19 @@ describe('giveHandler', () => {
         expect(giveHandler('give', '2.potion bob', null, props)).toEqual({
           ...defaultObj,
           feedback: 'You don\'t seem to be carrying that.'
+        });
+      });
+    });
+  });
+
+  describe('With a valid item', () => {
+    describe('Without dot notation', () => {
+      it('should return a give object', () => {
+        expect(giveHandler('give', 'potion bob', null, props)).toEqual({
+          funcsToCall: [dropItem],
+          emitType: 'give',
+          item: props.inventory[0],
+          target: 'bob'
         });
       });
     });
