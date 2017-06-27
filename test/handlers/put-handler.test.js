@@ -27,6 +27,15 @@ describe('putHandler', () => {
     });
   });
 
+  describe('Attempting to put a container inside itself', () => {
+    it('should return that you can\'t do that', () => {
+      expect(putHandler('put', 'backpack backpack', null, props)).toEqual({
+        ...defaultObj,
+        feedback: 'You can\'t put a container inside itself.'
+      });
+    });
+  });
+
   describe('In a container the user is carrying', () => {
     describe('With dot notation on the item, but not the container', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {

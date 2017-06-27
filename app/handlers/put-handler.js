@@ -16,6 +16,11 @@ export default function putHandler(command, args, socket, props) {
   dotNotation = splitArgs[1].split('.');
   let target = dotNotation.length > 1 ? props.inventory.filter(item => item.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
                                         props.inventory.find(item => item.terms.includes(splitArgs[1]));
+
+  if (target && !target.container) return {funcsToCall: [newMessage], feedback: 'That isn\'t a container.'};
+  if (target && !target.container.holds.includes(putItem.type)) return {funcsToCall: [newMessage], feedback: 'That container doesn\'t hold that type of item.'};
+  if (target && target.id === putItem.id) return {funcsToCall: [newMessage], feedback: 'You can\'t put a container inside itself.'};
+
   if (target) {
     return {
       emitType: 'put',
