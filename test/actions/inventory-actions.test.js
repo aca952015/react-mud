@@ -23,7 +23,7 @@ describe('inventory actions', () => {
 
   describe('addToContainer', () => {
     it('should return an object with type ADD_TO_CONTAINER and a payload with item and target properties', () => {
-      expect(addToContainer('bob', 'bag')).toEqual({type: 'ADD_TO_CONTAINER', payload: {item: 'bob', target: 'bag'}});
+      expect(addToContainer({item: 'bob', container: 'bag'})).toEqual({type: 'ADD_TO_CONTAINER', payload: {item: 'bob', container: 'bag'}});
     });
   });
 });
