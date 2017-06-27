@@ -33,7 +33,7 @@ describe('putHandler', () => {
         expect(putHandler('put', '2.potion backpack', null, props)).toEqual({
           emitType: 'put',
           item: props.inventory[1],
-          target: props.inventory[2],
+          container: props.inventory[2],
           funcsToCall: [newMessage, addToContainer],
           feedback: `You put ${props.inventory[1].short} in ${props.inventory[2].short}.`
         });
@@ -45,7 +45,7 @@ describe('putHandler', () => {
         expect(putHandler('put', '2.potion 2.backpack', null, props)).toEqual({
           emitType: 'put',
           item: props.inventory[1],
-          target: props.inventory[3],
+          container: props.inventory[3],
           funcsToCall: [newMessage, addToContainer],
           feedback: `You put ${props.inventory[1].short} in ${props.inventory[3].short}.`
         });
@@ -57,7 +57,7 @@ describe('putHandler', () => {
         expect(putHandler('put', 'potion 2.backpack', null, props)).toEqual({
           emitType: 'put',
           item: props.inventory[0],
-          target: props.inventory[3],
+          container: props.inventory[3],
           funcsToCall: [newMessage, addToContainer],
           feedback: `You put ${props.inventory[0].short} in ${props.inventory[3].short}.`
         });
@@ -69,7 +69,7 @@ describe('putHandler', () => {
         expect(putHandler('put', 'potion backpack', null, props)).toEqual({
           emitType: 'put',
           item: props.inventory[0],
-          target: props.inventory[2],
+          container: props.inventory[2],
           funcsToCall: [newMessage, addToContainer],
           feedback: `You put ${props.inventory[0].short} in ${props.inventory[2].short}.`
         });
@@ -81,7 +81,7 @@ describe('putHandler', () => {
         expect(putHandler('put', '2.potion in backpack', null, props)).toEqual({
           emitType: 'put',
           item: props.inventory[1],
-          target: props.inventory[2],
+          container: props.inventory[2],
           funcsToCall: [newMessage, addToContainer],
           feedback: `You put ${props.inventory[1].short} in ${props.inventory[2].short}.`
         });
@@ -94,7 +94,7 @@ describe('putHandler', () => {
       expect(putHandler('put', 'potion corpse', null, props)).toEqual({
         emitType: 'put',
         item: props.inventory[0],
-        target: 'corpse'
+        container: 'corpse'
       });
     });
   });
