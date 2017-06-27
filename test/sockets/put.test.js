@@ -39,4 +39,14 @@ describe('put', () => {
       });
     });
   });
+
+  describe('With a container that isn\'t a container', () => {
+    it('should return feedback of it not being a container', done => {
+      player1.emit('put', {...putObj, container: 'potion'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('That isn\'t a container.');
+        done();
+      });
+    });
+  });
 });
