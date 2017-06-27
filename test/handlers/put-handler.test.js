@@ -88,4 +88,14 @@ describe('putHandler', () => {
       });
     });
   });
+
+  describe('In a container the user is not carrying', () => {
+    it('should return a put object with just the item and target', () => {
+      expect(putHandler('put', 'potion corpse', null, props)).toEqual({
+        emitType: 'put',
+        item: props.inventory[0],
+        target: 'corpse'
+      });
+    });
+  });
 });
