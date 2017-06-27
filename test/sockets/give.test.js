@@ -42,4 +42,14 @@ describe('give', () => {
       });
     });
   });
+
+  describe('To a player that doesn\'t exist', () => {
+    it('should give feedback that that player isn\'t seen', done => {
+      player1.emit('give', {...giveObj, target: 'bob'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('I don\'t see that person here.');
+        done();
+      });
+    });
+  });
 });
