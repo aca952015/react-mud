@@ -51,5 +51,11 @@ export default function reducer(state=initialState, action) {
     return {...state, combat: {targets: newTargets, active: true}};
   }
   if (action.type === 'DAMAGE_USER') return {...state, hp: state.hp - action.payload};
+  if (action.type === 'ADD_TO_CONTAINER') {
+    let tempInventory = [...state.inventory];
+    let container = tempInventory.find(_container => _container === action.payload.container);
+    container.container.contains.push(action.payload.item);
+    return {...state, inventory: tempInventory};
+  }
   return state;
 }

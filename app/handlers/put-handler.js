@@ -20,7 +20,7 @@ export default function putHandler(command, args, socket, props) {
     return {
       emitType: 'put',
       item: putItem,
-      target,
+      container: target,
       funcsToCall: [newMessage, addToContainer],
       feedback: `You put ${putItem.short} in ${target.short}.`
     };
@@ -28,6 +28,6 @@ export default function putHandler(command, args, socket, props) {
   return {
     emitType: 'put',
     item: putItem,
-    target: splitArgs[1]
+    container: splitArgs[1]
   };
 }

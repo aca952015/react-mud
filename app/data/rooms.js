@@ -53,7 +53,7 @@ export const roomData = {
         requiredKey: itemData['gallows key']
       }
     },
-    items: [newItem('useless key')],
+    items: [newItem('useless key'), newItem('backpack')],
     mobs: [newMob('bat'), newMob('bat')]
   },
   'Gallows': {

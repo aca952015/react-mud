@@ -21,12 +21,12 @@ export function quietlyAddItem(item) {
   };
 }
 
-export function addToContainer(item, target) {
+export function addToContainer(result) {
   return {
     type: 'ADD_TO_CONTAINER',
     payload: {
-      item,
-      target
+      item: result.item,
+      container: result.container
     }
   };
 }
