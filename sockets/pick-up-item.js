@@ -1,6 +1,11 @@
 'use strict';
 
 export default function pickUpItem(socket, roomData) {
+  const invalidTypes = {
+    'corpse': true,
+    'liquid': true
+  };
+
   socket.on('pickUpItem', itemShort => {
     itemShort = itemShort.item;
     let index = 0;
@@ -12,6 +17,8 @@ export default function pickUpItem(socket, roomData) {
     let tempItem = index > 0 ? roomItems.filter(_item => _item.terms.includes(itemShort.toLowerCase()))[index] :
                                roomItems.find(_item => _item.terms.includes(itemShort.toLowerCase()));
     if (!tempItem) return socket.emit('generalMessage', {feedback: 'I don\'t see that item here.'});
+    if (invalidTypes[tempItem.type]) return socket.emit('generalMessage', {feedback: 'You can\'t pick that up.'});
+    
     let room = {
       item: tempItem,
       pickRoom: socket.currentRoom

@@ -91,4 +91,14 @@ describe('pickUpItem', () => {
       });
     });
   });
+
+  describe('On an item of an invalid type', () => {
+    it('should return a feedback of not being able to pick it up', done => {
+      player1.emit('pickUpItem', {item: 'corpse'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('You can\'t pick that up.');
+        done();
+      });
+    });
+  });
 });
