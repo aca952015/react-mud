@@ -5,6 +5,7 @@ import movementHandler from './movement-handler.js';
 import getHandler from './get-handler.js';
 import dropHandler from './drop-handler.js';
 import lockHandler from './lock-handler.js';
+import giveHandler from './give-handler.js';
 import helpHandler from './help-handler.js';
 import drinkHandler from './drink-handler.js';
 import examineHandler from './examine-handler.js';
@@ -41,6 +42,7 @@ export default function commandHandler(command, args, props, socket) {
     'lock': lockHandler,
     'help': helpHandler,
     'drink': drinkHandler,
+    'give': giveHandler,
     'inventory': {funcsToCall: [newMessage], inventory: props.inventory},
     'examine': examineHandler,
     'kill': {emitType: 'kill', target: args}
