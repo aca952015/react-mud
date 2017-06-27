@@ -8,6 +8,7 @@ import pickUpItem from '../../sockets/pick-up-item.js';
 import unlock from '../../sockets/unlock.js';
 import kill from '../../sockets/kill.js';
 import damage from '../../sockets/damage.js';
+import give from '../../sockets/give.js';
 import whisper from '../../sockets/whisper.js';
 import mobTargetSelector from '../../sockets/mob-target-selector.js';
 import {roomData} from '../../app/data/rooms.js';
@@ -45,6 +46,7 @@ io.sockets.on('connection', function(socket) {
   whisper(io, socket, users);
   kill(socket, roomData, mobsInCombat);
   damage(socket, roomData, mobsInCombat);
+  give(socket, users);
 });
 
 export default function closeServer() {
