@@ -70,5 +70,15 @@ describe('put', () => {
         });
       });
     });
+
+    describe('With normal targeting', () => {
+      it('should trigger a forceDrop event', done => {
+        player1.emit('put', putObj);
+        player1.on('forceDrop', res => {
+          expect(res).toEqual({...putObj.item, drink: res.drink});
+          done();
+        });
+      });
+    });
   });
 });
