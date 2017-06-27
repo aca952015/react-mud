@@ -9,6 +9,7 @@ describe('getHandler', () => {
   let backpack1 = newItem('backpack');
   backpack1.container.contains.push(newItem('health potion'));
   backpack1.container.contains.push(newItem('health potion'));
+  backpack1.container.contains.push(newItem('corpse'));
 
   let backpack2 = newItem('backpack');
   backpack2.container.contains.push(newItem('health potion'));
@@ -21,6 +22,7 @@ describe('getHandler', () => {
     });
   });
 
+
   describe('With args', () => {
     describe('With no optional container arg', () => {
       it('should return a proper emit object to be handled by the server', () => {
@@ -30,6 +32,14 @@ describe('getHandler', () => {
 
     describe('With optional container arg', () => {
       describe('With an item the user is carrying', () => {
+        describe('On an item that isn\'t a valid pickup type', () => {
+          it('should inform the user they can\'t pick it up', () => {
+            expect(getHandler('get', 'corpse backpack', null, props)).toEqual({
+              funcsToCall: [newMessage],
+              feedback: 'You can\'t pick that up.'
+            });
+          });
+        });
         describe('That isn\'t a container', () => {
           it('should inform the user it isn\'t a container', () => {
             expect(getHandler('get', 'potion key', null, props)).toEqual({

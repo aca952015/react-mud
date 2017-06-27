@@ -4,6 +4,11 @@ import {newMessage} from '../actions/message-actions.js';
 import {getFromContainer} from '../actions/inventory-actions.js';
 
 export default function getHandler(command, args, socket, props) {
+  const invalidTypes = {
+    'corpse': true,
+    'liquid': true
+  };
+
   if (!args) return {funcsToCall: [newMessage], feedback: 'Get what?'};
   let splitArgs = args.split(' ');
   if (splitArgs.length < 2) return {emitType: 'pickUpItem', item: args};
@@ -18,6 +23,7 @@ export default function getHandler(command, args, socket, props) {
     let item = dotNotation.length > 1 ? container.container.contains.filter(_item => _item.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
                                         container.container.contains.find(_item => _item.terms.includes(splitArgs[0]));
     if (!item) return {funcsToCall: [newMessage], feedback: 'I don\'t see that item in that container.'};
+    if (invalidTypes[item.type]) return {funcsToCall: [newMessage], feedback: 'You can\'t pick that up.'};
     return {
       emitType: 'getFromContainer',
       funcsToCall: [newMessage, getFromContainer],
