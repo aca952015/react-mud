@@ -44,6 +44,7 @@ export class Home extends Component {
       <Messages username={this.props.username}
         justHitEnter={this.state.justHitEnter}
         messages={this.props.messages}
+        changeEnterStatus={this.changeEnterStatus}
         inventory={this.props.inventory} />
       <Prompt character={this.props.character} />
       <CommandInput

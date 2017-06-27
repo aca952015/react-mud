@@ -46,7 +46,7 @@ export default class Messages extends Component {
         {message.inventory ? <Inventory inventory={message.inventory}/> : null}
       </li>;
     });
-    return <div ref={messageList => this.messageList = messageList} className="messages">
+    return <div ref={messageList => this.messageList = messageList} onScroll={() => this.props.changeEnterStatus(false)} className="messages">
       <ul>{messages}</ul>
     </div>;
   }
@@ -55,5 +55,6 @@ export default class Messages extends Component {
 Messages.propTypes = {
   messages: PropTypes.array,
   justHitEnter: PropTypes.bool,
-  username: PropTypes.string
+  username: PropTypes.string,
+  changeEnterStatus: PropTypes.func
 };
