@@ -22,6 +22,6 @@ export default function drinkHandler(command, args, socket, props) {
     feedback: drinkEffects.desc,
     emitType: 'drink',
     item: itemToDrink,
-    quietAdd: newItem('empty flask')
+    quietAdd: newItem('glass flask')
   };
 }

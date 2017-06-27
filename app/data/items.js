@@ -19,6 +19,7 @@ export const itemData = {
     short: 'a red potion',
     long: 'A flask, with a v-shaped bottom and a thin neck, filled with a red liquid, sits on the ground here.',
     terms: ['potion', 'red', 'flask', 'health'],
+    type: 'items',
     drink: {
       effect: restoreStat,
       statToChange: 'hp',
@@ -27,11 +28,25 @@ export const itemData = {
     },
     description: 'This is a placeholder description for a health potion.'
   },
+  'corpse': {
+    name: 'corpse',
+    short: 'a corpse',
+    long: 'A corpse lies here.',
+    terms: ['corpse'],
+    drink: null,
+    type: 'corpse',
+    description: 'This is a placeholder description for a corpse.',
+    container: {
+      holds: ['items'],
+      contains: []
+    }
+  },
   'mana potion': {
     name: 'mana potion',
     short: 'a blue potion',
     long: 'A spherical container with a short neck, filled with a blue liquid, sits on the ground here.',
     terms: ['potion', 'blue', 'container', 'mana'],
+    type: 'items',
     drink: {
       effect: restoreStat,
       statToChange: 'mp',
@@ -40,17 +55,23 @@ export const itemData = {
     },
     description: 'This is still a placeholder description for a mana potion.'
   },
-  'empty flask': {
-    name: 'empty flask',
-    short: 'an empty flask',
-    long: 'An empty glass flask sits on the ground here.',
-    terms: ['empty', 'glass', 'flask'],
+  'glass flask': {
+    name: 'glass flask',
+    short: 'a glass flask',
+    long: 'A glass flask sits on the ground here.',
+    terms: ['glass', 'flask'],
+    type: 'items',
     drink: null,
-    description: 'This is a placeholder description for an empty flask.'
+    description: 'This is a placeholder description for a glass flask.',
+    container: {
+      holds: ['liquid'],
+      contains: []
+    }
   },
   'gallows key': {
     name: 'gallows key',
     short: 'a small black key',
+    type: 'items',
     long: 'A small black key with a simple carving of a noose on it lies here.',
     terms: ['key', 'black', 'small'],
     drink: null,
@@ -59,6 +80,7 @@ export const itemData = {
   'secret key': {
     name: 'secret key',
     short: 'THE SECRET KEY',
+    type: 'items',
     long: 'A key with the creator\'s symbol on it is lying on the ground here.',
     terms: ['key', 'secret', 'creator'],
     drink: null,
@@ -67,6 +89,7 @@ export const itemData = {
   'useless key': {
     name: 'useless key',
     short: 'a useless key',
+    type: 'items',
     long: 'A useless key whose teeth have been completely worn off lies here.',
     terms: ['useless', 'key'],
     drink: null,
@@ -75,6 +98,7 @@ export const itemData = {
   'tester key': {
     name: 'tester key',
     short: 'a tester\'s key',
+    type: 'items',
     long: 'A key with divine engravings on it lies here.',
     terms: ['tester', 'tester\'s', 'key'],
     drink: null,
