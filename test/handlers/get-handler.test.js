@@ -73,6 +73,18 @@ describe('getHandler', () => {
                 });
               });
             });
+
+            describe('With dot notation on the container, but not the item', () => {
+              it('should return a getFromContainer object with newMessage and getFromContainer funcsToCall', () => {
+                expect(getHandler('get', 'potion 2.backpack', null, props)).toEqual({
+                  emitType: 'getFromContainer',
+                  funcsToCall: [newMessage, getFromContainer],
+                  item: props.inventory[1].container.contains[0],
+                  container: props.inventory[1],
+                  feedback: `You get ${props.inventory[1].container.contains[0].short} from ${props.inventory[1].short}.`
+                });
+              });
+            });
           });
         });
       });
