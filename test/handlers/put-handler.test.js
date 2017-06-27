@@ -63,5 +63,17 @@ describe('putHandler', () => {
         });
       });
     });
+
+    describe('With normal targeting for all', () => {
+      it('should return a put object with addToContainer and newMessage funcsToCall', () => {
+        expect(putHandler('put', 'potion backpack', null, props)).toEqual({
+          emitType: 'put',
+          item: props.inventory[0],
+          target: props.inventory[2],
+          funcsToCall: [newMessage, addToContainer],
+          feedback: `You put ${props.inventory[0].short} in ${props.inventory[2].short}.`
+        });
+      });
+    });
   });
 });
