@@ -1,11 +1,6 @@
 'use strict';
 
 export default function put(socket, roomData) {
-  /*
-  emitType: 'put',
-  item: putItem,
-  container: splitArgs[1]
-  */
   socket.on('put', putObj => {
     let splitArgs = putObj.container.split('.');
     let container = splitArgs.length > 1 ? roomData[socket.currentRoom].items.filter(item => item.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :

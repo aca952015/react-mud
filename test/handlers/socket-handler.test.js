@@ -11,7 +11,8 @@ import {enterCombat, damageUser, slayEnemy} from '../../app/actions/combat-actio
 import whisperProcessor from '../../app/processors/whisper-processor.js';
 import moveProcessor from '../../app/processors/move-processor.js';
 import itemPickUpProcessor from '../../app/processors/item-pickup-processor.js';
-import {getItem} from '../../app/actions/inventory-actions.js';
+import {getItem, dropItem} from '../../app/actions/inventory-actions.js';
+import newItem from '../../app/data/items.js';
 
 describe('socketHandlers', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
@@ -211,6 +212,17 @@ describe('socketHandlers', () => {
       player1.emit('damage', {enemy: props.combat.targets[1], damage: 10});
       player1.on('endCombat', id => {
         expect(props.dispatch.calledWith(slayEnemy({id}))).toEqual(true);
+        done();
+      });
+    });
+  });
+
+  describe('forceDrop', () => {
+    it('should dispatch dropItem with the ID returned', done => {
+      player1.emit('move', {direction: 'down'});
+      player1.emit('put', {item: newItem('health potion'), container: 'backpack'});
+      player1.on('forceDrop', item => {
+        expect(props.dispatch.calledWith(dropItem({item}))).toEqual(true);
         done();
       });
     });
