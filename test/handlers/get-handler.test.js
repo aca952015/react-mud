@@ -85,6 +85,18 @@ describe('getHandler', () => {
                 });
               });
             });
+
+            describe('With normal targeting on both', () => {
+              it('should return a getFromContainer object with newMessage and getFromContainer funcsToCall', () => {
+                expect(getHandler('get', 'potion backpack', null, props)).toEqual({
+                  emitType: 'getFromContainer',
+                  funcsToCall: [newMessage, getFromContainer],
+                  item: props.inventory[0].container.contains[0],
+                  container: props.inventory[0],
+                  feedback: `You get ${props.inventory[0].container.contains[0].short} from ${props.inventory[0].short}.`
+                });
+              });
+            });
           });
         });
       });
