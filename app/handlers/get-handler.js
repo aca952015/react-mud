@@ -15,8 +15,8 @@ export default function getHandler(command, args, socket, props) {
   if (container) {
     if (!container.container) return {funcsToCall: [newMessage], feedback: 'That isn\'t a container.'};
     dotNotation = splitArgs[0].split('.');
-    let item = dotNotation.length > 1 ? container.filter(_item => _item.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
-                                        container.find(_item => _item.terms.includes(splitArgs[0]));
+    let item = dotNotation.length > 1 ? container.container.contains.filter(_item => _item.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
+                                        container.container.contains.find(_item => _item.terms.includes(splitArgs[0]));
     if (!item) return {funcsToCall: [newMessage], feedback: 'I don\'t see that item in that container.'};
     return {
       emitType: 'getFromContainer',

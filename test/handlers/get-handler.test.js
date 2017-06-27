@@ -38,6 +38,17 @@ describe('getHandler', () => {
             });
           });
         });
+
+        describe('That is a container', () => {
+          describe('That doesn\'t hold the designated item', () => {
+            it('should inform the user that that item isn\'t seen', () => {
+              expect(getHandler('get', 'sword backpack', null, props)).toEqual({
+                funcsToCall: [newMessage],
+                feedback: 'I don\'t see that item in that container.'
+              });
+            });
+          });
+        });
       });
     });
   });
