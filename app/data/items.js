@@ -28,6 +28,19 @@ export const itemData = {
     },
     description: 'This is a placeholder description for a health potion.'
   },
+  'backpack': {
+    name: 'backpack',
+    short: 'a backpack',
+    long: 'A simple backpack lies on the groud here.',
+    terms: ['backpack', 'simple'],
+    type: 'items',
+    drink: null,
+    description: 'This is a placeholder description for a backpack.',
+    container: {
+      holds: ['items'],
+      contains: []
+    }
+  },
   'corpse': {
     name: 'corpse',
     short: 'a corpse',
