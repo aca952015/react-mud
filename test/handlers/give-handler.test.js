@@ -49,5 +49,17 @@ describe('giveHandler', () => {
         });
       });
     });
+
+    describe('With dot notation', () => {
+      it('should return a give object', () => {
+        props.inventory.push(newItem('health potion'));
+        expect(giveHandler('give', '2.potion bob', null, props)).toEqual({
+          funcsToCall: [dropItem],
+          emitType: 'give',
+          item: props.inventory[1],
+          target: 'bob'
+        });
+      });
+    });
   });
 });
