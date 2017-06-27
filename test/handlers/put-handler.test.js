@@ -7,7 +7,7 @@ import putHandler from '../../app/handlers/put-handler.js';
 
 describe('putHandler', () => {
   let defaultObj = {funcsToCall: [newMessage]};
-  let props = {inventory: [newItem('health potion'), newItem('health potion'), newItem('backpack')]};
+  let props = {inventory: [newItem('health potion'), newItem('health potion'), newItem('backpack'), newItem('backpack')]};
 
   describe('With too few arguments', () => {
     it('should return feedback with a syntax error', () => {
@@ -23,6 +23,20 @@ describe('putHandler', () => {
       expect(putHandler('put', 'bob backpack', null, props)).toEqual({
         ...defaultObj,
         feedback: 'You don\'t seem to be carrying that.'
+      });
+    });
+  });
+
+  describe('In a container the user is carrying', () => {
+    describe('With dot notation on the item, but not the container', () => {
+      it('should return a put object with addToContainer and newMessage funcsToCall', () => {
+        expect(putHandler('put', '2.potion backpack', null, props)).toEqual({
+          emitType: 'put',
+          item: props.inventory[1],
+          target: props.inventory[2],
+          funcsToCall: [newMessage, addToContainer],
+          feedback: `You put ${props.inventory[1].short} in ${props.inventory[2].short}.`
+        });
       });
     });
   });
