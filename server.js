@@ -12,6 +12,7 @@ import look from './sockets/look.js';
 import give from './sockets/give.js';
 import pickUpItem from './sockets/pick-up-item.js';
 import dropItem from './sockets/drop-item.js';
+import put from './sockets/put.js';
 import unlock from './sockets/unlock.js';
 import kill from './sockets/kill.js';
 import damage from './sockets/damage.js';
@@ -56,6 +57,7 @@ io.on('connection', socket => {
   kill(socket, roomData, mobsInCombat);
   damage(socket, roomData, mobsInCombat);
   give(socket, users);
+  put(socket, roomData);
 });
 
 server.listen(PORT);
