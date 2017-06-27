@@ -18,7 +18,7 @@ export const roomData = {
         locked: false
       }
     },
-    items: [newItem('corpse'), newItem('health potion'), newItem('gallows key'), newItem('health potion'), newItem('tester key'), newItem('mana potion')],
+    items: [newItem('corpse'), newItem('backpack'), newItem('health potion'), newItem('gallows key'), newItem('health potion'), newItem('tester key'), newItem('mana potion')],
     examines: [{
       name: 'test examine',
       terms: ['test'],
