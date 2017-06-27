@@ -26,5 +26,14 @@ describe('giveHandler', () => {
         });
       });
     });
+
+    describe('With dot notation', () => {
+      it('should return a feedback error of not seeing that item', () => {
+        expect(giveHandler('give', '2.potion bob', null, props)).toEqual({
+          ...defaultObj,
+          feedback: 'You don\'t seem to be carrying that.'
+        });
+      });
+    });
   });
 });
