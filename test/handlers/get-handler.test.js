@@ -100,6 +100,16 @@ describe('getHandler', () => {
           });
         });
       });
+
+      describe('With an item the user isn\'t carrying', () => {
+        it('should return a getFromContainer emit event', () => {
+          expect(getHandler('get', 'potion satchel', null, props)).toEqual({
+            emitType: 'getFromContainer',
+            item: 'potion',
+            container: 'satchel'
+          });
+        });
+      });
     });
   });
 });
