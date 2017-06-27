@@ -55,6 +55,14 @@ export default function reducer(state=initialState, action) {
     let tempInventory = [...state.inventory];
     let container = tempInventory.find(_container => _container === action.payload.container);
     container.container.contains.push(action.payload.item);
+    tempInventory.splice(tempInventory.indexOf(action.payload.item), 1);
+    return {...state, inventory: tempInventory};
+  }
+  if (action.type === 'GET_FROM_CONTAINER') {
+    let tempInventory = [...state.inventory];
+    let container = tempInventory.find(_container => _container === action.payload.container);
+    container.container.contains.splice(container.container.contains.indexOf(action.payload.item), 1);
+    tempInventory.push(action.payload.item);
     return {...state, inventory: tempInventory};
   }
   return state;

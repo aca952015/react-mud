@@ -1,6 +1,6 @@
 'use strict';
 
-import {addToContainer, dropItem} from '../../app/actions/inventory-actions.js';
+import {addToContainer} from '../../app/actions/inventory-actions.js';
 import {newMessage} from '../../app/actions/message-actions.js';
 import newItem from '../../app/data/items.js';
 import putHandler from '../../app/handlers/put-handler.js';
@@ -61,7 +61,7 @@ describe('putHandler', () => {
           emitType: 'put',
           item: props.inventory[1],
           container: props.inventory[2],
-          funcsToCall: [newMessage, addToContainer, dropItem],
+          funcsToCall: [newMessage, addToContainer],
           feedback: `You put ${props.inventory[1].short} in ${props.inventory[2].short}.`
         });
       });
@@ -73,7 +73,7 @@ describe('putHandler', () => {
           emitType: 'put',
           item: props.inventory[1],
           container: props.inventory[3],
-          funcsToCall: [newMessage, addToContainer, dropItem],
+          funcsToCall: [newMessage, addToContainer],
           feedback: `You put ${props.inventory[1].short} in ${props.inventory[3].short}.`
         });
       });
@@ -85,7 +85,7 @@ describe('putHandler', () => {
           emitType: 'put',
           item: props.inventory[0],
           container: props.inventory[3],
-          funcsToCall: [newMessage, addToContainer, dropItem],
+          funcsToCall: [newMessage, addToContainer],
           feedback: `You put ${props.inventory[0].short} in ${props.inventory[3].short}.`
         });
       });
@@ -97,7 +97,7 @@ describe('putHandler', () => {
           emitType: 'put',
           item: props.inventory[0],
           container: props.inventory[2],
-          funcsToCall: [newMessage, addToContainer, dropItem],
+          funcsToCall: [newMessage, addToContainer],
           feedback: `You put ${props.inventory[0].short} in ${props.inventory[2].short}.`
         });
       });
@@ -109,7 +109,7 @@ describe('putHandler', () => {
           emitType: 'put',
           item: props.inventory[1],
           container: props.inventory[2],
-          funcsToCall: [newMessage, addToContainer, dropItem],
+          funcsToCall: [newMessage, addToContainer],
           feedback: `You put ${props.inventory[1].short} in ${props.inventory[2].short}.`
         });
       });

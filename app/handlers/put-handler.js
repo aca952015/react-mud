@@ -1,7 +1,7 @@
 'use strict';
 
 import {newMessage} from '../actions/message-actions.js';
-import {addToContainer, dropItem} from '../actions/inventory-actions.js';
+import {addToContainer} from '../actions/inventory-actions.js';
 
 export default function putHandler(command, args, socket, props) {
   let splitArgs = args.split(' ');
@@ -26,7 +26,7 @@ export default function putHandler(command, args, socket, props) {
       emitType: 'put',
       item: putItem,
       container: target,
-      funcsToCall: [newMessage, addToContainer, dropItem],
+      funcsToCall: [newMessage, addToContainer],
       feedback: `You put ${putItem.short} in ${target.short}.`
     };
   }

@@ -143,15 +143,45 @@ describe('user reducer', () => {
         }
       )).toEqual({
         ...initialState,
+        inventory: [{
+          ...backpack,
+          container: {
+            holds: [...backpack.container.holds],
+            contains: [potion]
+          }
+        }]
+      });
+    });
+  });
+
+  describe('GET_FROM_CONTAINER', () => {
+    it('should add an item to the inventory from a container', () => {
+      let potion = newItem('health potion');
+      let backpack = newItem('backpack');
+      backpack.container.contains.push(potion);
+      expect(reducer(
+        {
+          ...initialState,
+          inventory: [backpack]
+        },
+        {
+          type: 'GET_FROM_CONTAINER',
+          payload: {
+            item: potion,
+            container: backpack
+          }
+        }
+      )).toEqual({
+        ...initialState,
         inventory: [
-          potion,
           {
             ...backpack,
             container: {
               holds: [...backpack.container.holds],
-              contains: [potion]
+              contains: []
             }
-          }
+          },
+          potion
         ]
       });
     });

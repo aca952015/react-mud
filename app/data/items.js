@@ -4,8 +4,9 @@ import {restoreStat} from '../actions/item-actions.js';
 
 class Item {
   constructor(properties) {
-    Object.keys(properties).forEach(property => this[property] = properties[property]);
-    this.id = Math.floor(Math.random() * 1000000000);
+    let someObj = JSON.parse(JSON.stringify(properties));
+    someObj.id = Math.floor(Math.random() * 1000000000);
+    return someObj;
   }
 }
 
