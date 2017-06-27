@@ -59,4 +59,16 @@ describe('put', () => {
       });
     });
   });
+
+  describe('With a valid type and target', () => {
+    describe('With dot notation', () => {
+      it('should trigger a forceDrop event', done => {
+        player1.emit('put', {...putObj, container: '2.backpack'});
+        player1.on('forceDrop', res => {
+          expect(res).toEqual({...putObj.item, drink: res.drink});
+          done();
+        });
+      });
+    });
+  });
 });
