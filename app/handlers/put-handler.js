@@ -6,7 +6,7 @@ import {addToContainer} from '../actions/inventory-actions.js';
 export default function putHandler(command, args, socket, props) {
   let splitArgs = args.split(' ');
   if (splitArgs.length > 2) splitArgs.splice(1, 1);
-  if (splitArgs.length < 2) return {funcsToCall: [newMessage], feedback: 'Put what where? (format: PUT <item> <target> or PUT <item> IN <target>)'};
+  if (!args || splitArgs.length < 2) return {funcsToCall: [newMessage], feedback: 'Put what where? (format: PUT <item> <target> or PUT <item> IN <target>)'};
 
   let dotNotation = splitArgs[0].split('.');
   let putItem = dotNotation.length > 1 ? props.inventory.filter(item => item.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :

@@ -17,4 +17,13 @@ describe('putHandler', () => {
       });
     });
   });
+
+  describe('With an item the user isn\'t carrying', () => {
+    it('should return feedback that they aren\'t carrying it', () => {
+      expect(putHandler('put', 'bob backpack', null, props)).toEqual({
+        ...defaultObj,
+        feedback: 'You don\'t seem to be carrying that.'
+      });
+    });
+  });
 });
