@@ -7,7 +7,7 @@ import putHandler from '../../app/handlers/put-handler.js';
 
 describe('putHandler', () => {
   let defaultObj = {funcsToCall: [newMessage]};
-  let props = {inventory: [newItem('health potion'), newItem('health potion'), newItem('backpack'), newItem('backpack')]};
+  let props = {inventory: [newItem('health potion'), newItem('health potion'), newItem('backpack'), newItem('backpack'), newItem('corpse')]};
 
   describe('With too few arguments', () => {
     it('should return feedback with a syntax error', () => {
@@ -32,6 +32,15 @@ describe('putHandler', () => {
       expect(putHandler('put', 'backpack backpack', null, props)).toEqual({
         ...defaultObj,
         feedback: 'You can\'t put a container inside itself.'
+      });
+    });
+  });
+
+  describe('Attempting to put an invalid item type into a container', () => {
+    it('should return that you can\'t do that', () => {
+      expect(putHandler('put', 'corpse backpack', null, props)).toEqual({
+        ...defaultObj,
+        feedback: 'That container doesn\'t hold that type of item.'
       });
     });
   });
@@ -100,10 +109,10 @@ describe('putHandler', () => {
 
   describe('In a container the user is not carrying', () => {
     it('should return a put object with just the item and target', () => {
-      expect(putHandler('put', 'potion corpse', null, props)).toEqual({
+      expect(putHandler('put', 'potion satchel', null, props)).toEqual({
         emitType: 'put',
         item: props.inventory[0],
-        container: 'corpse'
+        container: 'satchel'
       });
     });
   });
