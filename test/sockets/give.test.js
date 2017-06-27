@@ -52,4 +52,16 @@ describe('give', () => {
       });
     });
   });
+
+  describe('To a valid player in the same room', () => {
+    it('should emit a generalMessage event', done => {
+      player1.emit('give', {...giveObj, target: 'player2'});
+      player2.on('generalMessage', res => {
+        expect(res.from).toEqual('player1');
+        expect(res.interaction).toEqual(` gives ${giveObj.item.short} to `);
+        expect(res.target).toEqual('player2');
+        done();
+      });
+    });
+  });
 });
