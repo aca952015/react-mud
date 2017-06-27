@@ -39,5 +39,17 @@ describe('putHandler', () => {
         });
       });
     });
+
+    describe('With dot notation on the item and on the container', () => {
+      it('should return a put object with addToContainer and newMessage funcsToCall', () => {
+        expect(putHandler('put', '2.potion 2.backpack', null, props)).toEqual({
+          emitType: 'put',
+          item: props.inventory[1],
+          target: props.inventory[3],
+          funcsToCall: [newMessage, addToContainer],
+          feedback: `You put ${props.inventory[1].short} in ${props.inventory[3].short}.`
+        });
+      });
+    });
   });
 });
