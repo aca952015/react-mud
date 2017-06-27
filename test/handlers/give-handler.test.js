@@ -6,7 +6,7 @@ import {newMessage} from '../../app/actions/message-actions.js';
 import {dropItem} from '../../app/actions/inventory-actions.js';
 
 describe('giveHandler', () => {
-  let props = {inventory: [newItem('health potion')]};
+  let props = {inventory: [newItem('health potion')], username: 'duder'};
 
   let defaultObj = {funcsToCall: [newMessage]};
   describe('Without the correct number of arguments', () => {
@@ -59,6 +59,15 @@ describe('giveHandler', () => {
           item: props.inventory[1],
           target: 'bob'
         });
+      });
+    });
+  });
+
+  describe('To yourself', () => {
+    it('should return a feedback error', () => {
+      expect(giveHandler('give', 'potion DuDer', null, props)).toEqual({
+        ...defaultObj,
+        feedback: 'You can\'t give items to yourself.'
       });
     });
   });
