@@ -110,6 +110,16 @@ describe('getHandler', () => {
           });
         });
       });
+
+      describe('With optional FROM clause', () => {
+        it('should return a getFromContainer emit event', () => {
+          expect(getHandler('get', 'potion from satchel', null, props)).toEqual({
+            emitType: 'getFromContainer',
+            item: 'potion',
+            container: 'satchel'
+          });
+        });
+      });
     });
   });
 });
