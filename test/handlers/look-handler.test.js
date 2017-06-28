@@ -25,4 +25,13 @@ describe('lookHandler', () => {
       });
     });
   });
+
+  describe('With args, but not IN', () => {
+    it('should return a look with target of args', () => {
+      expect(lookHandler('look', 'bob', null, props)).toEqual({
+        emitType: 'look',
+        target: 'bob'
+      });
+    });
+  });
 });
