@@ -133,6 +133,16 @@ describe('pickUpItem', () => {
           });
         });
       });
+
+      describe('With a valid item, but invalid pickup type', () => {
+        it('should return feedback that that item can\'t be picked up', done => {
+          player1.emit('getFromContainer', {item: 'corpse', container: 'backpack'});
+          player1.on('generalMessage', res => {
+            expect(res.feedback).toEqual('You can\'t pick that up.');
+            done();
+          });
+        });
+      });
     });
   });
 });
