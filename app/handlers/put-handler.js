@@ -23,7 +23,7 @@ export default function putHandler(command, args, socket, props) {
 
   if (target) {
     return {
-      emitType: 'put',
+      emitType: 'putInInventory',
       item: putItem,
       container: target,
       funcsToCall: [newMessage, addToContainer],

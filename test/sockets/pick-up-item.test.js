@@ -148,8 +148,8 @@ describe('pickUpItem', () => {
         describe('With valid type, dot notation on item, but not container', () => {
           it('should return an itemPickedUp event', done => {
             player1.emit('getFromContainer', {item: '2.potion', container: 'backpack'});
-            player1.on('itemPickedUp', res => {
-              expect(res.item).toEqual({...newItem('mana potion'), drink: res.item.drink, id: res.item.id});
+            player1.on('forceGet', res => {
+              expect(res).toEqual({...newItem('mana potion'), drink: res.drink, id: res.id});
               done();
             });
           });
@@ -158,8 +158,8 @@ describe('pickUpItem', () => {
         describe('With valid type, dot notation on item and on container', () => {
           it('should return an itemPickedUp event', done => {
             player1.emit('getFromContainer', {item: '2.potion', container: '2.backpack'});
-            player1.on('itemPickedUp', res => {
-              expect(res.item).toEqual({...newItem('mana potion'), drink: res.item.drink, id: res.item.id});
+            player1.on('forceGet', res => {
+              expect(res).toEqual({...newItem('mana potion'), drink: res.drink, id: res.id});
               done();
             });
           });
@@ -168,8 +168,8 @@ describe('pickUpItem', () => {
         describe('With valid type, dot notation on container, but not on item', () => {
           it('should return an itemPickedUp event', done => {
             player1.emit('getFromContainer', {item: 'potion', container: 'backpack'});
-            player1.on('itemPickedUp', res => {
-              expect(res.item).toEqual({...newItem('health potion'), drink: res.item.drink, id: res.item.id});
+            player1.on('forceGet', res => {
+              expect(res).toEqual({...newItem('health potion'), drink: res.drink, id: res.id});
               done();
             });
           });
@@ -178,8 +178,8 @@ describe('pickUpItem', () => {
         describe('No dot notation', () => {
           it('should return an itemPickedUp event', done => {
             player1.emit('getFromContainer', {item: 'potion', container: 'backpack'});
-            player1.on('itemPickedUp', res => {
-              expect(res.item).toEqual({...newItem('health potion'), drink: res.item.drink, id: res.item.id});
+            player1.on('forceGet', res => {
+              expect(res).toEqual({...newItem('health potion'), drink: res.drink, id: res.id});
               done();
             });
           });

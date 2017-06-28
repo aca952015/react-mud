@@ -58,7 +58,7 @@ describe('putHandler', () => {
     describe('With dot notation on the item, but not the container', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {
         expect(putHandler('put', '2.potion backpack', null, props)).toEqual({
-          emitType: 'put',
+          emitType: 'putInInventory',
           item: props.inventory[1],
           container: props.inventory[2],
           funcsToCall: [newMessage, addToContainer],
@@ -70,7 +70,7 @@ describe('putHandler', () => {
     describe('With dot notation on the item and on the container', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {
         expect(putHandler('put', '2.potion 2.backpack', null, props)).toEqual({
-          emitType: 'put',
+          emitType: 'putInInventory',
           item: props.inventory[1],
           container: props.inventory[3],
           funcsToCall: [newMessage, addToContainer],
@@ -82,7 +82,7 @@ describe('putHandler', () => {
     describe('With dot notation on the container, but not the item', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {
         expect(putHandler('put', 'potion 2.backpack', null, props)).toEqual({
-          emitType: 'put',
+          emitType: 'putInInventory',
           item: props.inventory[0],
           container: props.inventory[3],
           funcsToCall: [newMessage, addToContainer],
@@ -94,7 +94,7 @@ describe('putHandler', () => {
     describe('With normal targeting for all', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {
         expect(putHandler('put', 'potion backpack', null, props)).toEqual({
-          emitType: 'put',
+          emitType: 'putInInventory',
           item: props.inventory[0],
           container: props.inventory[2],
           funcsToCall: [newMessage, addToContainer],
@@ -106,7 +106,7 @@ describe('putHandler', () => {
     describe('With optional IN parameter', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {
         expect(putHandler('put', '2.potion in backpack', null, props)).toEqual({
-          emitType: 'put',
+          emitType: 'putInInventory',
           item: props.inventory[1],
           container: props.inventory[2],
           funcsToCall: [newMessage, addToContainer],

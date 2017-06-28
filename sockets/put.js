@@ -11,7 +11,7 @@ export default function put(socket, roomData) {
 
     socket.emit('forceDrop', putObj.item);
     socket.emit('generalMessage', {feedback: `You put ${putObj.item.short} in ${container.short}.`});
-    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} puts ${putObj.item.short} in ${container.short}.`});
+    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` puts ${putObj.item.short} in ${container.short}.`});
 
     container.container.contains.push(putObj.item);
   });
