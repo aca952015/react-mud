@@ -7,7 +7,7 @@ export default function lookHandler(command, args, socket, props) {
   let splitArgs = args.split(' ');
   if (splitArgs[0] !== 'in') return {emitType: 'look', target: args};
   if (splitArgs.length < 2) return {funcsToCall: [newMessage], feedback: 'Look in what? (format: LOOK IN <container>)'};
-  let dotNotation = splitArgs[0].split('.');
+  let dotNotation = splitArgs[1].split('.');
 
   let container = dotNotation.length > 1 ? props.inventory.filter(_container => _container.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
                                            props.inventory.find(_container => _container.terms.includes(splitArgs[1]));

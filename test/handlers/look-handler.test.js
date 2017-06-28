@@ -13,7 +13,13 @@ describe('lookHandler', () => {
           contains: [newItem('health potion')]
         }
       },
-      newItem('gallows key')
+      newItem('gallows key'),
+      {
+        ...newItem('backpack'),
+        container: {
+          contains: [newItem('health potion')]
+        }
+      }
     ]
   };
 
@@ -42,6 +48,15 @@ describe('lookHandler', () => {
           expect(lookHandler('look', 'in key', null, props)).toEqual({
             funcsToCall: [newMessage],
             feedback: 'That isn\'t a container.'
+          });
+        });
+      });
+
+      describe('With dot notation', () => {
+        it('should return a newMessage with containedItems', () => {
+          expect(lookHandler('look', 'in 2.backpack', null, props)).toEqual({
+            funcsToCall: [newMessage],
+            containedItems: props.inventory[2].container.contains
           });
         });
       });
