@@ -34,4 +34,17 @@ describe('lookHandler', () => {
       });
     });
   });
+
+  describe('With args and with IN', () => {
+    describe('Targeting an item the user is carrying', () => {
+      describe('That is not a container', () => {
+        it('should return feedback that it isn\'t a container', () => {
+          expect(lookHandler('look', 'in key', null, props)).toEqual({
+            funcsToCall: [newMessage],
+            feedback: 'That isn\'t a container.'
+          });
+        });
+      });
+    });
+  });
 });
