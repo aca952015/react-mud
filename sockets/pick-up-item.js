@@ -34,8 +34,7 @@ export default function pickUpItem(socket, roomData) {
                                              roomData[socket.currentRoom].items.find(item => item.terms.includes(getObj.container));
     if (!container) return socket.emit('generalMessage', {feedback: 'I don\'t see that container here.'});
     if (!container.container) return socket.emit('generalMessage', {feedback: 'That isn\'t a container.'});
-    if (!container.container.holds.includes(getObj.item.type)) return socket.emit('generalMessage', {feedback: 'That container doesn\'t hold that type of item.'});
-
+    
     dotNotation = getObj.item.split('.');
     let item = dotNotation.length > 1 ? container.container.contains.filter(_item => _item.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
                                         container.container.contains.find(_item => _item.terms.includes(getObj.item));

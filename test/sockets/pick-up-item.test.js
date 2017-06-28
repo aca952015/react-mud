@@ -122,5 +122,17 @@ describe('pickUpItem', () => {
         });
       });
     });
+
+    describe('With a valid container', () => {
+      describe('With an invalid item', () => {
+        it('should return feedback that the item isn\'t found', done => {
+          player1.emit('getFromContainer', {item: 'key', container: 'backpack'});
+          player1.on('generalMessage', res => {
+            expect(res.feedback).toEqual('I don\'t see that item in that container.');
+            done();
+          });
+        });
+      });
+    });
   });
 });
