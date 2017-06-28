@@ -101,4 +101,16 @@ describe('pickUpItem', () => {
       });
     });
   });
+
+  describe('From a container', () => {
+    describe('With a container that doesn\'t exist', () => {
+      it('should return feedback of not seeing it', done => {
+        player1.emit('getFromContainer', {item: 'satchel', container: 'bush'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('I don\'t see that container here.');
+          done();
+        });
+      });
+    });
+  });
 });
