@@ -30,6 +30,7 @@ export default function socketHandlers(homeCtx) {
   socket.on('movementArrive', movement => props.dispatch(newMessage(moveProcessor(movement))));
   socket.on('pickUpItem', room => props.dispatch(newMessage(itemPickUpProcessor(room, socket))));
   socket.on('forceDrop', item => props.dispatch(dropItem({item})));
+  socket.on('forceGet', item => props.dispatch(getItem(item)));
   socket.on('itemPickedUp', itemAndRoom => {
     props.dispatch(newMessage({feedback: `You pick up ${itemAndRoom.item.short}.`}));
     props.dispatch(getItem(itemAndRoom.item));

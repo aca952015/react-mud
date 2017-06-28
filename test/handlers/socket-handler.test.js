@@ -227,4 +227,14 @@ describe('socketHandlers', () => {
       });
     });
   });
+
+  describe('forceGet', () => {
+    it('should dispatch getItem with the item returned', done => {
+      player1.emit('getFromContainer', {item: 'potion', container: 'backpack'});
+      player1.on('forceGet', item => {
+        expect(props.dispatch.calledWith(getItem(item))).toEqual(true);
+        done();
+      });
+    });
+  });
 });
