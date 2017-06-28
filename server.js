@@ -9,6 +9,7 @@ const webpackConfig = require('./webpack.config.js');
 import whisper from './sockets/whisper.js';
 import movement from './sockets/movement.js';
 import look from './sockets/look.js';
+import lookInContainer from './sockets/look-in-container.js';
 import give from './sockets/give.js';
 import pickUpItem from './sockets/pick-up-item.js';
 import dropItem from './sockets/drop-item.js';
@@ -60,6 +61,7 @@ io.on('connection', socket => {
   damage(socket, roomData, mobsInCombat);
   give(socket, users);
   put(socket, roomData);
+  lookInContainer(socket, roomData);
 });
 
 server.listen(PORT);

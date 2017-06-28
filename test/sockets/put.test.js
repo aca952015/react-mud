@@ -12,6 +12,7 @@ describe('put', () => {
     item: newItem('health potion')
   };
 
+  require('../lib/test-server.js');
   beforeEach(done => {
     player1 = io.connect('http://0.0.0.0:5000', ioOptions);
     player1.on('connect', () => {
