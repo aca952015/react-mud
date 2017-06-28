@@ -134,12 +134,24 @@ describe('pickUpItem', () => {
         });
       });
 
-      describe('With a valid item, but invalid pickup type', () => {
-        it('should return feedback that that item can\'t be picked up', done => {
-          player1.emit('getFromContainer', {item: 'corpse', container: 'backpack'});
-          player1.on('generalMessage', res => {
-            expect(res.feedback).toEqual('You can\'t pick that up.');
-            done();
+      describe('With a valid item', () => {
+        describe('With an invalid pickup type', () => {
+          it('should return feedback that that item can\'t be picked up', done => {
+            player1.emit('getFromContainer', {item: 'corpse', container: 'backpack'});
+            player1.on('generalMessage', res => {
+              expect(res.feedback).toEqual('You can\'t pick that up.');
+              done();
+            });
+          });
+        });
+
+        describe('With valid type, dot notation on item, but not container', () => {
+          it('should return an itemPickedUp event', done => {
+            player1.emit('getFromContainer', {item: '2.potion', container: 'backpack'});
+            player1.on('itemPickedUp', res => {
+              expect(res.item).toEqual({...newItem('mana potion'), drink: res.item.drink, id: res.item.id});
+              done();
+            });
           });
         });
       });
