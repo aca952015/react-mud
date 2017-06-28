@@ -45,4 +45,14 @@ describe('lookInContainer', () => {
       });
     });
   });
+
+  describe('With a valid target', () => {
+    it('should return containedItems', done => {
+      player1.emit('lookInContainer', {container: 'corpse'});
+      player1.on('generalMessage', res => {
+        expect(res.containedItems).toEqual([]);
+        done();
+      });
+    });
+  });
 });
