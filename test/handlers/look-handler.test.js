@@ -42,6 +42,15 @@ describe('lookHandler', () => {
   });
 
   describe('With args and with IN', () => {
+    describe('Without a proper target', () => {
+      it('should return feedback asking to look in what?', () => {
+        expect(lookHandler('look', 'in', null, props)).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'Look in what? (format: LOOK IN <container>)'
+        });
+      });
+    });
+
     describe('Targeting an item the user is carrying', () => {
       describe('That is not a container', () => {
         it('should return feedback that it isn\'t a container', () => {
