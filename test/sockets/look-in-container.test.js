@@ -35,4 +35,14 @@ describe('lookInContainer', () => {
       });
     });
   });
+
+  describe('With a target that isn\'t a container', () => {
+    it('should return feedback saying so', done => {
+      player1.emit('lookInContainer', {container: 'key'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('That isn\'t a container.');
+        done();
+      });
+    });
+  });
 });
