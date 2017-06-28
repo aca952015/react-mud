@@ -4,6 +4,7 @@ class Mob {
   constructor(properties) {
     let someObj = JSON.parse(JSON.stringify(properties));
     someObj.id = Math.floor(Math.random() * 1000000000);
+    return someObj;
   }
 }
 
