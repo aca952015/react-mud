@@ -112,5 +112,15 @@ describe('pickUpItem', () => {
         });
       });
     });
+
+    describe('With an item that isn\'t a container', () => {
+      it('should return feedback that it isn\'t a container', done => {
+        player1.emit('getFromContainer', {item: 'potion', container: 'key'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('That isn\'t a container.');
+          done();
+        });
+      });
+    });
   });
 });
