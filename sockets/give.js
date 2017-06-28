@@ -2,7 +2,7 @@
 
 export default function give(socket, users) {
   socket.on('give', giveObj => {
-    let target = users.find(user => user.username.toLowerCase() === giveObj.target.toLowerCase());
+    let target = users.find(user => user.username && user.username.toLowerCase() === giveObj.target.toLowerCase());
     if (!target || target.currentRoom !== socket.currentRoom) return socket.emit('generalMessage', {feedback: 'I don\'t see that person here.'});
 
     let room = {
