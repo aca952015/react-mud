@@ -60,6 +60,15 @@ describe('lookHandler', () => {
           });
         });
       });
+
+      describe('With normal targeting', () => {
+        it('should return a newMessage with containedItems', () => {
+          expect(lookHandler('look', 'in backpack', null, props)).toEqual({
+            funcsToCall: [newMessage],
+            containedItems: props.inventory[0].container.contains
+          });
+        });
+      });
     });
   });
 });
