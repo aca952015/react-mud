@@ -3,6 +3,7 @@
 import io from 'socket.io-client';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
+import newItem from '../../app/data/items.js';
 
 describe('lookInContainer', () => {
   let player1;
@@ -51,6 +52,27 @@ describe('lookInContainer', () => {
       player1.emit('lookInContainer', {container: 'corpse'});
       player1.on('generalMessage', res => {
         expect(res.containedItems).toEqual([]);
+        done();
+      });
+    });
+  });
+
+  describe('With dot notation', () => {
+    it('should return containedItems', done => {
+      player1.emit('lookInContainer', {container: '2.backpack'});
+      player1.on('generalMessage', res => {
+        expect(res.containedItems).toEqual([
+          {
+            ...newItem('health potion'),
+            id: res.containedItems[0].id,
+            drink: res.containedItems[0].drink
+          },
+          {
+            ...newItem('mana potion'),
+            id: res.containedItems[1].id,
+            drink: res.containedItems[1].drink
+          }
+        ]);
         done();
       });
     });
