@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import {Room} from '../components/room.jsx';
 import {Occupants} from '../components/occupants.jsx';
 import {Mobs} from '../components/mobs.jsx';
+import {Containers} from '../components/containers.jsx';
 import {OnlineUsers} from '../components/online-users.jsx';
 import {Feedback} from '../components/feedback.jsx';
 import {Communication} from '../components/communication.jsx';
@@ -40,6 +41,7 @@ export default class Messages extends Component {
         {message.occupants ? <Occupants message={message}/> : null}
         {message.mobs ? <Mobs message={message}/> : null}
         {message.combatLog ? <CombatLog message={message}/> : null}
+        {message.containedItems ? <Containers message={message}/> : null}
         {message.onlineUsers ? <OnlineUsers message={message}/> : null}
         {message.commType ? <Communication username={this.props.username} message={message}/> : null}
         {message.helpObj ? <HelpFile message={message}/> : null}
