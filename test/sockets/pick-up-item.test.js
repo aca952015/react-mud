@@ -154,6 +154,16 @@ describe('pickUpItem', () => {
             });
           });
         });
+
+        describe('With valid type, dot notation on item and on container', () => {
+          it('should return an itemPickedUp event', done => {
+            player1.emit('getFromContainer', {item: '2.potion', container: '2.backpack'});
+            player1.on('itemPickedUp', res => {
+              expect(res.item).toEqual({...newItem('mana potion'), drink: res.item.drink, id: res.item.id});
+              done();
+            });
+          });
+        });
       });
     });
   });

@@ -27,7 +27,13 @@ export const roomData = {
           holds: ['items']
         }
       },
-      newItem('backpack'),
+      {
+        ...newItem('backpack'),
+        container: {
+          contains: [newItem('health potion'), newItem('mana potion')],
+          holds: ['items']
+        }
+      },
       newItem('health potion'),
       newItem('gallows key'),
       newItem('health potion'),
