@@ -1,6 +1,7 @@
 'use strict';
 
 import reducer from '../../app/reducers/user-reducer.js';
+import newItem from '../../app/data/items.js';
 
 describe('user reducer', () => {
   const initialState = {
@@ -121,6 +122,68 @@ describe('user reducer', () => {
   describe('DAMAGE_USER', () => {
     it('should reduce the user\'s HP by the damage in the payload', () => {
       expect(reducer(initialState, {type: 'DAMAGE_USER', payload: 2})).toEqual({...initialState, hp: 13});
+    });
+  });
+
+  describe('ADD_TO_CONTAINER', () => {
+    it('should add an item to the correct container', () => {
+      let potion = newItem('health potion');
+      let backpack = newItem('backpack');
+      expect(reducer(
+        {
+          ...initialState,
+          inventory: [potion, backpack]
+        },
+        {
+          type: 'ADD_TO_CONTAINER',
+          payload: {
+            item: potion,
+            container: backpack
+          }
+        }
+      )).toEqual({
+        ...initialState,
+        inventory: [{
+          ...backpack,
+          container: {
+            holds: [...backpack.container.holds],
+            contains: [potion]
+          }
+        }]
+      });
+    });
+  });
+
+  describe('GET_FROM_CONTAINER', () => {
+    it('should add an item to the inventory from a container', () => {
+      let potion = newItem('health potion');
+      let backpack = newItem('backpack');
+      backpack.container.contains.push(potion);
+      expect(reducer(
+        {
+          ...initialState,
+          inventory: [backpack]
+        },
+        {
+          type: 'GET_FROM_CONTAINER',
+          payload: {
+            item: potion,
+            container: backpack
+          }
+        }
+      )).toEqual({
+        ...initialState,
+        inventory: [
+          {
+            ...backpack,
+            container: {
+              holds: [...backpack.container.holds],
+              contains: []
+            }
+          },
+          potion
+        ]
+      });
     });
   });
 });

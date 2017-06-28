@@ -8,6 +8,7 @@ import newItem from '../../app/data/items.js';
 describe('give', () => {
   let player1, player2, alien;
   let giveObj = {item: newItem('health potion')};
+  require('../lib/test-server.js');
 
   beforeEach(done => {
     player1 = io.connect('http://0.0.0.0:5000', ioOptions);

@@ -28,7 +28,7 @@ describe('drinkHandler', () => {
         emitType: 'drink',
         item: props.inventory[2],
         quietAdd: {...
-          newItem('empty flask'),
+          newItem('glass flask'),
           id: response.quietAdd.id
         }
       });
@@ -46,7 +46,7 @@ describe('drinkHandler', () => {
         emitType: 'drink',
         item: props.inventory[0],
         quietAdd: {
-          ...newItem('empty flask'),
+          ...newItem('glass flask'),
           id: response.quietAdd.id
         }
       });

@@ -20,3 +20,23 @@ export function quietlyAddItem(item) {
     payload: item.quietAdd
   };
 }
+
+export function addToContainer(result) {
+  return {
+    type: 'ADD_TO_CONTAINER',
+    payload: {
+      item: result.item,
+      container: result.container
+    }
+  };
+}
+
+export function getFromContainer(result) {
+  return {
+    type: 'GET_FROM_CONTAINER',
+    payload: {
+      item: result.item,
+      container: result.container
+    }
+  };
+}

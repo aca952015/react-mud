@@ -8,6 +8,8 @@ import pickUpItem from '../../sockets/pick-up-item.js';
 import unlock from '../../sockets/unlock.js';
 import kill from '../../sockets/kill.js';
 import damage from '../../sockets/damage.js';
+import lookInContainer from '../../sockets/look-in-container.js';
+import put from '../../sockets/put.js';
 import give from '../../sockets/give.js';
 import whisper from '../../sockets/whisper.js';
 import mobTargetSelector from '../../sockets/mob-target-selector.js';
@@ -47,6 +49,8 @@ io.sockets.on('connection', function(socket) {
   kill(socket, roomData, mobsInCombat);
   damage(socket, roomData, mobsInCombat);
   give(socket, users);
+  lookInContainer(socket, roomData);
+  put(socket, roomData);
 });
 
 export default function closeServer() {

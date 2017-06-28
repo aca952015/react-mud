@@ -2,8 +2,9 @@
 
 class Mob {
   constructor(properties) {
-    Object.keys(properties).forEach(prop => this[prop] = properties[prop]);
-    this.id = Math.floor(Math.random() * 1000000000);
+    let someObj = JSON.parse(JSON.stringify(properties));
+    someObj.id = Math.floor(Math.random() * 1000000000);
+    return someObj;
   }
 }
 

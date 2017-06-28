@@ -18,7 +18,27 @@ export const roomData = {
         locked: false
       }
     },
-    items: [newItem('health potion'), newItem('gallows key'), newItem('health potion'), newItem('tester key'), newItem('mana potion')],
+    items: [
+      newItem('corpse'),
+      {
+        ...newItem('backpack'),
+        container: {
+          contains: [newItem('corpse'), newItem('health potion'), newItem('mana potion')],
+          holds: ['items']
+        }
+      },
+      {
+        ...newItem('backpack'),
+        container: {
+          contains: [newItem('health potion'), newItem('mana potion')],
+          holds: ['items']
+        }
+      },
+      newItem('health potion'),
+      newItem('gallows key'),
+      newItem('health potion'),
+      newItem('tester key'),
+      newItem('mana potion')],
     examines: [{
       name: 'test examine',
       terms: ['test'],
@@ -53,7 +73,7 @@ export const roomData = {
         requiredKey: itemData['gallows key']
       }
     },
-    items: [newItem('useless key')],
+    items: [newItem('useless key'), newItem('backpack')],
     mobs: [newMob('bat'), newMob('bat')]
   },
   'Gallows': {

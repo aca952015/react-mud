@@ -1,6 +1,6 @@
 'use strict';
 
-import {getItem, dropItem, quietlyAddItem} from '../../app/actions/inventory-actions.js';
+import {getItem, dropItem, quietlyAddItem, addToContainer, getFromContainer} from '../../app/actions/inventory-actions.js';
 
 describe('inventory actions', () => {
   describe('getItem', () => {
@@ -18,6 +18,18 @@ describe('inventory actions', () => {
   describe('quietlyAddItem', () => {
     it('should return an object with type QUIETLY_ADD_ITEM and payload of the quietAdd property', () => {
       expect(quietlyAddItem({item: 'dude', quietAdd: 'ayyy'})).toEqual({type: 'QUIETLY_ADD_ITEM', payload: 'ayyy'});
+    });
+  });
+
+  describe('addToContainer', () => {
+    it('should return an object with type ADD_TO_CONTAINER and a payload with item and container properties', () => {
+      expect(addToContainer({item: 'bob', container: 'bag'})).toEqual({type: 'ADD_TO_CONTAINER', payload: {item: 'bob', container: 'bag'}});
+    });
+  });
+
+  describe('getFromContainer', () => {
+    it('should return an object with type GET_FROM_CONTAINER and a payload with item and container properties', () => {
+      expect(getFromContainer({item: 'bob', container: 'bag'})).toEqual({type: 'GET_FROM_CONTAINER', payload: {item: 'bob', container: 'bag'}});
     });
   });
 });

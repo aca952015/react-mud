@@ -91,4 +91,100 @@ describe('pickUpItem', () => {
       });
     });
   });
+
+  describe('On an item of an invalid type', () => {
+    it('should return a feedback of not being able to pick it up', done => {
+      player1.emit('pickUpItem', {item: 'corpse'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('You can\'t pick that up.');
+        done();
+      });
+    });
+  });
+
+  describe('From a container', () => {
+    describe('With a container that doesn\'t exist', () => {
+      it('should return feedback of not seeing it', done => {
+        player1.emit('getFromContainer', {item: 'satchel', container: 'bush'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('I don\'t see that container here.');
+          done();
+        });
+      });
+    });
+
+    describe('With an item that isn\'t a container', () => {
+      it('should return feedback that it isn\'t a container', done => {
+        player1.emit('getFromContainer', {item: 'potion', container: 'key'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('That isn\'t a container.');
+          done();
+        });
+      });
+    });
+
+    describe('With a valid container', () => {
+      describe('With an invalid item', () => {
+        it('should return feedback that the item isn\'t found', done => {
+          player1.emit('getFromContainer', {item: 'key', container: 'backpack'});
+          player1.on('generalMessage', res => {
+            expect(res.feedback).toEqual('I don\'t see that item in that container.');
+            done();
+          });
+        });
+      });
+
+      describe('With a valid item', () => {
+        describe('With an invalid pickup type', () => {
+          it('should return feedback that that item can\'t be picked up', done => {
+            player1.emit('getFromContainer', {item: 'corpse', container: 'backpack'});
+            player1.on('generalMessage', res => {
+              expect(res.feedback).toEqual('You can\'t pick that up.');
+              done();
+            });
+          });
+        });
+
+        describe('With valid type, dot notation on item, but not container', () => {
+          it('should return an itemPickedUp event', done => {
+            player1.emit('getFromContainer', {item: '2.potion', container: 'backpack'});
+            player1.on('forceGet', res => {
+              expect(res).toEqual({...newItem('mana potion'), drink: res.drink, id: res.id});
+              done();
+            });
+          });
+        });
+
+        describe('With valid type, dot notation on item and on container', () => {
+          it('should return an itemPickedUp event', done => {
+            player1.emit('getFromContainer', {item: '2.potion', container: '2.backpack'});
+            player1.on('forceGet', res => {
+              expect(res).toEqual({...newItem('mana potion'), drink: res.drink, id: res.id});
+              done();
+            });
+          });
+        });
+
+        describe('With valid type, dot notation on container, but not on item', () => {
+          it('should return an itemPickedUp event', done => {
+            player1.emit('getFromContainer', {item: 'potion', container: 'backpack'});
+            player1.on('forceGet', res => {
+              expect(res).toEqual({...newItem('health potion'), drink: res.drink, id: res.id});
+              done();
+            });
+          });
+        });
+
+        describe('No dot notation', () => {
+          it('should return an itemPickedUp event', done => {
+            player1.emit('getFromContainer', {item: 'potion', container: 'backpack'});
+            player1.on('forceGet', res => {
+              expect(res).toEqual({...newItem('health potion'), drink: res.drink, id: res.id});
+              done();
+            });
+          });
+        });
+      });
+    });
+  });
 });

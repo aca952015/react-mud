@@ -5,7 +5,9 @@ import movementHandler from './movement-handler.js';
 import getHandler from './get-handler.js';
 import dropHandler from './drop-handler.js';
 import lockHandler from './lock-handler.js';
+import lookHandler from './look-handler.js';
 import giveHandler from './give-handler.js';
+import putHandler from './put-handler.js';
 import helpHandler from './help-handler.js';
 import drinkHandler from './drink-handler.js';
 import examineHandler from './examine-handler.js';
@@ -34,7 +36,7 @@ export default function commandHandler(command, args, props, socket) {
     'south': movementHandler,
     'up': movementHandler,
     'down': movementHandler,
-    'look': {emitType: 'look', target: args},
+    'look': lookHandler,
     'who': {emitType: 'who'},
     'get': getHandler,
     'drop': dropHandler,
@@ -45,6 +47,7 @@ export default function commandHandler(command, args, props, socket) {
     'give': giveHandler,
     'inventory': {funcsToCall: [newMessage], inventory: props.inventory},
     'examine': examineHandler,
+    'put': putHandler,
     'kill': {emitType: 'kill', target: args}
   };
 

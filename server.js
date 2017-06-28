@@ -9,9 +9,11 @@ const webpackConfig = require('./webpack.config.js');
 import whisper from './sockets/whisper.js';
 import movement from './sockets/movement.js';
 import look from './sockets/look.js';
+import lookInContainer from './sockets/look-in-container.js';
 import give from './sockets/give.js';
 import pickUpItem from './sockets/pick-up-item.js';
 import dropItem from './sockets/drop-item.js';
+import put from './sockets/put.js';
 import unlock from './sockets/unlock.js';
 import kill from './sockets/kill.js';
 import damage from './sockets/damage.js';
@@ -45,6 +47,8 @@ io.on('connection', socket => {
   socket.on('say', message => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {...message, commType: ' says, '}));
   socket.on('changeName', name => socket.username = name);
   socket.on('changeDescription', desc => socket.description = desc);
+  socket.on('putInContainer', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` puts ${item.item.short} in ${item.container.short}.`}));
+  socket.on('pickedFromInventory', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` gets ${item.item.short} from ${item.container.short}.`}));
   socket.on('drink', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` drinks ${item.item.short}.`}));
   socket.on('who', () => socket.emit('generalMessage', {onlineUsers: users.filter(user => user.username).map(user => `${user.username}`)}));
   pickUpItem(socket, roomData);
@@ -56,6 +60,8 @@ io.on('connection', socket => {
   kill(socket, roomData, mobsInCombat);
   damage(socket, roomData, mobsInCombat);
   give(socket, users);
+  put(socket, roomData);
+  lookInContainer(socket, roomData);
 });
 
 server.listen(PORT);
