@@ -70,5 +70,14 @@ describe('lookHandler', () => {
         });
       });
     });
+
+    describe('Targeting an item the user is not carrying', () => {
+      it('should return a lookInContainer emit', () => {
+        expect(lookHandler('look', 'in satchel', null, props)).toEqual({
+          emitType: 'lookInContainer',
+          container: 'satchel'
+        });
+      });
+    });
   });
 });
