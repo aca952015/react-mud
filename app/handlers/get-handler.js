@@ -25,7 +25,7 @@ export default function getHandler(command, args, socket, props) {
     if (!item) return {funcsToCall: [newMessage], feedback: 'I don\'t see that item in that container.'};
     if (invalidTypes[item.type]) return {funcsToCall: [newMessage], feedback: 'You can\'t pick that up.'};
     return {
-      emitType: 'getFromContainer',
+      emitType: 'pickedFromInventory',
       funcsToCall: [newMessage, getFromContainer],
       item,
       container,

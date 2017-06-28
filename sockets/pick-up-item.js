@@ -41,13 +41,8 @@ export default function pickUpItem(socket, roomData) {
     if (!item) return socket.emit('generalMessage', {feedback: 'I don\'t see that item in that container.'});
     if (invalidTypes[item.type]) return socket.emit('generalMessage', {feedback: 'You can\'t pick that up.'});
 
-    let room = {
-      item,
-      pickRoom: socket.currentRoom
-    };
-
     socket.emit('forceGet', item);
     socket.emit('generalMessage', {feedback: `You pick up ${item.short} from ${container.short}.`});
-    socket.broadcast.to(socket.currentRoom).emit('pickUpItem', {room, from: socket.username, container: container.short});
+    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` gets ${item.short} from ${container.short}.`});
   });
 }
