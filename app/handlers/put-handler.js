@@ -4,6 +4,7 @@ import {newMessage} from '../actions/message-actions.js';
 import {addToContainer} from '../actions/inventory-actions.js';
 
 export default function putHandler(command, args, socket, props) {
+  args = args.toLowerCase();
   let splitArgs = args.split(' ');
   if (splitArgs.length > 2) splitArgs.splice(1, 1);
   if (!args || splitArgs.length < 2) return {funcsToCall: [newMessage], feedback: 'Put what where? (format: PUT <item> <target> or PUT <item> IN <target>)'};
