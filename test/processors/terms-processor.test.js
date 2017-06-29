@@ -7,8 +7,22 @@ describe('termsProcessor', () => {
   let searchArray = [newItem('gallows key'), newItem('health potion'), newItem('mana potion')];
 
   describe('With dot notation', () => {
-    it('should return the item specified by the notation', () => {
-      expect(termsProcessor(searchArray, ['2', 'potion'])).toEqual(searchArray[2]);
+    describe('With the full term', () => {
+      it('should return the item specified by the notation', () => {
+        expect(termsProcessor(searchArray, ['2', 'potion'])).toEqual(searchArray[2]);
+      });
+    });
+
+    describe('With fuzzy matching', () => {
+      it('should return the item specified by the notation', () => {
+        expect(termsProcessor(searchArray, ['2', 'po'])).toEqual(searchArray[2]);
+      });
+    });
+
+    describe('With mixed case', () => {
+      it('should return the item specified by the notation', () => {
+        expect(termsProcessor(searchArray, ['2', 'pOtI'])).toEqual(searchArray[2]);
+      });
     });
   });
 
