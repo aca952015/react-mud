@@ -5,7 +5,7 @@ export default function kill(socket, roomData, mobsInCombat) {
     if (!targetObject.target) return socket.emit('generalMessage', {feedback: 'Kill what?'});
     targetObject.target = targetObject.target.toLowerCase();
     let splitArgs = targetObject.target.split('.');
-    let regEx = splitArgs.length > 1 ? new RegExp(splitArgs[1]) : new RegExp(splitArgs[0]);
+    let regEx = splitArgs.length > 1 ? new RegExp(`^${splitArgs[1]}`) : new RegExp(`^${splitArgs[0]}`);
 
     let target;
 

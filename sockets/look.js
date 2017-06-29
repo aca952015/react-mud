@@ -22,7 +22,7 @@ export default function look(socket, users, roomInfo) {
     if (args.target) {
       args.target = args.target.toLowerCase();
       let splitArgs = args.target.split('.');
-      let regEx = splitArgs.length > 1 ? new RegExp(splitArgs[1]) : new RegExp(splitArgs[0]);
+      let regEx = splitArgs.length > 1 ? new RegExp(`^${splitArgs[1]}`) : new RegExp(`^${splitArgs[0]}`);
       let lookTarget;
 
       if (splitArgs.length > 1) {
@@ -72,7 +72,7 @@ export default function look(socket, users, roomInfo) {
 
       if (room.examines) {
         lookTarget = room.examines.find(examine => {
-          regEx = new RegExp(args.target.toLowerCase());
+          regEx = new RegExp(`^${args.target}`, 'i');
           for (let i = 0; i < examine.terms.length; i++) {
             if (examine.terms[i].match(regEx)) return true;
           }
