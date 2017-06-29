@@ -69,11 +69,23 @@ describe('look', () => {
   });
 
   describe('With the user looking at an item', () => {
-    it('should show the item\'s description', done => {
-      player1.emit('look', {target: 'potion'});
-      player1.on('generalMessage', res => {
-        expect(res.feedback).toEqual(itemData['health potion'].description);
-        done();
+    describe('With fuzzy matching', () => {
+      it('should show the first matching item\'s description', done => {
+        player1.emit('look', {target: 'pot'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual(itemData['health potion'].description);
+          done();
+        });
+      });
+    });
+
+    describe('With the full term', () => {
+      it('should show the item\'s description', done => {
+        player1.emit('look', {target: 'potion'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual(itemData['health potion'].description);
+          done();
+        });
       });
     });
   });
@@ -90,11 +102,23 @@ describe('look', () => {
   });
 
   describe('With the user looking at a mob', () => {
-    it('should show the bat\'s description', done => {
-      player1.emit('look', {target: 'bat'});
-      player1.on('generalMessage', res => {
-        expect(res.feedback).toEqual(newMob('bat').description);
-        done();
+    describe('With fuzzy matching', () => {
+      it('should show the bat\'s description', done => {
+        player1.emit('look', {target: 'b'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual(newMob('bat').description);
+          done();
+        });
+      });
+    });
+
+    describe('With the full term', ()  => {
+      it('should show the bat\'s description', done => {
+        player1.emit('look', {target: 'bat'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual(newMob('bat').description);
+          done();
+        });
       });
     });
   });
@@ -111,18 +135,30 @@ describe('look', () => {
   });
 
   describe('With the user looking at an examine', () => {
-    it('should show player1 the examine description', done => {
-      player1.emit('look', {target: 'test'});
-      player1.on('generalMessage', res => {
-        expect(res.feedback).toEqual(roomData['Nexus'].examines[0].description);
-        done();
+    describe('With fuzzy matching', () => {
+      it('should show player1 the examine description', done => {
+        player1.emit('look', {target: 'zt'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual(roomData['Nexus'].examines[0].description);
+          done();
+        });
+      });
+    });
+
+    describe('With the full term', () => {
+      it('should show player1 the examine description', done => {
+        player1.emit('look', {target: 'ztest'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual(roomData['Nexus'].examines[0].description);
+          done();
+        });
       });
     });
   });
 
   describe('With the user seeing a player look at an examine', () => {
     it('should show "player1 looks at <examine name>."', done => {
-      player1.emit('look', {target: 'test'});
+      player1.emit('look', {target: 'ztest'});
       player2.on('generalMessage', res => {
         expect(res.feedback).toEqual(` looks at ${roomData['Nexus'].examines[0].name}.`);
         expect(res.from).toEqual('player1');

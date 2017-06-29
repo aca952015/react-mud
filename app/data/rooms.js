@@ -40,9 +40,9 @@ export const roomData = {
       newItem('tester key'),
       newItem('mana potion')],
     examines: [{
-      name: 'test examine',
-      terms: ['test'],
-      description: 'This is a test description. Why are you even looking at test?'
+      name: 'ztest',
+      terms: ['ztest'],
+      description: 'Really? Ztest? You thought to try looking at this?'
     }],
     mobs: [newMob('bat'), newMob('bat')]
   },
