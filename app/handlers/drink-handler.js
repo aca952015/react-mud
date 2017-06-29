@@ -3,14 +3,13 @@
 import {newMessage} from '../actions/message-actions.js';
 import {quietlyAddItem, dropItem} from '../actions/inventory-actions.js';
 import newItem, {itemData} from '../data/items.js';
+import termsProcessor from '../processors/terms-processor.js';
 
 export default function drinkHandler(command, args, socket, props) {
   if (!args) return {funcsToCall: [newMessage], feedback: 'Drink what?'};
   args = args.toLowerCase();
-  let index = 0;
-  if (args.split('.').length > 1) index = args.split('.')[0] - 1;
-  let itemToDrink = index > 0 ? props.inventory.filter(item => item.terms.includes(args.split('.')[1].toLowerCase()))[index] :
-                                props.inventory.find(item => item.terms.includes(args.toLowerCase()));
+
+  let itemToDrink = termsProcessor(props.inventory, args.split('.'));
   if (!itemToDrink) return {funcsToCall: [newMessage], feedback: 'You aren\'t carrying that.'};
   if (!itemToDrink.drink) return {funcsToCall: [newMessage], feedback: 'That isn\'t drinkable.'};
 
