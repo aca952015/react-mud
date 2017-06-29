@@ -48,7 +48,7 @@ export default function commandHandler(command, args, props, socket) {
     'inventory': {funcsToCall: [newMessage], inventory: props.inventory},
     'examine': examineHandler,
     'put': putHandler,
-    'kill': {emitType: 'kill', target: args}
+    'kill': {emitType: 'kill', target: args.toLowerCase()}
   };
 
   if (commandShorthand[command]) command = commandShorthand[command];
