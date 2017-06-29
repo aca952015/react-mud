@@ -1,27 +1,13 @@
 'use strict';
 
+import termsProcessor from '../app/processors/terms-processor.js';
+
 export default function kill(socket, roomData, mobsInCombat) {
   socket.on('kill', targetObject => {
     if (!targetObject.target) return socket.emit('generalMessage', {feedback: 'Kill what?'});
     targetObject.target = targetObject.target.toLowerCase();
-    let splitArgs = targetObject.target.split('.');
-    let regEx = splitArgs.length > 1 ? new RegExp(`^${splitArgs[1]}`) : new RegExp(`^${splitArgs[0]}`);
+    let target = termsProcessor(roomData[socket.currentRoom].mobs, targetObject.target.split('.'));
 
-    let target;
-
-    if (splitArgs.length > 1) {
-      target = roomData[socket.currentRoom].mobs.filter(mob => {
-        for (let i = 0; i < mob.terms.length; i++) {
-          if (mob.terms[i].match(regEx)) return true;
-        }
-      })[splitArgs[0] - 1];
-    } else {
-      target = roomData[socket.currentRoom].mobs.find(mob => {
-        for (let i = 0; i < mob.terms.length; i++) {
-          if (mob.terms[i].match(regEx)) return true;
-        }
-      });
-    }
     if (!target) return socket.emit('generalMessage', {feedback: 'I don\'t see that enemy here.'});
     socket.emit('enterCombat', target);
     target.combat = {
