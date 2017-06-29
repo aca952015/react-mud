@@ -27,8 +27,22 @@ describe('termsProcessor', () => {
   });
 
   describe('With normal targeting', () => {
-    it('should return the first match', () => {
-      expect(termsProcessor(searchArray, ['key'])).toEqual(searchArray[0]);
+    describe('With the full term', () => {
+      it('should return the first match', () => {
+        expect(termsProcessor(searchArray, ['key'])).toEqual(searchArray[0]);
+      });
+    });
+
+    describe('With fuzzy matching', () => {
+      it('should return the item specified by the notation', () => {
+        expect(termsProcessor(searchArray, ['ke'])).toEqual(searchArray[0]);
+      });
+    });
+
+    describe('With mixed case', () => {
+      it('should return the item specified by the notation', () => {
+        expect(termsProcessor(searchArray, ['Ke'])).toEqual(searchArray[0]);
+      });
     });
   });
 });
