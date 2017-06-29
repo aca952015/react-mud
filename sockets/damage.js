@@ -55,7 +55,7 @@ export default function damage(socket, roomData, mobsInCombat) {
       corpse.name = `${target.name} corpse`;
       corpse.short = `${target.short[0].toUpperCase()}${target.short.slice(1)}'s corpse'`;
       corpse.long = `The corpse of ${target.short} lies here.`;
-      corpse.terms.concat(target.terms);
+      corpse.terms = corpse.terms.concat(target.terms);
       corpse.description = `The corpse of ${target.short} lies here.`;
       mobsInCombat.splice(mobsInCombat.indexOf(mobsInCombat.find(mob => mob.id === target.id)), 1);
       roomData[socket.currentRoom].mobs.splice(roomData[socket.currentRoom].mobs.indexOf(target), 1);
