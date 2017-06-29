@@ -22,19 +22,41 @@ export default function look(socket, users, roomInfo) {
     if (args.target) {
       args.target = args.target.toLowerCase();
       let splitArgs = args.target.split('.');
+      let regEx = splitArgs.length > 1 ? new RegExp(splitArgs[1]) : new RegExp(splitArgs[0]);
+      let lookTarget;
 
-      lookTarget = splitArgs.length > 1 ?
-      roomInfo[socket.currentRoom].mobs.filter(mob => mob.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :
-      roomInfo[socket.currentRoom].mobs.find(mob => mob.terms.includes(args.target));
+      if (splitArgs.length > 1) {
+        lookTarget = mobs.filter(mob => {
+          for (let i = 0; i < mob.terms.length; i++) {
+            if (mob.terms[i].match(regEx)) return true;
+          }
+        })[splitArgs[0] - 1];
+      } else {
+        lookTarget = mobs.find(mob => {
+          for (let i = 0; i < mob.terms.length; i++) {
+            if (mob.terms[i].match(regEx)) return true;
+          }
+        });
+      }
 
       if (lookTarget) {
         socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.short}.`});
         return showMeTheDescription(lookTarget);
       }
 
-      let lookTarget = splitArgs.length > 1 ?
-                       room.items.filter(item => item.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :
-                       room.items.find(item => item.terms.includes(args.target));
+      if (splitArgs.length > 1) {
+        lookTarget = room.items.filter(item => {
+          for (let i = 0; i < item.terms.length; i++) {
+            if (item.terms[i].match(regEx)) return true;
+          }
+        })[splitArgs[0] - 1];
+      } else {
+        lookTarget = room.items.find(item => {
+          for (let i = 0; i < item.terms.length; i++) {
+            if (item.terms[i].match(regEx)) return true;
+          }
+        });
+      }
 
       if (lookTarget) {
         socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.short}.`});
@@ -48,7 +70,15 @@ export default function look(socket, users, roomInfo) {
         return showMeTheDescription(player);
       }
 
-      lookTarget = room.examines ? room.examines.find(examine => examine.terms.includes(args.target)) : null;
+      if (room.examines) {
+        lookTarget = room.examines.find(examine => {
+          regEx = new RegExp(args.target.toLowerCase());
+          for (let i = 0; i < examine.terms.length; i++) {
+            if (examine.terms[i].match(regEx)) return true;
+          }
+        });
+      }
+
       if (lookTarget) {
         socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.name}.`});
         return showMeTheDescription(lookTarget);
