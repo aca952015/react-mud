@@ -8,7 +8,7 @@ import newItem from '../../app/data/items.js';
 describe('<Containers />', () => {
   let props = {
     message: {
-      containedItems: [newItem('health potion'), newItem('gallows key')]
+      containedItems: [newItem('health potion'), newItem('gallows key'), newItem('mana potion'), newItem('mana potion')]
     }
   };
 
@@ -19,8 +19,12 @@ describe('<Containers />', () => {
   });
 
   it('should render a ul with an li for each item', () => {
-    expect(containers.find('li').first().text()).toEqual('a red potion');
-    expect(containers.find('li').last().text()).toEqual('a small black key');
+    expect(containers.find('li').first().text()).toEqual(props.message.containedItems[0].short);
+    expect(containers.find('li').at(1).text()).toEqual(props.message.containedItems[1].short);
+  });
+
+  it('should render parenthetical counts for multiples of the same item', () => {
+    expect(containers.find('li').last().text()).toEqual(`(2) ${props.message.containedItems[2].short}`);
   });
 
   it('should render a ul with an li that says "nothing" if there is nothing', () => {
@@ -33,4 +37,5 @@ describe('<Containers />', () => {
 
     expect(containers.find('li').text()).toEqual('Nothing');
   });
+
 });
