@@ -39,6 +39,17 @@ describe('giveHandler', () => {
   });
 
   describe('With a valid item', () => {
+    describe('With mixed case', () => {
+      it('should return a give object', () => {
+        expect(giveHandler('give', 'POtIoN BoB', null, props)).toEqual({
+          funcsToCall: [dropItem],
+          emitType: 'give',
+          item: props.inventory[0],
+          target: 'bob'
+        });
+      });
+    });
+    
     describe('Without dot notation', () => {
       it('should return a give object', () => {
         expect(giveHandler('give', 'potion bob', null, props)).toEqual({
