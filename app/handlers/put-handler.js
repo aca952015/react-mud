@@ -2,6 +2,7 @@
 
 import {newMessage} from '../actions/message-actions.js';
 import {addToContainer} from '../actions/inventory-actions.js';
+import termsProcessor from '../processors/terms-processor.js';
 
 export default function putHandler(command, args, socket, props) {
   args = args.toLowerCase();
@@ -10,13 +11,13 @@ export default function putHandler(command, args, socket, props) {
   if (!args || splitArgs.length < 2) return {funcsToCall: [newMessage], feedback: 'Put what where? (format: PUT <item> <target> or PUT <item> IN <target>)'};
 
   let dotNotation = splitArgs[0].split('.');
-  let putItem = dotNotation.length > 1 ? props.inventory.filter(item => item.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
-                                         props.inventory.find(item => item.terms.includes(splitArgs[0]));
+
+  let putItem = termsProcessor(props.inventory, dotNotation);
   if (!putItem) return {funcsToCall: [newMessage], feedback: 'You don\'t seem to be carrying that.'};
 
   dotNotation = splitArgs[1].split('.');
-  let target = dotNotation.length > 1 ? props.inventory.filter(item => item.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
-                                        props.inventory.find(item => item.terms.includes(splitArgs[1]));
+
+  let target = termsProcessor(props.inventory, dotNotation);
 
   if (target && !target.container) return {funcsToCall: [newMessage], feedback: 'That isn\'t a container.'};
   if (target && !target.container.holds.includes(putItem.type)) return {funcsToCall: [newMessage], feedback: 'That container doesn\'t hold that type of item.'};
