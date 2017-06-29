@@ -33,14 +33,28 @@ describe('pickUpItem', () => {
   describe('With dot notation', () => {
     describe('With a valid item in the room', () => {
       describe('The user picking the item up', () => {
-        it('should return an itemPickedUp event', done => {
-          player1.emit('pickUpItem', {item: '2.potion'});
-          player1.on('itemPickedUp', res => {
-            let expected = newItem('health potion');
-            delete expected.drink.effect;
-            expect(res.item).toEqual({...expected, id: res.item.id});
-            expect(res.pickRoom).toEqual('Nexus');
-            done();
+        describe('With the full term', () => {
+          it('should return an itemPickedUp event', done => {
+            player1.emit('pickUpItem', {item: '2.potion'});
+            player1.on('itemPickedUp', res => {
+              let expected = newItem('health potion');
+              delete expected.drink.effect;
+              expect(res.item).toEqual({...expected, id: res.item.id});
+              expect(res.pickRoom).toEqual('Nexus');
+              done();
+            });
+          });
+        });
+
+        describe('With fuzzy matching', () => {
+          it('should return an itemPickedUp event', done => {
+            player1.emit('pickUpItem', {item: '2.ke'});
+            player1.on('itemPickedUp', res => {
+              let expected = newItem('tester key');
+              expect(res.item).toEqual({...expected, id: res.item.id});
+              expect(res.pickRoom).toEqual('Nexus');
+              done();
+            });
           });
         });
       });
@@ -125,11 +139,23 @@ describe('pickUpItem', () => {
 
     describe('With a valid container', () => {
       describe('With an invalid item', () => {
-        it('should return feedback that the item isn\'t found', done => {
-          player1.emit('getFromContainer', {item: 'key', container: 'backpack'});
-          player1.on('generalMessage', res => {
-            expect(res.feedback).toEqual('I don\'t see that item in that container.');
-            done();
+        describe('With the full term', () => {
+          it('should return feedback that the item isn\'t found', done => {
+            player1.emit('getFromContainer', {item: 'key', container: 'backpack'});
+            player1.on('generalMessage', res => {
+              expect(res.feedback).toEqual('I don\'t see that item in that container.');
+              done();
+            });
+          });
+        });
+
+        describe('With fuzzy matching', () => {
+          it('should return the feedback that the item isn\'t found', done => {
+            player1.emit('getFromContainer', {item: 'key', container: 'bac'});
+            player1.on('generalMessage', res => {
+              expect(res.feedback).toEqual('I don\'t see that item in that container.');
+              done();
+            });
           });
         });
       });
@@ -157,7 +183,7 @@ describe('pickUpItem', () => {
 
         describe('With valid type, dot notation on item and on container', () => {
           it('should return an itemPickedUp event', done => {
-            player1.emit('getFromContainer', {item: '2.potion', container: '2.backpack'});
+            player1.emit('getFromContainer', {item: '2.pot', container: '2.back'});
             player1.on('forceGet', res => {
               expect(res).toEqual({...newItem('mana potion'), drink: res.drink, id: res.id});
               done();
