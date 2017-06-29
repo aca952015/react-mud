@@ -6,6 +6,7 @@ import newItem, {itemData} from '../data/items.js';
 
 export default function drinkHandler(command, args, socket, props) {
   if (!args) return {funcsToCall: [newMessage], feedback: 'Drink what?'};
+  args = args.toLowerCase();
   let index = 0;
   if (args.split('.').length > 1) index = args.split('.')[0] - 1;
   let itemToDrink = index > 0 ? props.inventory.filter(item => item.terms.includes(args.split('.')[1].toLowerCase()))[index] :
