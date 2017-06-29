@@ -43,11 +43,23 @@ describe('Kill', () => {
 
   describe('With dot notation', () => {
     describe('On an enemy that exists', () => {
-      it('should return an enterCombat event', done => {
-        player1.emit('kill', {target: '2.bat'});
-        player1.on('enterCombat', res => {
-          expect(res).toEqual({...bat, id: res.id});
-          done();
+      describe('With fuzzy matching', () => {
+        it('should return an enterCombat event', done => {
+          player1.emit('kill', {target: '2.b'});
+          player1.on('enterCombat', res => {
+            expect(res).toEqual({...bat, id: res.id});
+            done();
+          });
+        });
+      });
+
+      describe('With the full term', () => {
+        it('should return an enterCombat event', done => {
+          player1.emit('kill', {target: '2.bat'});
+          player1.on('enterCombat', res => {
+            expect(res).toEqual({...bat, id: res.id, combat: {active: true, targets: ['player1']}});
+            done();
+          });
         });
       });
     });

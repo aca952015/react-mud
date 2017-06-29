@@ -5,13 +5,28 @@ export default function kill(socket, roomData, mobsInCombat) {
     if (!targetObject.target) return socket.emit('generalMessage', {feedback: 'Kill what?'});
     targetObject.target = targetObject.target.toLowerCase();
     let splitArgs = targetObject.target.split('.');
-    let target = splitArgs.length > 1 ? roomData[socket.currentRoom].mobs.filter(mob => mob.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :
-                                        roomData[socket.currentRoom].mobs.find(mob => mob.terms.includes(targetObject.target));
+    let regEx = splitArgs.length > 1 ? new RegExp(splitArgs[1]) : new RegExp(splitArgs[0]);
+
+    let target;
+
+    if (splitArgs.length > 1) {
+      target = roomData[socket.currentRoom].mobs.filter(mob => {
+        for (let i = 0; i < mob.terms.length; i++) {
+          if (mob.terms[i].match(regEx)) return true;
+        }
+      })[splitArgs[0] - 1];
+    } else {
+      target = roomData[socket.currentRoom].mobs.find(mob => {
+        for (let i = 0; i < mob.terms.length; i++) {
+          if (mob.terms[i].match(regEx)) return true;
+        }
+      });
+    }
     if (!target) return socket.emit('generalMessage', {feedback: 'I don\'t see that enemy here.'});
     socket.emit('enterCombat', target);
     target.combat = {
       active: true,
-      targets: [...target.combat.targets, socket.username]
+      targets: target.combat.targets.includes(socket.username) ? target.combat.targets : [...target.combat.targets, socket.username]
     };
     if (!mobsInCombat.find(mob => mob.id === target.id)) mobsInCombat.push(target);
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
