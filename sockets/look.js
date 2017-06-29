@@ -21,20 +21,20 @@ export default function look(socket, users, roomInfo) {
 
     if (args.target) {
       args.target = args.target.toLowerCase();
-
       let splitArgs = args.target.split('.');
-      let lookTarget = splitArgs.length > 1 ?
-                       room.items.filter(item => item.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :
-                       room.items.find(item => item.terms.includes(args.target));
+
+      lookTarget = splitArgs.length > 1 ?
+      roomInfo[socket.currentRoom].mobs.filter(mob => mob.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :
+      roomInfo[socket.currentRoom].mobs.find(mob => mob.terms.includes(args.target));
 
       if (lookTarget) {
         socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.short}.`});
         return showMeTheDescription(lookTarget);
       }
 
-      lookTarget = splitArgs.length > 1 ?
-                   roomInfo[socket.currentRoom].mobs.filter(mob => mob.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :
-                   roomInfo[socket.currentRoom].mobs.find(mob => mob.terms.includes(args.target));
+      let lookTarget = splitArgs.length > 1 ?
+                       room.items.filter(item => item.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :
+                       room.items.find(item => item.terms.includes(args.target));
 
       if (lookTarget) {
         socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.short}.`});
