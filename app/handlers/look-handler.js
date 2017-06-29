@@ -4,6 +4,7 @@ import {newMessage} from '../actions/message-actions.js';
 
 export default function lookHandler(command, args, socket, props) {
   if (!args) return {emitType: 'look', target: args};
+  args = args.toLowerCase();
   let splitArgs = args.split(' ');
   if (splitArgs[0] !== 'in') return {emitType: 'look', target: args};
   if (splitArgs.length < 2) return {funcsToCall: [newMessage], feedback: 'Look in what? (format: LOOK IN <container>)'};
