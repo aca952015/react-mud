@@ -73,11 +73,23 @@ describe('put', () => {
     });
 
     describe('With normal targeting', () => {
-      it('should trigger a forceDrop event', done => {
-        player1.emit('put', putObj);
-        player1.on('forceDrop', res => {
-          expect(res).toEqual({...putObj.item, drink: res.drink});
-          done();
+      describe('With the full term', () => {
+        it('should trigger a forceDrop event', done => {
+          player1.emit('put', putObj);
+          player1.on('forceDrop', res => {
+            expect(res).toEqual({...putObj.item, drink: res.drink});
+            done();
+          });
+        });
+      });
+
+      describe('With fuzzy matching', () => {
+        it('should trigger a forceDrop event', done => {
+          player1.emit('put', {...putObj, container: 'bac'});
+          player1.on('forceDrop', res => {
+            expect(res).toEqual({...putObj.item, drink: res.drink});
+            done();
+          });
         });
       });
     });
