@@ -25,6 +25,15 @@ describe('examineHandler', () => {
     });
   });
 
+  describe('With mixed case', () => {
+    it('should return an examine object with the correct item', () => {
+      expect(examineHandler('examine', '2.pOtIoN', null, props)).toEqual({
+        ...returnObj,
+        feedback: itemData['health potion'].description
+      });
+    });
+  });
+
   describe('With normal targeting', () => {
     it('should return an examine object with the correct item', () => {
       expect(examineHandler('examine', 'key', null, props)).toEqual({

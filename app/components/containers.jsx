@@ -4,12 +4,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const Containers = props => {
-  let items = props.message.containedItems.map((item, i) => <li key={i}>{item.short}</li>);
-  if (!items.length) items = <li>Nothing</li>;
+  let counts = {};
+  props.message.containedItems.forEach(item => counts[item.name] = (counts[item.name] || 0) + 1);
+
+  let containerContents = props.message.containedItems.map(item => {
+    let invString = '';
+    if (counts[item.name] > 1) invString += `(${counts[item.name]}) `;
+    invString += item.short;
+    return invString;
+  }).reduce((acc, ele) => {
+    if (!acc.includes(ele)) acc.push(ele);
+    return acc;
+  }, []);
+
+  let contents = containerContents.map((item, i) => <li key={i}>{item}</li>);
+  if (!contents.length) contents = <li>Nothing</li>;
 
   return <div className="containers">
     <h3>You look inside and see:</h3>
-    <ul>{items}</ul>
+    <ul>{contents}</ul>
   </div>;
 };
 

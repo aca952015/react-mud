@@ -28,6 +28,17 @@ describe('dropHandler', () => {
     });
   });
 
+  describe('With mixed case', () => {
+    it('should return a drop object with the right item', () => {
+      expect(dropHandler('drop', '3.pOtIoN', null, props)).toEqual({
+        emitType: 'drop',
+        item: props.inventory[2],
+        funcsToCall: [newMessage, dropItem],
+        feedback: `You drop ${itemData['health potion'].short}.`
+      });
+    });
+  });
+
   describe('With normal targeting', () => {
     it('should return a drop object with the right item', () => {
       expect(dropHandler('drop', 'potion', null, props)).toEqual({

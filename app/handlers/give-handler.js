@@ -4,6 +4,7 @@ import {newMessage} from '../actions/message-actions.js';
 import {dropItem} from '../actions/inventory-actions.js';
 
 export default function giveHandler(command, args, socket, props) {
+  args = args.toLowerCase();
   let splitArgs = args.split(' ');
   if (!args || splitArgs.length < 2) return {funcsToCall: [newMessage], feedback: 'Give what to whom? (format: GIVE <item> <target>)'};
   if (splitArgs[1].toLowerCase() === props.username.toLowerCase()) return {funcsToCall: [newMessage], feedback: 'You can\'t give items to yourself.'};

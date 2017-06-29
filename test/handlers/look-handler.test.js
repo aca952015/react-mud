@@ -33,10 +33,12 @@ describe('lookHandler', () => {
   });
 
   describe('With args, but not IN', () => {
-    it('should return a look with target of args', () => {
-      expect(lookHandler('look', 'bob', null, props)).toEqual({
-        emitType: 'look',
-        target: 'bob'
+    describe('With mixed case', () => {
+      it('should return a look with target of args', () => {
+        expect(lookHandler('look', 'BoB', null, props)).toEqual({
+          emitType: 'look',
+          target: 'bob'
+        });
       });
     });
   });
@@ -62,10 +64,12 @@ describe('lookHandler', () => {
       });
 
       describe('With dot notation', () => {
-        it('should return a newMessage with containedItems', () => {
-          expect(lookHandler('look', 'in 2.backpack', null, props)).toEqual({
-            funcsToCall: [newMessage],
-            containedItems: props.inventory[2].container.contains
+        describe('With mixed case', () => {
+          it('should return a newMessage with containedItems', () => {
+            expect(lookHandler('look', 'in 2.BaCkPAck', null, props)).toEqual({
+              funcsToCall: [newMessage],
+              containedItems: props.inventory[2].container.contains
+            });
           });
         });
       });

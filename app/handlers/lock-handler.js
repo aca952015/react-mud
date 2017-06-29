@@ -12,6 +12,6 @@ export default function lockHandler(command, args, socket, props) {
   return {
     emitType: 'lock',
     inventory: props.inventory,
-    direction: args
+    direction: args.toLowerCase()
   };
 }
