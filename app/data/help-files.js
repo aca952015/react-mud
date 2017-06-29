@@ -26,16 +26,16 @@ export const helpFile = {
     text: 'Will initiate combat with the targeted enemy. Must be used on an enemy in the same room as you. You can initiate combat with as many enemies in a room at a time as you want. Once you\'ve initiated combat, you cannot move to another room until combat is over. Dot notation can be used if you want to target a specific enemy - for example, if a room contains two "a small bat"s, you can KILL 2.BAT to target the second one.'
   },
   'look': {
-    title: 'LOOK <target> (shortcut: L)',
-    text: 'By itself, LOOK or L will show you the room you\'re currently in, as well as any items and occupants. Items in the room are displayed in the order they originally started in, or in the order they were added (perhaps via the DROP command). If you specify a target, look will show you the description of either the player you looked at, the item in the room you looked at, or specially hidden objects in the room (usually hinted at in a room\'s description). If you want to look at something in your inventory, use the EXAMINE command (help EXAMINE). You can look at a specific object if there are multiples of it in the room using dot notation, such as LOOK 2.key or LOOK 3.potion to look at the second key in the room or the third potion.'
+    title: 'LOOK <target> -or- LOOK IN <container> (shortcut: L)',
+    text: 'By itself, LOOK or L will show you the room you\'re currently in, as well as any items and occupants. Items in the room are displayed in the order they originally started in, or in the order they were added (perhaps via the DROP command). If you specify a target, look will show you the description of either the player you looked at, the item in the room you looked at, or specially hidden objects in the room (usually hinted at in a room\'s description). If you want to look at something in your inventory, use the EXAMINE command (help EXAMINE). You can look at a specific object if there are multiples of it in the room using dot notation, such as LOOK 2.key or LOOK 3.potion to look at the second key in the room or the third potion. LOOK IN will show you the contents of a container. For example: "LOOK IN BACKPACK"'
   },
   'examine': {
     title: 'EXAMINE <target> (shortcut: EX)',
     text: 'Will show you the description of an item in your inventory. If you want to look at an item in the room, use the LOOK command (help LOOK). You can examine a specific item in your inventory if you have multiples by using dot notation, such as EX 2.key or EX 3.potion to look at the second key in the room or the third potion.'
   },
   'get': {
-    title: 'GET <item>',
-    text: 'GET <target> will pick up an item in the room and add it to your inventory. Every item has a handful of terms you can use to refer to it. For example, an item called "a small black key", which shows up in the room as, "A small black key with a simple carving of a noose on it lies here," could be targeted with GET KEY, GET SMALL, or GET BLACK. If you want to pick up a specific item, based on its order in the room, you can use dot notation with the index of the item you want. For example, if a room has two keys, and you want to pick up the second one, you could type GET 2.KEY.'
+    title: 'GET <item> -or- GET <item> <container> (optionally: GET <item> FROM <container>)',
+    text: 'GET <target> will pick up an item in the room and add it to your inventory. Every item has a handful of terms you can use to refer to it. For example, an item called "a small black key", which shows up in the room as, "A small black key with a simple carving of a noose on it lies here," could be targeted with GET KEY, GET SMALL, or GET BLACK. If you want to pick up a specific item, based on its order in the room, you can use dot notation with the index of the item you want. For example, if a room has two keys, and you want to pick up the second one, you could type GET 2.KEY. You can also get items that are inside a container (HELP LOOK to see how to check what\'s in a container) if you specify the container. For example, "GET KEY BACKPACK" or "GET KEY FROM BACKPACK" will try to get a key from a backpack container.'
   },
   'drop': {
     title: 'DROP <item>',
@@ -79,10 +79,10 @@ export const helpFile = {
   },
   'give': {
     title: 'GIVE <item> <target>',
-    text: 'Will try to give the item from your inventory to another player in the same room. If you are not carrying the item or it\'s in a container, the command will fail. '
+    text: 'Will try to give the item from your inventory to another player in the same room. If you are not carrying the item or it\'s in a container, the command will fail. Dot notation can be used to give a specific item. For example, if you\'re carrying 2 potions, you can GIVE 2.POTION <target>.'
   },
   'put': {
     title: 'PUT <item> <container> (optionally: PUT <item> IN <container>)',
-    text: 'Will put an item from your inventory into a container you\'re either carrying or that\'s in the room. For example, "PUT POTION BACKPACK" will attempt to put a potion from your inventory into a backpack. When selecting a container, items you are carrying are prioritized over items in the room. For example, if you have a backpack, but there\'s also a backpack in the room, then "PUT POTION BACKPACK" will put the potion in the backpack you\'re carrying.'
+    text: 'Will put an item from your inventory into a container you\'re either carrying or that\'s in the room. For example, "PUT POTION BACKPACK" will attempt to put a potion from your inventory into a backpack. When selecting a container, items you are carrying are prioritized over items in the room. For example, if you have a backpack, but there\'s also a backpack in the room, then "PUT POTION BACKPACK" will put the potion in the backpack you\'re carrying. Put recognizes dot notation on both the targeted item and the container. "PUT 2.POTION BACKPACK", "PUT POTION 2.BACKPACK", and "PUT 2.POTION 2.BACKPACK" are all valid commands.'
   }
 };
