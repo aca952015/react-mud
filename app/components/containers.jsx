@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import duplicatesProcessor from '../processors/duplicates-processor.js';
 
 export const Containers = props => {
-  let containerContents = duplicatesProcessor(props.message.containedItems);
-  
+  let containerContents = duplicatesProcessor(props.message.containedItems, 'short');
+
   let contents = containerContents.map((item, i) => <li key={i}>{item}</li>);
   if (!contents.length) contents = <li>Nothing</li>;
 
