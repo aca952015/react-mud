@@ -16,7 +16,9 @@ export const helpFile = {
       'WHO',
       'PREVIOUS_COMMANDS',
       'DRINK',
-      'EXAMINE'
+      'EXAMINE',
+      'GIVE',
+      'PUT'
     ]
   },
   'kill': {
@@ -74,5 +76,13 @@ export const helpFile = {
   'drink': {
     title: 'DRINK <item>',
     text: 'Will attempt to drink the contents of a specified item in your inventory. For example, if you have a red potion and you type DRINK potion, you will drink the red potion. If you want to specify an item based on the order in your inventory, you can use dot notation to do so. For example, if you have a blue potion and a red potion, you can type DRINK 2.potion to drink the red potion.'
+  },
+  'give': {
+    title: 'GIVE <item> <target>',
+    text: 'Will try to give the item from your inventory to another player in the same room. If you are not carrying the item or it\'s in a container, the command will fail. '
+  },
+  'put': {
+    title: 'PUT <item> <container> (optionally: PUT <item> IN <container>)',
+    text: 'Will put an item from your inventory into a container you\'re either carrying or that\'s in the room. For example, "PUT POTION BACKPACK" will attempt to put a potion from your inventory into a backpack. When selecting a container, items you are carrying are prioritized over items in the room. For example, if you have a backpack, but there\'s also a backpack in the room, then "PUT POTION BACKPACK" will put the potion in the backpack you\'re carrying.'
   }
 };
