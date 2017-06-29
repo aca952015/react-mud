@@ -1,5 +1,7 @@
 'use strict';
 
+import newItem from '../app/data/items.js';
+
 export default function damage(socket, roomData, mobsInCombat) {
   socket.on('damage', dmgObj => {
     let target = roomData[socket.currentRoom].mobs.find(mob => mob.id === dmgObj.enemy.id);
@@ -34,8 +36,30 @@ export default function damage(socket, roomData, mobsInCombat) {
       }
     });
     if (target.hp < 1) {
+      /*
+      'corpse': {
+        name: 'corpse',
+        short: 'a corpse',
+        long: 'A corpse lies here.',
+        terms: ['corpse'],
+        drink: null,
+        type: 'corpse',
+        description: 'This is a placeholder description for a corpse.',
+        container: {
+          holds: ['items'],
+          contains: []
+        }
+      }
+      */
+      let corpse = newItem('corpse');
+      corpse.name = `${target.name} corpse`;
+      corpse.short = `${target.short[0].toUpperCase()}${target.short.slice(1)}'s corpse'`;
+      corpse.long = `The corpse of ${target.short} lies here.`;
+      corpse.terms = corpse.terms.concat(target.terms);
+      corpse.description = `The corpse of ${target.short} lies here.`;
       mobsInCombat.splice(mobsInCombat.indexOf(mobsInCombat.find(mob => mob.id === target.id)), 1);
       roomData[socket.currentRoom].mobs.splice(roomData[socket.currentRoom].mobs.indexOf(target), 1);
+      roomData[socket.currentRoom].items.push(corpse);
       socket.emit('generalMessage', {
         combatLog: {
           from: {
