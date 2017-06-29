@@ -2,6 +2,7 @@
 
 import {newMessage} from '../actions/message-actions.js';
 import {getFromContainer} from '../actions/inventory-actions.js';
+import termsProcessor from '../processors/terms-processor.js';
 
 export default function getHandler(command, args, socket, props) {
   const invalidTypes = {
@@ -14,15 +15,13 @@ export default function getHandler(command, args, socket, props) {
   let splitArgs = args.split(' ');
   if (splitArgs.length < 2) return {emitType: 'pickUpItem', item: args};
   if (splitArgs.length > 2) splitArgs.splice(1, 1);
-
   let dotNotation = splitArgs[1].split('.');
-  let container = dotNotation.length > 1 ? props.inventory.filter(_container => _container.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
-                                           props.inventory.find(_container => _container.terms.includes(splitArgs[1]));
+
+  let container = termsProcessor(props.inventory, dotNotation);
   if (container) {
     if (!container.container) return {funcsToCall: [newMessage], feedback: 'That isn\'t a container.'};
     dotNotation = splitArgs[0].split('.');
-    let item = dotNotation.length > 1 ? container.container.contains.filter(_item => _item.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
-                                        container.container.contains.find(_item => _item.terms.includes(splitArgs[0]));
+    let item = termsProcessor(container.container.contains, dotNotation);
     if (!item) return {funcsToCall: [newMessage], feedback: 'I don\'t see that item in that container.'};
     if (invalidTypes[item.type]) return {funcsToCall: [newMessage], feedback: 'You can\'t pick that up.'};
     return {

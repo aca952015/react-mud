@@ -18,19 +18,39 @@ describe('drinkHandler', () => {
   });
 
   describe('With dot notation', () => {
-    it('should drink the targeted item', () => {
-      let response = drinkHandler('drink', '3.potion', null, props);
-      expect(response).toEqual({
-        funcsToCall: [newMessage, itemData['health potion'].drink.effect, quietlyAddItem, dropItem],
-        amount: itemData['health potion'].drink.amount,
-        statToChange: itemData['health potion'].drink.statToChange,
-        feedback: itemData['health potion'].drink.desc,
-        emitType: 'drink',
-        item: props.inventory[2],
-        quietAdd: {...
-          newItem('glass flask'),
-          id: response.quietAdd.id
-        }
+    describe('With the full term', () => {
+      it('should drink the targeted item', () => {
+        let response = drinkHandler('drink', '3.potion', null, props);
+        expect(response).toEqual({
+          funcsToCall: [newMessage, itemData['health potion'].drink.effect, quietlyAddItem, dropItem],
+          amount: itemData['health potion'].drink.amount,
+          statToChange: itemData['health potion'].drink.statToChange,
+          feedback: itemData['health potion'].drink.desc,
+          emitType: 'drink',
+          item: props.inventory[2],
+          quietAdd: {...
+            newItem('glass flask'),
+            id: response.quietAdd.id
+          }
+        });
+      });
+    });
+
+    describe('With fuzzy matching', () => {
+      it('should drink the targeted item', () => {
+        let response = drinkHandler('drink', '3.po', null, props);
+        expect(response).toEqual({
+          funcsToCall: [newMessage, itemData['health potion'].drink.effect, quietlyAddItem, dropItem],
+          amount: itemData['health potion'].drink.amount,
+          statToChange: itemData['health potion'].drink.statToChange,
+          feedback: itemData['health potion'].drink.desc,
+          emitType: 'drink',
+          item: props.inventory[2],
+          quietAdd: {...
+            newItem('glass flask'),
+            id: response.quietAdd.id
+          }
+        });
       });
     });
   });

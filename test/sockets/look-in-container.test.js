@@ -58,22 +58,45 @@ describe('lookInContainer', () => {
   });
 
   describe('With dot notation', () => {
-    it('should return containedItems', done => {
-      player1.emit('lookInContainer', {container: '2.backpack'});
-      player1.on('generalMessage', res => {
-        expect(res.containedItems).toEqual([
-          {
-            ...newItem('health potion'),
-            id: res.containedItems[0].id,
-            drink: res.containedItems[0].drink
-          },
-          {
-            ...newItem('mana potion'),
-            id: res.containedItems[1].id,
-            drink: res.containedItems[1].drink
-          }
-        ]);
-        done();
+    describe('With the full term', () => {
+      it('should return containedItems', done => {
+        player1.emit('lookInContainer', {container: '2.backpack'});
+        player1.on('generalMessage', res => {
+          expect(res.containedItems).toEqual([
+            {
+              ...newItem('health potion'),
+              id: res.containedItems[0].id,
+              drink: res.containedItems[0].drink
+            },
+            {
+              ...newItem('mana potion'),
+              id: res.containedItems[1].id,
+              drink: res.containedItems[1].drink
+            }
+          ]);
+          done();
+        });
+      });
+    });
+
+    describe('With fuzzy matching', () => {
+      it('should return containedItems', done => {
+        player1.emit('lookInContainer', {container: '2.bac'});
+        player1.on('generalMessage', res => {
+          expect(res.containedItems).toEqual([
+            {
+              ...newItem('health potion'),
+              id: res.containedItems[0].id,
+              drink: res.containedItems[0].drink
+            },
+            {
+              ...newItem('mana potion'),
+              id: res.containedItems[1].id,
+              drink: res.containedItems[1].drink
+            }
+          ]);
+          done();
+        });
       });
     });
   });

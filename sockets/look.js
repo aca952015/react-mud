@@ -1,5 +1,7 @@
 'use strict';
 
+import termsProcessor from '../app/processors/terms-processor.js';
+
 export default function look(socket, users, roomInfo) {
   socket.on('look', args => {
     function showMeTheDescription(target) {
@@ -23,18 +25,14 @@ export default function look(socket, users, roomInfo) {
       args.target = args.target.toLowerCase();
       let splitArgs = args.target.split('.');
 
-      lookTarget = splitArgs.length > 1 ?
-      roomInfo[socket.currentRoom].mobs.filter(mob => mob.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :
-      roomInfo[socket.currentRoom].mobs.find(mob => mob.terms.includes(args.target));
+      let lookTarget = termsProcessor(mobs, splitArgs);
 
       if (lookTarget) {
         socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.short}.`});
         return showMeTheDescription(lookTarget);
       }
 
-      let lookTarget = splitArgs.length > 1 ?
-                       room.items.filter(item => item.terms.includes(splitArgs[1]))[splitArgs[0] - 1] :
-                       room.items.find(item => item.terms.includes(args.target));
+      lookTarget = termsProcessor(room.items, splitArgs);
 
       if (lookTarget) {
         socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.short}.`});
@@ -42,13 +40,17 @@ export default function look(socket, users, roomInfo) {
       }
 
       lookTarget = occupants.find(player => player.toLowerCase() === args.target);
+
       if (lookTarget) {
         let player = users.find(user => user.username === lookTarget);
         socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, interaction: ' looks at ', target: lookTarget});
         return showMeTheDescription(player);
       }
 
-      lookTarget = room.examines ? room.examines.find(examine => examine.terms.includes(args.target)) : null;
+      if (room.examines) {
+        lookTarget = termsProcessor(room.examines, splitArgs);
+      }
+
       if (lookTarget) {
         socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.name}.`});
         return showMeTheDescription(lookTarget);

@@ -1,5 +1,7 @@
 'use strict';
 
+import termsProcessor from '../app/processors/terms-processor.js';
+
 export default function pickUpItem(socket, roomData) {
   const invalidTypes = {
     'corpse': true,
@@ -7,20 +9,13 @@ export default function pickUpItem(socket, roomData) {
   };
 
   socket.on('pickUpItem', itemShort => {
-    itemShort = itemShort.item;
-    let index = 0;
-    if (itemShort.split('.').length > 1) {
-      index = itemShort.split('.')[0] - 1;
-      itemShort = itemShort.split('.')[1];
-    }
-    let roomItems = roomData[socket.currentRoom].items;
-    let tempItem = index > 0 ? roomItems.filter(_item => _item.terms.includes(itemShort.toLowerCase()))[index] :
-                               roomItems.find(_item => _item.terms.includes(itemShort.toLowerCase()));
-    if (!tempItem) return socket.emit('generalMessage', {feedback: 'I don\'t see that item here.'});
-    if (invalidTypes[tempItem.type]) return socket.emit('generalMessage', {feedback: 'You can\'t pick that up.'});
+    let item = termsProcessor(roomData[socket.currentRoom].items, itemShort.item.split('.'));
+
+    if (!item) return socket.emit('generalMessage', {feedback: 'I don\'t see that item here.'});
+    if (invalidTypes[item.type]) return socket.emit('generalMessage', {feedback: 'You can\'t pick that up.'});
 
     let room = {
-      item: tempItem,
+      item,
       pickRoom: socket.currentRoom
     };
     socket.emit('itemPickedUp', room);
@@ -29,15 +24,11 @@ export default function pickUpItem(socket, roomData) {
   });
 
   socket.on('getFromContainer', getObj => {
-    let dotNotation = getObj.container.split('.');
-    let container = dotNotation.length > 1 ? roomData[socket.currentRoom].items.filter(item => item.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
-                                             roomData[socket.currentRoom].items.find(item => item.terms.includes(getObj.container));
+    let container = termsProcessor(roomData[socket.currentRoom].items, getObj.container.split('.'));
     if (!container) return socket.emit('generalMessage', {feedback: 'I don\'t see that container here.'});
     if (!container.container) return socket.emit('generalMessage', {feedback: 'That isn\'t a container.'});
 
-    dotNotation = getObj.item.split('.');
-    let item = dotNotation.length > 1 ? container.container.contains.filter(_item => _item.terms.includes(dotNotation[1]))[dotNotation[0] - 1] :
-                                        container.container.contains.find(_item => _item.terms.includes(getObj.item));
+    let item = termsProcessor(container.container.contains, getObj.item.split('.'));
     if (!item) return socket.emit('generalMessage', {feedback: 'I don\'t see that item in that container.'});
     if (invalidTypes[item.type]) return socket.emit('generalMessage', {feedback: 'You can\'t pick that up.'});
 
