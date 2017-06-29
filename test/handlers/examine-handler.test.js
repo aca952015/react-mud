@@ -17,10 +17,21 @@ describe('examineHandler', () => {
   });
 
   describe('With dot notation targeting', () => {
-    it('should return an examine object with the correct item', () => {
-      expect(examineHandler('examine', '2.potion', null, props)).toEqual({
-        ...returnObj,
-        feedback: itemData['health potion'].description
+    describe('With the full term', () => {
+      it('should return an examine object with the correct item', () => {
+        expect(examineHandler('examine', '2.potion', null, props)).toEqual({
+          ...returnObj,
+          feedback: itemData['health potion'].description
+        });
+      });
+    });
+
+    describe('With fuzzy matching', () => {
+      it('should return an examine object with the correct item', () => {
+        expect(examineHandler('examine', '2.po', null, props)).toEqual({
+          ...returnObj,
+          feedback: itemData['health potion'].description
+        });
       });
     });
   });

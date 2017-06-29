@@ -18,12 +18,25 @@ describe('dropHandler', () => {
   });
 
   describe('With dot notation targeting', () => {
-    it('should return a drop object with the right item', () => {
-      expect(dropHandler('drop', '3.potion', null, props)).toEqual({
-        emitType: 'drop',
-        item: props.inventory[2],
-        funcsToCall: [newMessage, dropItem],
-        feedback: `You drop ${itemData['health potion'].short}.`
+    describe('With the full term', () => {
+      it('should return a drop object with the right item', () => {
+        expect(dropHandler('drop', '3.potion', null, props)).toEqual({
+          emitType: 'drop',
+          item: props.inventory[2],
+          funcsToCall: [newMessage, dropItem],
+          feedback: `You drop ${itemData['health potion'].short}.`
+        });
+      });
+    });
+
+    describe('With fuzzy matching', () => {
+      it('should return a drop object with the right item', () => {
+        expect(dropHandler('drop', '3.pot', null, props)).toEqual({
+          emitType: 'drop',
+          item: props.inventory[2],
+          funcsToCall: [newMessage, dropItem],
+          feedback: `You drop ${itemData['health potion'].short}.`
+        });
       });
     });
   });

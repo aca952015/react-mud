@@ -75,10 +75,21 @@ describe('lookHandler', () => {
       });
 
       describe('With normal targeting', () => {
-        it('should return a newMessage with containedItems', () => {
-          expect(lookHandler('look', 'in backpack', null, props)).toEqual({
-            funcsToCall: [newMessage],
-            containedItems: props.inventory[0].container.contains
+        describe('With the full term', () => {
+          it('should return a newMessage with containedItems', () => {
+            expect(lookHandler('look', 'in backpack', null, props)).toEqual({
+              funcsToCall: [newMessage],
+              containedItems: props.inventory[0].container.contains
+            });
+          });
+        });
+
+        describe('With fuzzy matching', () => {
+          it('should return a newMessage with containedItems', () => {
+            expect(lookHandler('look', 'in bac', null, props)).toEqual({
+              funcsToCall: [newMessage],
+              containedItems: props.inventory[0].container.contains
+            });
           });
         });
       });

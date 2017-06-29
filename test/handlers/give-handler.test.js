@@ -49,14 +49,27 @@ describe('giveHandler', () => {
         });
       });
     });
-    
+
     describe('Without dot notation', () => {
-      it('should return a give object', () => {
-        expect(giveHandler('give', 'potion bob', null, props)).toEqual({
-          funcsToCall: [dropItem],
-          emitType: 'give',
-          item: props.inventory[0],
-          target: 'bob'
+      describe('With full terms', () => {
+        it('should return a give object', () => {
+          expect(giveHandler('give', 'potion bob', null, props)).toEqual({
+            funcsToCall: [dropItem],
+            emitType: 'give',
+            item: props.inventory[0],
+            target: 'bob'
+          });
+        });
+      });
+
+      describe('With fuzzy matching', () => {
+        it('should return a give object', () => {
+          expect(giveHandler('give', 'po bob', null, props)).toEqual({
+            funcsToCall: [dropItem],
+            emitType: 'give',
+            item: props.inventory[0],
+            target: 'bob'
+          });
         });
       });
     });
