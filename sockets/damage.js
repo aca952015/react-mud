@@ -36,21 +36,6 @@ export default function damage(socket, roomData, mobsInCombat) {
       }
     });
     if (target.hp < 1) {
-      /*
-      'corpse': {
-        name: 'corpse',
-        short: 'a corpse',
-        long: 'A corpse lies here.',
-        terms: ['corpse'],
-        drink: null,
-        type: 'corpse',
-        description: 'This is a placeholder description for a corpse.',
-        container: {
-          holds: ['items'],
-          contains: []
-        }
-      }
-      */
       let corpse = newItem('corpse');
       corpse.name = `${target.name} corpse`;
       corpse.short = `${target.short[0].toUpperCase()}${target.short.slice(1)}'s corpse'`;
