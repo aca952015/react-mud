@@ -10,6 +10,7 @@ export default function getHandler(command, args, socket, props) {
   };
 
   if (!args) return {funcsToCall: [newMessage], feedback: 'Get what?'};
+  args = args.toLowerCase();
   let splitArgs = args.split(' ');
   if (splitArgs.length < 2) return {emitType: 'pickUpItem', item: args};
   if (splitArgs.length > 2) splitArgs.splice(1, 1);
