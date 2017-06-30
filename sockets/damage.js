@@ -38,7 +38,7 @@ export default function damage(socket, roomData, mobsInCombat) {
     if (target.hp < 1) {
       let corpse = newItem('corpse');
       corpse.name = `${target.name} corpse`;
-      corpse.short = `${target.short[0].toUpperCase()}${target.short.slice(1)}'s corpse'`;
+      corpse.short = `${target.short}'s corpse`;
       corpse.long = `The corpse of ${target.short} lies here.`;
       corpse.terms = corpse.terms.concat(target.terms);
       corpse.description = `The corpse of ${target.short} lies here.`;
