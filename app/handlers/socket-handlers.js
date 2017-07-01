@@ -11,11 +11,10 @@ import combatProcessor from '../processors/combat-processor.js';
 export default function socketHandlers(homeCtx) {
   let socket = homeCtx.socket;
   let props = homeCtx.props;
-  socket.username = props.username;
   socket.currentRoom = 'Nexus';
-  socket.description = props.character.description;
-  socket.emit('changeName', socket.username);
-  socket.emit('changeDescription', socket.description);
+  socket.emit('changeName', homeCtx.props.username);
+  socket.emit('changeDescription', homeCtx.props.description);
+  socket.emit('updateEquipment', homeCtx.props.equipment);
   socket.emit('look', {target: null});
   socket.emit('move', {direction: 'login'});
   socket.on('move', result => socket.currentRoom = result);

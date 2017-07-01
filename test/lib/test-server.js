@@ -12,6 +12,7 @@ import lookInContainer from '../../sockets/look-in-container.js';
 import put from '../../sockets/put.js';
 import give from '../../sockets/give.js';
 import whisper from '../../sockets/whisper.js';
+import wearItem from '../../sockets/wear-item.js';
 import mobTargetSelector from '../../sockets/mob-target-selector.js';
 import {roomData} from '../../app/data/rooms.js';
 
@@ -51,6 +52,7 @@ io.sockets.on('connection', function(socket) {
   give(socket, users);
   lookInContainer(socket, roomData);
   put(socket, roomData);
+  wearItem(socket);
 });
 
 export default function closeServer() {
