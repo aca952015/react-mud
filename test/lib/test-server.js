@@ -23,6 +23,7 @@ io.sockets.on('connection', function(socket) {
   users.push(socket);
   socket.currentRoom = 'Nexus';
   socket.join('Nexus');
+  socket.on('updateEquipment', eq => socket.equipment = eq);
   socket.on('changeName', name => {
     if (name === 'alien') {
       socket.currentRoom = 'Town Square';
