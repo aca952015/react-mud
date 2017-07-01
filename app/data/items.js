@@ -11,7 +11,8 @@ class Item {
   }
 }
 
-export default function newItem(itemName) {
+export default function newItem(itemName, itemType) {
+  if (itemType) return new Item(itemData[itemType][itemName]);
   return new Item(itemData[itemName]);
 }
 
