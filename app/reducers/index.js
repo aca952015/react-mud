@@ -7,5 +7,6 @@ import equipment from './equipment-reducer.js';
 
 export default combineReducers({
   user,
-  messages
+  messages,
+  equipment
 });

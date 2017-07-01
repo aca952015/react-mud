@@ -1,6 +1,6 @@
 'use strict';
 
-const initialState = {
+export const initialState = {
   head: null,
   shoulders: null,
   chest: null,
