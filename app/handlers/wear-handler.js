@@ -15,6 +15,7 @@ export default function wearHandler(command, args, socket, props) {
   return {
     funcsToCall: [wearEquipment, newMessage],
     equipment,
-    feedback: `You equip ${equipment.short} on your ${equipment.slot}.`
+    feedback: `You equip ${equipment.short} on your ${equipment.slot}.`,
+    emitType: 'wearItem'
   };
 }

@@ -37,4 +37,17 @@ describe('wearHandler', () => {
       });
     });
   });
+
+  describe('With a valid item the user is carrying', () => {
+    describe('With a full term', () => {
+      it('should return an object with emitType wearItem and proper funcsToCall', () => {
+        expect(wearHandler('wear', 'helm', null, props)).toEqual({
+          funcsToCall: [wearEquipment, newMessage],
+          equipment: props.inventory[0],
+          emitType: 'wearItem',
+          feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`
+        });
+      });
+    });
+  });
 });
