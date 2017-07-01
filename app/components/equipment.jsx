@@ -12,9 +12,10 @@ export const Equipment = props => {
     4: 'feet'
   };
 
-  const eq = props.message.equipment.map((item, i) => {
+  const equips = props.message.equipment;
+  const eq = Object.keys(equips).map((item, i) => {
     return <li key={i}>
-      {slots[i]} : {item ? <span>{item.short}</span> : <span>Nothing</span>}
+      {`${slots[i][0].toUpperCase()}${slots[i].slice(1)}`}: {equips[item] ? <span>{equips[item].short}</span> : <span>Nothing</span>}
     </li>;
   });
   return <div className="equipment">
