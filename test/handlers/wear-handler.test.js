@@ -8,7 +8,7 @@ import newItem from '../../app/data/items.js';
 describe('wearHandler', () => {
   const defaultObj = {funcsToCall: [newMessage]};
   const props = {
-    inventory: [newItem('leather helm', 'equipment'), newItem('health potion')]
+    inventory: [newItem('leather helm', 'equipment'), newItem('health potion'), newItem('leather helm', 'equipment')]
   };
 
   describe('With no args', () => {
@@ -68,6 +68,17 @@ describe('wearHandler', () => {
           equipment: props.inventory[0],
           emitType: 'wearItem',
           feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`
+        });
+      });
+    });
+
+    describe('With dot notation', () => {
+      it('should return an object with emitType wearItem and proper funcsToCall', () => {
+        expect(wearHandler('wear', '2.hel', null, props)).toEqual({
+          funcsToCall: [wearEquipment, newMessage],
+          equipment: props.inventory[2],
+          emitType: 'wearItem',
+          feedback: `You equip ${props.inventory[2].short} on your ${props.inventory[2].slot}.`
         });
       });
     });
