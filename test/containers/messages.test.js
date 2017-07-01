@@ -27,6 +27,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
     expect(messageComponent.find('HelpFile').node).toEqual(undefined);
     expect(messageComponent.find('Inventory').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
   });
 
   it('should render only a Room child with a room message', () => {
@@ -57,6 +58,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
     expect(messageComponent.find('HelpFile').node).toEqual(undefined);
     expect(messageComponent.find('Inventory').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
   });
 
   it('should render only an Occupants child with an occupants message', () => {
@@ -77,6 +79,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
     expect(messageComponent.find('HelpFile').node).toEqual(undefined);
     expect(messageComponent.find('Inventory').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
   });
 
   it('should render only an OnlineUsers child with an onlineUsers message', () => {
@@ -96,6 +99,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Communication').node).toEqual(undefined);
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
     expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
     expect(messageComponent.find('Inventory').node).toEqual(undefined);
   });
 
@@ -117,6 +121,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
     expect(messageComponent.find('HelpFile').node).toEqual(undefined);
     expect(messageComponent.find('Inventory').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
   });
 
   it('should render only a Communication child with a commType message', () => {
@@ -140,6 +145,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Feedback').node).toEqual(undefined);
     expect(messageComponent.find('HelpFile').node).toEqual(undefined);
     expect(messageComponent.find('Inventory').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
   });
 
   it('should render only a Feedback child with a feedback message', () => {
@@ -160,6 +166,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Occupants').node).toEqual(undefined);
     expect(messageComponent.find('HelpFile').node).toEqual(undefined);
     expect(messageComponent.find('Inventory').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
   });
 
   it('should render only a HelpFile child with a helpObj message', () => {
@@ -183,6 +190,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('Room').node).toEqual(undefined);
     expect(messageComponent.find('Occupants').node).toEqual(undefined);
     expect(messageComponent.find('Inventory').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
   });
 
   it('should render only an Inventory child with an inventory message', () => {
@@ -203,6 +211,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
     expect(messageComponent.find('Room').node).toEqual(undefined);
     expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
   });
 
   it('should render only a Mobs child with a mobs message', () => {
@@ -223,6 +232,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
     expect(messageComponent.find('Room').node).toEqual(undefined);
     expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
   });
 
   it('should render only a CombatLog child with a combatLog message', () => {
@@ -247,6 +257,7 @@ describe('<Messages />', () => {
     expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
     expect(messageComponent.find('Room').node).toEqual(undefined);
     expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
   });
 
   it('should render only a Containers child with a containedItems message', () => {
@@ -255,6 +266,26 @@ describe('<Messages />', () => {
     };
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Containers').length).toEqual(1);
+    expect(messageComponent.find('CombatLog').node).toEqual(undefined);
+    expect(messageComponent.find('Mobs').node).toEqual(undefined);
+    expect(messageComponent.find('Inventory').node).toEqual(undefined);
+    expect(messageComponent.find('HelpFile').node).toEqual(undefined);
+    expect(messageComponent.find('Feedback').node).toEqual(undefined);
+    expect(messageComponent.find('Communication').node).toEqual(undefined);
+    expect(messageComponent.find('PlayerInput').node).toEqual(undefined);
+    expect(messageComponent.find('OnlineUsers').node).toEqual(undefined);
+    expect(messageComponent.find('Room').node).toEqual(undefined);
+    expect(messageComponent.find('Occupants').node).toEqual(undefined);
+    expect(messageComponent.find('Equipment').node).toEqual(undefined);
+  });
+
+  it('should render only an Equipment child with an equipment message', () => {
+    props = {
+      messages: [{containedItems: []}]
+    };
+    messageComponent = shallow(<Messages {...props} />);
+    expect(messageComponent.find('Equipment').length).toEqual(1);
+    expect(messageComponent.find('Containers').node).toEqual(undefined);
     expect(messageComponent.find('CombatLog').node).toEqual(undefined);
     expect(messageComponent.find('Mobs').node).toEqual(undefined);
     expect(messageComponent.find('Inventory').node).toEqual(undefined);
