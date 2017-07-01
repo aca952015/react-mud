@@ -10,6 +10,7 @@ export default function wearHandler(command, args, socket, props) {
   let equipment = termsProcessor(props.inventory, args.split('.'));
 
   if (!equipment) return {funcsToCall: [newMessage], feedback: 'You aren\'t carrying that.'};
+  if (!equipment.slot) return {funcsToCall: [newMessage], feedback: 'You can\'t wear that.'};
 
   return {
     funcsToCall: [wearEquipment, newMessage],
