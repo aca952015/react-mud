@@ -12,7 +12,7 @@ export const Equipment = props => {
     4: 'feet'
   };
 
-  const equips = props.message.equipment;
+  const equips = props.equipment;
   const eq = Object.keys(equips).map((item, i) => {
     return <li key={i}>
       {`<${slots[i][0].toUpperCase()}${slots[i].slice(1)}>`} {equips[item] ? <span>{equips[item].short}</span> : <span>Nothing</span>}
@@ -25,5 +25,5 @@ export const Equipment = props => {
 };
 
 Equipment.propTypes = {
-  message: PropTypes.object
+  equipment: PropTypes.object
 };

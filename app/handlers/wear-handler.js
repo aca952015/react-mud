@@ -7,15 +7,15 @@ import {wearEquipment} from '../actions/item-actions.js';
 export default function wearHandler(command, args, socket, props) {
   if (!args) return {funcsToCall: [newMessage], feedback: 'Wear what?'};
   args = args.toLowerCase();
-  let equipment = termsProcessor(props.inventory, args.split('.'));
+  let equip = termsProcessor(props.inventory, args.split('.'));
 
-  if (!equipment) return {funcsToCall: [newMessage], feedback: 'You aren\'t carrying that.'};
-  if (!equipment.slot) return {funcsToCall: [newMessage], feedback: 'You can\'t wear that.'};
+  if (!equip) return {funcsToCall: [newMessage], feedback: 'You aren\'t carrying that.'};
+  if (!equip.slot) return {funcsToCall: [newMessage], feedback: 'You can\'t wear that.'};
 
   return {
     funcsToCall: [wearEquipment, newMessage],
-    equipment,
-    feedback: `You equip ${equipment.short} on your ${equipment.slot}.`,
+    equip,
+    feedback: `You equip ${equip.short} on your ${equip.slot}.`,
     emitType: 'wearItem'
   };
 }

@@ -13,6 +13,6 @@ export function restoreStat(item) {
 export function wearEquipment(eq) {
   return {
     type: 'WEAR_EQUIPMENT',
-    payload: eq.equipment
+    payload: eq.equip
   };
 }

@@ -21,7 +21,7 @@ describe('item actions', () => {
 
   describe('wearEquipment', () => {
     it('should return an object with type "WEAR_EQUIPMENT" and payload of whatever was passed in', () => {
-      expect(wearEquipment({equipment: 'something'})).toEqual({type: 'WEAR_EQUIPMENT', payload: 'something'});
+      expect(wearEquipment({equip: 'something'})).toEqual({type: 'WEAR_EQUIPMENT', payload: 'something'});
     });
   });
 });

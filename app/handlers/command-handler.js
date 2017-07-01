@@ -25,7 +25,8 @@ export default function commandHandler(command, args, props, socket) {
     'l': 'look',
     'i': 'inventory',
     'inv': 'inventory',
-    'ex': 'examine'
+    'ex': 'examine',
+    'eq': 'equipment'
   };
 
   const helperFunctions = {
@@ -50,7 +51,8 @@ export default function commandHandler(command, args, props, socket) {
     'examine': examineHandler,
     'put': putHandler,
     'kill': {emitType: 'kill', target: args},
-    'wear': wearHandler
+    'wear': wearHandler,
+    'equipment': {funcsToCall: [newMessage], equipment: props.equipment}
   };
 
   if (commandShorthand[command]) command = commandShorthand[command];
