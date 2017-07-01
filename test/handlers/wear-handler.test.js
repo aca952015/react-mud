@@ -28,4 +28,13 @@ describe('wearHandler', () => {
       });
     });
   });
+
+  describe('With an item that isn\'t wearable', () => {
+    it('should return feedback of "You can\'t wear that."', () => {
+      expect(wearHandler('wear', 'potion', null, props)).toEqual({
+        ...defaultObj,
+        feedback: 'You can\'t wear that.'
+      });
+    });
+  });
 });
