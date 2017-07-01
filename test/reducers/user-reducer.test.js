@@ -1,30 +1,9 @@
 'use strict';
 
-import reducer from '../../app/reducers/user-reducer.js';
+import reducer, {initialState} from '../../app/reducers/user-reducer.js';
 import newItem from '../../app/data/items.js';
 
 describe('user reducer', () => {
-  const initialState = {
-    username: 'tester',
-    description: 'As actual players do not exist yet, everybody is a robot. They all look the same. They all speak the same. They look just like you.',
-    inventory: [],
-    hp: 15,
-    maxHP: 20,
-    mp: 11,
-    maxMP: 20,
-    level: 1,
-    atk: 2,
-    str: 18,
-    int: 18,
-    wis: 18,
-    con: 18,
-    dex: 18,
-    combat: {
-      active: false,
-      targets: []
-    }
-  };
-
   it('should return the initialState with no information', () => {
     let tempReducer = reducer(undefined, {});
     tempReducer.username = initialState.username;
