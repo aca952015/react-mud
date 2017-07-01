@@ -15,7 +15,7 @@ export const Equipment = props => {
   const equips = props.message.equipment;
   const eq = Object.keys(equips).map((item, i) => {
     return <li key={i}>
-      {`${slots[i][0].toUpperCase()}${slots[i].slice(1)}`}: {equips[item] ? <span>{equips[item].short}</span> : <span>Nothing</span>}
+      {`<${slots[i][0].toUpperCase()}${slots[i].slice(1)}>`} {equips[item] ? <span>{equips[item].short}</span> : <span>Nothing</span>}
     </li>;
   });
   return <div className="equipment">
