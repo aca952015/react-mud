@@ -17,7 +17,8 @@ function mapStateToProps(state) {
     username: state.user.username,
     inventory: state.user.inventory,
     character: state.user,
-    combat: state.user.combat
+    combat: state.user.combat,
+    equipment: state.equipment
   };
 }
 

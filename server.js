@@ -17,6 +17,7 @@ import put from './sockets/put.js';
 import unlock from './sockets/unlock.js';
 import kill from './sockets/kill.js';
 import damage from './sockets/damage.js';
+import wearItem from './sockets/wear-item.js';
 import mobTargetSelector from './sockets/mob-target-selector.js';
 import {roomData} from './app/data/rooms.js';
 
@@ -47,6 +48,7 @@ io.on('connection', socket => {
   socket.on('say', message => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {...message, commType: ' says, '}));
   socket.on('changeName', name => socket.username = name);
   socket.on('changeDescription', desc => socket.description = desc);
+  socket.on('updateEquipment', eq => socket.equipment = eq);
   socket.on('putInContainer', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` puts ${item.item.short} in ${item.container.short}.`}));
   socket.on('pickedFromInventory', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` gets ${item.item.short} from ${item.container.short}.`}));
   socket.on('drink', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` drinks ${item.item.short}.`}));
@@ -62,6 +64,7 @@ io.on('connection', socket => {
   give(socket, users);
   put(socket, roomData);
   lookInContainer(socket, roomData);
+  wearItem(socket);
 });
 
 server.listen(PORT);

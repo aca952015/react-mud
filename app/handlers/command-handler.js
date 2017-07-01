@@ -10,6 +10,7 @@ import giveHandler from './give-handler.js';
 import putHandler from './put-handler.js';
 import helpHandler from './help-handler.js';
 import drinkHandler from './drink-handler.js';
+import wearHandler from './wear-handler.js';
 import examineHandler from './examine-handler.js';
 import {newMessage} from '../actions/message-actions.js';
 
@@ -24,7 +25,8 @@ export default function commandHandler(command, args, props, socket) {
     'l': 'look',
     'i': 'inventory',
     'inv': 'inventory',
-    'ex': 'examine'
+    'ex': 'examine',
+    'eq': 'equipment'
   };
 
   const helperFunctions = {
@@ -48,7 +50,9 @@ export default function commandHandler(command, args, props, socket) {
     'inventory': {funcsToCall: [newMessage], inventory: props.inventory},
     'examine': examineHandler,
     'put': putHandler,
-    'kill': {emitType: 'kill', target: args}
+    'kill': {emitType: 'kill', target: args},
+    'wear': wearHandler,
+    'equipment': {funcsToCall: [newMessage], equipment: props.equipment}
   };
 
   if (commandShorthand[command]) command = commandShorthand[command];

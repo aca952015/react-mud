@@ -5,6 +5,7 @@ import termsProcessor from '../app/processors/terms-processor.js';
 export default function look(socket, users, roomInfo) {
   socket.on('look', args => {
     function showMeTheDescription(target) {
+      if (target.equipment) return socket.emit('generalMessage', {feedback: target.description, name: target.username, equipment: target.equipment});
       socket.emit('generalMessage', {feedback: target.description});
     }
 

@@ -19,6 +19,13 @@ describe('look', () => {
       player1.emit('changeDescription', 'player1 desc');
       player2.emit('changeName', 'player2');
       player2.emit('changeDescription', 'player2 desc');
+      player2.emit('updateEquipment', {
+        head: null,
+        shoulders: null,
+        chest: null,
+        legs: null,
+        feet: null
+      });
       done();
     });
   });
@@ -47,10 +54,18 @@ describe('look', () => {
   });
 
   describe('With the user looking at a player', () => {
-    it('should show player1 the description of player2', done => {
+    it('should show player1 the description of player2 and their equipment', done => {
       player1.emit('look', {target: 'player2'});
       player1.on('generalMessage', res => {
         expect(res.feedback).toEqual('player2 desc');
+        expect(res.name).toEqual('player2');
+        expect(res.equipment).toEqual({
+          head: null,
+          shoulders: null,
+          chest: null,
+          legs: null,
+          feet: null
+        });
         done();
       });
     });
@@ -107,6 +122,7 @@ describe('look', () => {
         player1.emit('look', {target: 'b'});
         player1.on('generalMessage', res => {
           expect(res.feedback).toEqual(newMob('bat').description);
+          expect(res.equipment).toEqual(undefined);
           done();
         });
       });

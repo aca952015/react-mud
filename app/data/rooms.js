@@ -24,21 +24,24 @@ export const roomData = {
         ...newItem('backpack'),
         container: {
           contains: [newItem('corpse'), newItem('health potion'), newItem('mana potion')],
-          holds: ['items']
+          holds: ['items', 'equipment']
         }
       },
       {
         ...newItem('backpack'),
         container: {
           contains: [newItem('health potion'), newItem('mana potion')],
-          holds: ['items']
+          holds: ['items', 'equipment']
         }
       },
       newItem('health potion'),
       newItem('gallows key'),
       newItem('health potion'),
       newItem('tester key'),
-      newItem('mana potion')],
+      newItem('mana potion'),
+      newItem('leather helm', 'equipment'),
+      newItem('leather helm', 'equipment')
+    ],
     examines: [{
       name: 'ztest',
       terms: ['ztest'],

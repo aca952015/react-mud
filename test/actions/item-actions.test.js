@@ -1,6 +1,6 @@
 'use strict';
 
-import {restoreStat} from '../../app/actions/item-actions.js';
+import {restoreStat, wearEquipment} from '../../app/actions/item-actions.js';
 
 describe('item actions', () => {
   describe('restoreStat', () => {
@@ -16,6 +16,12 @@ describe('item actions', () => {
           amount: item.amount
         }
       });
+    });
+  });
+
+  describe('wearEquipment', () => {
+    it('should return an object with type "WEAR_EQUIPMENT" and payload of whatever was passed in', () => {
+      expect(wearEquipment({equip: 'something'})).toEqual({type: 'WEAR_EQUIPMENT', payload: 'something'});
     });
   });
 });
