@@ -12,9 +12,9 @@ export default function socketHandlers(homeCtx) {
   let socket = homeCtx.socket;
   let props = homeCtx.props;
   socket.currentRoom = 'Nexus';
-  socket.emit('changeName', homeCtx.props.username);
-  socket.emit('changeDescription', homeCtx.props.description);
-  socket.emit('updateEquipment', homeCtx.props.equipment);
+  socket.emit('changeName', props.username);
+  socket.emit('changeDescription', props.character.description);
+  socket.emit('updateEquipment', props.equipment);
   socket.emit('look', {target: null});
   socket.emit('move', {direction: 'login'});
   socket.on('move', result => socket.currentRoom = result);

@@ -47,7 +47,7 @@ export default class Messages extends Component {
         {message.commType ? <Communication username={this.props.username} message={message}/> : null}
         {message.helpObj ? <HelpFile message={message}/> : null}
         {message.inventory ? <Inventory inventory={message.inventory}/> : null}
-        {message.equipment ? <Equipment equipment={message.equipment}/> : null}
+        {message.equipment ? <Equipment name={message.name} equipment={message.equipment}/> : null}
       </li>;
     });
     return <div ref={messageList => this.messageList = messageList} onScroll={() => this.props.changeEnterStatus(false)} className="messages">

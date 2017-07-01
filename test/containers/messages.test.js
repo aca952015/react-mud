@@ -281,7 +281,7 @@ describe('<Messages />', () => {
 
   it('should render only an Equipment child with an equipment message', () => {
     props = {
-      messages: [{containedItems: []}]
+      messages: [{equipment: {}}]
     };
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Equipment').length).toEqual(1);

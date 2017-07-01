@@ -19,11 +19,12 @@ export const Equipment = props => {
     </li>;
   });
   return <div className="equipment">
-    <h3>You are wearing:</h3>
+    <h3>{props.name ? `${props.name} is ` : 'You are '}wearing:</h3>
     <ul>{eq}</ul>
   </div>;
 };
 
 Equipment.propTypes = {
-  equipment: PropTypes.object
+  equipment: PropTypes.object,
+  name: PropTypes.string
 };
