@@ -29,4 +29,13 @@ describe('<Equipment />', () => {
     expect(eq.find('li').last().text()).toEqual('<Feet> Nothing');
     expect(eq.find('li').first().children('span').text()).toEqual(props.equipment.head.short);
   });
+
+  describe('With a name', () => {
+    it('should show "Bob is wearing:"', () => {
+      props = {...props, name: 'Bob'};
+      eq = shallow(<Equipment {...props} />);
+
+      expect(eq.find('h3').text()).toEqual('Bob is wearing:');
+    });
+  });
 });
