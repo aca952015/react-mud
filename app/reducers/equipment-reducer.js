@@ -9,5 +9,10 @@ export const initialState = {
 };
 
 export default function reducer(state=initialState, action) {
+  if (action.type === 'WEAR_EQUIPMENT') {
+    let newState = {...state};
+    newState[action.payload.slot] = action.payload;
+    return newState;
+  }
   return state;
 }
