@@ -49,5 +49,16 @@ describe('wearHandler', () => {
         });
       });
     });
+
+    describe('With mixed case', () => {
+      it('should return an object with emitType wearItem and proper funcsToCall', () => {
+        expect(wearHandler('wear', 'HeLm', null, props)).toEqual({
+          funcsToCall: [wearEquipment, newMessage],
+          equipment: props.inventory[0],
+          emitType: 'wearItem',
+          feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`
+        });
+      });
+    });
   });
 });
