@@ -122,6 +122,7 @@ describe('look', () => {
         player1.emit('look', {target: 'b'});
         player1.on('generalMessage', res => {
           expect(res.feedback).toEqual(newMob('bat').description);
+          expect(res.equipment).toEqual(undefined);
           done();
         });
       });
