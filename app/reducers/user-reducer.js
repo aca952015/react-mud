@@ -10,6 +10,7 @@ export const initialState = {
   maxMP: 20,
   level: 1,
   atk: 2,
+  def: 0,
   str: 18,
   int: 18,
   wis: 18,

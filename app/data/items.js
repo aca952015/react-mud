@@ -1,6 +1,7 @@
 'use strict';
 
 import {restoreStat} from '../actions/item-actions.js';
+import {equipment} from './equipment.js';
 
 class Item {
   constructor(properties) {
@@ -15,6 +16,7 @@ export default function newItem(itemName) {
 }
 
 export const itemData = {
+  equipment,
   'health potion': {
     name: 'health potion',
     short: 'a red potion',
@@ -38,7 +40,7 @@ export const itemData = {
     drink: null,
     description: 'This is a placeholder description for a backpack.',
     container: {
-      holds: ['items'],
+      holds: ['items', 'equipment'],
       contains: []
     }
   },
@@ -51,7 +53,7 @@ export const itemData = {
     type: 'corpse',
     description: 'This is a placeholder description for a corpse.',
     container: {
-      holds: ['items'],
+      holds: ['items', 'equipment'],
       contains: []
     }
   },
