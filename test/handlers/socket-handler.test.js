@@ -221,7 +221,7 @@ describe('socketHandlers', () => {
   describe('forceDrop', () => {
     it('should dispatch dropItem with the ID returned', done => {
       player1.emit('move', {direction: 'down'});
-      player1.emit('put', {item: newItem('health potion'), container: 'backpack'});
+      player1.emit('put', {item: newItem('potions', 'health potion'), container: 'backpack'});
       player1.on('forceDrop', item => {
         expect(props.dispatch.calledWith(dropItem({item}))).toEqual(true);
         done();

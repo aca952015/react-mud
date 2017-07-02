@@ -6,16 +6,16 @@ import getHandler from '../../app/handlers/get-handler.js';
 import newItem from '../../app/data/items.js';
 
 describe('getHandler', () => {
-  let backpack1 = newItem('backpack');
-  backpack1.container.contains.push(newItem('health potion'));
-  backpack1.container.contains.push(newItem('health potion'));
-  backpack1.container.contains.push(newItem('corpse'));
+  let backpack1 = newItem('containers', 'backpack');
+  backpack1.container.contains.push(newItem('potions', 'health potion'));
+  backpack1.container.contains.push(newItem('potions', 'health potion'));
+  backpack1.container.contains.push(newItem('containers', 'corpse'));
 
-  let backpack2 = newItem('backpack');
-  backpack2.container.contains.push(newItem('health potion'));
-  backpack2.container.contains.push(newItem('health potion'));
+  let backpack2 = newItem('containers', 'backpack');
+  backpack2.container.contains.push(newItem('potions', 'health potion'));
+  backpack2.container.contains.push(newItem('potions', 'health potion'));
 
-  let props = {inventory: [backpack1, backpack2, newItem('gallows key')]};
+  let props = {inventory: [backpack1, backpack2, newItem('keys', 'gallows key')]};
   describe('With no args', () => {
     it('should return an error object with feedback "Get what?"', () => {
       expect(getHandler('get')).toEqual({funcsToCall: [newMessage], feedback: 'Get what?'});

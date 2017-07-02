@@ -106,8 +106,8 @@ describe('user reducer', () => {
 
   describe('ADD_TO_CONTAINER', () => {
     it('should add an item to the correct container', () => {
-      let potion = newItem('health potion');
-      let backpack = newItem('backpack');
+      let potion = newItem('potions', 'health potion');
+      let backpack = newItem('containers', 'backpack');
       expect(reducer(
         {
           ...initialState,
@@ -135,8 +135,8 @@ describe('user reducer', () => {
 
   describe('GET_FROM_CONTAINER', () => {
     it('should add an item to the inventory from a container', () => {
-      let potion = newItem('health potion');
-      let backpack = newItem('backpack');
+      let potion = newItem('potions', 'health potion');
+      let backpack = newItem('containers', 'backpack');
       backpack.container.contains.push(potion);
       expect(reducer(
         {

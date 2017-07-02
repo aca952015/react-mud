@@ -11,7 +11,7 @@ export const roomData = {
       up: {
         exit: 'Secret Room',
         locked: true,
-        requiredKey: itemData['secret key']
+        requiredKey: itemData['keys']['secret key']
       },
       down: {
         exit: 'Town Square',
@@ -19,28 +19,28 @@ export const roomData = {
       }
     },
     items: [
-      newItem('corpse'),
+      newItem('containers', 'corpse'),
       {
-        ...newItem('backpack'),
+        ...newItem('containers', 'backpack'),
         container: {
-          contains: [newItem('corpse'), newItem('health potion'), newItem('mana potion')],
+          contains: [newItem('containers', 'corpse'), newItem('potions', 'health potion'), newItem('potions', 'mana potion')],
           holds: ['items', 'equipment']
         }
       },
       {
-        ...newItem('backpack'),
+        ...newItem('containers', 'backpack'),
         container: {
-          contains: [newItem('health potion'), newItem('mana potion')],
+          contains: [newItem('potions', 'health potion'), newItem('potions', 'mana potion')],
           holds: ['items', 'equipment']
         }
       },
-      newItem('health potion'),
-      newItem('gallows key'),
-      newItem('health potion'),
-      newItem('tester key'),
-      newItem('mana potion'),
-      newItem('leather helm', 'equipment'),
-      newItem('leather helm', 'equipment')
+      newItem('potions', 'health potion'),
+      newItem('keys', 'gallows key'),
+      newItem('potions', 'health potion'),
+      newItem('keys', 'tester key'),
+      newItem('potions', 'mana potion'),
+      newItem('equipment', 'leather helm'),
+      newItem('equipment', 'leather helm')
     ],
     examines: [{
       name: 'ztest',
@@ -56,7 +56,7 @@ export const roomData = {
       down: {
         exit: 'Nexus',
         locked: true,
-        requiredKey: itemData['secret key']
+        requiredKey: itemData['keys']['secret key']
       }
     },
     items: [],
@@ -73,10 +73,10 @@ export const roomData = {
       east: {
         exit: 'Gallows',
         locked: true,
-        requiredKey: itemData['gallows key']
+        requiredKey: itemData['keys']['gallows key']
       }
     },
-    items: [newItem('useless key'), newItem('backpack')],
+    items: [newItem('keys', 'useless key'), newItem('containers', 'backpack')],
     mobs: [newMob('bat'), newMob('bat')]
   },
   'Gallows': {
@@ -86,10 +86,10 @@ export const roomData = {
       west: {
         exit: 'Town Square',
         locked: true,
-        requiredKey: itemData['gallows key']
+        requiredKey: itemData['keys']['gallows key']
       }
     },
-    items: [newItem('health potion')],
+    items: [newItem('potions', 'health potion')],
     examines: [{
       name: 'the gallows',
       terms: ['gallows'],

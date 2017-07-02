@@ -36,7 +36,7 @@ export default function damage(socket, roomData, mobsInCombat) {
       }
     });
     if (target.hp < 1) {
-      let corpse = newItem('corpse');
+      let corpse = newItem('containers', 'corpse');
       corpse.name = `${target.name} corpse`;
       corpse.short = `${target.short}'s corpse`;
       corpse.long = `The corpse of ${target.short} lies here.`;

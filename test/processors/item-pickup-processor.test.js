@@ -8,7 +8,7 @@ describe('itemPickUpProcessor', () => {
     room: {
       from: 'TestR',
       pickRoom: 'Nexus',
-      roomItems: [newItem('health potion'), newItem('gallows key')],
+      roomItems: [newItem('potions', 'health potion'), newItem('keys', 'gallows key')],
     }
   };
   room.room.item = room.room.roomItems[0];

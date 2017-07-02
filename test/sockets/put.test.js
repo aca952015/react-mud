@@ -9,7 +9,7 @@ describe('put', () => {
   let player1;
   let putObj = {
     container: 'backpack',
-    item: newItem('health potion')
+    item: newItem('potions', 'health potion')
   };
 
   require('../lib/test-server.js');
@@ -53,7 +53,7 @@ describe('put', () => {
 
   describe('With an invalid type', () => {
     it('should return feedback of an invalid item type', done => {
-      player1.emit('put', {...putObj, item: newItem('corpse')});
+      player1.emit('put', {...putObj, item: newItem('containers', 'corpse')});
       player1.on('generalMessage', res => {
         expect(res.feedback).toEqual('That container doesn\'t hold that type of item.');
         done();

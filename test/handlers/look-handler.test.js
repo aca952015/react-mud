@@ -8,16 +8,16 @@ describe('lookHandler', () => {
   let props = {
     inventory: [
       {
-        ...newItem('backpack'),
+        ...newItem('containers', 'backpack'),
         container: {
-          contains: [newItem('health potion')]
+          contains: [newItem('potions', 'health potion')]
         }
       },
-      newItem('gallows key'),
+      newItem('keys', 'gallows key'),
       {
-        ...newItem('backpack'),
+        ...newItem('containers', 'backpack'),
         container: {
-          contains: [newItem('health potion')]
+          contains: [newItem('potions', 'health potion')]
         }
       }
     ]

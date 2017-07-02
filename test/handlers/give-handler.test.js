@@ -6,7 +6,7 @@ import {newMessage} from '../../app/actions/message-actions.js';
 import {dropItem} from '../../app/actions/inventory-actions.js';
 
 describe('giveHandler', () => {
-  let props = {inventory: [newItem('health potion')], username: 'duder'};
+  let props = {inventory: [newItem('potions', 'health potion')], username: 'duder'};
 
   let defaultObj = {funcsToCall: [newMessage]};
   describe('Without the correct number of arguments', () => {
@@ -76,7 +76,7 @@ describe('giveHandler', () => {
 
     describe('With dot notation', () => {
       it('should return a give object', () => {
-        props.inventory.push(newItem('health potion'));
+        props.inventory.push(newItem('potions', 'health potion'));
         expect(giveHandler('give', '2.potion bob', null, props)).toEqual({
           funcsToCall: [dropItem],
           emitType: 'give',

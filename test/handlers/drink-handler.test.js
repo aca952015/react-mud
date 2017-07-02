@@ -8,7 +8,7 @@ import newItem, {itemData} from '../../app/data/items.js';
 describe('drinkHandler', () => {
   let returnObj = {funcsToCall: [newMessage]};
   let props = {
-    inventory: [newItem('health potion'), newItem('mana potion'), newItem('health potion'), newItem('gallows key')]
+    inventory: [newItem('potions', 'health potion'), newItem('potions', 'mana potion'), newItem('potions', 'health potion'), newItem('keys', 'gallows key')]
   };
 
   describe('With no args', () => {
@@ -22,14 +22,14 @@ describe('drinkHandler', () => {
       it('should drink the targeted item', () => {
         let response = drinkHandler('drink', '3.potion', null, props);
         expect(response).toEqual({
-          funcsToCall: [newMessage, itemData['health potion'].drink.effect, quietlyAddItem, dropItem],
-          amount: itemData['health potion'].drink.amount,
-          statToChange: itemData['health potion'].drink.statToChange,
-          feedback: itemData['health potion'].drink.desc,
+          funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
+          amount: itemData['potions']['health potion'].drink.amount,
+          statToChange: itemData['potions']['health potion'].drink.statToChange,
+          feedback: itemData['potions']['health potion'].drink.desc,
           emitType: 'drink',
           item: props.inventory[2],
           quietAdd: {...
-            newItem('glass flask'),
+            newItem('containers', 'glass flask'),
             id: response.quietAdd.id
           }
         });
@@ -40,14 +40,14 @@ describe('drinkHandler', () => {
       it('should drink the targeted item', () => {
         let response = drinkHandler('drink', '3.po', null, props);
         expect(response).toEqual({
-          funcsToCall: [newMessage, itemData['health potion'].drink.effect, quietlyAddItem, dropItem],
-          amount: itemData['health potion'].drink.amount,
-          statToChange: itemData['health potion'].drink.statToChange,
-          feedback: itemData['health potion'].drink.desc,
+          funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
+          amount: itemData['potions']['health potion'].drink.amount,
+          statToChange: itemData['potions']['health potion'].drink.statToChange,
+          feedback: itemData['potions']['health potion'].drink.desc,
           emitType: 'drink',
           item: props.inventory[2],
           quietAdd: {...
-            newItem('glass flask'),
+            newItem('containers', 'glass flask'),
             id: response.quietAdd.id
           }
         });
@@ -59,14 +59,14 @@ describe('drinkHandler', () => {
     it('should drink the targeted item', () => {
       let response = drinkHandler('drink', '3.PoTiOn', null, props);
       expect(response).toEqual({
-        funcsToCall: [newMessage, itemData['health potion'].drink.effect, quietlyAddItem, dropItem],
-        amount: itemData['health potion'].drink.amount,
-        statToChange: itemData['health potion'].drink.statToChange,
-        feedback: itemData['health potion'].drink.desc,
+        funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
+        amount: itemData['potions']['health potion'].drink.amount,
+        statToChange: itemData['potions']['health potion'].drink.statToChange,
+        feedback: itemData['potions']['health potion'].drink.desc,
         emitType: 'drink',
         item: props.inventory[2],
         quietAdd: {...
-          newItem('glass flask'),
+          newItem('containers', 'glass flask'),
           id: response.quietAdd.id
         }
       });
@@ -77,14 +77,14 @@ describe('drinkHandler', () => {
     it('should drink the targeted item', () => {
       let response = drinkHandler('drink', 'potion', null, props);
       expect(response).toEqual({
-        funcsToCall: [newMessage, itemData['health potion'].drink.effect, quietlyAddItem, dropItem],
-        amount: itemData['health potion'].drink.amount,
-        statToChange: itemData['health potion'].drink.statToChange,
-        feedback: itemData['health potion'].drink.desc,
+        funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
+        amount: itemData['potions']['health potion'].drink.amount,
+        statToChange: itemData['potions']['health potion'].drink.statToChange,
+        feedback: itemData['potions']['health potion'].drink.desc,
         emitType: 'drink',
         item: props.inventory[0],
         quietAdd: {
-          ...newItem('glass flask'),
+          ...newItem('containers', 'glass flask'),
           id: response.quietAdd.id
         }
       });

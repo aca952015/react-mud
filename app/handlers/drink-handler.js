@@ -13,7 +13,7 @@ export default function drinkHandler(command, args, socket, props) {
   if (!itemToDrink) return {funcsToCall: [newMessage], feedback: 'You aren\'t carrying that.'};
   if (!itemToDrink.drink) return {funcsToCall: [newMessage], feedback: 'That isn\'t drinkable.'};
 
-  let drinkEffects = itemData[itemToDrink.name].drink;
+  let drinkEffects = itemData['potions'][itemToDrink.name].drink;
 
   return {
     funcsToCall: [newMessage, drinkEffects.effect, quietlyAddItem, dropItem],
@@ -22,6 +22,6 @@ export default function drinkHandler(command, args, socket, props) {
     feedback: drinkEffects.desc,
     emitType: 'drink',
     item: itemToDrink,
-    quietAdd: newItem('glass flask')
+    quietAdd: newItem('containers', 'glass flask')
   };
 }

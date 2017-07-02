@@ -30,10 +30,10 @@ describe('Drop item', () => {
   it('should return a drop object with the username and a drop feedback', done => {
     socket.emit('changeName', 'tester');
     socket2.emit('changeName', 'TestR');
-    socket.emit('drop', {item: newItem('health potion')});
+    socket.emit('drop', {item: newItem('potions', 'health potion')});
     socket2.on('generalMessage', res => {
       expect(res.from).toEqual('tester');
-      expect(res.feedback).toEqual(` drops ${itemData['health potion'].short}.`);
+      expect(res.feedback).toEqual(` drops ${itemData['potions']['health potion'].short}.`);
       done();
     });
   });

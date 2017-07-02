@@ -1,6 +1,6 @@
 'use strict';
 
-import {restoreStat} from '../actions/item-actions.js';
+import {restoreStat} from '../../actions/item-actions.js';
 
 export const potions = {
   'health potion': {

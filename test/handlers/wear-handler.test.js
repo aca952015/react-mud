@@ -8,7 +8,7 @@ import newItem from '../../app/data/items.js';
 describe('wearHandler', () => {
   const defaultObj = {funcsToCall: [newMessage]};
   const props = {
-    inventory: [newItem('leather helm', 'equipment'), newItem('health potion'), newItem('leather helm', 'equipment')]
+    inventory: [newItem('equipment', 'leather helm'), newItem('potions', 'health potion'), newItem('equipment', 'leather helm')]
   };
 
   describe('With no args', () => {

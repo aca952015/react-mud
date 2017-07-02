@@ -7,7 +7,7 @@ import newItem, {itemData} from '../../app/data/items.js';
 describe('examineHandler', () => {
   let returnObj = {funcsToCall: [newMessage]};
   let props = {
-    inventory: [newItem('health potion'), newItem('gallows key'), newItem('health potion')]
+    inventory: [newItem('potions', 'health potion'), newItem('keys', 'gallows key'), newItem('potions', 'health potion')]
   };
 
   describe('With no args', () => {
@@ -21,7 +21,7 @@ describe('examineHandler', () => {
       it('should return an examine object with the correct item', () => {
         expect(examineHandler('examine', '2.potion', null, props)).toEqual({
           ...returnObj,
-          feedback: itemData['health potion'].description
+          feedback: itemData['potions']['health potion'].description
         });
       });
     });
@@ -30,7 +30,7 @@ describe('examineHandler', () => {
       it('should return an examine object with the correct item', () => {
         expect(examineHandler('examine', '2.po', null, props)).toEqual({
           ...returnObj,
-          feedback: itemData['health potion'].description
+          feedback: itemData['potions']['health potion'].description
         });
       });
     });
@@ -40,7 +40,7 @@ describe('examineHandler', () => {
     it('should return an examine object with the correct item', () => {
       expect(examineHandler('examine', '2.pOtIoN', null, props)).toEqual({
         ...returnObj,
-        feedback: itemData['health potion'].description
+        feedback: itemData['potions']['health potion'].description
       });
     });
   });
@@ -49,7 +49,7 @@ describe('examineHandler', () => {
     it('should return an examine object with the correct item', () => {
       expect(examineHandler('examine', 'key', null, props)).toEqual({
         ...returnObj,
-        feedback: itemData['gallows key'].description
+        feedback: itemData['keys']['gallows key'].description
       });
     });
   });
