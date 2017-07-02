@@ -2,6 +2,7 @@
 
 import {newMessage} from '../../app/actions/message-actions.js';
 import {wearEquipment} from '../../app/actions/item-actions.js';
+import {dropItem} from '../../app/actions/inventory-actions.js';
 import wearHandler from '../../app/handlers/wear-handler.js';
 import newItem from '../../app/data/items.js';
 
@@ -42,8 +43,9 @@ describe('wearHandler', () => {
     describe('With a full term', () => {
       it('should return an object with emitType wearItem and proper funcsToCall', () => {
         expect(wearHandler('wear', 'helm', null, props)).toEqual({
-          funcsToCall: [wearEquipment, newMessage],
+          funcsToCall: [wearEquipment, newMessage, dropItem],
           equip: props.inventory[0],
+          item: props.inventory[0],
           emitType: 'wearItem',
           feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`
         });
@@ -53,8 +55,9 @@ describe('wearHandler', () => {
     describe('With mixed case', () => {
       it('should return an object with emitType wearItem and proper funcsToCall', () => {
         expect(wearHandler('wear', 'HeLm', null, props)).toEqual({
-          funcsToCall: [wearEquipment, newMessage],
+          funcsToCall: [wearEquipment, newMessage, dropItem],
           equip: props.inventory[0],
+          item: props.inventory[0],
           emitType: 'wearItem',
           feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`
         });
@@ -64,8 +67,9 @@ describe('wearHandler', () => {
     describe('With fuzzy matching', () => {
       it('should return an object with emitType wearItem and proper funcsToCall', () => {
         expect(wearHandler('wear', 'he', null, props)).toEqual({
-          funcsToCall: [wearEquipment, newMessage],
+          funcsToCall: [wearEquipment, newMessage, dropItem],
           equip: props.inventory[0],
+          item: props.inventory[0],
           emitType: 'wearItem',
           feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`
         });
@@ -75,7 +79,8 @@ describe('wearHandler', () => {
     describe('With dot notation', () => {
       it('should return an object with emitType wearItem and proper funcsToCall', () => {
         expect(wearHandler('wear', '2.hel', null, props)).toEqual({
-          funcsToCall: [wearEquipment, newMessage],
+          funcsToCall: [wearEquipment, newMessage, dropItem],
+          item: props.inventory[2],
           equip: props.inventory[2],
           emitType: 'wearItem',
           feedback: `You equip ${props.inventory[2].short} on your ${props.inventory[2].slot}.`
