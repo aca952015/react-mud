@@ -16,6 +16,7 @@ export const initialState = {
   wis: 18,
   con: 18,
   dex: 18,
+  currentRoom: 'Nexus',
   combat: {
     active: false,
     targets: []
@@ -67,5 +68,6 @@ export default function reducer(state=initialState, action) {
     tempInventory.push(action.payload.item);
     return {...state, inventory: tempInventory};
   }
+  if (action.type === 'CHANGE_ROOM') return {...state, currentRoom: action.payload};
   return state;
 }

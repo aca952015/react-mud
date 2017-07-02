@@ -1,11 +1,11 @@
 'use strict';
 
-export default function whisperProcessor(result, socket) {
+export default function whisperProcessor(result, username) {
   let post = {};
-  let toYourself = result.target.toLowerCase() === socket.username.toLowerCase();
+  let toYourself = result.target.toLowerCase() === username.toLowerCase();
   let sameTarget = result.from.toLowerCase() === result.target.toLowerCase();
 
-  if (result.from === socket.username) {
+  if (result.from === username) {
     post = {
       text: result.text,
       from: 'You ',

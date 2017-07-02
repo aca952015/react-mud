@@ -10,7 +10,7 @@ describe('whisperProcessor', () => {
         target: 'tester',
         text: 'Ayy'
       };
-      expect(whisperProcessor(result, {username: 'TestR'})).toEqual({
+      expect(whisperProcessor(result, 'TestR')).toEqual({
         text: result.text,
         from: 'You ',
         target: result.target,
@@ -26,7 +26,7 @@ describe('whisperProcessor', () => {
         target: 'TestR',
         text: 'Ayy'
       };
-      expect(whisperProcessor(result, {username: 'TestR'})).toEqual({
+      expect(whisperProcessor(result, 'TestR')).toEqual({
         text: result.text,
         from: 'You ',
         target: null,
@@ -42,7 +42,7 @@ describe('whisperProcessor', () => {
         target: 'tester',
         text: 'Ayy'
       };
-      expect(whisperProcessor(result, {username: 'tester'})).toEqual({
+      expect(whisperProcessor(result, 'tester')).toEqual({
         text: result.text,
         from: result.from,
         target: 'you',
@@ -58,7 +58,7 @@ describe('whisperProcessor', () => {
         target: 'Duder',
         text: 'Ayy'
       };
-      expect(whisperProcessor(result, {username: 'tester'})).toEqual({
+      expect(whisperProcessor(result, 'tester')).toEqual({
         from: result.from,
         target: result.target,
         commType: ' whispers something to '
@@ -73,7 +73,7 @@ describe('whisperProcessor', () => {
         target: 'TestR',
         text: 'Ayy'
       };
-      expect(whisperProcessor(result, {username: 'tester'})).toEqual({
+      expect(whisperProcessor(result, 'tester')).toEqual({
         from: result.from,
         commType: ' whispers something quietly.',
         target: null

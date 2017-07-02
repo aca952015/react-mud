@@ -12,6 +12,7 @@ import whisperProcessor from '../../app/processors/whisper-processor.js';
 import moveProcessor from '../../app/processors/move-processor.js';
 import itemPickUpProcessor from '../../app/processors/item-pickup-processor.js';
 import {getItem, dropItem} from '../../app/actions/inventory-actions.js';
+import {changeRoom} from '../../app/actions/move-actions.js';
 import newItem from '../../app/data/items.js';
 
 describe('socketHandlers', () => {
@@ -54,10 +55,10 @@ describe('socketHandlers', () => {
   });
 
   describe('Move', () => {
-    it('should change the player\'s currentRoom to whatever got passed in', done => {
+    it('should dispatch a changeRoom with the new room', done => {
       player1.emit('move', {direction: 'down'});
       player1.on('move', res => {
-        expect(player1.currentRoom).toEqual(res);
+        expect(props.dispatch.calledWith(changeRoom(res))).toEqual(true);
         done();
       });
     });
@@ -77,7 +78,7 @@ describe('socketHandlers', () => {
     it('should dispatch a newMessage with the result passed into the whisperProcessor', done => {
       player1.emit('whisper', {target: 'player2'});
       player1.on('whisperSuccess', res => {
-        expect(props.dispatch.calledWith(newMessage(whisperProcessor(res, player1)))).toEqual(true);
+        expect(props.dispatch.calledWith(newMessage(whisperProcessor(res, 'player1')))).toEqual(true);
         done();
       });
     });

@@ -3,6 +3,7 @@
 import {newMessage} from '../actions/message-actions.js';
 import {getItem, dropItem} from '../actions/inventory-actions.js';
 import {enterCombat, damageUser, slayEnemy} from '../actions/combat-actions.js';
+import {changeRoom} from '../actions/move-actions.js';
 import whisperProcessor from '../processors/whisper-processor.js';
 import moveProcessor from '../processors/move-processor.js';
 import itemPickUpProcessor from '../processors/item-pickup-processor.js';
@@ -11,16 +12,14 @@ import combatProcessor from '../processors/combat-processor.js';
 export default function socketHandlers(homeCtx) {
   let socket = homeCtx.socket;
   let props = homeCtx.props;
-  socket.currentRoom = 'Nexus';
-  socket.username = props.username;
-  socket.emit('changeName', socket.username);
-  socket.emit('changeDescription', props.character.description);
-  socket.emit('updateEquipment', props.equipment);
+  socket.emit('changeName', homeCtx.props.username);
+  socket.emit('changeDescription', homeCtx.props.character.description);
+  socket.emit('updateEquipment', homeCtx.props.equipment);
   socket.emit('look', {target: null});
   socket.emit('move', {direction: 'login'});
-  socket.on('move', result => socket.currentRoom = result);
+  socket.on('move', result => props.dispatch(changeRoom(result)));
   socket.on('generalMessage', result => props.dispatch(newMessage(result)));
-  socket.on('whisperSuccess', result => props.dispatch(newMessage(whisperProcessor(result, socket))));
+  socket.on('whisperSuccess', result => props.dispatch(newMessage(whisperProcessor(result, homeCtx.props.username))));
   socket.on('whisperFail', () => props.dispatch(newMessage({feedback: 'I don\'t see that person here.'})));
   socket.on('movementLeave', movement => {
     movement.username ? props.dispatch(newMessage({
@@ -28,7 +27,7 @@ export default function socketHandlers(homeCtx) {
       feedback: ` moves ${movement.direction}.`})) : null;
   });
   socket.on('movementArrive', movement => props.dispatch(newMessage(moveProcessor(movement))));
-  socket.on('pickUpItem', room => props.dispatch(newMessage(itemPickUpProcessor(room, socket))));
+  socket.on('pickUpItem', room => props.dispatch(newMessage(itemPickUpProcessor(room, homeCtx.props.currentRoom))));
   socket.on('forceDrop', item => props.dispatch(dropItem({item})));
   socket.on('forceGet', item => props.dispatch(getItem(item)));
   socket.on('itemPickedUp', itemAndRoom => {
