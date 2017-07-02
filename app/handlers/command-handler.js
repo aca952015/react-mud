@@ -56,7 +56,7 @@ export default function commandHandler(command, args, props, socket) {
   };
 
   if (commandShorthand[command]) command = commandShorthand[command];
-  if (commandShorthand[args]) args = commandShorthand[args];
+  if (args && commandShorthand[args.toLowerCase()]) args = commandShorthand[args.toLowerCase()];
 
   if (helperFunctions[command]) {
     if (typeof(helperFunctions[command]) === 'object') return helperFunctions[command];
