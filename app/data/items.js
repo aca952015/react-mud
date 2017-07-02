@@ -14,8 +14,7 @@ class Item {
 }
 
 export default function newItem(itemType, itemName) {
-  if (itemType) return new Item(itemData[itemType][itemName]);
-  return new Item(itemData[itemName]);
+  return new Item(itemData[itemType][itemName]);
 }
 
 export const itemData = {
