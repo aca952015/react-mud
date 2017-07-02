@@ -165,4 +165,13 @@ describe('user reducer', () => {
       });
     });
   });
+
+  describe('CHANGE_ROOM', () => {
+    it('should change the currentRoom property to the payload', () => {
+      expect(reducer(initialState, {type: 'CHANGE_ROOM', payload: 'Town Square'})).toEqual({
+        ...initialState,
+        currentRoom: 'Town Square'
+      });
+    });
+  });
 });
