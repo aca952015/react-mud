@@ -40,7 +40,7 @@ describe('wearItem', () => {
   });
 
   it('should broadcast to the room that the item was worn', done => {
-    let helm = newItem('leather helm', 'equipment');
+    let helm = newItem('equipment', 'leather helm');
     player1.emit('wearItem', {equip: helm});
     player2.on('generalMessage', item => {
       expect(item.from).toEqual('player1');

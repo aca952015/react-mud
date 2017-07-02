@@ -16,7 +16,12 @@ function mapStateToProps(state) {
     commandIndex: state.messages.commandIndex,
     username: state.user.username,
     inventory: state.user.inventory,
-    character: state.user,
+    hp: state.user.hp,
+    mp: state.user.mp,
+    maxHP: state.user.maxHP,
+    maxMP: state.user.maxMP,
+    description: state.user.description,
+    atk: state.user.atk,
     combat: state.user.combat,
     equipment: state.equipment
   };
@@ -47,7 +52,7 @@ export class Home extends Component {
         messages={this.props.messages}
         changeEnterStatus={this.changeEnterStatus}
         inventory={this.props.inventory} />
-      <Prompt character={this.props.character} />
+      <Prompt hp={this.props.hp} mp={this.props.mp} maxHP={this.props.maxHP} maxMP={this.props.maxMP} />
       <CommandInput
         socket={this.socket}
         handleChange={this.handleChange}
@@ -65,5 +70,9 @@ Home.propTypes = {
   inventory: PropTypes.array,
   character: PropTypes.object,
   commandIndex: PropTypes.number,
-  combat: PropTypes.object
+  combat: PropTypes.object,
+  hp: PropTypes.number,
+  mp: PropTypes.number,
+  maxHP: PropTypes.number,
+  maxMP: PropTypes.number
 };

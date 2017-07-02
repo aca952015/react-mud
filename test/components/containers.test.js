@@ -8,7 +8,7 @@ import newItem from '../../app/data/items.js';
 describe('<Containers />', () => {
   let props = {
     message: {
-      containedItems: [newItem('health potion'), newItem('gallows key'), newItem('mana potion'), newItem('mana potion')]
+      containedItems: [newItem('potions', 'health potion'), newItem('keys', 'gallows key'), newItem('potions', 'mana potion'), newItem('potions', 'mana potion')]
     }
   };
 

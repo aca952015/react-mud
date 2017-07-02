@@ -8,20 +8,20 @@ describe('itemPickUpProcessor', () => {
     room: {
       from: 'TestR',
       pickRoom: 'Nexus',
-      roomItems: [newItem('health potion'), newItem('gallows key')],
+      roomItems: [newItem('potions', 'health potion'), newItem('keys', 'gallows key')],
     }
   };
   room.room.item = room.room.roomItems[0];
-  
+
   describe('The user is not in the same room', () => {
     it('should return an empty object', () => {
-      expect(itemPickUpProcessor(room, {currentRoom: 'Gallows'})).toEqual({});
+      expect(itemPickUpProcessor(room, 'Gallows')).toEqual({});
     });
   });
 
   describe('The user is in the same room', () => {
     it('should return a pick object to be processed by the newMessage action', () => {
-      expect(itemPickUpProcessor(room, {currentRoom: 'Nexus'})).toEqual({
+      expect(itemPickUpProcessor(room, 'Nexus')).toEqual({
         from: room.from,
         feedback: ` picks up ${room.room.item.short}.`
       });

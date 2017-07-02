@@ -4,7 +4,7 @@ import termsProcessor from '../../app/processors/terms-processor.js';
 import newItem from '../../app/data/items.js';
 
 describe('termsProcessor', () => {
-  let searchArray = [newItem('gallows key'), newItem('health potion'), newItem('mana potion')];
+  let searchArray = [newItem('keys', 'gallows key'), newItem('potions', 'health potion'), newItem('potions', 'mana potion')];
 
   describe('With dot notation', () => {
     describe('With the full term', () => {

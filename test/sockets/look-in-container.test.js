@@ -64,12 +64,12 @@ describe('lookInContainer', () => {
         player1.on('generalMessage', res => {
           expect(res.containedItems).toEqual([
             {
-              ...newItem('health potion'),
+              ...newItem('potions', 'health potion'),
               id: res.containedItems[0].id,
               drink: res.containedItems[0].drink
             },
             {
-              ...newItem('mana potion'),
+              ...newItem('potions', 'mana potion'),
               id: res.containedItems[1].id,
               drink: res.containedItems[1].drink
             }
@@ -85,12 +85,12 @@ describe('lookInContainer', () => {
         player1.on('generalMessage', res => {
           expect(res.containedItems).toEqual([
             {
-              ...newItem('health potion'),
+              ...newItem('potions', 'health potion'),
               id: res.containedItems[0].id,
               drink: res.containedItems[0].drink
             },
             {
-              ...newItem('mana potion'),
+              ...newItem('potions', 'mana potion'),
               id: res.containedItems[1].id,
               drink: res.containedItems[1].drink
             }

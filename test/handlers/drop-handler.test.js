@@ -8,7 +8,7 @@ import dropHandler from '../../app/handlers/drop-handler.js';
 describe('dropHandler', () => {
   let returnObj = {funcsToCall: [newMessage]};
   let props = {
-    inventory: [newItem('health potion'), newItem('mana potion'), newItem('health potion')]
+    inventory: [newItem('potions', 'health potion'), newItem('potions', 'mana potion'), newItem('potions', 'health potion')]
   };
 
   describe('With no args', () => {
@@ -24,7 +24,7 @@ describe('dropHandler', () => {
           emitType: 'drop',
           item: props.inventory[2],
           funcsToCall: [newMessage, dropItem],
-          feedback: `You drop ${itemData['health potion'].short}.`
+          feedback: `You drop ${itemData['potions']['health potion'].short}.`
         });
       });
     });
@@ -35,7 +35,7 @@ describe('dropHandler', () => {
           emitType: 'drop',
           item: props.inventory[2],
           funcsToCall: [newMessage, dropItem],
-          feedback: `You drop ${itemData['health potion'].short}.`
+          feedback: `You drop ${itemData['potions']['health potion'].short}.`
         });
       });
     });
@@ -47,7 +47,7 @@ describe('dropHandler', () => {
         emitType: 'drop',
         item: props.inventory[2],
         funcsToCall: [newMessage, dropItem],
-        feedback: `You drop ${itemData['health potion'].short}.`
+        feedback: `You drop ${itemData['potions']['health potion'].short}.`
       });
     });
   });
@@ -58,7 +58,7 @@ describe('dropHandler', () => {
         emitType: 'drop',
         item: props.inventory[0],
         funcsToCall: [newMessage, dropItem],
-        feedback: `You drop ${itemData['health potion'].short}.`
+        feedback: `You drop ${itemData['potions']['health potion'].short}.`
       });
     });
   });

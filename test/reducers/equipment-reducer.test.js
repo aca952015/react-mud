@@ -10,7 +10,7 @@ describe('Equipment reducer', () => {
 
   describe('With type WEAR_EQUIPMENT', () => {
     it('should update the appropriate wear slot with the item equipped', () => {
-      let helm = newItem('leather helm', 'equipment');
+      let helm = newItem('equipment', 'leather helm');
       expect(reducer(initialState, {type: 'WEAR_EQUIPMENT', payload: helm})).toEqual({
         ...initialState,
         head: helm

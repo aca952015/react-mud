@@ -37,7 +37,7 @@ describe('pickUpItem', () => {
           it('should return an itemPickedUp event', done => {
             player1.emit('pickUpItem', {item: '2.potion'});
             player1.on('itemPickedUp', res => {
-              let expected = newItem('health potion');
+              let expected = newItem('potions', 'health potion');
               delete expected.drink.effect;
               expect(res.item).toEqual({...expected, id: res.item.id});
               expect(res.pickRoom).toEqual('Nexus');
@@ -50,7 +50,7 @@ describe('pickUpItem', () => {
           it('should return an itemPickedUp event', done => {
             player1.emit('pickUpItem', {item: '2.ke'});
             player1.on('itemPickedUp', res => {
-              let expected = newItem('tester key');
+              let expected = newItem('keys', 'tester key');
               expect(res.item).toEqual({...expected, id: res.item.id});
               expect(res.pickRoom).toEqual('Nexus');
               done();
@@ -64,7 +64,7 @@ describe('pickUpItem', () => {
           player1.emit('pickUpItem', {item: '2.potion'});
           player2.on('pickUpItem', res => {
             expect(res.room.pickRoom).toEqual('Nexus');
-            expect(res.room.item.short).toEqual(itemData['mana potion'].short);
+            expect(res.room.item.short).toEqual(itemData['potions']['mana potion'].short);
             expect(res.from).toEqual('player1');
             done();
           });
@@ -97,7 +97,7 @@ describe('pickUpItem', () => {
     it('should return a pickUpItem event', done => {
       player1.emit('pickUpItem', {item: 'potion'});
       player1.on('itemPickedUp', res => {
-        let expected = newItem('health potion');
+        let expected = newItem('potions', 'health potion');
         delete expected.drink.effect;
         expect(res.item).toEqual({...expected, id: res.item.id});
         expect(res.pickRoom).toEqual('Nexus');
@@ -175,7 +175,7 @@ describe('pickUpItem', () => {
           it('should return an itemPickedUp event', done => {
             player1.emit('getFromContainer', {item: '2.potion', container: 'backpack'});
             player1.on('forceGet', res => {
-              expect(res).toEqual({...newItem('mana potion'), drink: res.drink, id: res.id});
+              expect(res).toEqual({...newItem('potions', 'mana potion'), drink: res.drink, id: res.id});
               done();
             });
           });
@@ -185,7 +185,7 @@ describe('pickUpItem', () => {
           it('should return an itemPickedUp event', done => {
             player1.emit('getFromContainer', {item: '2.pot', container: '2.back'});
             player1.on('forceGet', res => {
-              expect(res).toEqual({...newItem('mana potion'), drink: res.drink, id: res.id});
+              expect(res).toEqual({...newItem('potions', 'mana potion'), drink: res.drink, id: res.id});
               done();
             });
           });
@@ -195,7 +195,7 @@ describe('pickUpItem', () => {
           it('should return an itemPickedUp event', done => {
             player1.emit('getFromContainer', {item: 'potion', container: 'backpack'});
             player1.on('forceGet', res => {
-              expect(res).toEqual({...newItem('health potion'), drink: res.drink, id: res.id});
+              expect(res).toEqual({...newItem('potions', 'health potion'), drink: res.drink, id: res.id});
               done();
             });
           });
@@ -205,7 +205,7 @@ describe('pickUpItem', () => {
           it('should return an itemPickedUp event', done => {
             player1.emit('getFromContainer', {item: 'potion', container: 'backpack'});
             player1.on('forceGet', res => {
-              expect(res).toEqual({...newItem('health potion'), drink: res.drink, id: res.id});
+              expect(res).toEqual({...newItem('potions', 'health potion'), drink: res.drink, id: res.id});
               done();
             });
           });

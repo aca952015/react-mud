@@ -7,7 +7,7 @@ import putHandler from '../../app/handlers/put-handler.js';
 
 describe('putHandler', () => {
   let defaultObj = {funcsToCall: [newMessage]};
-  let props = {inventory: [newItem('health potion'), newItem('health potion'), newItem('backpack'), newItem('backpack'), newItem('corpse')]};
+  let props = {inventory: [newItem('potions', 'health potion'), newItem('potions', 'health potion'), newItem('containers', 'backpack'), newItem('containers', 'backpack'), newItem('containers', 'corpse')]};
 
   describe('With too few arguments', () => {
     it('should return feedback with a syntax error', () => {

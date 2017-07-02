@@ -34,7 +34,7 @@ describe('Unlock', () => {
     describe('With the correct key', () => {
       describe('To the user', () => {
         it('should return a feedback of unlocking the door', done => {
-          player1.emit('lock', {direction: 'up', inventory: [newItem('secret key')]});
+          player1.emit('lock', {direction: 'up', inventory: [newItem('keys', 'secret key')]});
           player1.on('generalMessage', res => {
             expect(res.feedback).toEqual('You unlock the door above.');
             done();
@@ -44,7 +44,7 @@ describe('Unlock', () => {
 
       describe('To other players in the room', () => {
         it('should return feedback of the player locking the door', done => {
-          player1.emit('lock', {direction: 'up', inventory: [newItem('secret key')]});
+          player1.emit('lock', {direction: 'up', inventory: [newItem('keys', 'secret key')]});
           player2.on('generalMessage', res => {
             expect(res.feedback).toEqual('player1 locks the door above.');
             done();
@@ -66,7 +66,7 @@ describe('Unlock', () => {
 
   describe('Unlocking an invalid exit', () => {
     it('should return feedback of not seeing that exit', done => {
-      player1.emit('lock', {direction: 'west', inventory: [newItem('secret key')]});
+      player1.emit('lock', {direction: 'west', inventory: [newItem('keys', 'secret key')]});
       player1.on('generalMessage', res => {
         expect(res.feedback).toEqual('I don\'t see that exit here.');
         done();
@@ -76,7 +76,7 @@ describe('Unlock', () => {
 
   describe('Unlocking an exit that isn\'t lockable', () => {
     it('should return feedback of the exit not being lockable', done => {
-      player1.emit('lock', {direction: 'down', inventory: [newItem('secret key')]});
+      player1.emit('lock', {direction: 'down', inventory: [newItem('keys', 'secret key')]});
       player1.on('generalMessage', res => {
         expect(res.feedback).toEqual('That exit has nothing to lock.');
         done();

@@ -14,6 +14,7 @@ function mapStateToProps(state) {
     username: state.user.username,
     inventory: state.user.inventory,
     combat: state.user.combat,
+    currentRoom: state.user.currentRoom,
     equipment: state.equipment
   };
 }

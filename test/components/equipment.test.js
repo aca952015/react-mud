@@ -11,7 +11,7 @@ describe('<Equipment />', () => {
   it('should return a UL with Nothing in slots that are null and shorts in slots that have an item', () => {
     props = {
       equipment: {
-        head: newItem('leather helm', 'equipment'),
+        head: newItem('equipment', 'leather helm'),
         shoulders: null,
         chest: null,
         legs: null,

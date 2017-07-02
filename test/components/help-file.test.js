@@ -30,8 +30,8 @@ describe('<HelpFile /> with the say help file', () => {
       helpObj: helpFile['help']
     };
     const help = shallow(<HelpFile message={message} />);
-    expect(help.find('li').first().text()).toEqual('LOOK');
-    expect(help.find('li').at(1).text()).toEqual('GET');
-    expect(help.find('li').at(2).text()).toEqual('DROP');
+    expect(help.find('li').first().text()).toEqual('DRINK');
+    expect(help.find('li').at(1).text()).toEqual('DROP');
+    expect(help.find('li').last().text()).toEqual('WHO');
   });
 });

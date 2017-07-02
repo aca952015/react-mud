@@ -7,7 +7,7 @@ import newItem from '../../app/data/items.js';
 
 describe('give', () => {
   let player1, player2, alien;
-  let giveObj = {item: newItem('health potion')};
+  let giveObj = {item: newItem('potions', 'health potion')};
   require('../lib/test-server.js');
 
   beforeEach(done => {

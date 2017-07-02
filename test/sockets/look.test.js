@@ -88,7 +88,7 @@ describe('look', () => {
       it('should show the first matching item\'s description', done => {
         player1.emit('look', {target: 'pot'});
         player1.on('generalMessage', res => {
-          expect(res.feedback).toEqual(itemData['health potion'].description);
+          expect(res.feedback).toEqual(itemData['potions']['health potion'].description);
           done();
         });
       });
@@ -98,7 +98,7 @@ describe('look', () => {
       it('should show the item\'s description', done => {
         player1.emit('look', {target: 'potion'});
         player1.on('generalMessage', res => {
-          expect(res.feedback).toEqual(itemData['health potion'].description);
+          expect(res.feedback).toEqual(itemData['potions']['health potion'].description);
           done();
         });
       });
@@ -110,7 +110,7 @@ describe('look', () => {
       player1.emit('look', {target: 'potion'});
       player2.on('generalMessage', res => {
         expect(res.from).toEqual('player1');
-        expect(res.feedback).toEqual(` looks at ${itemData['health potion'].short}.`);
+        expect(res.feedback).toEqual(` looks at ${itemData['potions']['health potion'].short}.`);
         done();
       });
     });
@@ -188,7 +188,7 @@ describe('look', () => {
       it('should show a health potion description', done => {
         player1.emit('look', {target: '2.potion'});
         player1.on('generalMessage', res => {
-          expect(res.feedback).toEqual(itemData['health potion'].description);
+          expect(res.feedback).toEqual(itemData['potions']['health potion'].description);
           done();
         });
       });
