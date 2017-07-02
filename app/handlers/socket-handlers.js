@@ -13,7 +13,7 @@ export default function socketHandlers(homeCtx) {
   let socket = homeCtx.socket;
   let props = homeCtx.props;
   socket.emit('changeName', homeCtx.props.username);
-  socket.emit('changeDescription', homeCtx.props.character.description);
+  socket.emit('changeDescription', homeCtx.props.description);
   socket.emit('updateEquipment', homeCtx.props.equipment);
   socket.emit('look', {target: null});
   socket.emit('move', {direction: 'login'});

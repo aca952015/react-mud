@@ -13,9 +13,7 @@ describe('combatProcessor', () => {
       active: true,
       targets: []
     },
-    character: {
-      atk: 2
-    }
+    atk: 2
   };
 
   beforeEach(done => {
@@ -45,7 +43,7 @@ describe('combatProcessor', () => {
             friendly: 'You'
           },
           pre: ' deal ',
-          damage: props.character.atk,
+          damage: props.atk,
           post: ' damage to ',
           target: {
             enemy: 'a small bat'
