@@ -8,6 +8,8 @@ import {roomData} from '../../app/data/rooms.js';
 const users = [];
 const mobsInCombat = [];
 
+process.env.TESTING = true;
+
 io.sockets.on('connection', function(socket) {
   users.push(socket);
   socket.currentRoom = 'Nexus';

@@ -5,7 +5,7 @@ import {roomData} from '../data/rooms.js';
 
 export default function movementHandler(command, args, socket, props) {
   if (props.combat.active) return {funcsToCall: [newMessage], feedback: `You're busy fighting ${props.combat.targets[0].short}!`};
-  if (roomData[socket.currentRoom].exits[command]) {
+  if (roomData[props.currentRoom].exits[command]) {
     return {
       direction: command,
       emitType: 'move'

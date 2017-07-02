@@ -12,8 +12,8 @@ export const Prompt = props => {
 
 Prompt.propTypes = {
   character: PropTypes.object,
-  hp: PropTypes.string,
-  mp: PropTypes.string,
-  maxHP: PropTypes.string,
-  maxMP: PropTypes.string
+  hp: PropTypes.number,
+  mp: PropTypes.number,
+  maxHP: PropTypes.number,
+  maxMP: PropTypes.number
 };

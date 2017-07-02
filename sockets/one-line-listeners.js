@@ -1,9 +1,5 @@
 'use strict';
 
-import dotenv from 'dotenv';
-
-dotenv.load();
-
 export default function oneLineListeners(socket, users) {
   socket.on('say', message => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {...message, commType: ' says, '}));
   if (!process.env.TESTING) socket.on('changeName', name => socket.username = name);
