@@ -48,5 +48,17 @@ describe('removeHandler', () => {
         });
       });
     });
+
+    describe('With fuzzy matching', () => {
+      it('should return an object calling quietlyAddItem, removeItem, and newMessage', () => {
+        expect(removeHandler('remove', 'he', null, props)).toEqual({
+          funcsToCall: [quietlyAddItem, removeItem, newMessage],
+          emitType: 'removeItem',
+          quietAdd: props.equipment.head,
+          equip: props.equipment.head,
+          feedback: `You remove ${props.equipment.head.short}.`
+        });
+      });
+    });
   });
 });
