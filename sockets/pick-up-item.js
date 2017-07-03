@@ -14,13 +14,9 @@ export default function pickUpItem(socket, roomData) {
     if (!item) return socket.emit('generalMessage', {feedback: 'I don\'t see that item here.'});
     if (invalidTypes[item.type]) return socket.emit('generalMessage', {feedback: 'You can\'t pick that up.'});
 
-    let room = {
-      item,
-      pickRoom: socket.currentRoom
-    };
-    socket.emit('itemPickedUp', room);
-    socket.broadcast.to(socket.currentRoom).emit('pickUpItem', {room, from: socket.username});
-    roomData[socket.currentRoom].items.splice(roomData[socket.currentRoom].items.indexOf(room.item), 1);
+    socket.emit('itemPickedUp', item);
+    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` picks up ${item.short}.`});
+    roomData[socket.currentRoom].items.splice(roomData[socket.currentRoom].items.indexOf(item), 1);
   });
 
   socket.on('getFromContainer', getObj => {
