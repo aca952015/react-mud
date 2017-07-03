@@ -27,7 +27,8 @@ export default function commandHandler(command, args, props, socket) {
     'i': 'inventory',
     'inv': 'inventory',
     'ex': 'examine',
-    'eq': 'equipment'
+    'eq': 'equipment',
+    'rm': 'remove'
   };
 
   const helperFunctions = {
