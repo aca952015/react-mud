@@ -11,6 +11,7 @@ export const Equipment = props => {
     <h3>{props.name ? `${props.name} is ` : 'You are '}wearing:</h3>
     <ul>{slots}</ul>
     <ul>{items}</ul>
+    <div className="clearfix" style={{clear: 'both'}}></div>
   </div>;
 };
 
