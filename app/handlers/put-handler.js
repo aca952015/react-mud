@@ -4,7 +4,7 @@ import {newMessage} from '../actions/message-actions.js';
 import {addToContainer} from '../actions/inventory-actions.js';
 import termsProcessor from '../processors/terms-processor.js';
 
-export default function putHandler(command, args, socket, props) {
+export default function putHandler(command, args, props) {
   args = args.toLowerCase();
   let splitArgs = args.split(' ');
   if (splitArgs.length > 2) splitArgs.splice(1, 1);

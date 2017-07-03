@@ -4,7 +4,7 @@ import {newMessage} from '../actions/message-actions.js';
 import {dropItem} from '../actions/inventory-actions.js';
 import termsProcessor from '../processors/terms-processor.js';
 
-export default function dropHandler(command, args, socket, props) {
+export default function dropHandler(command, args, props) {
   if (!args) return {funcsToCall: [newMessage], feedback: 'Drop what?'};
   args = args.toLowerCase();
 

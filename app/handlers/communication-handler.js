@@ -2,7 +2,7 @@
 
 import {newMessage} from '../actions/message-actions.js';
 
-export default function communicationHandler(command, args, socket, props) {
+export default function communicationHandler(command, args, props) {
   if (command === 'say') {
     if (!args) return {funcsToCall: [newMessage], feedback: 'Say what?'};
     return {

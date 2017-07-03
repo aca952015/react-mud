@@ -27,7 +27,7 @@ describe('item actions', () => {
 
   describe('removeItem', () => {
     it('should return an object with type "REMOVE_ITEM" and payload of whatever was passed in', () => {
-      expect(removeItem({equip: 'something'})).toEqual({type: 'REMOVE_ITEM', payload: 'something'});
+      expect(removeItem({removeEquip: 'something'})).toEqual({type: 'REMOVE_ITEM', payload: 'something'});
     });
   });
 });

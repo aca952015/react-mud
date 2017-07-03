@@ -19,7 +19,7 @@ describe('examineHandler', () => {
   describe('With dot notation targeting', () => {
     describe('With the full term', () => {
       it('should return an examine object with the correct item', () => {
-        expect(examineHandler('examine', '2.potion', null, props)).toEqual({
+        expect(examineHandler('examine', '2.potion', props)).toEqual({
           ...returnObj,
           feedback: itemData['potions']['health potion'].description
         });
@@ -28,7 +28,7 @@ describe('examineHandler', () => {
 
     describe('With fuzzy matching', () => {
       it('should return an examine object with the correct item', () => {
-        expect(examineHandler('examine', '2.po', null, props)).toEqual({
+        expect(examineHandler('examine', '2.po', props)).toEqual({
           ...returnObj,
           feedback: itemData['potions']['health potion'].description
         });
@@ -38,7 +38,7 @@ describe('examineHandler', () => {
 
   describe('With mixed case', () => {
     it('should return an examine object with the correct item', () => {
-      expect(examineHandler('examine', '2.pOtIoN', null, props)).toEqual({
+      expect(examineHandler('examine', '2.pOtIoN', props)).toEqual({
         ...returnObj,
         feedback: itemData['potions']['health potion'].description
       });
@@ -47,7 +47,7 @@ describe('examineHandler', () => {
 
   describe('With normal targeting', () => {
     it('should return an examine object with the correct item', () => {
-      expect(examineHandler('examine', 'key', null, props)).toEqual({
+      expect(examineHandler('examine', 'key', props)).toEqual({
         ...returnObj,
         feedback: itemData['keys']['gallows key'].description
       });
@@ -56,7 +56,7 @@ describe('examineHandler', () => {
 
   describe('With a valid target that the user isn\'t carrying', () => {
     it('should return an error object with the feedback "You aren\'t carrying that."', () => {
-      expect(examineHandler('examine', 'sword', null, props)).toEqual({
+      expect(examineHandler('examine', 'sword', props)).toEqual({
         ...returnObj,
         feedback: 'You aren\'t carrying that.'
       });

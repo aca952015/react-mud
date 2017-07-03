@@ -2,7 +2,7 @@
 
 import {newMessage} from '../actions/message-actions.js';
 
-export default function lockHandler(command, args, socket, props) {
+export default function lockHandler(command, args, props) {
   if (!args) {
     let feedback = 'Unlock what direction?';
     if (command === 'lock') feedback = 'Lock what direction?';

@@ -20,7 +20,7 @@ describe('removeHandler', () => {
 
   describe('With no arguments', () => {
     it('should return feedback of "Remove what?"', () => {
-      expect(removeHandler('remove', null, null, props)).toEqual({
+      expect(removeHandler('remove', null, props)).toEqual({
         ...defaultObj,
         feedback: 'Remove what?'
       });
@@ -29,7 +29,7 @@ describe('removeHandler', () => {
 
   describe('With an item the user isn\'t wearing', () => {
     it('should return feedback of "You aren\'t wearing that."', () => {
-      expect(removeHandler('remove', 'hat', null, props)).toEqual({
+      expect(removeHandler('remove', 'hat', props)).toEqual({
         ...defaultObj,
         feedback: 'You aren\'t wearing that.'
       });
@@ -39,11 +39,11 @@ describe('removeHandler', () => {
   describe('With a valid item', () => {
     describe('With the full term', () => {
       it('should return an object calling quietlyAddItem, removeItem, and newMessage', () => {
-        expect(removeHandler('remove', 'helm', null, props)).toEqual({
+        expect(removeHandler('remove', 'helm', props)).toEqual({
           funcsToCall: [quietlyAddItem, removeItem, newMessage],
           emitType: 'removeItem',
           quietAdd: props.equipment.head,
-          equip: props.equipment.head,
+          removeEquip: props.equipment.head,
           feedback: `You remove ${props.equipment.head.short}.`
         });
       });
@@ -51,11 +51,11 @@ describe('removeHandler', () => {
 
     describe('With fuzzy matching', () => {
       it('should return an object calling quietlyAddItem, removeItem, and newMessage', () => {
-        expect(removeHandler('remove', 'he', null, props)).toEqual({
+        expect(removeHandler('remove', 'he', props)).toEqual({
           funcsToCall: [quietlyAddItem, removeItem, newMessage],
           emitType: 'removeItem',
           quietAdd: props.equipment.head,
-          equip: props.equipment.head,
+          removeEquip: props.equipment.head,
           feedback: `You remove ${props.equipment.head.short}.`
         });
       });
@@ -63,11 +63,11 @@ describe('removeHandler', () => {
 
     describe('With dot notation', () => {
       it('should return an object calling quietlyAddItem, removeItem, and newMessage', () => {
-        expect(removeHandler('remove', '2.helm', null, props)).toEqual({
+        expect(removeHandler('remove', '2.helm', props)).toEqual({
           funcsToCall: [quietlyAddItem, removeItem, newMessage],
           emitType: 'removeItem',
           quietAdd: props.equipment.shoulders,
-          equip: props.equipment.shoulders,
+          removeEquip: props.equipment.shoulders,
           feedback: `You remove ${props.equipment.shoulders.short}.`
         });
       });
@@ -75,11 +75,11 @@ describe('removeHandler', () => {
 
     describe('With mixed case', () => {
       it('should return an object calling quietlyAddItem, removeItem, and newMessage', () => {
-        expect(removeHandler('remove', 'HeLm', null, props)).toEqual({
+        expect(removeHandler('remove', 'HeLm', props)).toEqual({
           funcsToCall: [quietlyAddItem, removeItem, newMessage],
           emitType: 'removeItem',
           quietAdd: props.equipment.head,
-          equip: props.equipment.head,
+          removeEquip: props.equipment.head,
           feedback: `You remove ${props.equipment.head.short}.`
         });
       });

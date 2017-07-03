@@ -3,7 +3,7 @@
 import {newMessage} from '../actions/message-actions.js';
 import termsProcessor from '../processors/terms-processor.js';
 
-export default function lookHandler(command, args, socket, props) {
+export default function lookHandler(command, args, props) {
   if (!args) return {emitType: 'look', target: args};
   args = args.toLowerCase();
   let splitArgs = args.split(' ');

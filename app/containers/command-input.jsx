@@ -73,7 +73,7 @@ export class CommandInput extends Component {
       const command = line[0].toLowerCase().trim();
       const args = line.length > 1 ? line.slice(1).join(' ').trim() : null;
 
-      let result = commandHandler(command, args, this.props, this.props.socket);
+      let result = commandHandler(command, args, this.props);
 
       if (result.funcsToCall && result.funcsToCall.length) result.funcsToCall.forEach(func => this.props.dispatch(func(result)));
       this.props.socket.emit(result.emitType, result);

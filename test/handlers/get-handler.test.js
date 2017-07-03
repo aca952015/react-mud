@@ -34,7 +34,7 @@ describe('getHandler', () => {
       describe('With an item the user is carrying', () => {
         describe('On an item that isn\'t a valid pickup type', () => {
           it('should inform the user they can\'t pick it up', () => {
-            expect(getHandler('get', 'corpse backpack', null, props)).toEqual({
+            expect(getHandler('get', 'corpse backpack', props)).toEqual({
               funcsToCall: [newMessage],
               feedback: 'You can\'t pick that up.'
             });
@@ -42,7 +42,7 @@ describe('getHandler', () => {
         });
         describe('That isn\'t a container', () => {
           it('should inform the user it isn\'t a container', () => {
-            expect(getHandler('get', 'potion key', null, props)).toEqual({
+            expect(getHandler('get', 'potion key', props)).toEqual({
               funcsToCall: [newMessage],
               feedback: 'That isn\'t a container.'
             });
@@ -52,7 +52,7 @@ describe('getHandler', () => {
         describe('That is a container', () => {
           describe('That doesn\'t hold the designated item', () => {
             it('should inform the user that that item isn\'t seen', () => {
-              expect(getHandler('get', 'sword backpack', null, props)).toEqual({
+              expect(getHandler('get', 'sword backpack', props)).toEqual({
                 funcsToCall: [newMessage],
                 feedback: 'I don\'t see that item in that container.'
               });
@@ -62,7 +62,7 @@ describe('getHandler', () => {
           describe('That does hold the designated item', () => {
             describe('With mixed case', () => {
               it('should return a getFromContainer object with newMessage and getFromContainer funcsToCall', () => {
-                expect(getHandler('get', '2.PotIoN BaCKPaCk', null, props)).toEqual({
+                expect(getHandler('get', '2.PotIoN BaCKPaCk', props)).toEqual({
                   emitType: 'pickedFromInventory',
                   funcsToCall: [newMessage, getFromContainer],
                   item: props.inventory[0].container.contains[1],
@@ -75,7 +75,7 @@ describe('getHandler', () => {
             describe('With dot notation on the item, but not the container', () => {
               describe('With full terms', () => {
                 it('should return a getFromContainer object with newMessage and getFromContainer funcsToCall', () => {
-                  expect(getHandler('get', '2.potion backpack', null, props)).toEqual({
+                  expect(getHandler('get', '2.potion backpack', props)).toEqual({
                     emitType: 'pickedFromInventory',
                     funcsToCall: [newMessage, getFromContainer],
                     item: props.inventory[0].container.contains[1],
@@ -87,7 +87,7 @@ describe('getHandler', () => {
 
               describe('With fuzzy matching', () => {
                 it('should return a getFromContainer object with newMessage and getFromContainer funcsToCall', () => {
-                  expect(getHandler('get', '2.po bac', null, props)).toEqual({
+                  expect(getHandler('get', '2.po bac', props)).toEqual({
                     emitType: 'pickedFromInventory',
                     funcsToCall: [newMessage, getFromContainer],
                     item: props.inventory[0].container.contains[1],
@@ -100,7 +100,7 @@ describe('getHandler', () => {
 
             describe('With dot notation on the item and container', () => {
               it('should return a getFromContainer object with newMessage and getFromContainer funcsToCall', () => {
-                expect(getHandler('get', '2.potion 2.backpack', null, props)).toEqual({
+                expect(getHandler('get', '2.potion 2.backpack', props)).toEqual({
                   emitType: 'pickedFromInventory',
                   funcsToCall: [newMessage, getFromContainer],
                   item: props.inventory[1].container.contains[1],
@@ -112,7 +112,7 @@ describe('getHandler', () => {
 
             describe('With dot notation on the container, but not the item', () => {
               it('should return a getFromContainer object with newMessage and getFromContainer funcsToCall', () => {
-                expect(getHandler('get', 'potion 2.backpack', null, props)).toEqual({
+                expect(getHandler('get', 'potion 2.backpack', props)).toEqual({
                   emitType: 'pickedFromInventory',
                   funcsToCall: [newMessage, getFromContainer],
                   item: props.inventory[1].container.contains[0],
@@ -124,7 +124,7 @@ describe('getHandler', () => {
 
             describe('With normal targeting on both', () => {
               it('should return a getFromContainer object with newMessage and getFromContainer funcsToCall', () => {
-                expect(getHandler('get', 'potion backpack', null, props)).toEqual({
+                expect(getHandler('get', 'potion backpack', props)).toEqual({
                   emitType: 'pickedFromInventory',
                   funcsToCall: [newMessage, getFromContainer],
                   item: props.inventory[0].container.contains[0],
@@ -139,7 +139,7 @@ describe('getHandler', () => {
 
       describe('With an item the user isn\'t carrying', () => {
         it('should return a getFromContainer emit event', () => {
-          expect(getHandler('get', 'potion satchel', null, props)).toEqual({
+          expect(getHandler('get', 'potion satchel', props)).toEqual({
             emitType: 'getFromContainer',
             item: 'potion',
             container: 'satchel'
@@ -149,7 +149,7 @@ describe('getHandler', () => {
 
       describe('With optional FROM clause', () => {
         it('should return a getFromContainer emit event', () => {
-          expect(getHandler('get', 'potion from satchel', null, props)).toEqual({
+          expect(getHandler('get', 'potion from satchel', props)).toEqual({
             emitType: 'getFromContainer',
             item: 'potion',
             container: 'satchel'

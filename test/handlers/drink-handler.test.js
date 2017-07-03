@@ -20,7 +20,7 @@ describe('drinkHandler', () => {
   describe('With dot notation', () => {
     describe('With the full term', () => {
       it('should drink the targeted item', () => {
-        let response = drinkHandler('drink', '3.potion', null, props);
+        let response = drinkHandler('drink', '3.potion', props);
         expect(response).toEqual({
           funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
           amount: itemData['potions']['health potion'].drink.amount,
@@ -38,7 +38,7 @@ describe('drinkHandler', () => {
 
     describe('With fuzzy matching', () => {
       it('should drink the targeted item', () => {
-        let response = drinkHandler('drink', '3.po', null, props);
+        let response = drinkHandler('drink', '3.po', props);
         expect(response).toEqual({
           funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
           amount: itemData['potions']['health potion'].drink.amount,
@@ -57,7 +57,7 @@ describe('drinkHandler', () => {
 
   describe('With mixed case', () => {
     it('should drink the targeted item', () => {
-      let response = drinkHandler('drink', '3.PoTiOn', null, props);
+      let response = drinkHandler('drink', '3.PoTiOn', props);
       expect(response).toEqual({
         funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
         amount: itemData['potions']['health potion'].drink.amount,
@@ -75,7 +75,7 @@ describe('drinkHandler', () => {
 
   describe('Targeting a valid item in the user\'s inventory', () => {
     it('should drink the targeted item', () => {
-      let response = drinkHandler('drink', 'potion', null, props);
+      let response = drinkHandler('drink', 'potion', props);
       expect(response).toEqual({
         funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
         amount: itemData['potions']['health potion'].drink.amount,
@@ -93,7 +93,7 @@ describe('drinkHandler', () => {
 
   describe('Targeting a valid item not in the user\'s inventory', () => {
     it('should return feedback of "You aren\'t carrying that."', () => {
-      expect(drinkHandler('drink', 'potion', null, {inventory: []})).toEqual({
+      expect(drinkHandler('drink', 'potion', {inventory: []})).toEqual({
         ...returnObj,
         feedback: 'You aren\'t carrying that.'
       });
@@ -102,7 +102,7 @@ describe('drinkHandler', () => {
 
   describe('Targeting an invalid item', () => {
     it('should return feedback of "That isn\'t drinkable."', () => {
-      expect(drinkHandler('drink', 'key', null, props)).toEqual({
+      expect(drinkHandler('drink', 'key', props)).toEqual({
         ...returnObj,
         feedback: 'That isn\'t drinkable.'
       });

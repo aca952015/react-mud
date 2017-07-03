@@ -4,7 +4,7 @@ import {newMessage} from '../actions/message-actions.js';
 import {getFromContainer} from '../actions/inventory-actions.js';
 import termsProcessor from '../processors/terms-processor.js';
 
-export default function getHandler(command, args, socket, props) {
+export default function getHandler(command, args, props) {
   const invalidTypes = {
     'corpse': true,
     'liquid': true
