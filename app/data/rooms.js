@@ -40,7 +40,11 @@ export const roomData = {
       newItem('keys', 'tester key'),
       newItem('potions', 'mana potion'),
       newItem('equipment', 'leather helm'),
-      newItem('equipment', 'leather helm')
+      newItem('equipment', 'leather helm'),
+      newItem('equipment', 'leather pauldrons'),
+      newItem('equipment', 'leather breastplate'),
+      newItem('equipment', 'leather leggings'),
+      newItem('equipment', 'leather boots')
     ],
     examines: [{
       name: 'ztest',

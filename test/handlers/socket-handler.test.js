@@ -10,7 +10,6 @@ import {newMessage} from '../../app/actions/message-actions.js';
 import {enterCombat, damageUser, slayEnemy} from '../../app/actions/combat-actions.js';
 import whisperProcessor from '../../app/processors/whisper-processor.js';
 import moveProcessor from '../../app/processors/move-processor.js';
-import itemPickUpProcessor from '../../app/processors/item-pickup-processor.js';
 import {getItem, dropItem} from '../../app/actions/inventory-actions.js';
 import {changeRoom} from '../../app/actions/move-actions.js';
 import newItem from '../../app/data/items.js';
@@ -115,22 +114,12 @@ describe('socketHandlers', () => {
     });
   });
 
-  describe('pickUpItem', () => {
-    it('should dispatch a newMessage with an itemPickUpProcessor', done => {
-      player2.emit('pickUpItem', {item: 'potion'});
-      player1.on('pickUpItem', res => {
-        expect(props.dispatch.calledWith(newMessage(itemPickUpProcessor(res, player1)))).toEqual(true);
-        done();
-      });
-    });
-  });
-
   describe('itemPickedUp', () => {
     it('should dispatch a newMessage and a getItem', done => {
       player1.emit('pickUpItem', {item: 'potion'});
       player1.on('itemPickedUp', res => {
-        expect(props.dispatch.calledWith(newMessage({feedback: `You pick up ${res.item.short}.`}))).toEqual(true);
-        expect(props.dispatch.calledWith(getItem(res.item))).toEqual(true);
+        expect(props.dispatch.calledWith(newMessage({feedback: `You pick up ${res.short}.`}))).toEqual(true);
+        expect(props.dispatch.calledWith(getItem(res))).toEqual(true);
         done();
       });
     });

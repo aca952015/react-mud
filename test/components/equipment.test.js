@@ -22,12 +22,16 @@ describe('<Equipment />', () => {
     eq = shallow(<Equipment {...props} />);
 
     expect(eq.find('h3').text()).toEqual('You are wearing:');
-    expect(eq.find('li').first().text()).toEqual(`<Head> ${props.equipment.head.short}`);
-    expect(eq.find('li').at(1).text()).toEqual('<Shoulders> Nothing');
-    expect(eq.find('li').at(2).text()).toEqual('<Chest> Nothing');
-    expect(eq.find('li').at(3).text()).toEqual('<Legs> Nothing');
-    expect(eq.find('li').last().text()).toEqual('<Feet> Nothing');
-    expect(eq.find('li').first().children('span').text()).toEqual(props.equipment.head.short);
+    expect(eq.find('ul').first().children('li').first().text()).toEqual('<Head>');
+    expect(eq.find('ul').first().children('li').at(1).text()).toEqual('<Shoulders>');
+    expect(eq.find('ul').first().children('li').at(2).text()).toEqual('<Chest>');
+    expect(eq.find('ul').first().children('li').at(3).text()).toEqual('<Legs>');
+    expect(eq.find('ul').first().children('li').last().text()).toEqual('<Feet>');
+    expect(eq.find('ul').last().children('li').first().text()).toEqual(props.equipment.head.short);
+    expect(eq.find('ul').last().children('li').at(1).text()).toEqual('Nothing');
+    expect(eq.find('ul').last().children('li').at(2).text()).toEqual('Nothing');
+    expect(eq.find('ul').last().children('li').at(3).text()).toEqual('Nothing');
+    expect(eq.find('ul').last().children('li').last().text()).toEqual('Nothing');
   });
 
   describe('With a name', () => {

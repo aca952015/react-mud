@@ -17,8 +17,10 @@ export const helpFile = {
       'MOVEMENT',
       'PREVIOUS_COMMANDS',
       'PUT',
+      'REMOVE',
       'SAY',
       'UNLOCK',
+      'WEAR',
       'WHISPER',
       'WHO'
     ]
@@ -75,6 +77,10 @@ export const helpFile = {
     title: 'PUT <item> <container> (optionally: PUT <item> IN <container>)',
     text: 'Will put an item from your inventory into a container you\'re either carrying or that\'s in the room. For example, "PUT POTION BACKPACK" will attempt to put a potion from your inventory into a backpack. When selecting a container, items you are carrying are prioritized over items in the room. For example, if you have a backpack, but there\'s also a backpack in the room, then "PUT POTION BACKPACK" will put the potion in the backpack you\'re carrying. Put recognizes dot notation on both the targeted item and the container. "PUT 2.POTION BACKPACK", "PUT POTION 2.BACKPACK", and "PUT 2.POTION 2.BACKPACK" are all valid commands.'
   },
+  'remove': {
+    title: 'REMOVE <item> (optionally: RM <item>)',
+    text: 'Will remove an item you\'re currently wearing and put it back in your inventory. Dot notation can be used to target specific items, starting from the head down. For example, if you are wearing a leather helm and a leather breastplate, you can REMOVE 2.LEATHER to remove the breastplate.'
+  },
   'say': {
     title: 'SAY <message>',
     text: 'Will have your character say something to everyone in your current room.'
@@ -82,6 +88,10 @@ export const helpFile = {
   'unlock': {
     title: 'UNLOCK <direction>',
     text: 'Some exits are locked, meaning you cannot move through them until they are unlocked. These exits will be displayed with parentheses around them. To unlock an exit, you will need to have the correct key in your inventory. For example, if "a small black key" is needed to unlock the east exit, you would need to have "a small black key" in your inventory, then type UNLOCK EAST or UNLOCK E.'
+  },
+  'wear': {
+    title: 'WEAR <item>',
+    text: 'Will equip an item you are carrying in your inventory. If you are already wearing something in that slot, it will first remove the currently worn item. You can use dot notation to wear specific items in your inventory. For example, if you have "a broad sword" and "a thin sword", you can WEAR 2.SWORD to equip the thin sword.'
   },
   'whisper': {
     title: 'WHISPER <target> <message>',

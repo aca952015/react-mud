@@ -6,7 +6,6 @@ import {enterCombat, damageUser, slayEnemy} from '../actions/combat-actions.js';
 import {changeRoom} from '../actions/move-actions.js';
 import whisperProcessor from '../processors/whisper-processor.js';
 import moveProcessor from '../processors/move-processor.js';
-import itemPickUpProcessor from '../processors/item-pickup-processor.js';
 import combatProcessor from '../processors/combat-processor.js';
 
 export default function socketHandlers(homeCtx) {
@@ -27,12 +26,11 @@ export default function socketHandlers(homeCtx) {
       feedback: ` moves ${movement.direction}.`})) : null;
   });
   socket.on('movementArrive', movement => props.dispatch(newMessage(moveProcessor(movement))));
-  socket.on('pickUpItem', room => props.dispatch(newMessage(itemPickUpProcessor(room, homeCtx.props.currentRoom))));
   socket.on('forceDrop', item => props.dispatch(dropItem({item})));
   socket.on('forceGet', item => props.dispatch(getItem(item)));
-  socket.on('itemPickedUp', itemAndRoom => {
-    props.dispatch(newMessage({feedback: `You pick up ${itemAndRoom.item.short}.`}));
-    props.dispatch(getItem(itemAndRoom.item));
+  socket.on('itemPickedUp', item => {
+    props.dispatch(newMessage({feedback: `You pick up ${item.short}.`}));
+    props.dispatch(getItem(item));
   });
   socket.on('enterCombat', target => {
     if (homeCtx.props.combat.targets.find(mob => mob.id === target.id)) return props.dispatch(newMessage({feedback: `You're already fighting ${target.short}!`}));
