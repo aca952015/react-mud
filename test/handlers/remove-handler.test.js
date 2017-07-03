@@ -35,4 +35,18 @@ describe('removeHandler', () => {
       });
     });
   });
+
+  describe('With a valid item', () => {
+    describe('With the full term', () => {
+      it('should return an object calling quietlyAddItem, removeItem, and newMessage', () => {
+        expect(removeHandler('remove', 'helm', null, props)).toEqual({
+          funcsToCall: [quietlyAddItem, removeItem, newMessage],
+          emitType: 'removeItem',
+          quietAdd: props.equipment.head,
+          equip: props.equipment.head,
+          feedback: `You remove ${props.equipment.head.short}.`
+        });
+      });
+    });
+  });
 });
