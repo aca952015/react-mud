@@ -14,5 +14,10 @@ export default function reducer(state=initialState, action) {
     newState[action.payload.slot] = action.payload;
     return newState;
   }
+  if (action.type === 'REMOVE_ITEM') {
+    let newState = {...state};
+    newState[action.payload.slot] = null;
+    return newState;
+  }
   return state;
 }
