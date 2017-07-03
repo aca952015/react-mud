@@ -20,6 +20,6 @@ export function wearEquipment(eq) {
 export function removeItem(eq) {
   return {
     type: 'REMOVE_ITEM',
-    payload: eq.equip
+    payload: eq.removeEquip
   };
 }

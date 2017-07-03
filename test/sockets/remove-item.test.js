@@ -39,7 +39,7 @@ describe('removeItem', () => {
   });
 
   it('should broadcast a generalMessage of player1 removing the item', done => {
-    player1.emit('removeItem', {equip: helm});
+    player1.emit('removeItem', {removeEquip: helm});
     player2.on('generalMessage', res => {
       expect(res.from).toEqual('player1');
       expect(res.feedback).toEqual(` removes ${helm.short}.`);

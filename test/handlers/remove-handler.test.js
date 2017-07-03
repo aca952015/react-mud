@@ -43,7 +43,7 @@ describe('removeHandler', () => {
           funcsToCall: [quietlyAddItem, removeItem, newMessage],
           emitType: 'removeItem',
           quietAdd: props.equipment.head,
-          equip: props.equipment.head,
+          removeEquip: props.equipment.head,
           feedback: `You remove ${props.equipment.head.short}.`
         });
       });
@@ -55,7 +55,7 @@ describe('removeHandler', () => {
           funcsToCall: [quietlyAddItem, removeItem, newMessage],
           emitType: 'removeItem',
           quietAdd: props.equipment.head,
-          equip: props.equipment.head,
+          removeEquip: props.equipment.head,
           feedback: `You remove ${props.equipment.head.short}.`
         });
       });
@@ -67,7 +67,7 @@ describe('removeHandler', () => {
           funcsToCall: [quietlyAddItem, removeItem, newMessage],
           emitType: 'removeItem',
           quietAdd: props.equipment.shoulders,
-          equip: props.equipment.shoulders,
+          removeEquip: props.equipment.shoulders,
           feedback: `You remove ${props.equipment.shoulders.short}.`
         });
       });
@@ -79,7 +79,7 @@ describe('removeHandler', () => {
           funcsToCall: [quietlyAddItem, removeItem, newMessage],
           emitType: 'removeItem',
           quietAdd: props.equipment.head,
-          equip: props.equipment.head,
+          removeEquip: props.equipment.head,
           feedback: `You remove ${props.equipment.head.short}.`
         });
       });

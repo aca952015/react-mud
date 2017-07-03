@@ -17,7 +17,7 @@ export default function removeHandler(command, args, socket, props) {
     funcsToCall: [quietlyAddItem, removeItem, newMessage],
     emitType: 'removeItem',
     quietAdd: item,
-    equip: item,
+    removeEquip: item,
     feedback: `You remove ${item.short}.`
   };
 }
