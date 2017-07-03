@@ -20,7 +20,7 @@ describe('dropHandler', () => {
   describe('With dot notation targeting', () => {
     describe('With the full term', () => {
       it('should return a drop object with the right item', () => {
-        expect(dropHandler('drop', '3.potion', null, props)).toEqual({
+        expect(dropHandler('drop', '3.potion', props)).toEqual({
           emitType: 'drop',
           item: props.inventory[2],
           funcsToCall: [newMessage, dropItem],
@@ -31,7 +31,7 @@ describe('dropHandler', () => {
 
     describe('With fuzzy matching', () => {
       it('should return a drop object with the right item', () => {
-        expect(dropHandler('drop', '3.pot', null, props)).toEqual({
+        expect(dropHandler('drop', '3.pot', props)).toEqual({
           emitType: 'drop',
           item: props.inventory[2],
           funcsToCall: [newMessage, dropItem],
@@ -43,7 +43,7 @@ describe('dropHandler', () => {
 
   describe('With mixed case', () => {
     it('should return a drop object with the right item', () => {
-      expect(dropHandler('drop', '3.pOtIoN', null, props)).toEqual({
+      expect(dropHandler('drop', '3.pOtIoN', props)).toEqual({
         emitType: 'drop',
         item: props.inventory[2],
         funcsToCall: [newMessage, dropItem],
@@ -54,7 +54,7 @@ describe('dropHandler', () => {
 
   describe('With normal targeting', () => {
     it('should return a drop object with the right item', () => {
-      expect(dropHandler('drop', 'potion', null, props)).toEqual({
+      expect(dropHandler('drop', 'potion', props)).toEqual({
         emitType: 'drop',
         item: props.inventory[0],
         funcsToCall: [newMessage, dropItem],
@@ -65,7 +65,7 @@ describe('dropHandler', () => {
 
   describe('With a valid item that the user doesn\'t have', () => {
     it('should return an error object with the feedback "You don\'t seem to be carrying that"', () => {
-      expect(dropHandler('drop', 'key', null, props)).toEqual({
+      expect(dropHandler('drop', 'key', props)).toEqual({
         ...returnObj,
         feedback: 'You don\'t seem to be carrying that.'
       });

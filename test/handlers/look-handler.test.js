@@ -25,7 +25,7 @@ describe('lookHandler', () => {
 
   describe('with no args', () => {
     it('should return a look with target undefined', () => {
-      expect(lookHandler('look', undefined, null, props)).toEqual({
+      expect(lookHandler('look', undefined, props)).toEqual({
         emitType: 'look',
         target: undefined
       });
@@ -35,7 +35,7 @@ describe('lookHandler', () => {
   describe('With args, but not IN', () => {
     describe('With mixed case', () => {
       it('should return a look with target of args', () => {
-        expect(lookHandler('look', 'BoB', null, props)).toEqual({
+        expect(lookHandler('look', 'BoB', props)).toEqual({
           emitType: 'look',
           target: 'bob'
         });
@@ -46,7 +46,7 @@ describe('lookHandler', () => {
   describe('With args and with IN', () => {
     describe('Without a proper target', () => {
       it('should return feedback asking to look in what?', () => {
-        expect(lookHandler('look', 'in', null, props)).toEqual({
+        expect(lookHandler('look', 'in', props)).toEqual({
           funcsToCall: [newMessage],
           feedback: 'Look in what? (format: LOOK IN <container>)'
         });
@@ -56,7 +56,7 @@ describe('lookHandler', () => {
     describe('Targeting an item the user is carrying', () => {
       describe('That is not a container', () => {
         it('should return feedback that it isn\'t a container', () => {
-          expect(lookHandler('look', 'in key', null, props)).toEqual({
+          expect(lookHandler('look', 'in key', props)).toEqual({
             funcsToCall: [newMessage],
             feedback: 'That isn\'t a container.'
           });
@@ -66,7 +66,7 @@ describe('lookHandler', () => {
       describe('With dot notation', () => {
         describe('With mixed case', () => {
           it('should return a newMessage with containedItems', () => {
-            expect(lookHandler('look', 'in 2.BaCkPAck', null, props)).toEqual({
+            expect(lookHandler('look', 'in 2.BaCkPAck', props)).toEqual({
               funcsToCall: [newMessage],
               containedItems: props.inventory[2].container.contains
             });
@@ -77,7 +77,7 @@ describe('lookHandler', () => {
       describe('With normal targeting', () => {
         describe('With the full term', () => {
           it('should return a newMessage with containedItems', () => {
-            expect(lookHandler('look', 'in backpack', null, props)).toEqual({
+            expect(lookHandler('look', 'in backpack', props)).toEqual({
               funcsToCall: [newMessage],
               containedItems: props.inventory[0].container.contains
             });
@@ -86,7 +86,7 @@ describe('lookHandler', () => {
 
         describe('With fuzzy matching', () => {
           it('should return a newMessage with containedItems', () => {
-            expect(lookHandler('look', 'in bac', null, props)).toEqual({
+            expect(lookHandler('look', 'in bac', props)).toEqual({
               funcsToCall: [newMessage],
               containedItems: props.inventory[0].container.contains
             });
@@ -97,7 +97,7 @@ describe('lookHandler', () => {
 
     describe('Targeting an item the user is not carrying', () => {
       it('should return a lookInContainer emit', () => {
-        expect(lookHandler('look', 'in satchel', null, props)).toEqual({
+        expect(lookHandler('look', 'in satchel', props)).toEqual({
           emitType: 'lookInContainer',
           container: 'satchel'
         });

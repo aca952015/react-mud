@@ -13,7 +13,7 @@ describe('communicationHandler', () => {
     });
 
     it('should return a say object with args', () => {
-      expect(communicationHandler('say', 'hello', null, props)).toEqual({
+      expect(communicationHandler('say', 'hello', props)).toEqual({
         ...returnObj,
         from: props.username,
         text: 'hello',
@@ -33,7 +33,7 @@ describe('communicationHandler', () => {
     });
 
     it('should return a whisper object with correct args', () => {
-      expect(communicationHandler('whisper', 'duder hello', null, props)).toEqual({
+      expect(communicationHandler('whisper', 'duder hello', props)).toEqual({
         target: 'duder',
         text: 'hello',
         from: props.username,

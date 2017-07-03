@@ -13,7 +13,7 @@ describe('movementHandler', () => {
   };
   describe('With a valid exit', () => {
     it('should return a move object for the server to handle', () => {
-      expect(movementHandler('down', null, null, props)).toEqual({
+      expect(movementHandler('down', null, props)).toEqual({
         direction: 'down',
         emitType: 'move'
       });
@@ -22,7 +22,7 @@ describe('movementHandler', () => {
 
   describe('With an invalid exit', () => {
     it('should return an error object with feedback of "I don\'t see that exit here."', () => {
-      expect(movementHandler('east', null, null, props)).toEqual({
+      expect(movementHandler('east', null, props)).toEqual({
         funcsToCall: [newMessage],
         feedback: 'I don\'t see that exit here.'
       });
@@ -41,7 +41,7 @@ describe('movementHandler', () => {
         }
       };
 
-      expect(movementHandler('down', null, null, props)).toEqual({
+      expect(movementHandler('down', null, props)).toEqual({
         funcsToCall: [newMessage],
         feedback: `You're busy fighting ${props.combat.targets[0].short}!`});
     });

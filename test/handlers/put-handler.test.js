@@ -11,7 +11,7 @@ describe('putHandler', () => {
 
   describe('With too few arguments', () => {
     it('should return feedback with a syntax error', () => {
-      expect(putHandler('put', 'potion', null, props)).toEqual({
+      expect(putHandler('put', 'potion', props)).toEqual({
         ...defaultObj,
         feedback: 'Put what where? (format: PUT <item> <target> or PUT <item> IN <target>)'
       });
@@ -20,7 +20,7 @@ describe('putHandler', () => {
 
   describe('With an item the user isn\'t carrying', () => {
     it('should return feedback that they aren\'t carrying it', () => {
-      expect(putHandler('put', 'bob backpack', null, props)).toEqual({
+      expect(putHandler('put', 'bob backpack', props)).toEqual({
         ...defaultObj,
         feedback: 'You don\'t seem to be carrying that.'
       });
@@ -29,7 +29,7 @@ describe('putHandler', () => {
 
   describe('Attempting to put a container inside itself', () => {
     it('should return that you can\'t do that', () => {
-      expect(putHandler('put', 'backpack backpack', null, props)).toEqual({
+      expect(putHandler('put', 'backpack backpack', props)).toEqual({
         ...defaultObj,
         feedback: 'You can\'t put a container inside itself.'
       });
@@ -38,7 +38,7 @@ describe('putHandler', () => {
 
   describe('Attempting to put an invalid item type into a container', () => {
     it('should return that you can\'t do that', () => {
-      expect(putHandler('put', 'corpse backpack', null, props)).toEqual({
+      expect(putHandler('put', 'corpse backpack', props)).toEqual({
         ...defaultObj,
         feedback: 'That container doesn\'t hold that type of item.'
       });
@@ -47,7 +47,7 @@ describe('putHandler', () => {
 
   describe('Attempting to put an item into another item that isn\'t a container', () => {
     it('should return that you can\'t do that', () => {
-      expect(putHandler('put', 'backpack potion', null, props)).toEqual({
+      expect(putHandler('put', 'backpack potion', props)).toEqual({
         ...defaultObj,
         feedback: 'That isn\'t a container.'
       });
@@ -58,7 +58,7 @@ describe('putHandler', () => {
     describe('With dot notation on the item, but not the container', () => {
       describe('With mixed case', () => {
         it('should return a put object with addToContainer and newMessage funcsToCall', () => {
-          expect(putHandler('put', '2.PoTioN BacKpACk', null, props)).toEqual({
+          expect(putHandler('put', '2.PoTioN BacKpACk', props)).toEqual({
             emitType: 'putInInventory',
             item: props.inventory[1],
             container: props.inventory[2],
@@ -72,7 +72,7 @@ describe('putHandler', () => {
     describe('With dot notation on the item and on the container', () => {
       describe('With full terms', () => {
         it('should return a put object with addToContainer and newMessage funcsToCall', () => {
-          expect(putHandler('put', '2.potion 2.backpack', null, props)).toEqual({
+          expect(putHandler('put', '2.potion 2.backpack', props)).toEqual({
             emitType: 'putInInventory',
             item: props.inventory[1],
             container: props.inventory[3],
@@ -84,7 +84,7 @@ describe('putHandler', () => {
 
       describe('With fuzzy matching', () => {
         it('should return a put object with addToContainer and newMessage funcsToCall', () => {
-          expect(putHandler('put', '2.pot 2.bac', null, props)).toEqual({
+          expect(putHandler('put', '2.pot 2.bac', props)).toEqual({
             emitType: 'putInInventory',
             item: props.inventory[1],
             container: props.inventory[3],
@@ -97,7 +97,7 @@ describe('putHandler', () => {
 
     describe('With dot notation on the container, but not the item', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {
-        expect(putHandler('put', 'potion 2.backpack', null, props)).toEqual({
+        expect(putHandler('put', 'potion 2.backpack', props)).toEqual({
           emitType: 'putInInventory',
           item: props.inventory[0],
           container: props.inventory[3],
@@ -109,7 +109,7 @@ describe('putHandler', () => {
 
     describe('With normal targeting for all', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {
-        expect(putHandler('put', 'potion backpack', null, props)).toEqual({
+        expect(putHandler('put', 'potion backpack', props)).toEqual({
           emitType: 'putInInventory',
           item: props.inventory[0],
           container: props.inventory[2],
@@ -121,7 +121,7 @@ describe('putHandler', () => {
 
     describe('With optional IN parameter', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {
-        expect(putHandler('put', '2.potion in backpack', null, props)).toEqual({
+        expect(putHandler('put', '2.potion in backpack', props)).toEqual({
           emitType: 'putInInventory',
           item: props.inventory[1],
           container: props.inventory[2],
@@ -134,7 +134,7 @@ describe('putHandler', () => {
 
   describe('In a container the user is not carrying', () => {
     it('should return a put object with just the item and target', () => {
-      expect(putHandler('put', 'potion satchel', null, props)).toEqual({
+      expect(putHandler('put', 'potion satchel', props)).toEqual({
         emitType: 'put',
         item: props.inventory[0],
         container: 'satchel'

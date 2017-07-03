@@ -4,7 +4,7 @@ import {newMessage} from '../actions/message-actions.js';
 import {dropItem} from '../actions/inventory-actions.js';
 import termsProcessor from '../processors/terms-processor.js';
 
-export default function giveHandler(command, args, socket, props) {
+export default function giveHandler(command, args, props) {
   args = args.toLowerCase();
   let splitArgs = args.split(' ');
   if (!args || splitArgs.length < 2) return {funcsToCall: [newMessage], feedback: 'Give what to whom? (format: GIVE <item> <target>)'};

@@ -15,7 +15,7 @@ import wearHandler from './wear-handler.js';
 import examineHandler from './examine-handler.js';
 import {newMessage} from '../actions/message-actions.js';
 
-export default function commandHandler(command, args, props, socket) {
+export default function commandHandler(command, args, props) {
   const commandShorthand = {
     'e': 'east',
     'w': 'west',
@@ -63,7 +63,7 @@ export default function commandHandler(command, args, props, socket) {
 
   if (helperFunctions[command]) {
     if (typeof(helperFunctions[command]) === 'object') return helperFunctions[command];
-    return helperFunctions[command](command, args, socket, props);
+    return helperFunctions[command](command, args, props);
   }
 
   return {

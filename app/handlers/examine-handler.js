@@ -3,7 +3,7 @@
 import {newMessage} from '../actions/message-actions.js';
 import termsProcessor from '../processors/terms-processor.js';
 
-export default function examineHandler(command, args, socket, props) {
+export default function examineHandler(command, args, props) {
   if (!args) return {funcsToCall: [newMessage], feedback: 'Examine what?'};
   args = args.toLowerCase();
   let foundItem = termsProcessor(props.inventory, args.split('.'));

@@ -5,7 +5,7 @@ import {quietlyAddItem, dropItem} from '../actions/inventory-actions.js';
 import newItem, {itemData} from '../data/items.js';
 import termsProcessor from '../processors/terms-processor.js';
 
-export default function drinkHandler(command, args, socket, props) {
+export default function drinkHandler(command, args, props) {
   if (!args) return {funcsToCall: [newMessage], feedback: 'Drink what?'};
   args = args.toLowerCase();
 
