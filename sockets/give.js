@@ -5,12 +5,7 @@ export default function give(socket, users) {
     let target = users.find(user => user.username && user.username.toLowerCase() === giveObj.target.toLowerCase());
     if (!target || target.currentRoom !== socket.currentRoom) return socket.emit('generalMessage', {feedback: 'I don\'t see that person here.'});
 
-    let room = {
-      item: giveObj.item,
-      pickRoom: socket.currentRoom
-    };
-
-    target.emit('itemPickedUp', room);
+    target.emit('forceGet', giveObj.item);
     socket.emit('generalMessage', {
       from: 'You',
       interaction: ` give ${giveObj.item.short} to `,
