@@ -6,14 +6,18 @@ export default function termsProcessor(searchArray, split) {
 
   if (split.length > 1) {
     foundStuff = searchArray.filter(item => {
-      for (let i = 0; i < item.terms.length; i++) {
-        if (item.terms[i].match(regEx)) return true;
+      if (item) {
+        for (let i = 0; i < item.terms.length; i++) {
+          if (item.terms[i].match(regEx)) return true;
+        }
       }
     })[split[0] - 1];
   } else {
     foundStuff = searchArray.find(item => {
-      for (let i = 0; i < item.terms.length; i++) {
-        if (item.terms[i].match(regEx)) return true;
+      if (item) {
+        for (let i = 0; i < item.terms.length; i++) {
+          if (item.terms[i].match(regEx)) return true;
+        }
       }
     });
   }

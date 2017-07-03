@@ -16,3 +16,10 @@ export function wearEquipment(eq) {
     payload: eq.equip
   };
 }
+
+export function removeItem(eq) {
+  return {
+    type: 'REMOVE_ITEM',
+    payload: eq.equip
+  };
+}

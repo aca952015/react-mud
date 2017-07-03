@@ -11,6 +11,7 @@ import put from './put.js';
 import unlock from './unlock.js';
 import kill from './kill.js';
 import damage from './damage.js';
+import removeItem from './remove-item.js';
 import wearItem from './wear-item.js';
 import oneLineListeners from './one-line-listeners.js';
 
@@ -28,4 +29,5 @@ export default function serverSocketListeners(io, socket, users, roomData, mobsI
   put(socket, roomData);
   lookInContainer(socket, roomData);
   wearItem(socket);
+  removeItem(socket);
 }
