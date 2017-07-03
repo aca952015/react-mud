@@ -60,5 +60,17 @@ describe('removeHandler', () => {
         });
       });
     });
+
+    describe('With dot notation', () => {
+      it('should return an object calling quietlyAddItem, removeItem, and newMessage', () => {
+        expect(removeHandler('remove', '2.helm', null, props)).toEqual({
+          funcsToCall: [quietlyAddItem, removeItem, newMessage],
+          emitType: 'removeItem',
+          quietAdd: props.equipment.shoulders,
+          equip: props.equipment.shoulders,
+          feedback: `You remove ${props.equipment.shoulders.short}.`
+        });
+      });
+    });
   });
 });
