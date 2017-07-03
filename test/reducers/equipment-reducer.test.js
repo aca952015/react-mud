@@ -17,4 +17,11 @@ describe('Equipment reducer', () => {
       });
     });
   });
+
+  describe('With type REMOVE_ITEM', () => {
+    it('should update the appropriate wear slot to null', () => {
+      let helm = newItem('equipment', 'leather helm');
+      expect(reducer({...initialState, head: helm}, {type: 'REMOVE_ITEM', payload: helm})).toEqual(initialState);
+    });
+  });
 });
