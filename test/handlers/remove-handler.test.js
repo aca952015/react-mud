@@ -26,4 +26,13 @@ describe('removeHandler', () => {
       });
     });
   });
+
+  describe('With an item the user isn\'t wearing', () => {
+    it('should return feedback of "You aren\'t wearing that."', () => {
+      expect(removeHandler('remove', 'hat', null, props)).toEqual({
+        ...defaultObj,
+        feedback: 'You aren\'t wearing that.'
+      });
+    });
+  });
 });
