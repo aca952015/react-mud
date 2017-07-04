@@ -212,12 +212,26 @@ describe('pickUpItem', () => {
 
   describe('With an argument of all', () => {
     describe('Without specifying a container', () => {
-      it('should return a getAll event with all valid items', done => {
-        player1.emit('pickUpItem', {item: 'all'});
-        player1.on('getAll', res => {
-          expect(res.length).toBeGreaterThan(2);
-          expect(res[2]).toEqual({...newItem('keys', 'gallows key'), id: res[2].id});
-          done();
+      describe('With items in the room', () => {
+        describe('With at least one valid item', () => {
+          it('should return a getAll event with all valid items', done => {
+            player1.emit('pickUpItem', {item: 'all'});
+            player1.on('getAll', res => {
+              expect(res.length).toBeGreaterThan(2);
+              expect(res[2]).toEqual({...newItem('keys', 'gallows key'), id: res[2].id});
+              done();
+            });
+          });
+        });
+
+        describe('With no valid items', () => {
+          it('should return a feedback of event with "there are no items you can get."', done => {
+            player1.emit('pickUpItem', {item: 'all'});
+            player1.on('generalMessage', res => {
+              expect(res.feedback).toEqual('There\'s nothing you can get.');
+              done();
+            });
+          });
         });
       });
     });

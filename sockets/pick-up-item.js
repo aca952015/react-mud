@@ -12,6 +12,7 @@ export default function pickUpItem(socket, roomData) {
     if (itemShort.item === 'all') {
       if (!roomData[socket.currentRoom].items.length) return socket.emit('generalMessage', {feedback: 'There\'s nothing in the room to get.'});
       let validItems = roomData[socket.currentRoom].items.filter(item => !invalidTypes[item.type]);
+      if (!validItems.length) return socket.emit('generalMessage', {feedback: 'There\'s nothing you can get.'});
       validItems.forEach(item => roomData[socket.currentRoom].items.splice(roomData[socket.currentRoom].items.indexOf(item), 1));
       socket.emit('getAll', validItems);
       socket.emit('generalMessage', {feedback: 'You get everything you can from the room.'});

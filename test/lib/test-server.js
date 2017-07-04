@@ -14,6 +14,11 @@ io.sockets.on('connection', function(socket) {
   users.push(socket);
   socket.currentRoom = 'Nexus';
   socket.join('Nexus');
+  socket.on('teleport', room => {
+    socket.leave('Nexus');
+    socket.join(room);
+    socket.currentRoom = room;
+  });
   socket.on('changeName', name => {
     if (name === 'alien') {
       socket.currentRoom = 'Town Square';
