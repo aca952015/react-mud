@@ -234,6 +234,23 @@ describe('pickUpItem', () => {
           });
         });
       });
+
+      describe('With no items in the room', () => {
+        beforeEach(done => {
+          player1.emit('teleport', 'Gallows');
+          player1.emit('pickUpItem', {item: 'all'});
+          player1.on('generalMessage', () => {
+            done();
+          });
+        });
+        it('should return a feedback of "there\'s nothing in the room to get."', done => {
+          player1.emit('pickUpItem', {item: 'all'});
+          player1.on('generalMessage', res => {
+            expect(res.feedback).toEqual('There\'s nothing in the room to get.');
+            done();
+          });
+        });
+      });
     });
 
     describe('Specifying a container', () => {
