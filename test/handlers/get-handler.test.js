@@ -15,7 +15,9 @@ describe('getHandler', () => {
   backpack2.container.contains.push(newItem('potions', 'health potion'));
   backpack2.container.contains.push(newItem('potions', 'health potion'));
 
-  let props = {inventory: [backpack1, backpack2, newItem('keys', 'gallows key')]};
+  let backpack3 = newItem('containers', 'backpack');
+
+  let props = {inventory: [backpack1, backpack2, newItem('keys', 'gallows key'), backpack3]};
   describe('With no args', () => {
     it('should return an error object with feedback "Get what?"', () => {
       expect(getHandler('get')).toEqual({funcsToCall: [newMessage], feedback: 'Get what?'});
@@ -50,6 +52,26 @@ describe('getHandler', () => {
         });
 
         describe('That is a container', () => {
+          describe('With an argument of all', () => {
+            describe('On a container that\'s empty', () => {
+              it('should return a feedback object that says "There\'s nothing in that container."', () => {
+                expect(getHandler('get', 'all 3.backpack', props)).toEqual({
+                  funcsToCall: [newMessage],
+                  feedback: 'There\'s nothing in that container.'
+                });
+              });
+            });
+
+            describe('On a container that doesn\'t have anything that can be gotten', () => {
+              it('should return a feedback object that says "There\'s nothing you can get in that container."', () => {
+                props.inventory[3].container.contains.push(newItem('containers', 'corpse'));
+                expect(getHandler('get', 'all 3.backpack', props)).toEqual({
+                  funcsToCall: [newMessage],
+                  feedback: 'There\'s nothing you can get in that container.'
+                });
+              });
+            });
+          });
           describe('That doesn\'t hold the designated item', () => {
             it('should inform the user that that item isn\'t seen', () => {
               expect(getHandler('get', 'sword backpack', props)).toEqual({
