@@ -189,7 +189,7 @@ describe('pickUpItem', () => {
 
         describe('With valid type, dot notation on container, but not on item', () => {
           it('should return an itemPickedUp event', done => {
-            player1.emit('getFromContainer', {item: 'potion', container: 'backpack'});
+            player1.emit('getFromContainer', {item: 'potion', container: '2.backpack'});
             player1.on('forceGet', res => {
               expect(res).toEqual({...newItem('potions', 'health potion'), drink: res.drink, id: res.id});
               done();
@@ -204,6 +204,74 @@ describe('pickUpItem', () => {
               expect(res).toEqual({...newItem('potions', 'health potion'), drink: res.drink, id: res.id});
               done();
             });
+          });
+        });
+      });
+    });
+  });
+
+  describe('With an argument of all', () => {
+    describe('Without specifying a container', () => {
+      describe('With items in the room', () => {
+        describe('With at least one valid item', () => {
+          it('should return a getAll event with all valid items', done => {
+            player1.emit('pickUpItem', {item: 'all'});
+            player1.on('getAll', res => {
+              expect(res.itemArray.length).toBeGreaterThan(2);
+              expect(res.itemArray[2]).toEqual({...newItem('keys', 'gallows key'), id: res.itemArray[2].id});
+              done();
+            });
+          });
+        });
+
+        describe('With no valid items', () => {
+          it('should return a feedback of event with "there are no items you can get."', done => {
+            player1.emit('pickUpItem', {item: 'all'});
+            player1.on('generalMessage', res => {
+              expect(res.feedback).toEqual('There\'s nothing you can get.');
+              done();
+            });
+          });
+        });
+      });
+
+      describe('With no items in the room', () => {
+        beforeEach(done => {
+          player1.emit('teleport', 'Gallows');
+          player1.emit('pickUpItem', {item: 'all'});
+          player1.on('generalMessage', () => {
+            done();
+          });
+        });
+        it('should return a feedback of "there\'s nothing in the room to get."', done => {
+          player1.emit('pickUpItem', {item: 'all'});
+          player1.on('generalMessage', res => {
+            expect(res.feedback).toEqual('There\'s nothing in the room to get.');
+            done();
+          });
+        });
+      });
+    });
+
+    describe('Specifying a container', () => {
+      describe('With items in it', () => {
+        it('should return a getAll event with all valid items', done => {
+          player1.emit('getFromContainer', {container: 'corpse', item: 'all'});
+          player1.on('getAll', res => {
+            expect(res.itemArray.length).toEqual(2);
+            expect(res.itemArray[0]).toEqual({...newItem('potions', 'health potion'), id: res.itemArray[0].id});
+            expect(res.itemArray[1]).toEqual({...newItem('potions', 'health potion'), id: res.itemArray[1].id});
+            done();
+          });
+        });
+      });
+
+      describe('With no items', () => {
+        it('should return feedback of "there\'s nothing in that container to get."', done => {
+          player1.emit('getFromContainer', {container: 'corpse', item: 'all'});
+          player1.on('generalMessage', res => {
+            expect(res.feedback).toEqual('There\'s nothing in that container to get.');
+            done();
           });
         });
       });

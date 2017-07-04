@@ -40,3 +40,11 @@ export function getFromContainer(result) {
     }
   };
 }
+
+export function getAll(itemObj) {
+  return {
+    type: 'GET_ALL',
+    payload: itemObj.itemArray,
+    container: itemObj.container
+  };
+}

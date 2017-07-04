@@ -51,7 +51,16 @@ describe('lookInContainer', () => {
     it('should return containedItems', done => {
       player1.emit('lookInContainer', {container: 'corpse'});
       player1.on('generalMessage', res => {
-        expect(res.containedItems).toEqual([]);
+        expect(res.containedItems).toEqual([
+          {
+            ...newItem('potions', 'health potion'),
+            id: res.containedItems[0].id
+          },
+          {
+            ...newItem('potions', 'health potion'),
+            id: res.containedItems[1].id
+          }
+        ]);
         done();
       });
     });
