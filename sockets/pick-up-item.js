@@ -48,6 +48,7 @@ export default function pickUpItem(socket, roomData) {
 
     socket.emit('forceGet', item);
     socket.emit('generalMessage', {feedback: `You pick up ${item.short} from ${container.short}.`});
+    container.container.contains.splice(container.container.contains.indexOf(item), 1);
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` gets ${item.short} from ${container.short}.`});
   });
 }
