@@ -223,13 +223,25 @@ describe('pickUpItem', () => {
     });
 
     describe('Specifying a container', () => {
-      it('should return a getAll event with all valid items', done => {
-        player1.emit('getFromContainer', {container: 'corpse', item: 'all'});
-        player1.on('getAll', res => {
-          expect(res.length).toEqual(2);
-          expect(res[0]).toEqual({...newItem('potions', 'health potion'), id: res[0].id});
-          expect(res[1]).toEqual({...newItem('potions', 'health potion'), id: res[1].id});
-          done();
+      describe('With items in it', () => {
+        it('should return a getAll event with all valid items', done => {
+          player1.emit('getFromContainer', {container: 'corpse', item: 'all'});
+          player1.on('getAll', res => {
+            expect(res.length).toEqual(2);
+            expect(res[0]).toEqual({...newItem('potions', 'health potion'), id: res[0].id});
+            expect(res[1]).toEqual({...newItem('potions', 'health potion'), id: res[1].id});
+            done();
+          });
+        });
+      });
+
+      describe('With no items', () => {
+        it('should return feedback of "there\'s nothing in that container to get."', done => {
+          player1.emit('getFromContainer', {container: 'corpse', item: 'all'});
+          player1.on('generalMessage', res => {
+            expect(res.feedback).toEqual('There\'s nothing in that container to get.');
+            done();
+          });
         });
       });
     });
