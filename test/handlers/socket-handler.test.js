@@ -10,7 +10,7 @@ import {newMessage} from '../../app/actions/message-actions.js';
 import {enterCombat, damageUser, slayEnemy} from '../../app/actions/combat-actions.js';
 import whisperProcessor from '../../app/processors/whisper-processor.js';
 import moveProcessor from '../../app/processors/move-processor.js';
-import {getItem, dropItem} from '../../app/actions/inventory-actions.js';
+import {getItem, dropItem, getAll} from '../../app/actions/inventory-actions.js';
 import {changeRoom} from '../../app/actions/move-actions.js';
 import newItem from '../../app/data/items.js';
 
@@ -223,6 +223,16 @@ describe('socketHandlers', () => {
       player1.emit('getFromContainer', {item: 'potion', container: 'backpack'});
       player1.on('forceGet', item => {
         expect(props.dispatch.calledWith(getItem(item))).toEqual(true);
+        done();
+      });
+    });
+  });
+
+  describe('getAll', () => {
+    it('should dispatch getAll with the itemArray', done => {
+      player1.emit('pickUpItem', {item: 'all'});
+      player1.on('getAll', itemArray => {
+        expect(props.dispatch.calledWith(getAll(itemArray))).toEqual(true);
         done();
       });
     });
