@@ -174,4 +174,16 @@ describe('user reducer', () => {
       });
     });
   });
+
+  describe('GET_ALL', () => {
+    it('should concatenate the current inventory with the item array from the payload', () => {
+      let potion = newItem('potions', 'health potion');
+      let key = newItem('keys', 'gallows key');
+      let backpack = newItem('containers', 'backpack');
+      expect(reducer({...initialState, inventory: [potion]}, {type: 'GET_ALL', payload: [key, backpack]})).toEqual({
+        ...initialState,
+        inventory: [potion, key, backpack]
+      });
+    });
+  });
 });
