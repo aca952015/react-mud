@@ -176,13 +176,28 @@ describe('user reducer', () => {
   });
 
   describe('GET_ALL', () => {
-    it('should concatenate the current inventory with the item array from the payload', () => {
+    describe('From the room or the contents of a container in the room', () => {
+      it('should concatenate the current inventory with the item array from the payload', () => {
+        let potion = newItem('potions', 'health potion');
+        let key = newItem('keys', 'gallows key');
+        let backpack = newItem('containers', 'backpack');
+        expect(reducer({...initialState, inventory: [potion]}, {type: 'GET_ALL', payload: [key, backpack]})).toEqual({
+          ...initialState,
+          inventory: [potion, key, backpack]
+        });
+      });
+    });
+
+    describe('From a container the user is carrying', () => {
       let potion = newItem('potions', 'health potion');
+      let manaPotion = newItem('potions', 'mana potion');
       let key = newItem('keys', 'gallows key');
       let backpack = newItem('containers', 'backpack');
-      expect(reducer({...initialState, inventory: [potion]}, {type: 'GET_ALL', payload: [key, backpack]})).toEqual({
+      backpack.container.contains.push(key);
+      backpack.container.contains.push(potion);
+      expect(reducer({...initialState, inventory: [manaPotion, backpack]}, {type: 'GET_ALL', payload: [key, potion], container: backpack})).toEqual({
         ...initialState,
-        inventory: [potion, key, backpack]
+        inventory: [manaPotion, {...backpack, container: {contains: [], holds: ['items', 'equipment']}}, key, potion]
       });
     });
   });
