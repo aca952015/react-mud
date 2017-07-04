@@ -24,7 +24,6 @@ export default function getHandler(command, args, props) {
       if (!container.container.contains.length) return {funcsToCall: [newMessage], feedback: 'There\'s nothing in that container.'};
       let validItems = container.container.contains.filter(item => !invalidTypes[item.type]);
       if (!validItems.length) return {funcsToCall: [newMessage], feedback: 'There\'s nothing you can get in that container.'};
-      validItems.forEach(item => container.container.contains.splice(container.container.contains.indexOf(item), 1));
       return {
         emitType: 'getAllFromInventory',
         funcsToCall: [newMessage, getAll],
