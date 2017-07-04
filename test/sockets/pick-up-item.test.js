@@ -189,7 +189,7 @@ describe('pickUpItem', () => {
 
         describe('With valid type, dot notation on container, but not on item', () => {
           it('should return an itemPickedUp event', done => {
-            player1.emit('getFromContainer', {item: 'potion', container: 'backpack'});
+            player1.emit('getFromContainer', {item: 'potion', container: '2.backpack'});
             player1.on('forceGet', res => {
               expect(res).toEqual({...newItem('potions', 'health potion'), drink: res.drink, id: res.id});
               done();

@@ -34,8 +34,16 @@ describe('inventory actions', () => {
   });
 
   describe('getAll', () => {
-    it('should return an object with type GET_ALL and payload of the array passed in', () => {
-      expect(getAll({itemArray: ['dude', 'bro']})).toEqual({type: 'GET_ALL', payload: ['dude', 'bro']});
+    describe('With a container object', () => {
+      it('should return an object with type GET_ALL and payload of the array passed in, plus the container', () => {
+        expect(getAll({itemArray: ['dude', 'bro'], container: 'derp'})).toEqual({type: 'GET_ALL', payload: ['dude', 'bro'], container: 'derp'});
+      });
+    });
+
+    describe('With no container object', () => {
+      it('should return an object with type GET_ALL and payload of the array passed in', () => {
+        expect(getAll({itemArray: ['dude', 'bro']})).toEqual({type: 'GET_ALL', payload: ['dude', 'bro']});
+      });
     });
   });
 });
