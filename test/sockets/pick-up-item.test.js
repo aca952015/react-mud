@@ -209,4 +209,15 @@ describe('pickUpItem', () => {
       });
     });
   });
+
+  describe('With an argument of all', () => {
+    it('should return a getAll event with all valid items', done => {
+      player1.emit('pickUpItem', {item: 'all'});
+      player1.on('getAll', res => {
+        expect(res.length).toBeGreaterThan(2);
+        expect(res[1]).toEqual({...newItem('keys', 'gallows key'), id: res[1].id});
+        done();
+      });
+    });
+  });
 });

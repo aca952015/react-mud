@@ -9,6 +9,18 @@ export default function pickUpItem(socket, roomData) {
   };
 
   socket.on('pickUpItem', itemShort => {
+    if (itemShort.item === 'all') {
+      if (!roomData[socket.currentRoom].items.length) return socket.emit('generalMessage', {feedback: 'There\'s nothing in the room to get.'});
+      let validItems = roomData[socket.currentRoom].items.filter(item => {
+        if (!invalidTypes[item.type]) {
+          roomData[socket.currentRoom].items.splice(roomData[socket.currentRoom].items.indexOf(item), 1);
+          return true;
+        }
+      });
+      socket.emit('getAll', validItems);
+      socket.emit('generalMessage', {feedback: 'You get everything you can from the room.'});
+      return socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ' picks up everything they can in the room.'});
+    }
     let item = termsProcessor(roomData[socket.currentRoom].items, itemShort.item.split('.'));
 
     if (!item) return socket.emit('generalMessage', {feedback: 'I don\'t see that item here.'});
@@ -23,6 +35,19 @@ export default function pickUpItem(socket, roomData) {
     let container = termsProcessor(roomData[socket.currentRoom].items, getObj.container.split('.'));
     if (!container) return socket.emit('generalMessage', {feedback: 'I don\'t see that container here.'});
     if (!container.container) return socket.emit('generalMessage', {feedback: 'That isn\'t a container.'});
+
+    if (getObj.item === 'all') {
+      if (!container.containers.contains.length) return socket.emit('generalMessage', {feedback: 'There\'s nothing in that container to get.'});
+      let validItems = container.containers.contains.filter(item => {
+        if (!invalidTypes[item.type]) {
+          container.containers.contains.splice(container.containers.contains.indexOf(item), 1);
+          return true;
+        }
+      });
+      socket.emit('getAll', validItems);
+      socket.emit('generalMessage', {feedback: `You get everything you can from ${container.short}.`});
+      return socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` gets everything they can from ${container.short}.`});
+    }
 
     let item = termsProcessor(container.container.contains, getObj.item.split('.'));
     if (!item) return socket.emit('generalMessage', {feedback: 'I don\'t see that item in that container.'});
