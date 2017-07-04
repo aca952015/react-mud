@@ -30,8 +30,8 @@ const mobsInCombat = [];
 io.on('connection', socket => {
   users.push(socket);
   socket.on('disconnect', () => {
-    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {text: `${socket.username} vanishes into the nether.`});
-    users.splice(users.indexOf(socket), 1);
+    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ' vanishes into the nether.'});
+    users.splice(users.indexOf(users.find(user => user.username === socket.username)), 1);
   });
 
   serverSocketListeners(io, socket, users, roomData, mobsInCombat);
