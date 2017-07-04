@@ -25,7 +25,7 @@ export const initialState = {
 
 export default function reducer(state=initialState, action) {
   if (action.type === 'GET_ITEM' || action.type === 'QUIETLY_ADD_ITEM') return {...state, inventory: [...state.inventory, action.payload]};
-  if (action.type === 'GET_ALL') return {...state, inventory: state.inventory.concat(action.payload.itemArray)};
+  if (action.type === 'GET_ALL') return {...state, inventory: state.inventory.concat(action.payload)};
   if (action.type === 'DROP_ITEM') {
     let itemToDrop = state.inventory.find(item => item.id === action.payload.id);
     let prevItems = state.inventory.slice(0, state.inventory.indexOf(itemToDrop));
