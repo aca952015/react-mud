@@ -1,7 +1,7 @@
 'use strict';
 
 import {newMessage} from '../../app/actions/message-actions.js';
-import {getFromContainer} from '../../app/actions/inventory-actions.js';
+import {getFromContainer, getAll} from '../../app/actions/inventory-actions.js';
 import getHandler from '../../app/handlers/get-handler.js';
 import newItem from '../../app/data/items.js';
 
@@ -12,8 +12,10 @@ describe('getHandler', () => {
   backpack1.container.contains.push(newItem('containers', 'corpse'));
 
   let backpack2 = newItem('containers', 'backpack');
-  backpack2.container.contains.push(newItem('potions', 'health potion'));
-  backpack2.container.contains.push(newItem('potions', 'health potion'));
+  let potion1 = newItem('potions', 'health potion');
+  let potion2 = newItem('potions', 'health potion');
+  backpack2.container.contains.push(potion1);
+  backpack2.container.contains.push(potion2);
 
   let backpack3 = newItem('containers', 'backpack');
 
@@ -71,7 +73,20 @@ describe('getHandler', () => {
                 });
               });
             });
+
+            describe('With valid items existing', () => {
+              it('should return an object with an itemArray', () => {
+                expect(getHandler('get', 'all 2.backpack', props)).toEqual({
+                  emitType: 'getAllFromInventory',
+                  funcsToCall: [newMessage, getAll],
+                  itemArray: [potion1, potion2],
+                  container: backpack2,
+                  feedback: `You get everything you can from ${backpack2.short}.`
+                });
+              });
+            });
           });
+
           describe('That doesn\'t hold the designated item', () => {
             it('should inform the user that that item isn\'t seen', () => {
               expect(getHandler('get', 'sword backpack', props)).toEqual({
@@ -122,6 +137,8 @@ describe('getHandler', () => {
 
             describe('With dot notation on the item and container', () => {
               it('should return a getFromContainer object with newMessage and getFromContainer funcsToCall', () => {
+                props.inventory[1].container.contains.push(potion1);
+                props.inventory[1].container.contains.push(potion2);
                 expect(getHandler('get', '2.potion 2.backpack', props)).toEqual({
                   emitType: 'pickedFromInventory',
                   funcsToCall: [newMessage, getFromContainer],
