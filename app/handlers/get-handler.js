@@ -1,7 +1,7 @@
 'use strict';
 
 import {newMessage} from '../actions/message-actions.js';
-import {getFromContainer} from '../actions/inventory-actions.js';
+import {getFromContainer, getAll} from '../actions/inventory-actions.js';
 import termsProcessor from '../processors/terms-processor.js';
 
 export default function getHandler(command, args, props) {
@@ -20,6 +20,19 @@ export default function getHandler(command, args, props) {
   let container = termsProcessor(props.inventory, dotNotation);
   if (container) {
     if (!container.container) return {funcsToCall: [newMessage], feedback: 'That isn\'t a container.'};
+    if (args === 'all') {
+      if (!container.container.contains.length) return {funcsToCall: [newMessage], feedback: 'There\'s nothing in that container.'};
+      let validItems = container.container.contains.filter(item => !invalidTypes[item.type]);
+      if (!validItems.length) return {funcsToCall: [newMessage], feedback: 'There\'s nothing you can get from that container.'};
+      validItems.forEach(item => container.container.contains.splice(container.container.contains.indexOf(item), 1));
+      return {
+        emitType: 'getAllFromInventory',
+        funcsToCall: [newMessage, getAll],
+        itemArray: validItems,
+        container,
+        feedback: `You get everything you can from ${container.short}.`
+      };
+    }
     dotNotation = splitArgs[0].split('.');
     let item = termsProcessor(container.container.contains, dotNotation);
     if (!item) return {funcsToCall: [newMessage], feedback: 'I don\'t see that item in that container.'};

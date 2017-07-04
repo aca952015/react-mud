@@ -180,7 +180,7 @@ describe('user reducer', () => {
       let potion = newItem('potions', 'health potion');
       let key = newItem('keys', 'gallows key');
       let backpack = newItem('containers', 'backpack');
-      expect(reducer({...initialState, inventory: [potion]}, {type: 'GET_ALL', payload: [key, backpack]})).toEqual({
+      expect(reducer({...initialState, inventory: [potion]}, {type: 'GET_ALL', payload: {itemArray: [key, backpack]}})).toEqual({
         ...initialState,
         inventory: [potion, key, backpack]
       });

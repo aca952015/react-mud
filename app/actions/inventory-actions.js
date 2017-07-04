@@ -41,9 +41,9 @@ export function getFromContainer(result) {
   };
 }
 
-export function getAll(itemArray) {
+export function getAll(itemObj) {
   return {
     type: 'GET_ALL',
-    payload: itemArray
+    payload: itemObj.itemArray
   };
 }

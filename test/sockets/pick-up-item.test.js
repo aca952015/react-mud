@@ -217,8 +217,8 @@ describe('pickUpItem', () => {
           it('should return a getAll event with all valid items', done => {
             player1.emit('pickUpItem', {item: 'all'});
             player1.on('getAll', res => {
-              expect(res.length).toBeGreaterThan(2);
-              expect(res[2]).toEqual({...newItem('keys', 'gallows key'), id: res[2].id});
+              expect(res.itemArray.length).toBeGreaterThan(2);
+              expect(res.itemArray[2]).toEqual({...newItem('keys', 'gallows key'), id: res.itemArray[2].id});
               done();
             });
           });
@@ -258,9 +258,9 @@ describe('pickUpItem', () => {
         it('should return a getAll event with all valid items', done => {
           player1.emit('getFromContainer', {container: 'corpse', item: 'all'});
           player1.on('getAll', res => {
-            expect(res.length).toEqual(2);
-            expect(res[0]).toEqual({...newItem('potions', 'health potion'), id: res[0].id});
-            expect(res[1]).toEqual({...newItem('potions', 'health potion'), id: res[1].id});
+            expect(res.itemArray.length).toEqual(2);
+            expect(res.itemArray[0]).toEqual({...newItem('potions', 'health potion'), id: res.itemArray[0].id});
+            expect(res.itemArray[1]).toEqual({...newItem('potions', 'health potion'), id: res.itemArray[1].id});
             done();
           });
         });

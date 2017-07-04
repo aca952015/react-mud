@@ -35,7 +35,7 @@ describe('inventory actions', () => {
 
   describe('getAll', () => {
     it('should return an object with type GET_ALL and payload of the array passed in', () => {
-      expect(getAll(['dude', 'bro'])).toEqual({type: 'GET_ALL', payload: ['dude', 'bro']});
+      expect(getAll({itemArray: ['dude', 'bro']})).toEqual({type: 'GET_ALL', payload: ['dude', 'bro']});
     });
   });
 });

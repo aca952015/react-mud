@@ -14,7 +14,7 @@ export default function pickUpItem(socket, roomData) {
       let validItems = roomData[socket.currentRoom].items.filter(item => !invalidTypes[item.type]);
       if (!validItems.length) return socket.emit('generalMessage', {feedback: 'There\'s nothing you can get.'});
       validItems.forEach(item => roomData[socket.currentRoom].items.splice(roomData[socket.currentRoom].items.indexOf(item), 1));
-      socket.emit('getAll', validItems);
+      socket.emit('getAll', {itemArray: validItems});
       socket.emit('generalMessage', {feedback: 'You get everything you can from the room.'});
       return socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ' picks up everything they can in the room.'});
     }
@@ -37,7 +37,7 @@ export default function pickUpItem(socket, roomData) {
       if (!container.container.contains.length) return socket.emit('generalMessage', {feedback: 'There\'s nothing in that container to get.'});
       let validItems = container.container.contains.filter(item => !invalidTypes[item.type]);
       validItems.forEach(item => container.container.contains.splice(container.container.contains.indexOf(item), 1));
-      socket.emit('getAll', validItems);
+      socket.emit('getAll', {itemArray: validItems});
       socket.emit('generalMessage', {feedback: `You get everything you can from ${container.short}.`});
       return socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` gets everything they can from ${container.short}.`});
     }
