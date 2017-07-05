@@ -46,6 +46,7 @@ export default function reducer(state=initialState, action) {
     newContainer.container.contains = newContainer.container.contains.concat(action.payload.itemArray);
     return {...state, inventory: [newContainer]};
   }
+  if (action.type === 'DROP_ALL') return {...state, inventory: []};
   if (action.type === 'DROP_ITEM') {
     let itemToDrop = state.inventory.find(item => item.id === action.payload.id);
     let prevItems = state.inventory.slice(0, state.inventory.indexOf(itemToDrop));

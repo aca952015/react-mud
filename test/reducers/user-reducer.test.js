@@ -216,7 +216,7 @@ describe('user reducer', () => {
           inventory: [backpack, key, potion]
         },
         {
-          type: 'PUT_ALL', 
+          type: 'PUT_ALL',
           payload: {
             itemArray: [key, potion],
             container: backpack
@@ -231,6 +231,15 @@ describe('user reducer', () => {
             holds: ['items', 'equipment']
           }
         }]
+      });
+    });
+  });
+
+  describe('DROP_ALL', () => {
+    it('should change the user\'s inventory to an empty array', () => {
+      expect(reducer({...initialState, inventory: [newItem('potions', 'health potion'), newItem('containers', 'backpack')]}, {type: 'DROP_ALL'})).toEqual({
+        ...initialState,
+        inventory: []
       });
     });
   });
