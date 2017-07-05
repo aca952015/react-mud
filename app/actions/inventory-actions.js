@@ -55,3 +55,7 @@ export function putAll(itemObj) {
     payload: itemObj
   };
 }
+
+export function dropAll() {
+  return {type: 'DROP_ALL'};
+}

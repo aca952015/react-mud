@@ -1,6 +1,6 @@
 'use strict';
 
-import {getItem, dropItem, quietlyAddItem, addToContainer, getFromContainer, getAll, putAll} from '../../app/actions/inventory-actions.js';
+import {getItem, dropItem, quietlyAddItem, addToContainer, getFromContainer, getAll, putAll, dropAll} from '../../app/actions/inventory-actions.js';
 
 describe('inventory actions', () => {
   describe('getItem', () => {
@@ -50,6 +50,12 @@ describe('inventory actions', () => {
   describe('putAll', () => {
     it('should return an object with type PUT_ALL and payload of the item array', () => {
       expect(putAll(['dude', 'bro'])).toEqual({type: 'PUT_ALL', payload: ['dude', 'bro']});
+    });
+  });
+
+  describe('dropAll', () => {
+    it('should return an object with type DROP_ALL', () => {
+      expect(dropAll()).toEqual({type: 'DROP_ALL'});
     });
   });
 });
