@@ -210,7 +210,19 @@ describe('user reducer', () => {
       let potion = newItem('potions', 'health potion');
       backpack.container.contains.push(manaPotion);
 
-      expect(reducer({...initialState, inventory: [backpack, key, potion]}, {type: 'PUT_ALL', payload: {itemArray: [key, potion], container: backpack}})).toEqual({
+      expect(reducer(
+        {
+          ...initialState,
+          inventory: [backpack, key, potion]
+        },
+        {
+          type: 'PUT_ALL', 
+          payload: {
+            itemArray: [key, potion],
+            container: backpack
+          }
+        }
+      )).toEqual({
         ...initialState,
         inventory: [{
           ...backpack,
