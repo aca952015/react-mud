@@ -15,7 +15,7 @@ export default function wearHandler(command, args, props) {
       if (item.slot && !acc.find(_item => _item.name === item.name)) acc.push(item);
       return acc;
     }, []);
-    if (!validEquipment) return {funcsToCall: [newMessage], feedback: 'You aren\'t carrying anything to wear.'};
+    if (!validEquipment.length) return {funcsToCall: [newMessage], feedback: 'You aren\'t carrying anything to wear.'};
 
     validEquipment.forEach(item => {
       const result = props.equipment[item.slot] ? swapEquipmentProcessor(item, props.equipment[item.slot]) : generateWearObj(item);

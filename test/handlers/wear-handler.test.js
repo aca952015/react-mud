@@ -33,6 +33,19 @@ describe('wearHandler', () => {
     });
   });
 
+  describe('With an argument of "all"', () => {
+    describe('With nothing equipped', () => {
+      describe('With no equipment in the inventory', () => {
+        it('should return feedback of "You aren\'t carrying anything to wear."', () => {
+          expect(wearHandler('wear', 'all', {...props, inventory: []})).toEqual({
+            ...defaultObj,
+            feedback: 'You aren\'t carrying anything to wear.'
+          });
+        });
+      });
+    });
+  });
+
   describe('With an item the user isn\'t carrying', () => {
     it('should return feedback of "You aren\'t carrying that."', () => {
       expect(wearHandler('wear', 'sword', props)).toEqual({
