@@ -101,7 +101,7 @@ describe('wearHandler', () => {
     });
 
     describe('With an item already in the slot', () => {
-      it('should call removeItem and emit a removeItem event', () => {
+      it('should call swap items and call a swapItem event', () => {
         let equippedProps = {
           ...props,
           equipment: {
@@ -113,21 +113,18 @@ describe('wearHandler', () => {
           }
         };
         let result = {
-          funcsToCall: [quietlyAddItem, removeItem, newMessage],
-          emitType: 'removeItem',
-          quietAdd: equippedProps.equipment.head,
-          removeEquip: equippedProps.equipment.head,
-          feedback: `You remove ${equippedProps.equipment.head.short}.`
-        };
-
-        expect(wearHandler('wear', 'helm', equippedProps)).toEqual({
-          funcsToCall: [wearEquipment, newMessage, dropItem],
+          funcsToCall: [quietlyAddItem, removeItem, wearEquipment, dropItem, newMessage],
           equip: props.inventory[0],
           item: props.inventory[0],
-          emitType: 'wearItem',
-          feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`
-        });
+          quietAdd: equippedProps.equipment.head,
+          removeEquip: equippedProps.equipment.head,
+          feedback: `You swap ${equippedProps.equipment.head.short} with ${props.inventory[0].short}.`,
+          emitType: 'swapEquips'
+        };
+
+        expect(wearHandler('wear', 'helm', equippedProps)).toEqual({});
         expect(props.dispatch.calledWith(removeItem(result))).toEqual(true);
+        expect(props.dispatch.calledWith(quietlyAddItem(result))).toEqual(true);
         expect(props.socket.emit.calledWith(result.emitType, result)).toEqual(true);
       });
     });
