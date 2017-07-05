@@ -1,7 +1,7 @@
 'use strict';
 
 import {newMessage} from '../actions/message-actions.js';
-import {addToContainer} from '../actions/inventory-actions.js';
+import {addToContainer, putAll} from '../actions/inventory-actions.js';
 import termsProcessor from '../processors/terms-processor.js';
 
 export default function putHandler(command, args, props) {
@@ -23,9 +23,20 @@ export default function putHandler(command, args, props) {
   if (target && !target.container.holds.includes(putItem.type)) return {funcsToCall: [newMessage], feedback: 'That container doesn\'t hold that type of item.'};
   if (target && target.id === putItem.id) return {funcsToCall: [newMessage], feedback: 'You can\'t put a container inside itself.'};
 
+  let validItems = splitArgs[0] === 'all' ? props.inventory.filter(item => item !== target) : null;
+
   if (target) {
+    if (validItems) {
+      return {
+        emitType: 'putAllInInventoryContainer',
+        itemArray: validItems,
+        container: target,
+        funcsToCall: [newMessage, putAll],
+        feedback: `You put everything you can into ${target.short}.`
+      };
+    }
     return {
-      emitType: 'putInInventory',
+      emitType: 'putInContainer',
       item: putItem,
       container: target,
       funcsToCall: [newMessage, addToContainer],
@@ -33,8 +44,9 @@ export default function putHandler(command, args, props) {
     };
   }
   return {
-    emitType: 'put',
+    emitType: validItems ? 'putAllInRoomContainer' : 'put',
     item: putItem,
+    itemArray: validItems ? validItems : null,
     container: splitArgs[1]
   };
 }
