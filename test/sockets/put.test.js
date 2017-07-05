@@ -116,5 +116,14 @@ describe('put', () => {
         });
       });
     });
+
+    describe('With a valid container', () => {
+      it('should put the itemArray in the container', done => {
+        player1.emit('putAllInRoomContainer', {container: 'backpack', itemArray});
+        player1.on('forceDropAll', () => {
+          done();
+        });
+      });
+    });
   });
 });
