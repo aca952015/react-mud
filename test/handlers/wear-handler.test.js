@@ -42,6 +42,20 @@ describe('wearHandler', () => {
   });
 
   describe('With an argument of "all"', () => {
+    let result1 = {
+      funcsToCall: [wearEquipment, newMessage, dropItem],
+      equip: props.inventory[0],
+      item: props.inventory[0],
+      feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`,
+      emitType: 'wearItem'
+    };
+    let result5 = {
+      funcsToCall: [wearEquipment, newMessage, dropItem],
+      equip: props.inventory[6],
+      item: props.inventory[6],
+      feedback: `You equip ${props.inventory[6].short} on your ${props.inventory[6].slot}.`,
+      emitType: 'wearItem'
+    };
     describe('With nothing equipped', () => {
       describe('With no equipment in the inventory', () => {
         it('should return feedback of "You aren\'t carrying anything to wear."', () => {
@@ -55,26 +69,55 @@ describe('wearHandler', () => {
       describe('With valid equipment', () => {
         it('should dispatch wearEquipment 5 times and emit wearItem 5 times', () => {
           let resetProps = {...props, dispatch: sinon.spy(), socket: {emit: sinon.spy()}};
-          let result1 = {
-            funcsToCall: [wearEquipment, newMessage, dropItem],
-            equip: props.inventory[0],
-            item: props.inventory[0],
-            feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`,
-            emitType: 'wearItem'
-          };
-          let result5 = {
-            funcsToCall: [wearEquipment, newMessage, dropItem],
-            equip: props.inventory[6],
-            item: props.inventory[6],
-            feedback: `You equip ${props.inventory[6].short} on your ${props.inventory[6].slot}.`,
-            emitType: 'wearItem'
-          };
-
           expect(wearHandler('wear', 'all', resetProps)).toEqual({});
           expect(resetProps.dispatch.calledWith(wearEquipment(result1))).toEqual(true);
           expect(resetProps.dispatch.calledWith(wearEquipment(result5))).toEqual(true);
           expect(resetProps.socket.emit.callCount).toEqual(5);
         });
+      });
+    });
+
+    describe('With items already equipped', () => {
+      it('should dispatch wearEquipment 5 times, removeItem 2 times, and emit 5 times', () => {
+        let resetProps = {
+          ...props,
+          equipment: {
+            head: null,
+            shoulders: newItem('equipment', 'leather pauldrons'),
+            chest: newItem('equipment', 'leather pauldrons'),
+            legs: null,
+            feet: null
+          },
+          dispatch: sinon.spy(),
+          socket: {
+            emit: sinon.spy()
+          }
+        };
+        let result2 = {
+          funcsToCall: [quietlyAddItem, removeItem, wearEquipment, dropItem, newMessage],
+          equip: resetProps.inventory[4],
+          item: resetProps.inventory[4],
+          quietAdd: resetProps.equipment.chest,
+          removeEquip: resetProps.equipment.chest,
+          feedback: `You swap ${resetProps.equipment.chest.short} with ${resetProps.inventory[4].short}.`,
+          emitType: 'swapEquips'
+        };
+        let result3 = {
+          funcsToCall: [quietlyAddItem, removeItem, wearEquipment, dropItem, newMessage],
+          equip: resetProps.inventory[3],
+          item: resetProps.inventory[3],
+          quietAdd: resetProps.equipment.shoulders,
+          removeEquip: resetProps.equipment.shoulders,
+          feedback: `You swap ${resetProps.equipment.shoulders.short} with ${resetProps.inventory[3].short}.`,
+          emitType: 'swapEquips'
+        };
+
+        expect(wearHandler('wear', 'all', resetProps)).toEqual({});
+        expect(resetProps.dispatch.calledWith(wearEquipment(result1))).toEqual(true);
+        expect(resetProps.dispatch.calledWith(wearEquipment(result5))).toEqual(true);
+        expect(resetProps.dispatch.calledWith(removeItem(result3))).toEqual(true);
+        expect(resetProps.dispatch.calledWith(removeItem(result2))).toEqual(true);
+        expect(resetProps.socket.emit.callCount).toEqual(5);
       });
     });
   });
