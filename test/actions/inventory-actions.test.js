@@ -49,7 +49,7 @@ describe('inventory actions', () => {
 
   describe('putAll', () => {
     it('should return an object with type PUT_ALL and payload of the item array', () => {
-      expect(putAll({itemArray: ['dude', 'bro']})).toEqual({type: 'PUT_ALL', payload: ['dude', 'bro']});
+      expect(putAll(['dude', 'bro'])).toEqual({type: 'PUT_ALL', payload: ['dude', 'bro']});
     });
   });
 });

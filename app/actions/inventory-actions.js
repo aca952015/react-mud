@@ -52,6 +52,6 @@ export function getAll(itemObj) {
 export function putAll(itemObj) {
   return {
     type: 'PUT_ALL',
-    payload: itemObj.itemArray
+    payload: itemObj
   };
 }

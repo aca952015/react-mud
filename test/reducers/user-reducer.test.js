@@ -201,4 +201,25 @@ describe('user reducer', () => {
       });
     });
   });
+
+  describe('PUT_ALL', () => {
+    it('should put everything in the user\'s inventory into the specified container', () => {
+      let backpack = newItem('containers', 'backpack');
+      let manaPotion = newItem('potions', 'mana potion');
+      let key = newItem('keys', 'gallows key');
+      let potion = newItem('potions', 'health potion');
+      backpack.container.contains.push(manaPotion);
+
+      expect(reducer({...initialState, inventory: [backpack, key, potion]}, {type: 'PUT_ALL', payload: {itemArray: [key, potion], container: backpack}})).toEqual({
+        ...initialState,
+        inventory: [{
+          ...backpack,
+          container: {
+            contains: [manaPotion, key, potion],
+            holds: ['items', 'equipment']
+          }
+        }]
+      });
+    });
+  });
 });
