@@ -48,3 +48,14 @@ export function getAll(itemObj) {
     container: itemObj.container
   };
 }
+
+export function putAll(itemObj) {
+  return {
+    type: 'PUT_ALL',
+    payload: itemObj
+  };
+}
+
+export function dropAll() {
+  return {type: 'DROP_ALL'};
+}

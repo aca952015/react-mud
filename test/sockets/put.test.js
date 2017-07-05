@@ -94,4 +94,36 @@ describe('put', () => {
       });
     });
   });
+
+  describe('With putAllInRoomContainer functionality', () => {
+    let itemArray = [newItem('potions', 'health potion'), newItem('keys', 'gallows key')];
+    describe('With a container not found', () => {
+      it('should return feedback of "I don\'t see that container here."', done => {
+        player1.emit('putAllInRoomContainer', {container: 'satchel', itemArray});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('I don\'t see that container here.');
+          done();
+        });
+      });
+    });
+
+    describe('With something that isn\'t a container', () => {
+      it('should return feedback of "That isn\'t a container."', done => {
+        player1.emit('putAllInRoomContainer', {container: 'key', itemArray});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('That isn\'t a container.');
+          done();
+        });
+      });
+    });
+
+    describe('With a valid container', () => {
+      it('should put the itemArray in the container', done => {
+        player1.emit('putAllInRoomContainer', {container: 'backpack', itemArray});
+        player1.on('forceDropAll', () => {
+          done();
+        });
+      });
+    });
+  });
 });

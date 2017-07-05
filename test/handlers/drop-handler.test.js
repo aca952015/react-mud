@@ -1,7 +1,7 @@
 'use strict';
 
 import {newMessage} from '../../app/actions/message-actions.js';
-import {dropItem} from '../../app/actions/inventory-actions.js';
+import {dropItem, dropAll} from '../../app/actions/inventory-actions.js';
 import newItem, {itemData} from '../../app/data/items.js';
 import dropHandler from '../../app/handlers/drop-handler.js';
 
@@ -14,6 +14,28 @@ describe('dropHandler', () => {
   describe('With no args', () => {
     it('should return an error object with the feedback "Drop what?"', () => {
       expect(dropHandler('drop')).toEqual({...returnObj, feedback: 'Drop what?'});
+    });
+  });
+
+  describe('With argument of all', () => {
+    describe('With something to drop', () => {
+      it('should return a dropAll object', () => {
+        expect(dropHandler('drop', 'all', props)).toEqual({
+          emitType: 'dropAll',
+          itemArray: props.inventory,
+          funcsToCall: [newMessage, dropAll],
+          feedback: 'You drop everything you\'re carrying.'
+        });
+      });
+    });
+
+    describe('With an empty inventory', () => {
+      it('should return feedback of "You aren\'t carrying anything to drop."', () => {
+        expect(dropHandler('drop', 'all', {inventory: []})).toEqual({
+          ...returnObj,
+          feedback: 'You aren\'t carrying anything to drop.'
+        });
+      });
     });
   });
 
