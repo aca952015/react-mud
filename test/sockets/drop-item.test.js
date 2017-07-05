@@ -37,4 +37,16 @@ describe('Drop item', () => {
       done();
     });
   });
+
+  describe('with dropAll', () => {
+    it('should return a generalMessage of everything being dropped', done => {
+      socket.emit('changeName', 'tester');
+      socket.emit('dropAll', {itemArray: newItem('potions', 'health potion')});
+      socket2.on('generalMessage', res => {
+        expect(res.from).toEqual('tester');
+        expect(res.feedback).toEqual(' drops everything they\'re carrying.');
+        done();
+      });
+    });
+  });
 });
