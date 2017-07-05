@@ -156,12 +156,23 @@ describe('putHandler', () => {
   });
 
   describe('In a container the user is not carrying', () => {
-    it('should return a put object with just the item and target', () => {
-      expect(putHandler('put', 'potion satchel', props)).toEqual({
-        emitType: 'put',
-        item: props.inventory[0],
-        itemArray: null,
-        container: 'satchel'
+    describe('With a specific item', () => {
+      it('should return a put object with just the item and target', () => {
+        expect(putHandler('put', 'potion satchel', props)).toEqual({
+          emitType: 'put',
+          item: props.inventory[0],
+          container: 'satchel'
+        });
+      });
+    });
+
+    describe('With an argument of all', () => {
+      it('should return a putAllInRoomContainer object with an itemArray', () => {
+        expect(putHandler('put', 'all satchel', props)).toEqual({
+          emitType: 'putAllInRoomContainer',
+          itemArray: props.inventory,
+          container: 'satchel'
+        });
       });
     });
   });

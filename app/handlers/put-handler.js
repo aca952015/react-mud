@@ -11,9 +11,10 @@ export default function putHandler(command, args, props) {
   if (!args || splitArgs.length < 2) return {funcsToCall: [newMessage], feedback: 'Put what where? (format: PUT <item> <target> or PUT <item> IN <target>)'};
 
   let target = termsProcessor(props.inventory, splitArgs[1].split('.'));
-  let validItems = splitArgs[0] === 'all' ? props.inventory.filter(item => item !== target) : null;
-
   if (target && !target.container) return {funcsToCall: [newMessage], feedback: 'That isn\'t a container.'};
+
+  let argumentOfAll = splitArgs[0] === 'all';
+  let validItems = argumentOfAll && target ? props.inventory.filter(item => item !== target) : null;
   if (validItems && validItems.length < 1) return {funcsToCall: [newMessage], feedback: 'You aren\'t carrying anything to put in that container.'};
 
   if (validItems) {
@@ -26,12 +27,12 @@ export default function putHandler(command, args, props) {
     };
   }
 
-  let putItem = termsProcessor(props.inventory, splitArgs[0].split('.'));
+  let putItem = argumentOfAll ? 'all' : termsProcessor(props.inventory, splitArgs[0].split('.'));
   if (!putItem) return {funcsToCall: [newMessage], feedback: 'You don\'t seem to be carrying that.'};
-  if (target && !target.container.holds.includes(putItem.type)) return {funcsToCall: [newMessage], feedback: 'That container doesn\'t hold that type of item.'};
-  if (target && target.id === putItem.id) return {funcsToCall: [newMessage], feedback: 'You can\'t put a container inside itself.'};
+  if (target && !argumentOfAll && !target.container.holds.includes(putItem.type)) return {funcsToCall: [newMessage], feedback: 'That container doesn\'t hold that type of item.'};
+  if (target && !argumentOfAll && target.id === putItem.id) return {funcsToCall: [newMessage], feedback: 'You can\'t put a container inside itself.'};
 
-  if (target) {
+  if (target && !argumentOfAll) {
     return {
       emitType: 'putInContainer',
       item: putItem,
@@ -40,10 +41,16 @@ export default function putHandler(command, args, props) {
       feedback: `You put ${putItem.short} in ${target.short}.`
     };
   }
+  if (!target && argumentOfAll) {
+    return {
+      emitType: 'putAllInRoomContainer',
+      itemArray: props.inventory,
+      container: splitArgs[1]
+    };
+  }
   return {
-    emitType: validItems ? 'putAllInRoomContainer' : 'put',
+    emitType: 'put',
     item: putItem,
-    itemArray: validItems ? validItems : null,
     container: splitArgs[1]
   };
 }
