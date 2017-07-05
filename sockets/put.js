@@ -26,6 +26,6 @@ export default function put(socket, roomData) {
     socket.emit('generalMessage', {feedback: `You put everything you're carrying in ${container.short}.`});
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` puts everything they're carrying in ${container.short}.`});
 
-    container.container.contains.concat(putObj.itemArray);
+    container.container.contains = container.container.contains.concat(putObj.itemArray);
   });
 }
