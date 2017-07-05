@@ -94,4 +94,17 @@ describe('put', () => {
       });
     });
   });
+
+  describe('With putAllInRoomContainer functionality', () => {
+    let itemArray = [newItem('potions', 'health potion'), newItem('keys', 'gallows key')];
+    describe('With a container not found', () => {
+      it('should return feedback of "I don\'t see that container here."', done => {
+        player1.emit('putAllInRoomContainer', {container: 'satchel', itemArray});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('I don\'t see that container here.');
+          done();
+        });
+      });
+    });
+  });
 });
