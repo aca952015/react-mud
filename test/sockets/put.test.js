@@ -106,5 +106,15 @@ describe('put', () => {
         });
       });
     });
+
+    describe('With something that isn\'t a container', () => {
+      it('should return feedback of "That isn\'t a container."', done => {
+        player1.emit('putAllInRoomContainer', {container: 'key', itemArray});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('That isn\'t a container.');
+          done();
+        });
+      });
+    });
   });
 });
