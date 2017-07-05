@@ -10,7 +10,15 @@ import newItem from '../../app/data/items.js';
 describe('wearHandler', () => {
   const defaultObj = {funcsToCall: [newMessage]};
   const props = {
-    inventory: [newItem('equipment', 'leather helm'), newItem('potions', 'health potion'), newItem('equipment', 'leather helm')],
+    inventory: [
+      newItem('equipment', 'leather helm'),
+      newItem('potions', 'health potion'),
+      newItem('equipment', 'leather helm'),
+      newItem('equipment', 'leather pauldrons'),
+      newItem('equipment', 'leather breastplate'),
+      newItem('equipment', 'leather leggings'),
+      newItem('equipment', 'leather boots')
+    ],
     equipment: {
       head: null,
       shoulders: null,
@@ -41,6 +49,31 @@ describe('wearHandler', () => {
             ...defaultObj,
             feedback: 'You aren\'t carrying anything to wear.'
           });
+        });
+      });
+
+      describe('With valid equipment', () => {
+        it('should dispatch wearEquipment 5 times and emit wearItem 5 times', () => {
+          let resetProps = {...props, dispatch: sinon.spy(), socket: {emit: sinon.spy()}};
+          let result1 = {
+            funcsToCall: [wearEquipment, newMessage, dropItem],
+            equip: props.inventory[0],
+            item: props.inventory[0],
+            feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`,
+            emitType: 'wearItem'
+          };
+          let result5 = {
+            funcsToCall: [wearEquipment, newMessage, dropItem],
+            equip: props.inventory[6],
+            item: props.inventory[6],
+            feedback: `You equip ${props.inventory[6].short} on your ${props.inventory[6].slot}.`,
+            emitType: 'wearItem'
+          };
+
+          expect(wearHandler('wear', 'all', resetProps)).toEqual({});
+          expect(resetProps.dispatch.calledWith(wearEquipment(result1))).toEqual(true);
+          expect(resetProps.dispatch.calledWith(wearEquipment(result5))).toEqual(true);
+          expect(resetProps.socket.emit.callCount).toEqual(5);
         });
       });
     });
