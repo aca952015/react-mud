@@ -18,12 +18,23 @@ describe('dropHandler', () => {
   });
 
   describe('With argument of all', () => {
-    it('should return a dropAll object', () => {
-      expect(dropHandler('drop', 'all', props)).toEqual({
-        emitType: 'dropAll',
-        itemArray: props.inventory,
-        funcsToCall: [newMessage, dropAll],
-        feedback: 'You drop everything you\'re carrying.'
+    describe('With something to drop', () => {
+      it('should return a dropAll object', () => {
+        expect(dropHandler('drop', 'all', props)).toEqual({
+          emitType: 'dropAll',
+          itemArray: props.inventory,
+          funcsToCall: [newMessage, dropAll],
+          feedback: 'You drop everything you\'re carrying.'
+        });
+      });
+    });
+
+    describe('With an empty inventory', () => {
+      it('should return feedback of "You aren\'t carrying anything to drop."', () => {
+        expect(dropHandler('drop', 'all', {inventory: []})).toEqual({
+          ...returnObj,
+          feedback: 'You aren\'t carrying anything to drop.'
+        });
       });
     });
   });
