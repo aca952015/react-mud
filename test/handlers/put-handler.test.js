@@ -1,6 +1,6 @@
 'use strict';
 
-import {addToContainer} from '../../app/actions/inventory-actions.js';
+import {addToContainer, putAll} from '../../app/actions/inventory-actions.js';
 import {newMessage} from '../../app/actions/message-actions.js';
 import newItem from '../../app/data/items.js';
 import putHandler from '../../app/handlers/put-handler.js';
@@ -59,7 +59,7 @@ describe('putHandler', () => {
       describe('With mixed case', () => {
         it('should return a put object with addToContainer and newMessage funcsToCall', () => {
           expect(putHandler('put', '2.PoTioN BacKpACk', props)).toEqual({
-            emitType: 'putInInventory',
+            emitType: 'putInContainer',
             item: props.inventory[1],
             container: props.inventory[2],
             funcsToCall: [newMessage, addToContainer],
@@ -73,7 +73,7 @@ describe('putHandler', () => {
       describe('With full terms', () => {
         it('should return a put object with addToContainer and newMessage funcsToCall', () => {
           expect(putHandler('put', '2.potion 2.backpack', props)).toEqual({
-            emitType: 'putInInventory',
+            emitType: 'putInContainer',
             item: props.inventory[1],
             container: props.inventory[3],
             funcsToCall: [newMessage, addToContainer],
@@ -85,7 +85,7 @@ describe('putHandler', () => {
       describe('With fuzzy matching', () => {
         it('should return a put object with addToContainer and newMessage funcsToCall', () => {
           expect(putHandler('put', '2.pot 2.bac', props)).toEqual({
-            emitType: 'putInInventory',
+            emitType: 'putInContainer',
             item: props.inventory[1],
             container: props.inventory[3],
             funcsToCall: [newMessage, addToContainer],
@@ -98,7 +98,7 @@ describe('putHandler', () => {
     describe('With dot notation on the container, but not the item', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {
         expect(putHandler('put', 'potion 2.backpack', props)).toEqual({
-          emitType: 'putInInventory',
+          emitType: 'putInContainer',
           item: props.inventory[0],
           container: props.inventory[3],
           funcsToCall: [newMessage, addToContainer],
@@ -110,7 +110,7 @@ describe('putHandler', () => {
     describe('With normal targeting for all', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {
         expect(putHandler('put', 'potion backpack', props)).toEqual({
-          emitType: 'putInInventory',
+          emitType: 'putInContainer',
           item: props.inventory[0],
           container: props.inventory[2],
           funcsToCall: [newMessage, addToContainer],
@@ -119,10 +119,33 @@ describe('putHandler', () => {
       });
     });
 
+    describe('With an argument of all', () => {
+      describe('With at least one valid item', () => {
+        it('should return a putAllInInventoryContainer object', () => {
+          expect(putHandler('put', 'all backpack', props)).toEqual({
+            emitType: 'putAllInInventoryContainer',
+            itemArray: [props.inventory[0], props.inventory[1], props.inventory[3], props.inventory[4]],
+            container: props.inventory[2],
+            funcsToCall: [newMessage, putAll],
+            feedback: `You put everything you can into ${props.inventory[2].short}.`
+          });
+        });
+      });
+
+      describe('With a container, but no other items', () => {
+        it('should return feedback of "You aren\'t carrying anything to put in that container."', () => {
+          expect(putHandler('put', 'all backpack', {inventory: [newItem('containers', 'backpack')]})).toEqual({
+            ...defaultObj,
+            feedback: 'You aren\'t carrying anything to put in that container.'
+          });
+        });
+      });
+    });
+
     describe('With optional IN parameter', () => {
       it('should return a put object with addToContainer and newMessage funcsToCall', () => {
         expect(putHandler('put', '2.potion in backpack', props)).toEqual({
-          emitType: 'putInInventory',
+          emitType: 'putInContainer',
           item: props.inventory[1],
           container: props.inventory[2],
           funcsToCall: [newMessage, addToContainer],
@@ -137,6 +160,7 @@ describe('putHandler', () => {
       expect(putHandler('put', 'potion satchel', props)).toEqual({
         emitType: 'put',
         item: props.inventory[0],
+        itemArray: null,
         container: 'satchel'
       });
     });
