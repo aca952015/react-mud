@@ -1,5 +1,6 @@
 'use strict';
 
+// The server keeps track of each user's equipment for LOOK purposes.
 export default function removeItem(socket) {
   socket.on('removeItem', item => {
     socket.equipment[item.removeEquip.slot] = null;

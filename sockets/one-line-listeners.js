@@ -1,5 +1,7 @@
 'use strict';
 
+// A collection of relatively simple socket listeners, tucked away in here so they don't clutter up
+// other files. The kids' table, if you will.
 export default function oneLineListeners(socket, users) {
   socket.on('say', message => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {...message, commType: ' says, '}));
   if (!process.env.TESTING) socket.on('changeName', name => socket.username = name);

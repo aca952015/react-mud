@@ -1,6 +1,9 @@
 'use strict';
 
 export default function mobTargetSelector(mobsInCombat, users) {
+  // For each mob in combat, select a random target from their current targets.
+  // Emit a damage event to the target and a combatLog event to everyone else
+  // in the room.
   for (let i = 0; i < mobsInCombat.length; i++) {
     let targets = mobsInCombat[i].combat.targets;
     let selectedTarget = targets[Math.floor(Math.random() * targets.length)];
