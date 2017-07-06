@@ -46,6 +46,16 @@ describe('giveHandler', () => {
         });
       });
     });
+
+    describe('With at least one item', () => {
+      it('should return a giveAll object', () => {
+        expect(giveHandler('give', 'all bob', props)).toEqual({
+          emitType: 'giveAll',
+          itemArray: props.inventory,
+          target: 'bob'
+        });
+      });
+    });
   });
 
   describe('With a valid item', () => {
