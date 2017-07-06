@@ -11,6 +11,9 @@ import combatProcessor from '../processors/combat-processor.js';
 export default function socketHandlers(homeCtx) {
   let socket = homeCtx.socket;
   let props = homeCtx.props;
+  // On login, let the server know what the user's name, desc, and equipment is,
+  // then get the room description and announce to others in the room that the
+  // user has logged in.
   socket.emit('changeName', homeCtx.props.username);
   socket.emit('changeDescription', homeCtx.props.description);
   socket.emit('updateEquipment', homeCtx.props.equipment);
@@ -21,6 +24,9 @@ export default function socketHandlers(homeCtx) {
   socket.on('whisperSuccess', result => props.dispatch(newMessage(whisperProcessor(result, homeCtx.props.username))));
   socket.on('whisperFail', () => props.dispatch(newMessage({feedback: 'I don\'t see that person here.'})));
   socket.on('movementLeave', movement => {
+    // Sometimes the server has a socket with no username. This conditional corrects for that error.
+    // A better solution would be to ensure the server isn't managing any sockets without usernames,
+    // but I haven't gotten to that yet.
     movement.username ? props.dispatch(newMessage({
       from: movement.username,
       feedback: ` moves ${movement.direction}.`})) : null;
@@ -30,10 +36,6 @@ export default function socketHandlers(homeCtx) {
   socket.on('forceGet', item => props.dispatch(getItem(item)));
   socket.on('forceDropAll', () => props.dispatch(dropAll()));
   socket.on('getAll', itemArray => props.dispatch(getAll(itemArray)));
-  socket.on('itemPickedUp', item => {
-    props.dispatch(newMessage({feedback: `You pick up ${item.short}.`}));
-    props.dispatch(getItem(item));
-  });
   socket.on('enterCombat', target => {
     if (homeCtx.props.combat.targets.find(mob => mob.id === target.id)) return props.dispatch(newMessage({feedback: `You're already fighting ${target.short}!`}));
     props.dispatch(newMessage({

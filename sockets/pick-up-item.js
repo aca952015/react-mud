@@ -23,7 +23,8 @@ export default function pickUpItem(socket, roomData) {
     if (!item) return socket.emit('generalMessage', {feedback: 'I don\'t see that item here.'});
     if (invalidTypes[item.type]) return socket.emit('generalMessage', {feedback: 'You can\'t pick that up.'});
 
-    socket.emit('itemPickedUp', item);
+    socket.emit('forceGet', item);
+    socket.emit('generalMessage', {feedback: `You pick up ${item.short}.`});
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` picks up ${item.short}.`});
     roomData[socket.currentRoom].items.splice(roomData[socket.currentRoom].items.indexOf(item), 1);
   });

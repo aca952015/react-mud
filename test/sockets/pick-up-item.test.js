@@ -34,9 +34,9 @@ describe('pickUpItem', () => {
     describe('With a valid item in the room', () => {
       describe('The user picking the item up', () => {
         describe('With the full term', () => {
-          it('should return an itemPickedUp event', done => {
+          it('should return a forceGet event', done => {
             player1.emit('pickUpItem', {item: '2.potion'});
-            player1.on('itemPickedUp', res => {
+            player1.on('forceGet', res => {
               let expected = newItem('potions', 'health potion');
               delete expected.drink.effect;
               expect(res).toEqual({...expected, id: res.id});
@@ -46,9 +46,9 @@ describe('pickUpItem', () => {
         });
 
         describe('With fuzzy matching', () => {
-          it('should return an itemPickedUp event', done => {
+          it('should return a forceGet event', done => {
             player1.emit('pickUpItem', {item: '2.ke'});
-            player1.on('itemPickedUp', res => {
+            player1.on('forceGet', res => {
               let expected = newItem('keys', 'tester key');
               expect(res).toEqual({...expected, id: res.id});
               done();
@@ -93,7 +93,7 @@ describe('pickUpItem', () => {
   describe('Without dot notation', () => {
     it('should return a pickUpItem event', done => {
       player1.emit('pickUpItem', {item: 'potion'});
-      player1.on('itemPickedUp', res => {
+      player1.on('forceGet', res => {
         let expected = newItem('potions', 'health potion');
         delete expected.drink.effect;
         expect(res).toEqual({...expected, id: res.id});
