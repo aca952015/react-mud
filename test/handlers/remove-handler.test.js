@@ -27,6 +27,24 @@ describe('removeHandler', () => {
     });
   });
 
+  describe('With an argument of all', () => {
+    describe('If the user isn\'t wearing anything', () => {
+      it('should return feedback that they aren\'t wearing anything', () => {
+        expect(removeHandler('remove', 'all', {
+          ...props,
+          equipment: {
+            ...props.equipment,
+            head: null,
+            shoulders: null
+          }
+        })).toEqual({
+          ...defaultObj,
+          feedback: 'You aren\'t wearing anything to remove.'
+        });
+      });
+    });
+  });
+
   describe('With an item the user isn\'t wearing', () => {
     it('should return feedback of "You aren\'t wearing that."', () => {
       expect(removeHandler('remove', 'hat', props)).toEqual({
