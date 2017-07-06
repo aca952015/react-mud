@@ -30,8 +30,8 @@ export const helpFile = {
     text: 'Will attempt to drink the contents of a specified item in your inventory. For example, if you have a red potion and you type DRINK potion, you will drink the red potion. If you want to specify an item based on the order in your inventory, you can use dot notation to do so. For example, if you have a blue potion and a red potion, you can type DRINK 2.potion to drink the red potion.'
   },
   'drop': {
-    title: 'DROP <item>',
-    text: 'Will drop an item from your inventory into the room you\'re currently in. Every item has a handful of terms you can use to refer to it. For example, if your inventory has "a small black key", you can drop it with DROP KEY, DROP SMALL, or DROP BLACK. If you want to drop a specific item, based on its order in your inventory, you can use dot notation with the index of the item you want. For example, if you have two keys, and you want to drop the second one, you can type DROP 2.KEY.'
+    title: 'DROP <item> -or- DROP ALL',
+    text: 'Will drop an item from your inventory into the room you\'re currently in. DROP ALL will drop everything you\'re carrying. Every item has a handful of terms you can use to refer to it. For example, if your inventory has "a small black key", you can drop it with DROP KEY, DROP SMALL, or DROP BLACK. If you want to drop a specific item, based on its order in your inventory, you can use dot notation with the index of the item you want. For example, if you have two keys, and you want to drop the second one, you can type DROP 2.KEY.'
   },
   'equipment': {
     title: 'EQUIPMENT (shortcut: EQ)',
@@ -42,12 +42,12 @@ export const helpFile = {
     text: 'Will show you the description of an item in your inventory. If you want to look at an item in the room, use the LOOK command (help LOOK). You can examine a specific item in your inventory if you have multiples by using dot notation, such as EX 2.key or EX 3.potion to look at the second key in the room or the third potion.'
   },
   'get': {
-    title: 'GET <item> -or- GET <item> <container> (optionally: GET <item> FROM <container>)',
-    text: 'GET <target> will pick up an item in the room and add it to your inventory. Every item has a handful of terms you can use to refer to it. For example, an item called "a small black key", which shows up in the room as, "A small black key with a simple carving of a noose on it lies here," could be targeted with GET KEY, GET SMALL, or GET BLACK. If you want to pick up a specific item, based on its order in the room, you can use dot notation with the index of the item you want. For example, if a room has two keys, and you want to pick up the second one, you could type GET 2.KEY. You can also get items that are inside a container (HELP LOOK to see how to check what\'s in a container) if you specify the container. For example, "GET KEY BACKPACK" or "GET KEY FROM BACKPACK" will try to get a key from a backpack container.'
+    title: 'GET <item> -or- GET <item> <container> -or- GET ALL -or- GET ALL <container> (optionally: GET <item> FROM <container>)',
+    text: 'GET <target> will pick up an item in the room and add it to your inventory. Every item has a handful of terms you can use to refer to it. For example, an item called "a small black key", which shows up in the room as, "A small black key with a simple carving of a noose on it lies here," could be targeted with GET KEY, GET SMALL, or GET BLACK. If you want to pick up a specific item, based on its order in the room, you can use dot notation with the index of the item you want. For example, if a room has two keys, and you want to pick up the second one, you could type GET 2.KEY. You can also get items that are inside a container (HELP LOOK to see how to check what\'s in a container) if you specify the container. For example, "GET KEY BACKPACK" or "GET KEY FROM BACKPACK" will try to get a key from a backpack container. GET ALL or GET ALL <container> will get all items you are able to pick up from either the room or the specified container.'
   },
   'give': {
-    title: 'GIVE <item> <target>',
-    text: 'Will try to give the item from your inventory to another player in the same room. If you are not carrying the item or it\'s in a container, the command will fail. Dot notation can be used to give a specific item. For example, if you\'re carrying 2 potions, you can GIVE 2.POTION <target>.'
+    title: 'GIVE <item> <target> -or- GIVE ALL <target>',
+    text: 'Will try to give the item from your inventory to another player in the same room. GIVE ALL will give everything you\'re carrying to the target. If you are not carrying the item or it\'s in a container, the command will fail. Dot notation can be used to give a specific item. For example, if you\'re carrying 2 potions, you can GIVE 2.POTION <target>.'
   },
   'inventory': {
     title: 'INVENTORY (shortcuts: I or INV)',
@@ -74,12 +74,12 @@ export const helpFile = {
     text: 'If you have a keyboard available, you can press the up or down arrow keys to cycle through previous input, through your last 20 commands. Entering the same command more than once in a row will count as a single instance of entering input for the purposes of this cycling.'
   },
   'put': {
-    title: 'PUT <item> <container> (optionally: PUT <item> IN <container>)',
-    text: 'Will put an item from your inventory into a container you\'re either carrying or that\'s in the room. For example, "PUT POTION BACKPACK" will attempt to put a potion from your inventory into a backpack. When selecting a container, items you are carrying are prioritized over items in the room. For example, if you have a backpack, but there\'s also a backpack in the room, then "PUT POTION BACKPACK" will put the potion in the backpack you\'re carrying. Put recognizes dot notation on both the targeted item and the container. "PUT 2.POTION BACKPACK", "PUT POTION 2.BACKPACK", and "PUT 2.POTION 2.BACKPACK" are all valid commands.'
+    title: 'PUT <item> <container> -or- PUT ALL <container> (optionally: PUT <item> IN <container>)',
+    text: 'Will put an item from your inventory into a container you\'re either carrying or that\'s in the room. PUT ALL will put everything you\'re carrying into the specified container. For example, "PUT POTION BACKPACK" will attempt to put a potion from your inventory into a backpack. When selecting a container, items you are carrying are prioritized over items in the room. For example, if you have a backpack, but there\'s also a backpack in the room, then "PUT POTION BACKPACK" will put the potion in the backpack you\'re carrying. Put recognizes dot notation on both the targeted item and the container. "PUT 2.POTION BACKPACK", "PUT POTION 2.BACKPACK", and "PUT 2.POTION 2.BACKPACK" are all valid commands.'
   },
   'remove': {
-    title: 'REMOVE <item> (optionally: RM <item>)',
-    text: 'Will remove an item you\'re currently wearing and put it back in your inventory. Dot notation can be used to target specific items, starting from the head down. For example, if you are wearing a leather helm and a leather breastplate, you can REMOVE 2.LEATHER to remove the breastplate.'
+    title: 'REMOVE <item> -or- REMOVE ALL (optionally: RM <item>)',
+    text: 'Will remove an item you\'re currently wearing and put it back in your inventory. REMOVE ALL will remove all your equipment and put it in your inventory. Dot notation can be used to target specific items, starting from the head down. For example, if you are wearing a leather helm and a leather breastplate, you can REMOVE 2.LEATHER to remove the breastplate.'
   },
   'say': {
     title: 'SAY <message>',
@@ -90,8 +90,8 @@ export const helpFile = {
     text: 'Some exits are locked, meaning you cannot move through them until they are unlocked. These exits will be displayed with parentheses around them. To unlock an exit, you will need to have the correct key in your inventory. For example, if "a small black key" is needed to unlock the east exit, you would need to have "a small black key" in your inventory, then type UNLOCK EAST or UNLOCK E.'
   },
   'wear': {
-    title: 'WEAR <item>',
-    text: 'Will equip an item you are carrying in your inventory. If you are already wearing something in that slot, it will first remove the currently worn item. You can use dot notation to wear specific items in your inventory. For example, if you have "a broad sword" and "a thin sword", you can WEAR 2.SWORD to equip the thin sword.'
+    title: 'WEAR <item> -or- WEAR ALL',
+    text: 'Will equip an item you are carrying in your inventory. If you are already wearing something in that slot, it will first remove the currently worn item. You can use dot notation to wear specific items in your inventory. For example, if you have "a broad sword" and "a thin sword", you can WEAR 2.SWORD to equip the thin sword. WEAR ALL will wear every piece of equipment in your inventory in order, swapping anything that is currently equipped, ignoring duplicates of the same kind of item. For example, if you have 2 leather helms, a leather breastplate, a steel breastplate, and leather boots, and you\'re not wearing anything, WEAR ALL will equip the leather helm, equip the leather breastplate, swap the steel breastplate for the leather breastplate, then equip the leather boots.'
   },
   'whisper': {
     title: 'WHISPER <target> <message>',

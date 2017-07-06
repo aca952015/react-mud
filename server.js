@@ -18,6 +18,9 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(`${__dirname}/build`));
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 
+// Every 30 seconds, emit a "tick" event.
+// Every 2 seconds, emit combat ticks. Users autoattack if they're in combat on
+// combat ticks, as do mobs that are currently in combat.
 setInterval(() => io.sockets.emit('tick'), 30000);
 setInterval(() => {
   io.sockets.emit('combatTick');

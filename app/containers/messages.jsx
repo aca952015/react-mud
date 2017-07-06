@@ -34,6 +34,8 @@ export default class Messages extends Component {
   }
 
   render() {
+    // The game is primarily played through a series of messages rendered to the user. This container checks
+    // what type of message needs to be rendered and calls the appropriate presentational component(s).
     const messages = this.props.messages.map((message, index) => {
       return <li key={index}>
         {message.playerInput ? <PlayerInput message={message}/> : null}

@@ -15,6 +15,7 @@ import removeItem from './remove-item.js';
 import wearItem from './wear-item.js';
 import oneLineListeners from './one-line-listeners.js';
 
+// All the various socket listeners for the server, compartmentalized for easy reference and debugging.
 export default function serverSocketListeners(io, socket, users, roomData, mobsInCombat) {
   oneLineListeners(socket, users);
   pickUpItem(socket, roomData);

@@ -114,17 +114,6 @@ describe('socketHandlers', () => {
     });
   });
 
-  describe('itemPickedUp', () => {
-    it('should dispatch a newMessage and a getItem', done => {
-      player1.emit('pickUpItem', {item: 'potion'});
-      player1.on('itemPickedUp', res => {
-        expect(props.dispatch.calledWith(newMessage({feedback: `You pick up ${res.short}.`}))).toEqual(true);
-        expect(props.dispatch.calledWith(getItem(res))).toEqual(true);
-        done();
-      });
-    });
-  });
-
   describe('enterCombat', () => {
     describe('If the user is not already fighting the target', () => {
       it('should return the mob being attacked', done => {
@@ -192,16 +181,6 @@ describe('socketHandlers', () => {
       player1.emit('damage', {enemy: props.combat.targets[1], damage: 10});
       player1.on('slayEnemy', res => {
         expect(props.dispatch.calledWith(slayEnemy(res))).toEqual(true);
-        done();
-      });
-    });
-  });
-
-  describe('endCombat', () => {
-    it('should dispatch slayEnemy with the ID returned', done => {
-      player1.emit('damage', {enemy: props.combat.targets[1], damage: 10});
-      player1.on('endCombat', id => {
-        expect(props.dispatch.calledWith(slayEnemy({id}))).toEqual(true);
         done();
       });
     });

@@ -65,13 +65,13 @@ describe('damage', () => {
   });
 
   describe('With a damage event on a target that was already slain', () => {
-    it('should return an endCombat event', done => {
+    it('should return a slayEnemy event', done => {
       // The test server has two bats in the room, so both need to be slain
       // to make sure that the target no longer exists.
       player1.emit('damage', {...dmgObj, damage: 5});
       player1.emit('damage', dmgObj);
-      player1.on('endCombat', id => {
-        expect(id).toEqual(dmgObj.enemy.id);
+      player1.on('slayEnemy', enemy => {
+        expect(enemy.id).toEqual(dmgObj.enemy.id);
         done();
       });
     });

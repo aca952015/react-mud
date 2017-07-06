@@ -73,8 +73,13 @@ export class CommandInput extends Component {
       const command = line[0].toLowerCase().trim();
       const args = line.length > 1 ? line.slice(1).join(' ').trim() : null;
 
+      // commandHandler will return an object, typically with a number of functions
+      // to pass to this.props.dispatch and potentially with something that needs
+      // to be emitted to the server to handle.
       let result = commandHandler(command, args, this.props);
 
+      // Without the check for funcsToCall, checking length will error out. Sometimes
+      // there are no funcsToCall, so this conditional checks for both.
       if (result.funcsToCall && result.funcsToCall.length) result.funcsToCall.forEach(func => this.props.dispatch(func(result)));
       this.props.socket.emit(result.emitType, result);
       this.props.dispatch(updateInput(''));

@@ -2,6 +2,8 @@
 
 export default function whisperProcessor(result, username) {
   let post = {};
+  // If the message is to yourself, toYourself is true.
+  // If the user is a third party to a user whispering to themselves, sameTarget is true.
   let toYourself = result.target.toLowerCase() === username.toLowerCase();
   let sameTarget = result.from.toLowerCase() === result.target.toLowerCase();
 
@@ -12,7 +14,7 @@ export default function whisperProcessor(result, username) {
       target: toYourself ? null : result.target,
       commType: toYourself ? 'whisper to yourself, ' : 'whisper to ',
     };
-  } else if (toYourself){
+  } else if (toYourself) {
     post = {
       text: result.text,
       from: result.from,

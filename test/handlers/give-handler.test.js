@@ -3,7 +3,6 @@
 import giveHandler from '../../app/handlers/give-handler.js';
 import newItem from '../../app/data/items.js';
 import {newMessage} from '../../app/actions/message-actions.js';
-import {dropItem} from '../../app/actions/inventory-actions.js';
 
 describe('giveHandler', () => {
   let props = {inventory: [newItem('potions', 'health potion')], username: 'duder'};
@@ -38,11 +37,31 @@ describe('giveHandler', () => {
     });
   });
 
+  describe('With an argument of all', () => {
+    describe('With no inventory', () => {
+      it('should return a feedback error of not having anything to give', () => {
+        expect(giveHandler('give', 'all bob', {...props, inventory: []})).toEqual({
+          ...defaultObj,
+          feedback: 'You aren\'t carrying anything to give.'
+        });
+      });
+    });
+
+    describe('With at least one item', () => {
+      it('should return a giveAll object', () => {
+        expect(giveHandler('give', 'all bob', props)).toEqual({
+          emitType: 'giveAll',
+          itemArray: props.inventory,
+          target: 'bob'
+        });
+      });
+    });
+  });
+
   describe('With a valid item', () => {
     describe('With mixed case', () => {
       it('should return a give object', () => {
         expect(giveHandler('give', 'POtIoN BoB', props)).toEqual({
-          funcsToCall: [dropItem],
           emitType: 'give',
           item: props.inventory[0],
           target: 'bob'
@@ -54,7 +73,6 @@ describe('giveHandler', () => {
       describe('With full terms', () => {
         it('should return a give object', () => {
           expect(giveHandler('give', 'potion bob', props)).toEqual({
-            funcsToCall: [dropItem],
             emitType: 'give',
             item: props.inventory[0],
             target: 'bob'
@@ -65,7 +83,6 @@ describe('giveHandler', () => {
       describe('With fuzzy matching', () => {
         it('should return a give object', () => {
           expect(giveHandler('give', 'po bob', props)).toEqual({
-            funcsToCall: [dropItem],
             emitType: 'give',
             item: props.inventory[0],
             target: 'bob'
@@ -78,7 +95,6 @@ describe('giveHandler', () => {
       it('should return a give object', () => {
         props.inventory.push(newItem('potions', 'health potion'));
         expect(giveHandler('give', '2.potion bob', props)).toEqual({
-          funcsToCall: [dropItem],
           emitType: 'give',
           item: props.inventory[1],
           target: 'bob'

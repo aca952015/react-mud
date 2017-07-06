@@ -5,10 +5,14 @@ export default function movement(socket, users, roomInfo) {
   socket.currentRoom = 'Nexus';
 
   socket.on('move', movement => {
+    // Login has special functionality, so ignore most movement code if it's a login
     if (movement.direction !== 'login') {
       if (roomInfo[socket.currentRoom].exits[movement.direction].locked) return socket.emit('generalMessage', {feedback: 'That way is locked.'});
       socket.broadcast.to(socket.currentRoom).emit('movementLeave', {username: socket.username, direction: movement.direction});
       socket.leave(socket.currentRoom);
+
+      // The new room is the room specified by the current room's exit that the user left to. For example, if
+      // down is "Town Square", then the "Nexus" room object should have an exit of "down": "Town Square".
       let tempRoom = roomInfo[roomInfo[socket.currentRoom].exits[movement.direction].exit];
       socket.currentRoom = tempRoom.roomName;
       socket.join(socket.currentRoom);
