@@ -7,6 +7,8 @@ export const CombatLog = props => {
   const combatLog = props.message.combatLog;
   return <div className="combat-log">
     <p>
+      {/* The from, pre, interaction, damage, post, and target fields, using friendly and enemy,
+        are all used to help decide how to style the combat log, mostly in terms of color.*/}
       <span className={combatLog.from.friendly ? 'from-friendly' : 'from-enemy'}>{combatLog.from.friendly ? combatLog.from.friendly : combatLog.from.enemy}</span>
       {combatLog.interaction ? <span>{combatLog.interaction}</span> : null}
       {combatLog.damage ?

@@ -45,7 +45,7 @@ export function getAll(itemObj) {
   return {
     type: 'GET_ALL',
     payload: itemObj.itemArray,
-    container: itemObj.container
+    container: itemObj.container // This distinguishes between getAll from room and getAll from inventory
   };
 }
 
