@@ -30,11 +30,11 @@ function mapStateToProps(state) {
 export class Home extends Component {
   constructor() {
     super();
-    this.state = {justHitEnter: false};
+    this.state = {justHitEnter: false}; // Used to handle the scrollbar in the messages container
   }
   componentDidMount() {
     this.socket = io('/');
-    socketHandlers(this);
+    socketHandlers(this); // There are a lot of socket listeners, so they are handled in their own file.
     window.addEventListener('beforeunload', () => this.socket.emit('disconnect'));
     document.querySelector('input').focus();
   }
