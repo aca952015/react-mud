@@ -35,11 +35,23 @@ describe('give', () => {
   });
 
   describe('To a player that exists, but isn\'t in the room', () => {
-    it('should give feedback that that player isn\'t seen', done => {
-      player1.emit('give', {...giveObj, target: 'alien'});
-      player1.on('generalMessage', res => {
-        expect(res.feedback).toEqual('I don\'t see that person here.');
-        done();
+    describe('With a give event', () => {
+      it('should give feedback that that player isn\'t seen', done => {
+        player1.emit('give', {...giveObj, target: 'alien'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('I don\'t see that person here.');
+          done();
+        });
+      });
+    });
+
+    describe('With a giveAll event', () => {
+      it('should give feedback that that player isn\'t seen', done =>  {
+        player1.emit('giveAll', {itemArray: [newItem('potions', 'health potion')], target: 'alien'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('I don\'t see that person here.');
+          done();
+        });
       });
     });
   });
