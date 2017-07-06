@@ -10,7 +10,15 @@ import newItem from '../../app/data/items.js';
 describe('wearHandler', () => {
   const defaultObj = {funcsToCall: [newMessage]};
   const props = {
-    inventory: [newItem('equipment', 'leather helm'), newItem('potions', 'health potion'), newItem('equipment', 'leather helm')],
+    inventory: [
+      newItem('equipment', 'leather helm'),
+      newItem('potions', 'health potion'),
+      newItem('equipment', 'leather helm'),
+      newItem('equipment', 'leather pauldrons'),
+      newItem('equipment', 'leather breastplate'),
+      newItem('equipment', 'leather leggings'),
+      newItem('equipment', 'leather boots')
+    ],
     equipment: {
       head: null,
       shoulders: null,
@@ -29,6 +37,87 @@ describe('wearHandler', () => {
       expect(wearHandler('wear')).toEqual({
         ...defaultObj,
         feedback: 'Wear what?'
+      });
+    });
+  });
+
+  describe('With an argument of "all"', () => {
+    let result1 = {
+      funcsToCall: [wearEquipment, newMessage, dropItem],
+      equip: props.inventory[0],
+      item: props.inventory[0],
+      feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`,
+      emitType: 'wearItem'
+    };
+    let result5 = {
+      funcsToCall: [wearEquipment, newMessage, dropItem],
+      equip: props.inventory[6],
+      item: props.inventory[6],
+      feedback: `You equip ${props.inventory[6].short} on your ${props.inventory[6].slot}.`,
+      emitType: 'wearItem'
+    };
+    describe('With nothing equipped', () => {
+      describe('With no equipment in the inventory', () => {
+        it('should return feedback of "You aren\'t carrying anything to wear."', () => {
+          expect(wearHandler('wear', 'all', {...props, inventory: []})).toEqual({
+            ...defaultObj,
+            feedback: 'You aren\'t carrying anything to wear.'
+          });
+        });
+      });
+
+      describe('With valid equipment', () => {
+        it('should dispatch wearEquipment 5 times and emit wearItem 5 times', () => {
+          let resetProps = {...props, dispatch: sinon.spy(), socket: {emit: sinon.spy()}};
+          expect(wearHandler('wear', 'all', resetProps)).toEqual({});
+          expect(resetProps.dispatch.calledWith(wearEquipment(result1))).toEqual(true);
+          expect(resetProps.dispatch.calledWith(wearEquipment(result5))).toEqual(true);
+          expect(resetProps.socket.emit.callCount).toEqual(5);
+        });
+      });
+    });
+
+    describe('With items already equipped', () => {
+      it('should dispatch wearEquipment 5 times, removeItem 2 times, and emit 5 times', () => {
+        let resetProps = {
+          ...props,
+          equipment: {
+            head: null,
+            shoulders: newItem('equipment', 'leather pauldrons'),
+            chest: newItem('equipment', 'leather pauldrons'),
+            legs: null,
+            feet: null
+          },
+          dispatch: sinon.spy(),
+          socket: {
+            emit: sinon.spy()
+          }
+        };
+        let result2 = {
+          funcsToCall: [quietlyAddItem, removeItem, wearEquipment, dropItem, newMessage],
+          equip: resetProps.inventory[4],
+          item: resetProps.inventory[4],
+          quietAdd: resetProps.equipment.chest,
+          removeEquip: resetProps.equipment.chest,
+          feedback: `You swap ${resetProps.equipment.chest.short} with ${resetProps.inventory[4].short}.`,
+          emitType: 'swapEquips'
+        };
+        let result3 = {
+          funcsToCall: [quietlyAddItem, removeItem, wearEquipment, dropItem, newMessage],
+          equip: resetProps.inventory[3],
+          item: resetProps.inventory[3],
+          quietAdd: resetProps.equipment.shoulders,
+          removeEquip: resetProps.equipment.shoulders,
+          feedback: `You swap ${resetProps.equipment.shoulders.short} with ${resetProps.inventory[3].short}.`,
+          emitType: 'swapEquips'
+        };
+
+        expect(wearHandler('wear', 'all', resetProps)).toEqual({});
+        expect(resetProps.dispatch.calledWith(wearEquipment(result1))).toEqual(true);
+        expect(resetProps.dispatch.calledWith(wearEquipment(result5))).toEqual(true);
+        expect(resetProps.dispatch.calledWith(removeItem(result3))).toEqual(true);
+        expect(resetProps.dispatch.calledWith(removeItem(result2))).toEqual(true);
+        expect(resetProps.socket.emit.callCount).toEqual(5);
       });
     });
   });
@@ -101,7 +190,7 @@ describe('wearHandler', () => {
     });
 
     describe('With an item already in the slot', () => {
-      it('should call removeItem and emit a removeItem event', () => {
+      it('should call swap items and call a swapItem event', () => {
         let equippedProps = {
           ...props,
           equipment: {
@@ -113,21 +202,18 @@ describe('wearHandler', () => {
           }
         };
         let result = {
-          funcsToCall: [quietlyAddItem, removeItem, newMessage],
-          emitType: 'removeItem',
-          quietAdd: equippedProps.equipment.head,
-          removeEquip: equippedProps.equipment.head,
-          feedback: `You remove ${equippedProps.equipment.head.short}.`
-        };
-
-        expect(wearHandler('wear', 'helm', equippedProps)).toEqual({
-          funcsToCall: [wearEquipment, newMessage, dropItem],
+          funcsToCall: [quietlyAddItem, removeItem, wearEquipment, dropItem, newMessage],
           equip: props.inventory[0],
           item: props.inventory[0],
-          emitType: 'wearItem',
-          feedback: `You equip ${props.inventory[0].short} on your ${props.inventory[0].slot}.`
-        });
+          quietAdd: equippedProps.equipment.head,
+          removeEquip: equippedProps.equipment.head,
+          feedback: `You swap ${equippedProps.equipment.head.short} with ${props.inventory[0].short}.`,
+          emitType: 'swapEquips'
+        };
+
+        expect(wearHandler('wear', 'helm', equippedProps)).toEqual({});
         expect(props.dispatch.calledWith(removeItem(result))).toEqual(true);
+        expect(props.dispatch.calledWith(quietlyAddItem(result))).toEqual(true);
         expect(props.socket.emit.calledWith(result.emitType, result)).toEqual(true);
       });
     });
