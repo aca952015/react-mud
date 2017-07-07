@@ -6,7 +6,7 @@ export default function removeItem(socket) {
     socket.equipment[item.removeEquip.slot] = null;
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
       from: socket.username,
-      feedback: item.type === 'equipment' ? ` removes ${item.removeEquip.short}.` : ` puts ${item.removeEquip.short} away.`
+      feedback: item.removeEquip.type === 'equipment' ? ` removes ${item.removeEquip.short}.` : ` puts ${item.removeEquip.short} away.`
     });
   });
 }
