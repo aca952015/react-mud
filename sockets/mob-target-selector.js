@@ -30,7 +30,7 @@ export default function mobTargetSelector(mobsInCombat, users) {
           enemy: `${mob.short[0].toUpperCase()}${mob.short.slice(1)}`
         },
         pre: ' deals ',
-        damage: mob.atk,
+        damage,
         post: ' damage to ',
         target: {
           friendly: socket.username
