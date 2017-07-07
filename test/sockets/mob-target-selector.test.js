@@ -66,6 +66,25 @@ describe('mobTargetSelector', () => {
     });
   });
 
+  describe('With armor on, but enough to reduce the damage below 1', () => {
+    beforeEach(done => {
+      player1.emit('updateEquipment', {
+        ...equipment,
+        head: newItem('equipment', 'leather helm')
+      });
+      player1.emit('updateSocket');
+      player1.on('updateComplete', () => done());
+    });
+
+    it('should return a damage object with the mob\'s atk minus the equipment\'s defense', done => {
+      player1.emit('testMobSelector');
+      player1.on('damage', res => {
+        expect(res.damage).toEqual(bat.atk - newItem('equipment', 'leather helm').stats.def);
+        done();
+      });
+    });
+  });
+
   describe('With enough armor equipped to reduce the damage to less than 1', () => {
     beforeEach(done => {
       player1.emit('updateEquipment', {

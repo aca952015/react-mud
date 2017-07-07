@@ -24,7 +24,7 @@ const mobData = {
     long: 'A small, leathery-winged bat is here.',
     terms: ['small', 'bat'],
     hp: 5,
-    atk: 2,
+    atk: 5,
     def: 0,
     combat: {
       active: false,
