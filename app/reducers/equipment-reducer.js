@@ -3,6 +3,8 @@
 export const initialState = {
   head: null,
   shoulders: null,
+  mainHand: null,
+  offHand: null,
   chest: null,
   legs: null,
   feet: null
