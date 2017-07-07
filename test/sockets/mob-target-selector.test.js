@@ -91,7 +91,8 @@ describe('mobTargetSelector', () => {
         ...equipment,
         head: newItem('equipment', 'leather helm'),
         chest: newItem('equipment', 'leather breastplate'),
-        feet: newItem('equipment', 'leather boots')
+        feet: newItem('equipment', 'leather boots'),
+        legs: newItem('equipment', 'leather leggings')
       });
       player1.emit('updateSocket');
       player1.on('updateComplete', () => done());
