@@ -201,7 +201,8 @@ describe('wearHandler', () => {
             feet: null
           }
         };
-        let result = {
+        
+        expect(wearHandler('wear', 'helm', equippedProps)).toEqual({
           funcsToCall: [quietlyAddItem, removeItem, wearEquipment, dropItem, newMessage],
           equip: props.inventory[0],
           item: props.inventory[0],
@@ -209,12 +210,7 @@ describe('wearHandler', () => {
           removeEquip: equippedProps.equipment.head,
           feedback: `You swap ${equippedProps.equipment.head.short} with ${props.inventory[0].short}.`,
           emitType: 'swapEquips'
-        };
-
-        expect(wearHandler('wear', 'helm', equippedProps)).toEqual({});
-        expect(props.dispatch.calledWith(removeItem(result))).toEqual(true);
-        expect(props.dispatch.calledWith(quietlyAddItem(result))).toEqual(true);
-        expect(props.socket.emit.calledWith(result.emitType, result)).toEqual(true);
+        });
       });
     });
   });

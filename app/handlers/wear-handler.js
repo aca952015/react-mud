@@ -40,14 +40,7 @@ export default function wearHandler(command, args, props) {
   if (!equip.slot) return {funcsToCall: [newMessage], feedback: 'You can\'t wear that.'};
 
   // If they're already wearing something in that slot, swap the two items
-  if (props.equipment[equip.slot]) {
-    const result = swapEquipmentProcessor(equip, props.equipment[equip.slot]);
-
-    result.funcsToCall.forEach(func => props.dispatch(func(result)));
-    props.socket.emit(result.emitType, result);
-
-    return {};
-  }
+  if (props.equipment[equip.slot]) return swapEquipmentProcessor(equip, props.equipment[equip.slot]);
 
   // If they're not wearing something in that slot, equip it
   return generateWearObj(equip);
