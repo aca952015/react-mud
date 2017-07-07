@@ -12,6 +12,7 @@ process.env.TESTING = true;
 
 io.sockets.on('connection', function(socket) {
   users.push(socket);
+  socket.on('disconnect', () => users.splice(users.indexOf(users.find(user => user.username === socket.username)), 1));
   socket.currentRoom = 'Nexus';
   socket.join('Nexus');
   socket.on('teleport', room => {
@@ -35,6 +36,7 @@ io.sockets.on('connection', function(socket) {
       }
     });
   });
+  socket.on('updateSocket', () => socket.emit('updateComplete'));
   socket.on('testMobSelector', () => mobTargetSelector(mobsInCombat, users));
   serverSocketListeners(io, socket, users, roomData, mobsInCombat);
 });
