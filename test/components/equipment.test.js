@@ -4,6 +4,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import {Equipment} from '../../app/components/equipment.jsx';
 import newItem from '../../app/data/items.js';
+import {initialState} from '../../app/reducers/equipment-reducer.js';
 
 describe('<Equipment />', () => {
   let props, eq;
@@ -11,13 +12,8 @@ describe('<Equipment />', () => {
   it('should return a UL with Nothing in slots that are null and shorts in slots that have an item', () => {
     props = {
       equipment: {
-        head: newItem('equipment', 'leather helm'),
-        shoulders: null,
-        mainHand: null,
-        offHand: null,
-        chest: null,
-        legs: null,
-        feet: null
+        ...initialState,
+        head: newItem('equipment', 'leather helm')
       }
     };
 
