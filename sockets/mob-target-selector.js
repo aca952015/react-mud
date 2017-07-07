@@ -11,7 +11,7 @@ export default function mobTargetSelector(mobsInCombat, users) {
 
     // Get the def stat of all equipped items and add them together
     const defense = Object.keys(socket.equipment).reduce((acc, slot) => {
-      if (socket.equipment[slot]) acc += socket.equipment[slot].stats.def;
+      if (socket.equipment[slot] && socket.equipment[slot].stats.def) acc += socket.equipment[slot].stats.def;
       return acc;
     }, 0);
 
