@@ -8,6 +8,12 @@ class Mob {
     // Stringifying, then parsing it is a quick hack to give us a deep clone.
     let someObj = JSON.parse(JSON.stringify(properties));
     someObj.id = Math.floor(Math.random() * 1000000000);
+
+    // All mobs start out of combat with no targets
+    someObj.combat = {
+      active: false,
+      targets: []
+    };
     return someObj;
   }
 }
@@ -25,10 +31,16 @@ const mobData = {
     terms: ['small', 'bat'],
     hp: 5,
     atk: 5,
-    def: 0,
-    combat: {
-      active: false,
-      targets: []
-    }
+    def: 0
+  },
+  'armored zombie': {
+    name: 'armored zombie',
+    description: 'It\'s a zombie with armor on, here to test a mob with some def.',
+    short: 'an armored zombie',
+    long: 'A zombie that\'s been outfitted with some leather armor is here.',
+    terms: ['armored', 'zombie'],
+    hp: 10,
+    atk: 2,
+    def: 3
   }
 };

@@ -50,14 +50,15 @@ export const roomData = {
       newItem('equipment', 'leather pauldrons'),
       newItem('equipment', 'leather breastplate'),
       newItem('equipment', 'leather leggings'),
-      newItem('equipment', 'leather boots')
+      newItem('equipment', 'leather boots'),
+      newItem('weapons', 'broad sword')
     ],
     examines: [{
       name: 'ztest',
       terms: ['ztest'],
       description: 'Really? Ztest? You thought to try looking at this?'
     }],
-    mobs: [newMob('bat'), newMob('bat')]
+    mobs: [newMob('bat'), newMob('bat'), newMob('armored zombie')]
   },
   'Secret Room': {
     roomName: 'Secret Room',
