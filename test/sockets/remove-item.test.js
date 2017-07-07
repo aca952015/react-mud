@@ -38,12 +38,26 @@ describe('removeItem', () => {
     done();
   });
 
-  it('should broadcast a generalMessage of player1 removing the item', done => {
-    player1.emit('removeItem', {removeEquip: helm});
-    player2.on('generalMessage', res => {
-      expect(res.from).toEqual('player1');
-      expect(res.feedback).toEqual(` removes ${helm.short}.`);
-      done();
+  describe('With armor', () => {
+    it('should broadcast a generalMessage of player1 removing the item', done => {
+      player1.emit('removeItem', {removeEquip: helm});
+      player2.on('generalMessage', res => {
+        expect(res.from).toEqual('player1');
+        expect(res.feedback).toEqual(` removes ${helm.short}.`);
+        done();
+      });
+    });
+  });
+
+  describe('With a weapon', () => {
+    it('should broadcast a generalMessage of player1 removing the item', done => {
+      let sword = newItem('weapons', 'broad sword');
+      player1.emit('removeItem', {removeEquip: sword});
+      player2.on('generalMessage', res => {
+        expect(res.from).toEqual('player1');
+        expect(res.feedback).toEqual(` puts ${sword.short} away.`);
+        done();
+      });
     });
   });
 });
