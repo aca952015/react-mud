@@ -26,9 +26,11 @@ describe('look', () => {
         legs: null,
         feet: null
       });
-      done();
+      player2.emit('updateSocket');
+      player2.on('updateComplete', () => done());
     });
   });
+
   afterEach(done => {
     player1.disconnect();
     player2.disconnect();
