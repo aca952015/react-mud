@@ -4,6 +4,8 @@ import combatProcessor from '../../app/processors/combat-processor.js';
 import io from 'socket.io-client';
 import ioOptions from '../lib/io-options.js';
 import closeServer from '../lib/test-server.js';
+import {initialState} from '../../app/reducers/equipment-reducer.js';
+import newItem from '../../app/data/items.js';
 
 describe('combatProcessor', () => {
   require('../lib/test-server.js');
@@ -28,30 +30,61 @@ describe('combatProcessor', () => {
     });
   });
 
-  afterAll(done => {
+  afterEach(done => {
     player1.disconnect();
+    done();
+  });
+
+  afterAll(done => {
     closeServer();
     done();
   });
 
-  it('should emit a damage event and receive a generalMessage response', done => {
-    combatProcessor(player1, props);
-    player1.on('generalMessage', res => {
-      expect(res).toEqual({
-        combatLog: {
-          from: {
-            friendly: 'You'
-          },
-          pre: ' deal ',
-          damage: props.atk,
-          post: ' damage to ',
-          target: {
-            enemy: 'a small bat'
-          },
-          punctuation: '.'
-        }
+  describe('With no weapon equipped', () => {
+    it('should emit a damage event and receive a generalMessage response', done => {
+      props.equipment = initialState;
+      combatProcessor(player1, props);
+      player1.on('generalMessage', res => {
+        expect(res).toEqual({
+          combatLog: {
+            from: {
+              friendly: 'You'
+            },
+            pre: ' deal ',
+            damage: props.atk,
+            post: ' damage to ',
+            target: {
+              enemy: 'a small bat'
+            },
+            punctuation: '.'
+          }
+        });
+        done();
       });
-      done();
+    });
+  });
+
+  describe('With a weapon equipped', () => {
+    it('should emit a damage event with proper calculations and receive a generalMessage response', done => {
+      props.equipment = {...initialState, 'main hand': newItem('weapons', 'broad sword')};
+      combatProcessor(player1, props);
+      player1.on('generalMessage', res => {
+        expect(res).toEqual({
+          combatLog: {
+            from: {
+              friendly: 'You'
+            },
+            pre: ' deal ',
+            damage: props.atk + props.equipment['main hand'].stats.atk,
+            post: ' damage to ',
+            target: {
+              enemy: 'a small bat'
+            },
+            punctuation: '.'
+          }
+        });
+        done();
+      });
     });
   });
 });
