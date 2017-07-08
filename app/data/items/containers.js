@@ -4,7 +4,7 @@ export const containers = {
   'backpack': {
     name: 'backpack',
     short: 'a backpack',
-    long: 'A simple backpack lies on the groud here.',
+    long: 'A simple backpack lies on the ground here.',
     terms: ['backpack', 'simple'],
     type: 'items',
     drink: null,
