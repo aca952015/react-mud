@@ -2,7 +2,7 @@
 
 export const helpFile = {
   'help': {
-    title: 'Here is a list of help files available to you. Type help {file} to learn more (e.g., "HELP MOVEMENT"):',
+    title: 'Here is a list of help files available to you. Type <span class="highlight">help {file}</span> to learn more (e.g., "HELP MOVEMENT"):',
     text: [
       `<span class="help-topics">DRINK</span>
       <span class="help-topics">DROP</span>
@@ -26,19 +26,19 @@ export const helpFile = {
     ]
   },
   'drink': {
-    title: 'DRINK {item}',
+    title: '<span class="highlight">DRINK {item}</span>',
     text: ['Will attempt to drink the contents of a specified item in your inventory. For example, if you have a red potion and you type DRINK potion, you will drink the red potion. If you want to specify an item based on the order in your inventory, you can use dot notation to do so. For example, if you have a blue potion and a red potion, you can type DRINK 2.potion to drink the red potion.']
   },
   'drop': {
-    title: 'DROP {item} -or- DROP ALL',
+    title: '<span class="highlight">DROP {item}</span> -or- <span class="highlight">DROP ALL</span>',
     text: ['Will drop an item from your inventory into the room you\'re currently in. DROP ALL will drop everything you\'re carrying. Every item has a handful of terms you can use to refer to it. For example, if your inventory has "a small black key", you can drop it with DROP KEY, DROP SMALL, or DROP BLACK. If you want to drop a specific item, based on its order in your inventory, you can use dot notation with the index of the item you want. For example, if you have two keys, and you want to drop the second one, you can type DROP 2.KEY.']
   },
   'equipment': {
-    title: 'EQUIPMENT (shortcut: EQ)',
+    title: '<span class="highlight">EQUIPMENT</span> (shortcut: EQ)',
     text: ['Will show you what you currently have equipped.']
   },
   'examine': {
-    title: 'EXAMINE {target} (shortcut: EX)',
+    title: '<span class="highlight">EXAMINE {target}</span> (shortcut: EX)',
     text: ['Will show you the description of an item in your inventory. If you want to look at an item in the room, use the LOOK command (help LOOK). You can examine a specific item in your inventory if you have multiples by using dot notation, such as EX 2.key or EX 3.potion to look at the second key in the room or the third potion.']
   },
   'get': {
@@ -51,27 +51,27 @@ export const helpFile = {
     ]
   },
   'give': {
-    title: 'GIVE {item} {target} -or- GIVE ALL {target}',
-    text: 'Will try to give the item from your inventory to another player in the same room. GIVE ALL will give everything you\'re carrying to the target. If you are not carrying the item or it\'s in a container, the command will fail. Dot notation can be used to give a specific item. For example, if you\'re carrying 2 potions, you can GIVE 2.POTION {target}.'
+    title: '<span class="highlight">GIVE {item} {target}</span> -or- <span class="highlight">GIVE ALL {target}</span>',
+    text: ['Will try to give the item from your inventory to another player in the same room. GIVE ALL will give everything you\'re carrying to the target. If you are not carrying the item or it\'s in a container, the command will fail. Dot notation can be used to give a specific item. For example, if you\'re carrying 2 potions, you can GIVE 2.POTION {target}.']
   },
   'inventory': {
-    title: 'INVENTORY (shortcuts: I or INV)',
+    title: '<span class="highlight">INVENTORY</span> (shortcuts: I or INV)',
     text: ['Will display the contents of your inventory. If you have multiples of the same item, they will be displayed with parenthetical notation. For example, if you have two red potions, you would see "(2) a red potion". Items are tracked in your inventory in the order you picked them up.']
   },
   'kill': {
-    title: 'KILL {target}',
+    title: '<span class="highlight">KILL {target}</span>',
     text: ['Will initiate combat with the targeted enemy. Must be used on an enemy in the same room as you. You can initiate combat with as many enemies in a room at a time as you want. Once you\'ve initiated combat, you cannot move to another room until combat is over. Dot notation can be used if you want to target a specific enemy - for example, if a room contains two "a small bat"s, you can KILL 2.BAT to target the second one.']
   },
   'lock': {
-    title: 'LOCK {direction}',
+    title: '<span class="highlight">LOCK {direction}</span>',
     text: ['If an exit has been unlocked, but you want to lock it back up, you can do so by using LOCK {direction} if you have the correct key. For example, if an east exit requires "a small black key" to be unlocked and you are holding "a small black key", you can type LOCK EAST or LOCK E.']
   },
   'look': {
-    title: 'LOOK {target} -or- LOOK IN {container} (shortcut: L)',
+    title: '<span class="highlight">LOOK {target}</span> -or- <span class="highlight">LOOK IN {container}</span> (shortcut: L)',
     text: ['By itself, LOOK or L will show you the room you\'re currently in, as well as any items and occupants. Items in the room are displayed in the order they originally started in, or in the order they were added (perhaps via the DROP command). If you specify a target, look will show you the description of either the player you looked at, the item in the room you looked at, or specially hidden objects in the room (usually hinted at in a room\'s description). If you want to look at something in your inventory, use the EXAMINE command (help EXAMINE). You can look at a specific object if there are multiples of it in the room using dot notation, such as LOOK 2.key or LOOK 3.potion to look at the second key in the room or the third potion. LOOK IN will show you the contents of a container. For example: "LOOK IN BACKPACK"']
   },
   'movement': {
-    title: 'UP DOWN EAST WEST NORTH SOUTH (shortcuts: U D E W N S)',
+    title: '<span class="highlight">UP DOWN EAST WEST NORTH SOUTH</span> (shortcuts: U D E W N S)',
     text: ['In order to move from one room to the other, you simply type the exit you want to use, typically a cardinal direction. For example, if a room has exits: [ down  east ], you can type DOWN or EAST in order to move in either direction. If an exit has parentheses around it, it is locked and cannot be moved through unless it is unlocked with the correct key.']
   },
   'previous_commands': {
@@ -79,31 +79,31 @@ export const helpFile = {
     text: ['If you have a keyboard available, you can press the up or down arrow keys to cycle through previous input, through your last 20 commands. Entering the same command more than once in a row will count as a single instance of entering input for the purposes of this cycling.']
   },
   'put': {
-    title: 'PUT {item} {container} -or- PUT ALL {container} (optionally: PUT {item} IN {container})',
+    title: '<span class="highlight">PUT {item} {container}</span> -or- <span class="highlight">PUT ALL {container}</span> (optionally: <span class="highlight">PUT {item} IN {container}</span>)',
     text: ['Will put an item from your inventory into a container you\'re either carrying or that\'s in the room. PUT ALL will put everything you\'re carrying into the specified container. For example, "PUT POTION BACKPACK" will attempt to put a potion from your inventory into a backpack. When selecting a container, items you are carrying are prioritized over items in the room. For example, if you have a backpack, but there\'s also a backpack in the room, then "PUT POTION BACKPACK" will put the potion in the backpack you\'re carrying. Put recognizes dot notation on both the targeted item and the container. "PUT 2.POTION BACKPACK", "PUT POTION 2.BACKPACK", and "PUT 2.POTION 2.BACKPACK" are all valid commands.']
   },
   'remove': {
-    title: 'REMOVE {item} -or- REMOVE ALL (optionally: RM {item})',
+    title: '<span class="highlight">REMOVE {item}</span> -or- <span class="highlight">REMOVE ALL</span> (optionally: <span class="highlight">RM {item}</span>)',
     text: ['Will remove an item you\'re currently wearing and put it back in your inventory. REMOVE ALL will remove all your equipment and put it in your inventory. Dot notation can be used to target specific items, starting from the head down. For example, if you are wearing a leather helm and a leather breastplate, you can REMOVE 2.LEATHER to remove the breastplate.']
   },
   'say': {
-    title: 'SAY {message}',
+    title: '<span class="highlight">SAY {message}</span>',
     text: ['Will have your character say something to everyone in your current room.']
   },
   'unlock': {
-    title: 'UNLOCK {direction}',
+    title: '<span class="highlight">UNLOCK {direction}</span>',
     text: ['Some exits are locked, meaning you cannot move through them until they are unlocked. These exits will be displayed with parentheses around them. To unlock an exit, you will need to have the correct key in your inventory. For example, if "a small black key" is needed to unlock the east exit, you would need to have "a small black key" in your inventory, then type UNLOCK EAST or UNLOCK E.']
   },
   'wear': {
-    title: 'WEAR {item} -or- WEAR ALL',
+    title: '<span class="highlight">WEAR {item}</span> -or- <span class="highlight">WEAR ALL</span>',
     text: ['Will equip an item you are carrying in your inventory. If you are already wearing something in that slot, it will first remove the currently worn item. You can use dot notation to wear specific items in your inventory. For example, if you have "a broad sword" and "a thin sword", you can WEAR 2.SWORD to equip the thin sword. WEAR ALL will wear every piece of equipment in your inventory in order, swapping anything that is currently equipped, ignoring duplicates of the same kind of item. For example, if you have 2 leather helms, a leather breastplate, a steel breastplate, and leather boots, and you\'re not wearing anything, WEAR ALL will equip the leather helm, equip the leather breastplate, swap the steel breastplate for the leather breastplate, then equip the leather boots.']
   },
   'whisper': {
-    title: 'WHISPER {target} {message}',
+    title: '<span class="highlight">WHISPER {target} {message}</span>',
     text: ['Will send a private message to your target, if they are in the same room as you. This will alert your target that you\'ve whispered them a message, and alert everyone else in the room that you\'ve whispered something to that target, though they will not see what it is.']
   },
   'who': {
-    title: 'WHO',
+    title: '<span class="highlight">WHO</span>',
     text: ['Will show you all players currently connected, including yourself.']
   }
 };
