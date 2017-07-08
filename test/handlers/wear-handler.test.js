@@ -17,7 +17,8 @@ describe('wearHandler', () => {
       newItem('equipment', 'leather pauldrons'),
       newItem('equipment', 'leather breastplate'),
       newItem('equipment', 'leather leggings'),
-      newItem('equipment', 'leather boots')
+      newItem('equipment', 'leather boots'),
+      newItem('weapons', 'broad sword')
     ],
     equipment: {
       head: null,
@@ -67,18 +68,18 @@ describe('wearHandler', () => {
       });
 
       describe('With valid equipment', () => {
-        it('should dispatch wearEquipment 5 times and emit wearItem 5 times', () => {
+        it('should dispatch wearEquipment 6 times and emit wearItem 5 times', () => {
           let resetProps = {...props, dispatch: sinon.spy(), socket: {emit: sinon.spy()}};
           expect(wearHandler('wear', 'all', resetProps)).toEqual({});
           expect(resetProps.dispatch.calledWith(wearEquipment(result1))).toEqual(true);
           expect(resetProps.dispatch.calledWith(wearEquipment(result5))).toEqual(true);
-          expect(resetProps.socket.emit.callCount).toEqual(5);
+          expect(resetProps.socket.emit.callCount).toEqual(6);
         });
       });
     });
 
     describe('With items already equipped', () => {
-      it('should dispatch wearEquipment 5 times, removeItem 2 times, and emit 5 times', () => {
+      it('should dispatch wearEquipment 6 times, removeItem 2 times, and emit 5 times', () => {
         let resetProps = {
           ...props,
           equipment: {
@@ -117,14 +118,14 @@ describe('wearHandler', () => {
         expect(resetProps.dispatch.calledWith(wearEquipment(result5))).toEqual(true);
         expect(resetProps.dispatch.calledWith(removeItem(result3))).toEqual(true);
         expect(resetProps.dispatch.calledWith(removeItem(result2))).toEqual(true);
-        expect(resetProps.socket.emit.callCount).toEqual(5);
+        expect(resetProps.socket.emit.callCount).toEqual(6);
       });
     });
   });
 
   describe('With an item the user isn\'t carrying', () => {
     it('should return feedback of "You aren\'t carrying that."', () => {
-      expect(wearHandler('wear', 'sword', props)).toEqual({
+      expect(wearHandler('wear', 'bear', props)).toEqual({
         ...defaultObj,
         feedback: 'You aren\'t carrying that.'
       });
@@ -201,7 +202,7 @@ describe('wearHandler', () => {
             feet: null
           }
         };
-        
+
         expect(wearHandler('wear', 'helm', equippedProps)).toEqual({
           funcsToCall: [quietlyAddItem, removeItem, wearEquipment, dropItem, newMessage],
           equip: props.inventory[0],
@@ -210,6 +211,18 @@ describe('wearHandler', () => {
           removeEquip: equippedProps.equipment.head,
           feedback: `You swap ${equippedProps.equipment.head.short} with ${props.inventory[0].short}.`,
           emitType: 'swapEquips'
+        });
+      });
+    });
+
+    describe('With a weapon', () => {
+      it('should say "wear <short> in your hand, not on"', () => {
+        expect(wearHandler('wear', 'sword', props)).toEqual({
+          funcsToCall: [wearEquipment, newMessage, dropItem],
+          item: props.inventory[7],
+          equip: props.inventory[7],
+          emitType: 'wearItem',
+          feedback: `You equip ${props.inventory[7].short} in your ${props.inventory[7].slot}.`
         });
       });
     });

@@ -10,7 +10,7 @@ export const containers = {
     drink: null,
     description: 'This is a placeholder description for a backpack.',
     container: {
-      holds: ['items', 'equipment'],
+      holds: ['items', 'equipment', 'weapons'],
       contains: []
     }
   },
@@ -23,7 +23,7 @@ export const containers = {
     type: 'corpse',
     description: 'This is a placeholder description for a corpse.',
     container: {
-      holds: ['items', 'equipment'],
+      holds: ['items', 'equipment', 'weapons'],
       contains: []
     }
   },

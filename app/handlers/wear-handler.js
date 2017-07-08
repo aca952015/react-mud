@@ -47,11 +47,12 @@ export default function wearHandler(command, args, props) {
 }
 
 function generateWearObj(equip) {
+  // If the equip is equipment, it's armor. If it's not, it's a weapon. Use the right verb accordingly.
   return {
     funcsToCall: [wearEquipment, newMessage, dropItem],
     equip,
     item: equip,
-    feedback: `You equip ${equip.short} on your ${equip.slot}.`,
+    feedback: equip.type === 'equipment' ? `You equip ${equip.short} on your ${equip.slot}.` : `You equip ${equip.short} in your ${equip.slot}.`,
     emitType: 'wearItem'
   };
 }

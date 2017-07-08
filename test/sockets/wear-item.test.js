@@ -39,13 +39,27 @@ describe('wearItem', () => {
     done();
   });
 
-  it('should broadcast to the room that the item was worn', done => {
-    let helm = newItem('equipment', 'leather helm');
-    player1.emit('wearItem', {equip: helm});
-    player2.on('generalMessage', item => {
-      expect(item.from).toEqual('player1');
-      expect(item.feedback).toEqual(` wears ${helm.short} on their ${helm.slot}.`);
-      done();
+  describe('For armor', () => {
+    it('should broadcast to the room that the item was worn', done => {
+      let helm = newItem('equipment', 'leather helm');
+      player1.emit('wearItem', {equip: helm});
+      player2.on('generalMessage', item => {
+        expect(item.from).toEqual('player1');
+        expect(item.feedback).toEqual(` equips ${helm.short} on their ${helm.slot}.`);
+        done();
+      });
+    });
+  });
+
+  describe('For weapons', () => {
+    it('should broadcast to the room that the item was worn', done => {
+      let sword = newItem('weapons', 'broad sword');
+      player1.emit('wearItem', {equip: sword});
+      player2.on('generalMessage', item => {
+        expect(item.from).toEqual('player1');
+        expect(item.feedback).toEqual(` equips ${sword.short} in their ${sword.slot}.`);
+        done();
+      });
     });
   });
 });

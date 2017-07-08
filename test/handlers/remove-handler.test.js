@@ -13,6 +13,7 @@ describe('removeHandler', () => {
     equipment: {
       head: newItem('equipment', 'leather helm'),
       shoulders: newItem('equipment', 'leather helm'),
+      'main hand': newItem('weapons', 'broad sword'),
       chest: null,
       legs: null,
       feet: null
@@ -36,7 +37,8 @@ describe('removeHandler', () => {
           equipment: {
             ...props.equipment,
             head: null,
-            shoulders: null
+            shoulders: null,
+            'main hand': null
           }
         })).toEqual({
           ...defaultObj,
@@ -72,7 +74,7 @@ describe('removeHandler', () => {
         expect(removeHandler('remove', 'all', resetProps)).toEqual({});
         expect(resetProps.dispatch.calledWith(removeItem(result1))).toEqual(true);
         expect(resetProps.dispatch.calledWith(removeItem(result2))).toEqual(true);
-        expect(resetProps.socket.emit.callCount).toEqual(2);
+        expect(resetProps.socket.emit.callCount).toEqual(3);
       });
     });
   });
@@ -131,6 +133,18 @@ describe('removeHandler', () => {
           quietAdd: props.equipment.head,
           removeEquip: props.equipment.head,
           feedback: `You remove ${props.equipment.head.short}.`
+        });
+      });
+    });
+
+    describe('With a weapon', () => {
+      it('should say "you put away" instead of "remove"', () => {
+        expect(removeHandler('remove', 'sword', props)).toEqual({
+          funcsToCall: [quietlyAddItem, removeItem, newMessage],
+          emitType: 'removeItem',
+          quietAdd: props.equipment['main hand'],
+          removeEquip: props.equipment['main hand'],
+          feedback: `You put ${props.equipment['main hand'].short} away.`
         });
       });
     });

@@ -45,6 +45,6 @@ function generateRemoveObject(item) {
     emitType: 'removeItem',
     quietAdd: item,
     removeEquip: item,
-    feedback: `You remove ${item.short}.`
+    feedback: item.type === 'equipment' ? `You remove ${item.short}.` : `You put ${item.short} away.`
   };
 }

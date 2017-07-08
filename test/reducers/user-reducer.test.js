@@ -197,7 +197,7 @@ describe('user reducer', () => {
       backpack.container.contains.push(potion);
       expect(reducer({...initialState, inventory: [manaPotion, backpack]}, {type: 'GET_ALL', payload: [key, potion], container: backpack})).toEqual({
         ...initialState,
-        inventory: [manaPotion, {...backpack, container: {contains: [], holds: ['items', 'equipment']}}, key, potion]
+        inventory: [manaPotion, {...backpack, container: {contains: [], holds: [...backpack.container.holds]}}, key, potion]
       });
     });
   });
@@ -228,7 +228,7 @@ describe('user reducer', () => {
           ...backpack,
           container: {
             contains: [manaPotion, key, potion],
-            holds: ['items', 'equipment']
+            holds: [...backpack.container.holds]
           }
         }]
       });
