@@ -47,7 +47,7 @@ export default class Messages extends Component {
         {message.containedItems ? <Containers message={message}/> : null}
         {message.onlineUsers ? <OnlineUsers message={message}/> : null}
         {message.commType ? <Communication username={this.props.username} message={message}/> : null}
-        {message.helpObj ? <HelpFile message={message}/> : null}
+        {message.helpObj ? <HelpFile helpObj={message.helpObj}/> : null}
         {message.inventory ? <Inventory inventory={message.inventory}/> : null}
         {message.equipment ? <Equipment name={message.name} equipment={message.equipment}/> : null}
       </li>;
