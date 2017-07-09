@@ -45,4 +45,16 @@ describe('descriptionHandler', () => {
       });
     });
   });
+
+  describe('With an arg of +', () => {
+    describe('With no description set', () => {
+      it('should return an addParagraph object and change the description to the arg', () => {
+        expect(descriptionHandler('desc', '+ Ayy', {description: ['No description set.']})).toEqual({
+          funcsToCall: [newMessage, addDescriptionParagraph],
+          playerDescription: ['Ayy'],
+          emitType: 'changeDescription'
+        });
+      });
+    });
+  });
 });
