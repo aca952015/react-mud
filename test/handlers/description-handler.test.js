@@ -23,4 +23,16 @@ describe('descriptionHandler', () => {
       });
     });
   });
+
+  describe('With an arg of -', () => {
+    describe('With a description of only one paragraph', () => {
+      it('should return a truncateDescription object with playerDescription of none set.', () => {
+        expect(descriptionHandler('desc', '-', {description: ['Desc1']})).toEqual({
+          funcsToCall: [newMessage, truncateDescription],
+          playerDescription: ['No description set.'],
+          emitType: 'changeDescription'
+        });
+      });
+    });
+  });
 });
