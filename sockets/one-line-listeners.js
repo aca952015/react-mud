@@ -5,7 +5,7 @@
 export default function oneLineListeners(socket, users) {
   socket.on('say', message => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {...message, commType: ' says, '}));
   if (!process.env.TESTING) socket.on('changeName', name => socket.username = name);
-  socket.on('changeDescription', desc => socket.description = desc);
+  socket.on('changeDescription', desc => socket.description = desc.playerDescription);
   socket.on('updateEquipment', eq => socket.equipment = eq);
   socket.on('swapEquips', itemObj => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` swaps ${itemObj.item.short} with ${itemObj.quietAdd.short}.`}));
   socket.on('getAllFromInventory', item => socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` gets everything they can from ${item.container.short}.`}));

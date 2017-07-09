@@ -15,7 +15,7 @@ export default function socketHandlers(homeCtx) {
   // then get the room description and announce to others in the room that the
   // user has logged in.
   socket.emit('changeName', homeCtx.props.username);
-  socket.emit('changeDescription', homeCtx.props.description);
+  socket.emit('changeDescription', {playerDescription: homeCtx.props.description});
   socket.emit('updateEquipment', homeCtx.props.equipment);
   socket.emit('look', {target: null});
   socket.emit('move', {direction: 'login'});

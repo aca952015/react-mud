@@ -8,7 +8,7 @@ export default function look(socket, users, roomInfo) {
     // If the target has equipment (and is thus a player), send a response with their name, desc, and equipment
     // Otherwise, just send the description
     function showMeTheDescription(target) {
-      if (target.equipment) return socket.emit('generalMessage', {feedback: target.description, name: target.username, equipment: target.equipment});
+      if (target.equipment) return socket.emit('generalMessage', {playerDescription: target.description, name: target.username, equipment: target.equipment});
       socket.emit('generalMessage', {feedback: target.description});
     }
 

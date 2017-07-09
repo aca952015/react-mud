@@ -19,6 +19,55 @@ describe('user reducer', () => {
     });
   });
 
+  describe('With a TRUNCATE_DESCRIPTION action', () => {
+    describe('With a one-paragraph description set', () => {
+      it('should update the description to "No description set."', () => {
+        expect(reducer(initialState, {type: 'TRUNCATE_DESCRIPTION'})).toEqual({
+          ...initialState,
+          description: ['No description set.']
+        });
+      });
+    });
+
+    describe('With a multi-paragraph descripiton set', () => {
+      it('should update the description to be one less paragraph', () => {
+        expect(reducer({...initialState, description: ['Desc1', 'Desc2']}, {type: 'TRUNCATE_DESCRIPTION'})).toEqual({
+          ...initialState,
+          description: ['Desc1']
+        });
+      });
+    });
+  });
+
+  describe('With a CLEAR_DESCRIPTION action', () => {
+    it('should set the description to "No description set."', () => {
+      expect(reducer(initialState, {type: 'CLEAR_DESCRIPTION'})).toEqual({
+        ...initialState,
+        description: ['No description set.']
+      });
+    });
+  });
+
+  describe('With a ADD_DESCRIPTION_PARAGRAPH action', () => {
+    describe('If the description is "No description set."', () => {
+      it('should overwrite the description with the payload', () => {
+        expect(reducer({...initialState, description: ['No description set.']}, {type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'Desc1'})).toEqual({
+          ...initialState,
+          description: ['Desc1']
+        });
+      });
+    });
+
+    describe('If there is a description in place', () => {
+      it('should add a new paragraph to the description', () => {
+        expect(reducer(initialState, {type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'Desc1'})).toEqual({
+          ...initialState,
+          description: [...initialState.description, 'Desc1']
+        });
+      });
+    });
+  });
+
   describe('With a QUIETLY_ADD_ITEM action', () => {
     it('should update the inventory with the payload', () => {
       expect(reducer(initialState, {type: 'GET_ITEM', payload: 'some item'})).toEqual({

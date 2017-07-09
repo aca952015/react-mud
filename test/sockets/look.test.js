@@ -16,9 +16,9 @@ describe('look', () => {
     player2 = io.connect(url, ioOptions);
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
-      player1.emit('changeDescription', 'player1 desc');
+      player1.emit('changeDescription', {playerDescription: ['player1 desc']});
       player2.emit('changeName', 'player2');
-      player2.emit('changeDescription', 'player2 desc');
+      player2.emit('changeDescription', {playerDescription: ['player2 desc']});
       player2.emit('updateEquipment', {
         head: null,
         shoulders: null,
@@ -59,7 +59,7 @@ describe('look', () => {
     it('should show player1 the description of player2 and their equipment', done => {
       player1.emit('look', {target: 'player2'});
       player1.on('generalMessage', res => {
-        expect(res.feedback).toEqual('player2 desc');
+        expect(res.playerDescription).toEqual(['player2 desc']);
         expect(res.name).toEqual('player2');
         expect(res.equipment).toEqual({
           head: null,

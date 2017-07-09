@@ -14,6 +14,7 @@ import {CombatLog} from '../components/combat-log.jsx';
 import {Inventory} from '../components/inventory.jsx';
 import {Equipment} from '../components/equipment.jsx';
 import {PlayerInput} from '../components/player-input.jsx';
+import {PlayerDescription} from '../components/player-description.jsx';
 
 export default class Messages extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ export default class Messages extends Component {
     const messages = this.props.messages.map((message, index) => {
       return <li key={index}>
         {message.playerInput ? <PlayerInput message={message}/> : null}
+        {message.playerDescription ? <PlayerDescription description={message.playerDescription}/> : null}
         {message.feedback || message.interaction ? <Feedback username={this.props.username} message={message}/> : null}
         {message.room ? <Room message={message}/> : null}
         {message.occupants ? <Occupants message={message}/> : null}

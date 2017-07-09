@@ -2,7 +2,7 @@
 
 export const initialState = {
   username: `Robot_${Math.floor(Math.random() * 500 + 1)}`,
-  description: 'As actual players do not exist yet, everybody is a robot. They all look the same. They all speak the same. They look just like you.',
+  description: ['As actual players do not exist yet, everybody is a robot. They all look the same. They all speak the same. They look just like you.'],
   inventory: [],
   hp: 15,
   maxHP: 20,
@@ -24,6 +24,16 @@ export const initialState = {
 };
 
 export default function reducer(state=initialState, action) {
+  if (action.type === 'TRUNCATE_DESCRIPTION') {
+    let description = state.description.slice(0, state.description.length - 1);
+    if (description.length < 1) description = ['No description set.'];
+    return {...state, description};
+  }
+  if (action.type === 'ADD_DESCRIPTION_PARAGRAPH') {
+    let description = state.description[0] === 'No description set.' ? [action.payload] : [...state.description, action.payload];
+    return {...state, description};
+  }
+  if (action.type === 'CLEAR_DESCRIPTION') return {...state, description: ['No description set.']};
   if (action.type === 'GET_ITEM' || action.type === 'QUIETLY_ADD_ITEM') return {...state, inventory: [...state.inventory, action.payload]};
   if (action.type === 'GET_ALL') {
     // The existence of action.container is how we know if the user was getting items

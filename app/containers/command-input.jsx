@@ -12,6 +12,7 @@ function mapStateToProps(state) {
     prevCommands: state.messages.prevCommands,
     input: state.messages.input,
     username: state.user.username,
+    description: state.user.description,
     inventory: state.user.inventory,
     combat: state.user.combat,
     currentRoom: state.user.currentRoom,
