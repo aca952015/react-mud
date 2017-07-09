@@ -14,4 +14,10 @@ describe('User actions', () => {
       expect(addDescriptionParagraph({playerDescription: ['dude', 'berb']})).toEqual({type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'berb'});
     });
   });
+
+  describe('clearDescription', () => {
+    it('should return an object with a type of CLEAR_DESCRIPTION', () => {
+      expect(clearDescription()).toEqual({type: 'CLEAR_DESCRIPTION'});
+    });
+  });
 });
