@@ -48,6 +48,17 @@ describe('user reducer', () => {
     });
   });
 
+  describe('With a ADD_DESCRIPTION_PARAGRAPH action', () => {
+    describe('If the description is "No description set."', () => {
+      it('should overwrite the description with the payload', () => {
+        expect(reducer({...initialState, description: ['No description set.']}, {type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'Desc1'})).toEqual({
+          ...initialState,
+          description: ['Desc1']
+        });
+      });
+    });
+  });
+
   describe('With a QUIETLY_ADD_ITEM action', () => {
     it('should update the inventory with the payload', () => {
       expect(reducer(initialState, {type: 'GET_ITEM', payload: 'some item'})).toEqual({
