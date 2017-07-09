@@ -67,4 +67,13 @@ describe('descriptionHandler', () => {
       });
     });
   });
+
+  describe('With anything else', () => {
+    it('should return a feedback error', () => {
+      expect(descriptionHandler('desc', '+ayy', {description: ['Desc1']})).toEqual({
+        funcsToCall: [newMessage],
+        feedback: 'I\'m not sure what you\'re trying to do to your description. Try HELP DESCRIPTION for formatting.'
+      });
+    });
+  });
 });
