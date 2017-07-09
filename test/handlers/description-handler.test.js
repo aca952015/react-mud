@@ -56,5 +56,15 @@ describe('descriptionHandler', () => {
         });
       });
     });
+
+    describe('With a description in place', () => {
+      it('should add a new paragraph', () => {
+        expect(descriptionHandler('desc', '+ Ayy', {description: ['Desc1']})).toEqual({
+          funcsToCall: [newMessage, addDescriptionParagraph],
+          playerDescription: ['Desc1', 'Ayy'],
+          emitType: 'changeDescription'
+        });
+      });
+    });
   });
 });
