@@ -39,6 +39,15 @@ describe('user reducer', () => {
     });
   });
 
+  describe('With a CLEAR_DESCRIPTION action', () => {
+    it('should set the description to "No description set."', () => {
+      expect(reducer(initialState, {type: 'CLEAR_DESCRIPTION'})).toEqual({
+        ...initialState,
+        description: ['No description set.']
+      });
+    });
+  });
+
   describe('With a QUIETLY_ADD_ITEM action', () => {
     it('should update the inventory with the payload', () => {
       expect(reducer(initialState, {type: 'GET_ITEM', payload: 'some item'})).toEqual({
