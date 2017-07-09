@@ -34,5 +34,15 @@ describe('descriptionHandler', () => {
         });
       });
     });
+
+    describe('With more than one paragraph', () => {
+      it('should remove the last paragraph and call truncateDescription', () => {
+        expect(descriptionHandler('desc', '-', {description: ['Desc1', 'Desc2']})).toEqual({
+          funcsToCall: [newMessage, truncateDescription],
+          playerDescription: ['Desc1'],
+          emitType: 'changeDescription'
+        });
+      });
+    });
   });
 });
