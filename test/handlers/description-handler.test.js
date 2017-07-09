@@ -13,4 +13,14 @@ describe('descriptionHandler', () => {
       });
     });
   });
+
+  describe('With an arg of clear', () => {
+    it('should return a clearDescription object', () => {
+      expect(descriptionHandler('desc', 'clear', {description: ['Desc1']})).toEqual({
+        funcsToCall: [newMessage, clearDescription],
+        playerDescription: ['No description set.'],
+        emitType: 'changeDescription'
+      });
+    });
+  });
 });
