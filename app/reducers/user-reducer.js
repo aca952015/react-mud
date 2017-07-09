@@ -2,7 +2,7 @@
 
 export const initialState = {
   username: `Robot_${Math.floor(Math.random() * 500 + 1)}`,
-  description: 'As actual players do not exist yet, everybody is a robot. They all look the same. They all speak the same. They look just like you.',
+  description: ['As actual players do not exist yet, everybody is a robot. They all look the same. They all speak the same. They look just like you.'],
   inventory: [],
   hp: 15,
   maxHP: 20,
