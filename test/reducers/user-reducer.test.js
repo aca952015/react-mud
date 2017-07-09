@@ -19,6 +19,26 @@ describe('user reducer', () => {
     });
   });
 
+  describe('With a TRUNCATE_DESCRIPTION action', () => {
+    describe('With a one-paragraph description set', () => {
+      it('should update the description to "No description set."', () => {
+        expect(reducer(initialState, {type: 'TRUNCATE_DESCRIPTION'})).toEqual({
+          ...initialState,
+          description: ['No description set.']
+        });
+      });
+    });
+
+    describe('With a multi-paragraph descripiton set', () => {
+      it('should update the description to be one less paragraph', () => {
+        expect(reducer({...initialState, description: ['Desc1', 'Desc2']}, {type: 'TRUNCATE_DESCRIPTION'})).toEqual({
+          ...initialState,
+          description: ['Desc1']
+        });
+      });
+    });
+  });
+
   describe('With a QUIETLY_ADD_ITEM action', () => {
     it('should update the inventory with the payload', () => {
       expect(reducer(initialState, {type: 'GET_ITEM', payload: 'some item'})).toEqual({
