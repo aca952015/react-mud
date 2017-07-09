@@ -47,6 +47,14 @@ describe('descriptionHandler', () => {
   });
 
   describe('With an arg of +', () => {
+    describe('With no additional args', () => {
+      it('should return a feedback error', () => {
+        expect(descriptionHandler('desc', '+', {description: ['Desc1']})).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'What did you want to add to your description? (format: DESC + {paragraph})'
+        });
+      });
+    });
     describe('With no description set', () => {
       it('should return an addParagraph object and change the description to the arg', () => {
         expect(descriptionHandler('desc', '+ Ayy', {description: ['No description set.']})).toEqual({
