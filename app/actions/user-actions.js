@@ -14,3 +14,24 @@ export function addDescriptionParagraph(descObj) {
 export function clearDescription() {
   return {type: 'CLEAR_DESCRIPTION'};
 }
+
+export function saveID(id) {
+  return {
+    type: 'SAVE_ID',
+    payload: id
+  };
+}
+
+export function loginUser(char) {
+  return {
+    type: 'LOGIN_USER',
+    payload: char
+  };
+}
+
+export function loginEquipment(equipment) {
+  return {
+    type: 'LOGIN_EQUIPMENT',
+    payload: equipment
+  };
+}
