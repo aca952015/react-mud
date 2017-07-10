@@ -2,27 +2,44 @@
 
 export const helpFile = {
   'help': {
-    title: 'Here is a list of help files available to you. Type <span class="highlight">help {file}</span> to learn more (e.g., "HELP MOVEMENT"):',
+    title: 'Here is a list of categories you can find help on. Type <span class="highlight">help {category}</span> to see a list of help files associated with that category (e.g., "HELP ITEMS").',
     text: [
-      `<span class="help-topics">DRINK</span>
-      <span class="help-topics">DROP</span>
+      `<span class="help-topics">COMBAT</span>
+      <span class="help-topics">COMMUNICATION</span>
       <span class="help-topics">EQUIPMENT</span>
-      <span class="help-topics">EXAMINE</span>
-      <span class="help-topics">GET</span>
-      <span class="help-topics">GIVE</span>
-      <span class="help-topics">INVENTORY</span>
-      <span class="help-topics">KILL</span>
-      <span class="help-topics">LOCK</span>
-      <span class="help-topics">LOOK</span>
+      <span class="help-topics">ITEMS</span>
       <span class="help-topics">MOVEMENT</span>
-      <span class="help-topics">PREVIOUS_COMMANDS</span>
-      <span class="help-topics">PUT</span>
-      <span class="help-topics">REMOVE</span>
+      <span class="help-topics">PREVIOUS_COMMANDS</span>`
+    ]
+  },
+  'auto_attacks': {
+    title: 'AUTO ATTACKS',
+    text: ['Players and enemies will automatically attack with their equipped weapon(s) every combat tick (HELP TICKS). A target is randomly selected from all enemies a combatant is currently engaged with, then base attack (ATK) is added to equipment bonuses, before subtracting enemy defenses. Auto attacks cannot deal less than 1 damage.']
+  },
+  'combat': {
+    title: 'Here is a list of topics related to COMBAT. Type <span class="highlight">help {file}</span> to see more information.',
+    text: [
+      `<span class="help-topics">KILL</span>
+      <span class="help-topics">AUTO_ATTACKS</span>
+      <span class="help-topics">TICKS</span>`
+    ]
+  },
+  'communication': {
+    title: 'Here is a list of topics related to communicating with other players. Type <span class="highlight">help {file}</span> for more information.',
+    text: [
+      `<span class="help-topics">DESCRIPTION</span>
       <span class="help-topics">SAY</span>
-      <span class="help-topics">UNLOCK</span>
-      <span class="help-topics">WEAR</span>
       <span class="help-topics">WHISPER</span>
       <span class="help-topics">WHO</span>`
+    ]
+  },
+  'description': {
+    title: '<span class="highlight">DESCRIPTION</spa> (shortcut: DESC)',
+    text: [
+      'By itself, <span class="highlight">DESCRIPTION</span> will show you your current description - what others see when they LOOK at you.',
+      'If you want to clear everything in your description and rewrite it, you can use <span class="highlight">DESCRIPTION CLEAR</span>.',
+      'To remove the last paragraph of your description, use <span class="highlight">DESCRIPTION -</span>. If your description only had one paragraph, your description will be changed to "No description set."',
+      'To add another paragraph to your description, use <span class="highlight">DESCRIPTION + {paragraph}</span>.'
     ]
   },
   'drink': {
@@ -37,12 +54,20 @@ export const helpFile = {
     ]
   },
   'equipment': {
-    title: '<span class="highlight">EQUIPMENT</span> (shortcut: EQ)',
-    text: ['Will show you what you currently have equipped.']
+    title: 'By itself, <span class="highlight">EQUIPMENT</span> (shortcut: EQ) will show you what you currently have equipped. Otherwise, try <span class="highlight">help {file}</span> for more information.',
+    text: [
+      `<span class="help-topics">REMOVE</span>
+      <span class="help-topics">STATS</span>
+      <span class="help-topics">WEAR</span>`
+    ]
   },
   'examine': {
     title: '<span class="highlight">EXAMINE {target}</span> (shortcut: EX)',
     text: ['Will show you the description of an item in your inventory. If you want to look at an item in the room, use the LOOK command (help LOOK). You can examine a specific item in your inventory if you have multiples by using dot notation, such as <span class="highlight">EX 2.KEY</span> or <span class="highlight">EX 3.POTION</span> to look at the second key in your inventory or the third potion.']
+  },
+  'exits': {
+    title: '<span class="highlight">UP DOWN EAST WEST NORTH SOUTH</span> (shortcuts: U D E W N S)',
+    text: ['In order to move from one room to the other, you simply type the exit you want to use, typically a cardinal direction. For example, if a room has exits: <span class="highlight">[ down  east ]</span>, you can type <span class="highlight">DOWN</span> or <span class="highlight">EAST</span> in order to move in either direction. If an exit has parentheses around it, it is locked and cannot be moved through unless it is unlocked with the correct key.']
   },
   'get': {
     title: '<span class="highlight">GET {item}</span> -or- <span class="highlight">GET {item} {container}</span> (optionally: <span class="highlight">GET {item} FROM {container}</span>)',
@@ -60,6 +85,18 @@ export const helpFile = {
   'inventory': {
     title: '<span class="highlight">INVENTORY</span> (shortcuts: I or INV)',
     text: ['Will display the contents of your inventory. If you have multiples of the same item, they will be displayed with parenthetical notation. For example, if you have two red potions, you would see "(2) a red potion". Items are tracked in your inventory in the order you picked them up.']
+  },
+  'items': {
+    title: 'Here is a list of topics about interacting with items in the room or in your inventory. Type <span class="highlight">help {file}</span> for more information.',
+    text: [
+      `<span class="help-topics">DRINK</span>
+      <span class="help-topics">DROP</span>
+      <span class="help-topics">EXAMINE</span>
+      <span class="help-topics">GET</span>
+      <span class="help-topics">GIVE</span>
+      <span class="help-topics">INVENTORY</span>
+      <span class="help-topics">PUT</span>`
+    ]
   },
   'kill': {
     title: '<span class="highlight">KILL {target}</span>',
@@ -79,8 +116,13 @@ export const helpFile = {
     ]
   },
   'movement': {
-    title: '<span class="highlight">UP DOWN EAST WEST NORTH SOUTH</span> (shortcuts: U D E W N S)',
-    text: ['In order to move from one room to the other, you simply type the exit you want to use, typically a cardinal direction. For example, if a room has exits: <span class="highlight">[ down  east ]</span>, you can type <span class="highlight">DOWN</span> or <span class="highlight">EAST</span> in order to move in either direction. If an exit has parentheses around it, it is locked and cannot be moved through unless it is unlocked with the correct key.']
+    title: 'Here is a list of help topics about moving around and interacting with rooms. Type <span class="highlight">help {file}</span> for more information.',
+    text: [
+      `<span class="help-topics">EXITS</span>
+      <span class="help-topics">LOCK</span>
+      <span class="help-topics">LOOK</span>
+      <span class="help-topics">UNLOCK</span>`
+    ]
   },
   'previous_commands': {
     title: 'Cycle through previous commands',
@@ -101,6 +143,14 @@ export const helpFile = {
   'say': {
     title: '<span class="highlight">SAY {message}</span>',
     text: ['Will have your character say something to everyone in your current room.']
+  },
+  'stats': {
+    title: 'Equipment stats',
+    text: ['Each piece of armor you wear will increase your defense (DEF) or magic defense (MDF), while each weapon will increase your attack (ATK) or magic attack (MAT). These values are used to calculate how much damage your auto-attacks and special abilities do.']
+  },
+  'ticks': {
+    title: 'TICKS',
+    text: ['Many events in the game are tracked by a time system the server uses called ticks. Every 30 seconds, the server emits a "tick," and every 2 seconds, the server emits a "combat tick." Auto-attacks occur on every combat tick, for example. Naturally regenerating health and mana occurs every tick. Items and enemies in rooms reset every so many ticks.']
   },
   'unlock': {
     title: '<span class="highlight">UNLOCK {direction}</span>',
