@@ -2,7 +2,7 @@
 
 export const initialState = {
   username: `Robot_${Math.floor(Math.random() * 500 + 1)}`,
-  description: ['As actual players do not exist yet, everybody is a robot. They all look the same. They all speak the same. They look just like you.'],
+  description: ['No description set.'],
   inventory: [],
   hp: 15,
   maxHP: 20,
@@ -13,7 +13,6 @@ export const initialState = {
   def: 0,
   mat: 0,
   mdf: 0,
-  userID: Math.floor(Math.random() * 1000000000),
   currentRoom: 'Nexus',
   combat: {
     active: false,
