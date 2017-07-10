@@ -5,7 +5,7 @@ import {getItem, dropItem, getAll, dropAll} from '../actions/inventory-actions.j
 import {enterCombat, damageUser, slayEnemy} from '../actions/combat-actions.js';
 import {changeRoom} from '../actions/move-actions.js';
 import {saveID, loginUser, loginEquipment} from '../actions/user-actions.js';
-import {setUsername, incrementCreationStep} from '../actions/login-actions.js';
+import {setUsername, incrementCreationStep, endCreation, setCreationStep} from '../actions/login-actions.js';
 import whisperProcessor from '../processors/whisper-processor.js';
 import moveProcessor from '../processors/move-processor.js';
 import combatProcessor from '../processors/combat-processor.js';
@@ -29,6 +29,8 @@ export default function socketHandlers(homeCtx) {
     socket.emit('changeName', char.loginUser.username);
     socket.emit('changeDescription', {playerDescription: char.loginUser.description});
     socket.emit('updateEquipment', char.loginEquipment);
+    props.dispatch(endCreation());
+    props.dispatch(setCreationStep({step: 0}));
     props.dispatch(loginUser(char.loginUser));
     props.dispatch(loginEquipment(char.loginEquipment));
     if (homeCtx.props.currentRoom === 'Login Room') {
@@ -41,10 +43,17 @@ export default function socketHandlers(homeCtx) {
     socket.emit('move', {direction: 'login'});
   });
 
+  // If the login fails, go back to step 0 for creation and inform the player that the
+  // password was invalid.
+  socket.on('loginFail', () => {
+    props.dispatch(setCreationStep({step: 0}));
+    props.dispatch(newMessage({feedback: 'Invalid password for that character. Enter "new" or a character name to login.'}));
+  });
+
   // nameAvailable is used for creating new characters. This event only gets emitted
   // if a new name is not already in use.
   socket.on('nameAvailable', name => {
-    props.dispatch(setUsername(`${name[0].toUpperCase()}${name.slice(1)}`));
+    props.dispatch(setUsername({newUsername: `${name[0].toUpperCase()}${name.slice(1)}`}));
     props.dispatch(incrementCreationStep());
     props.dispatch(newMessage({feedback: 'Please enter a password for your character.'}));
   });
