@@ -1,9 +1,16 @@
 'use strict';
 
 let io = require('socket.io').listen(5000);
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import initialConnect from '../../sockets/initial-connect.js';
 import serverSocketListeners from '../../sockets/server-socket-listeners.js';
 import mobTargetSelector from '../../sockets/mob-target-selector.js';
 import {roomData} from '../../app/data/rooms.js';
+
+dotenv.load();
+
+mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true});
 
 const users = [];
 const mobsInCombat = [];
@@ -11,15 +18,11 @@ const mobsInCombat = [];
 process.env.TESTING = true;
 
 io.sockets.on('connection', function(socket) {
-  users.push(socket);
+  initialConnect(socket);
+  socket.on('changeName', () => users.push(socket));
   socket.on('disconnect', () => users.splice(users.indexOf(users.find(user => user.username === socket.username)), 1));
   socket.currentRoom = 'Nexus';
   socket.join('Nexus');
-  socket.on('teleport', room => {
-    socket.leave('Nexus');
-    socket.join(room);
-    socket.currentRoom = room;
-  });
   socket.on('changeName', name => {
     if (name === 'alien') {
       socket.currentRoom = 'Town Square';
@@ -43,4 +46,5 @@ io.sockets.on('connection', function(socket) {
 
 export default function closeServer() {
   io.close();
+  mongoose.disconnect();
 }
