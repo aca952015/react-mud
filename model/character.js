@@ -24,6 +24,15 @@ const characterSchema = Schema({
   combat: {
     active: {type: Boolean, required: true},
     targets: [{type: Schema.Types.Mixed, required: true}]
+  },
+  equipment: {
+    head: Schema.Types.Mixed,
+    shoulders: Schema.Types.Mixed,
+    'main hand': Schema.Types.Mixed,
+    'off hand': Schema.Types.Mixed,
+    chest: Schema.Types.Mixed,
+    legs: Schema.Types.Mixed,
+    feet: Schema.Types.Mixed
   }
 });
 
