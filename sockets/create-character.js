@@ -1,7 +1,7 @@
 'use strict';
 
-import {initialState as equipment} from '../test/lib/equipment-initial-state.js';
-import {initialState as user} from '../test/lib/user-initial-state.js';
+import {initialState as equipment} from '../app/data/equipment-initial-state.js';
+import {initialState as user} from '../app/data/user-initial-state.js';
 import {Character} from '../model/character.js';
 
 export default function createCharacter(socket) {

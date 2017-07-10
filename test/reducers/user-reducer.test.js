@@ -1,7 +1,7 @@
 'use strict';
 
 import reducer from '../../app/reducers/user-reducer.js';
-import {initialState} from '../lib/user-initial-state.js';
+import {initialState} from '../../app/data/user-initial-state.js';
 import newItem from '../../app/data/items.js';
 
 describe('user reducer', () => {
