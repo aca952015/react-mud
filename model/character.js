@@ -26,3 +26,25 @@ const characterSchema = Schema({
     targets: [{type: Schema.Types.Mixed, required: true}]
   }
 });
+
+characterSchema.methods.hashPassword = password => {
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(password, 10, (err, hash) => {
+      if (err) return reject(err);
+      this.password = hash;
+      return resolve(this);
+    });
+  });
+};
+
+characterSchema.methods.validatePassword = password => {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, this.password, (err, valid) => {
+      if (err) return reject(err);
+      if (!valid) return reject(createError(401, 'Wrong password'));
+      return resolve(this);
+    });
+  });
+};
+
+export const Character = mongoose.model('character', characterSchema);
