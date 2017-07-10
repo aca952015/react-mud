@@ -4,6 +4,7 @@ import {newMessage} from '../actions/message-actions.js';
 import {getItem, dropItem, getAll, dropAll} from '../actions/inventory-actions.js';
 import {enterCombat, damageUser, slayEnemy} from '../actions/combat-actions.js';
 import {changeRoom} from '../actions/move-actions.js';
+import {saveID, loginUser, loginEquipment} from '../actions/user-actions.js';
 import whisperProcessor from '../processors/whisper-processor.js';
 import moveProcessor from '../processors/move-processor.js';
 import combatProcessor from '../processors/combat-processor.js';
@@ -14,11 +15,16 @@ export default function socketHandlers(homeCtx) {
   // On login, let the server know what the user's name, desc, and equipment is,
   // then get the room description and announce to others in the room that the
   // user has logged in.
-  socket.emit('changeName', homeCtx.props.username);
-  socket.emit('changeDescription', {playerDescription: homeCtx.props.description});
-  socket.emit('updateEquipment', homeCtx.props.equipment);
-  socket.emit('look', {target: null});
-  socket.emit('move', {direction: 'login'});
+  socket.on('loginSuccessful', char => {
+    socket.emit('changeName', char.username);
+    socket.emit('changeDescription', {playerDescription: char.description});
+    socket.emit('updateEquipment', char.equipment);
+    socket.emit('look', {target: null});
+    socket.emit('move', {direction: 'login'});
+    props.dispatch(loginUser(char));
+    props.dispatch(loginEquipment(char.equipment));
+  });
+  socket.on('characterID', id => props.dispatch(saveID(id)));
   socket.on('move', result => props.dispatch(changeRoom(result)));
   socket.on('generalMessage', result => props.dispatch(newMessage(result)));
   socket.on('whisperSuccess', result => props.dispatch(newMessage(whisperProcessor(result, homeCtx.props.username))));
