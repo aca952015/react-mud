@@ -2,7 +2,6 @@
 
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import createError from 'http-errors';
 import Promise from 'bluebird';
 
 const Schema = mongoose.Schema;
@@ -10,6 +9,7 @@ const Schema = mongoose.Schema;
 const characterSchema = Schema({
   username: {type: String, required: true, lowercase: true, unique: true},
   description: [{type: String, required: true}],
+  password: {type: String, required: true},
   inventory: [{type: Object, required: true}],
   hp: {type: Number, required: true},
   maxHP: {type: Number, required: true},
@@ -50,7 +50,7 @@ characterSchema.methods.validatePassword = function(password) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, this.password, (err, valid) => {
       if (err) return reject(err);
-      if (!valid) return reject(createError(401, 'Wrong password'));
+      if (!valid) return reject('Wrong password');
       return resolve(this);
     });
   });
