@@ -4,6 +4,7 @@ import express from 'express';
 import http from 'http';
 import socketIo from 'socket.io';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 const webpackConfig = require('./webpack.config.js');
@@ -11,6 +12,8 @@ import initialConnect from './sockets/initial-connect.js';
 import serverSocketListeners from './sockets/server-socket-listeners.js';
 import mobTargetSelector from './sockets/mob-target-selector.js';
 import {roomData} from './app/data/rooms.js';
+
+dotenv.load();
 
 const app = express();
 const server = http.createServer(app);
