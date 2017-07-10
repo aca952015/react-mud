@@ -1,7 +1,7 @@
 'use strict';
 
 export default function initialConnect(socket) {
-  socket.emit('loginSuccessful', {
+  socket.emit('initialConnect', {
     username: `Robot_${Math.floor(Math.random() * 500 + 1)}`,
     description: ['As actual players do not exist yet, everybody is a robot. They all look the same. They all speak the same. They look just like you.'],
     inventory: [],
@@ -14,8 +14,7 @@ export default function initialConnect(socket) {
     def: 0,
     mat: 0,
     mdf: 0,
-    userID: Math.floor(Math.random() * 1000000000),
-    currentRoom: 'Nexus',
+    currentRoom: 'Login Room',
     combat: {
       active: false,
       targets: []
