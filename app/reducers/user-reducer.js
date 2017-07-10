@@ -1,26 +1,8 @@
 'use strict';
 
-export const initialState = {
-  username: `Robot_${Math.floor(Math.random() * 500 + 1)}`,
-  description: ['As actual players do not exist yet, everybody is a robot. They all look the same. They all speak the same. They look just like you.'],
-  inventory: [],
-  hp: 15,
-  maxHP: 20,
-  mp: 11,
-  maxMP: 20,
-  level: 1,
-  atk: 2,
-  def: 0,
-  mat: 0,
-  mdf: 0,
-  currentRoom: 'Nexus',
-  combat: {
-    active: false,
-    targets: []
-  }
-};
-
-export default function reducer(state=initialState, action) {
+export default function reducer(state={}, action) {
+  if (action.type === 'SAVE_ID') return {...state, userID: action.payload};
+  if (action.type === 'LOGIN_USER') return action.payload;
   if (action.type === 'TRUNCATE_DESCRIPTION') {
     let description = state.description.slice(0, state.description.length - 1);
     if (description.length < 1) description = ['No description set.'];
