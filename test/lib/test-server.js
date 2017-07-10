@@ -3,6 +3,7 @@
 let io = require('socket.io').listen(5000);
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import Promise from 'bluebird';
 import initialConnect from '../../sockets/initial-connect.js';
 import serverSocketListeners from '../../sockets/server-socket-listeners.js';
 import mobTargetSelector from '../../sockets/mob-target-selector.js';
@@ -10,6 +11,7 @@ import {roomData} from '../../app/data/rooms.js';
 
 dotenv.load();
 
+mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true});
 
 const users = [];
