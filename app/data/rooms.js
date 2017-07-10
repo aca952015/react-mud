@@ -4,6 +4,13 @@ import newItem, {itemData} from './items.js';
 import newMob from './mobs.js';
 
 export const roomData = {
+  'Login Room': {
+    roomName: 'Welcome to Tempest',
+    desc: 'Welcome to Tempest. To make a new character, type "new". To login to an existing character, enter the character\'s name.',
+    exits: {},
+    items: [],
+    mobs: []
+  },
   'Nexus': {
     roomName: 'Nexus',
     desc: 'Welcome to the nexus. Type HELP to get a list of commands available.',
