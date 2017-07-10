@@ -1,11 +1,12 @@
 'use strict';
 
-import reducer, {initialState} from '../lib/equipment-initial-state.js';
+import reducer from '../../app/reducers/equipment-reducer.js';
+import {initialState} from '../lib/equipment-initial-state.js';
 import newItem from '../../app/data/items.js';
 
 describe('Equipment reducer', () => {
-  it('should have an initialState of nulls', () => {
-    expect(reducer(undefined, {})).toEqual(initialState);
+  it('should have an initialState of an empty object', () => {
+    expect(reducer(undefined, {})).toEqual({});
   });
 
   describe('With type WEAR_EQUIPMENT', () => {

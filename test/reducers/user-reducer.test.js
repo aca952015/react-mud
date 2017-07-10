@@ -1,13 +1,12 @@
 'use strict';
 
-import reducer, {initialState} from '../lib/user-initial-state.js';
+import reducer from '../../app/reducers/user-reducer.js';
+import {initialState} from '../lib/user-initial-state.js';
 import newItem from '../../app/data/items.js';
 
 describe('user reducer', () => {
-  it('should return the initialState with no information', () => {
-    let tempReducer = reducer(undefined, {});
-    tempReducer.username = initialState.username;
-    expect(tempReducer).toEqual(initialState);
+  it('should return an initialState of an empty object with no information', () => {
+    expect(reducer(undefined, {})).toEqual({});
   });
 
   describe('With a GET_ITEM action', () => {
