@@ -5,6 +5,7 @@ import {getItem, dropItem, getAll, dropAll} from '../actions/inventory-actions.j
 import {enterCombat, damageUser, slayEnemy} from '../actions/combat-actions.js';
 import {changeRoom} from '../actions/move-actions.js';
 import {saveID, loginUser, loginEquipment} from '../actions/user-actions.js';
+import {setUsername, incrementCreationStep} from '../actions/login-actions.js';
 import whisperProcessor from '../processors/whisper-processor.js';
 import moveProcessor from '../processors/move-processor.js';
 import combatProcessor from '../processors/combat-processor.js';
@@ -12,18 +13,43 @@ import combatProcessor from '../processors/combat-processor.js';
 export default function socketHandlers(homeCtx) {
   let socket = homeCtx.socket;
   let props = homeCtx.props;
-  // On login, let the server know what the user's name, desc, and equipment is,
-  // then get the room description and announce to others in the room that the
-  // user has logged in.
-  socket.on('loginSuccessful', char => {
-    socket.emit('changeName', char.username);
-    socket.emit('changeDescription', {playerDescription: char.description});
-    socket.emit('updateEquipment', char.equipment);
-    socket.emit('look', {target: null});
-    socket.emit('move', {direction: 'login'});
+  // On initially connecting, send the user to the Login Room, then give them some
+  // default user data and equipment to prevent errors.
+  socket.on('initialConnect', char => {
+    socket.emit('teleport', 'Login Room');
     props.dispatch(loginUser(char));
     props.dispatch(loginEquipment(char.equipment));
   });
+
+  // Once the server has sent a loginSuccessful event, update the username, equipment,
+  // description, and various saved data on the client and the server. If it's a new
+  // character, they will have been in the Login Room, so teleport them to the Nexus.
+  // Otherwise, teleport them to whatever room they were in when they logged off.
+  socket.on('loginSuccessful', char => {
+    socket.emit('changeName', char.loginUser.username);
+    socket.emit('changeDescription', {playerDescription: char.loginUser.description});
+    socket.emit('updateEquipment', char.loginEquipment);
+    props.dispatch(loginUser(char.loginUser));
+    props.dispatch(loginEquipment(char.loginEquipment));
+    if (homeCtx.props.currentRoom === 'Login Room') {
+      props.dispatch(changeRoom('Nexus'));
+      socket.emit('teleport', 'Nexus');
+      return socket.emit('move', {direction: 'login'});
+    }
+    props.dispatch(changeRoom(homeCtx.props.currentRoom));
+    socket.emit('teleport', homeCtx.props.currentRoom);
+    socket.emit('move', {direction: 'login'});
+  });
+
+  // nameAvailable is used for creating new characters. This event only gets emitted
+  // if a new name is not already in use.
+  socket.on('nameAvailable', name => {
+    props.dispatch(setUsername(`${name[0].toUpperCase()}${name.slice(1)}`));
+    props.dispatch(incrementCreationStep());
+    props.dispatch(newMessage({feedback: 'Please enter a password for your character.'}));
+  });
+
+  // Get the _id property back from a Mongoose Schema to reference for saving later.
   socket.on('characterID', id => props.dispatch(saveID(id)));
   socket.on('move', result => props.dispatch(changeRoom(result)));
   socket.on('generalMessage', result => props.dispatch(newMessage(result)));
