@@ -4,7 +4,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import {Equipment} from '../../app/components/equipment.jsx';
 import newItem from '../../app/data/items.js';
-import {initialState} from '../../app/reducers/equipment-reducer.js';
+import {initialState} from '../lib/equipment-initial-state.js';
 
 describe('<Equipment />', () => {
   let props, eq;

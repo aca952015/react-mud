@@ -1,6 +1,6 @@
 'use strict';
 
-import reducer, {initialState} from '../../app/reducers/equipment-reducer.js';
+import reducer, {initialState} from '../lib/equipment-initial-state.js';
 import newItem from '../../app/data/items.js';
 
 describe('Equipment reducer', () => {

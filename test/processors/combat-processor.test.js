@@ -4,7 +4,7 @@ import combatProcessor from '../../app/processors/combat-processor.js';
 import io from 'socket.io-client';
 import ioOptions from '../lib/io-options.js';
 import closeServer from '../lib/test-server.js';
-import {initialState} from '../../app/reducers/equipment-reducer.js';
+import {initialState} from '../lib/equipment-initial-state.js';
 import newItem from '../../app/data/items.js';
 
 describe('combatProcessor', () => {
