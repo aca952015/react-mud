@@ -8,7 +8,7 @@ import Promise from 'bluebird';
 const Schema = mongoose.Schema;
 
 const characterSchema = Schema({
-  username: {type: String, required: true},
+  username: {type: String, required: true, lowercase: true, unique: true},
   description: [{type: String, required: true}],
   inventory: [{type: Object, required: true}],
   hp: {type: Number, required: true},
@@ -36,7 +36,7 @@ const characterSchema = Schema({
   }
 });
 
-characterSchema.methods.hashPassword = password => {
+characterSchema.methods.hashPassword = function(password) {
   return new Promise((resolve, reject) => {
     bcrypt.hash(password, 10, (err, hash) => {
       if (err) return reject(err);
@@ -46,7 +46,7 @@ characterSchema.methods.hashPassword = password => {
   });
 };
 
-characterSchema.methods.validatePassword = password => {
+characterSchema.methods.validatePassword = function(password) {
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, this.password, (err, valid) => {
       if (err) return reject(err);
