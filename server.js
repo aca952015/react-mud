@@ -4,6 +4,7 @@ import express from 'express';
 import http from 'http';
 import socketIo from 'socket.io';
 import mongoose from 'mongoose';
+import Promise from 'bluebird';
 import dotenv from 'dotenv';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
@@ -20,6 +21,7 @@ const server = http.createServer(app);
 const io = socketIo(server);
 const PORT = process.env.PORT || 3000;
 
+mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true});
 
 app.use(express.static(`${__dirname}/build`));
