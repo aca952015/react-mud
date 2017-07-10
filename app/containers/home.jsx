@@ -23,6 +23,7 @@ function mapStateToProps(state) {
     description: state.user.description,
     atk: state.user.atk,
     combat: state.user.combat,
+    currentRoom: state.user.currentRoom,
     equipment: state.equipment
   };
 }
