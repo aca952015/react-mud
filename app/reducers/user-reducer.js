@@ -11,11 +11,8 @@ export const initialState = {
   level: 1,
   atk: 2,
   def: 0,
-  str: 18,
-  int: 18,
-  wis: 18,
-  con: 18,
-  dex: 18,
+  mat: 0,
+  mdf: 0,
   currentRoom: 'Nexus',
   combat: {
     active: false,
