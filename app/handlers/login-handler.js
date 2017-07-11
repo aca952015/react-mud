@@ -12,6 +12,7 @@ export default function loginHandler(command, args, props) {
       if (command !== props.firstPassword) return {funcsToCall: [newMessage, setCreationStep], step: 1, feedback: 'Passwords don\'t match. Please enter a new password.'};
       return {emitType: 'createCharacter', newUsername: props.newUsername, password: command};
     }
+    return {funcsToCall: [newMessage, setCreationStep], step: 0, feedback: 'Encountered an unknown error. Starting over. Enter "new" or an existing character name.'};
   }
 
   if (command === 'new' && props.creationStep === 0) {
@@ -29,4 +30,5 @@ export default function loginHandler(command, args, props) {
       password: command
     };
   }
+  return {funcsToCall: [newMessage, setCreationStep], step: 0, feedback: 'Encountered an unknown error. Starting over. Enter "new" or an existing character name.'};
 }

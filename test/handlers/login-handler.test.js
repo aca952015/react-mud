@@ -62,6 +62,16 @@ describe('loginHandler', () => {
         });
       });
     });
+
+    describe('On an unknown error', () => {
+      it('should return an unknown error object', () => {
+        expect(loginHandler('duder', undefined, {...props, creationStep: 3, newUsername: 'Dunno'})).toEqual({
+          funcsToCall: [newMessage, setCreationStep],
+          step: 0,
+          feedback: 'Encountered an unknown error. Starting over. Enter "new" or an existing character name.'
+        });
+      });
+    });
   });
 
   describe('In the process of making a new character', () => {
@@ -102,6 +112,16 @@ describe('loginHandler', () => {
             step: 1,
             feedback: 'Passwords don\'t match. Please enter a new password.'
           });
+        });
+      });
+    });
+
+    describe('With some unknown error', () => {
+      it('should return an unknown error object', () => {
+        expect(loginHandler('banana', undefined, {...props, creatingNew: true, creationStep: 3, firstPassword: 'banana'})).toEqual({
+          funcsToCall: [newMessage, setCreationStep],
+          step: 0,
+          feedback: 'Encountered an unknown error. Starting over. Enter "new" or an existing character name.'
         });
       });
     });
