@@ -94,6 +94,16 @@ describe('loginHandler', () => {
           });
         });
       });
+
+      describe('With a password that doesn\'t match the one from step one', () => {
+        it('should return the user to step 1 and inform them they entered a different password', () => {
+          expect(loginHandler('BANA', undefined, {...props, creatingNew: true, creationStep: 2, firstPassword: 'banana'})).toEqual({
+            funcsToCall: [newMessage, setCreationStep],
+            step: 1,
+            feedback: 'Passwords don\'t match. Please enter a new password.'
+          });
+        });
+      });
     });
   });
 });
