@@ -7,6 +7,11 @@ export default function login(socket) {
     Character.findOne({username: auth.username.toLowerCase()})
     .then(char => char.validatePassword(auth.password))
     .then(char => {
+      // My attempts to send back a user without a password or equipment have proven
+      // fruitless using Object.assign or any version of copying the char object.
+      // I have attempted directly deleting properties off the char and that doesn't
+      // work, either. The only method I've found to get everything working as
+      // expected is this parse/stringify hack.
       const loginUser = JSON.parse(JSON.stringify(char));
       delete loginUser.equipment;
       delete loginUser.password;
