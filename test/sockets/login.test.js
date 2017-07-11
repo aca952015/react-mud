@@ -30,6 +30,13 @@ describe('login', () => {
     });
   });
 
+  describe('With a character not existing', () => {
+    it('should emit a loginFail event', done => {
+      player1.emit('login', {username: 'Davy', password: 'banana'});
+      player1.on('loginFail', () => done());
+    });
+  });
+
   describe('With an existing character and valid password', () => {
     beforeEach(done => {
       new Character({...user, username: 'Davy', equipment})
