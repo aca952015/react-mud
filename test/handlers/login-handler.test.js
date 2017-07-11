@@ -52,5 +52,15 @@ describe('loginHandler', () => {
         });
       });
     });
+
+    describe('On creationStep 1', () => {
+      it('should take whatever was entered as a password and pass it off to the server for authentication', () => {
+        expect(loginHandler('somePassword', undefined, {...props, creationStep: 1, newUsername: 'someName'})).toEqual({
+          emitType: 'login',
+          username: 'someName',
+          password: 'somePassword'
+        });
+      });
+    });
   });
 });
