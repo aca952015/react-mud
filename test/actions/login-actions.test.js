@@ -20,4 +20,10 @@ describe('Login actions', () => {
       expect(endCreation()).toEqual({type: 'CHARACTER_COMPLETE'});
     });
   });
+
+  describe('setUsername', () => {
+    it('should return an object with type "SET_USERNAME" and payload of the name passed in', () => {
+      expect(setUsername({newUsername: 'dave'})).toEqual({type: 'SET_USERNAME', payload: 'dave'});
+    });
+  });
 });
