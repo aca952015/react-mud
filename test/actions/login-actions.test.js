@@ -32,4 +32,10 @@ describe('Login actions', () => {
       expect(setFirstPassword({firstPassword: 'dave'})).toEqual({type: 'SET_FIRST_PASSWORD', payload: 'dave'});
     });
   });
+
+  describe('setCreationStep', () => {
+    it('should return an object with type "SET_CREATION_STEP" and payload of the number passed in', () => {
+      expect(setCreationStep({step: 4})).toEqual({type: 'SET_CREATION_STEP', payload: 4});
+    });
+  });
 });
