@@ -10,6 +10,5 @@ export const PlayerInput = props => {
 };
 
 PlayerInput.propTypes = {
-  message: PropTypes.object,
-  currentRoom: PropTypes.string
+  message: PropTypes.object
 };
