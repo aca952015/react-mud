@@ -46,4 +46,13 @@ describe('login reducer', () => {
       });
     });
   });
+
+  describe('With action of CHARACTER_COMPLETE', () => {
+    it('should set creatingNew to false and revert the password to "default"', () => {
+      expect(reducer(initialState, {type: 'CHARACTER_COMPLETE'})).toEqual({
+        ...initialState,
+        creatingNew: false
+      });
+    });
+  });
 });
