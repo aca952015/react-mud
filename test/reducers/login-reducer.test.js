@@ -55,4 +55,13 @@ describe('login reducer', () => {
       });
     });
   });
+
+  describe('With action of INCREMENT_CREATION_STEP', () => {
+    it('should set the creation step to 1 more than it currently is', () => {
+      expect(reducer(initialState, {type: 'INCREMENT_CREATION_STEP'})).toEqual({
+        ...initialState,
+        creationStep: 1
+      });
+    });
+  });
 });
