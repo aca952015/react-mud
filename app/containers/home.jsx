@@ -24,7 +24,8 @@ function mapStateToProps(state) {
     atk: state.user.atk,
     combat: state.user.combat,
     currentRoom: state.user.currentRoom,
-    equipment: state.equipment
+    equipment: state.equipment,
+    user: state.user // Used for saving the character
   };
 }
 
@@ -36,7 +37,14 @@ export class Home extends Component {
   componentDidMount() {
     this.socket = io('/');
     socketHandlers(this); // There are a lot of socket listeners, so they are handled in their own file.
-    window.addEventListener('beforeunload', () => this.socket.emit('disconnect'));
+    window.addEventListener('beforeunload', () => {
+      const character = {
+        ...this.props.user,
+        equipment: this.props.equipment
+      };
+      this.socket.emit('saveCharacter', character);
+      this.socket.emit('disconnect');
+    });
     document.querySelector('input').focus();
   }
   handleChange = event => {
@@ -69,11 +77,13 @@ Home.propTypes = {
   dispatch: PropTypes.func,
   messages: PropTypes.array,
   inventory: PropTypes.array,
-  character: PropTypes.object,
   commandIndex: PropTypes.number,
-  combat: PropTypes.object,
   hp: PropTypes.number,
   mp: PropTypes.number,
   maxHP: PropTypes.number,
-  maxMP: PropTypes.number
+  maxMP: PropTypes.number,
+  character: PropTypes.object,
+  user: PropTypes.object,
+  combat: PropTypes.object,
+  equipment: PropTypes.object
 };
