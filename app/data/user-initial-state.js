@@ -1,7 +1,7 @@
 'use strict';
 
 export const initialState = {
-  username: `Robot_${Math.floor(Math.random() * 500 + 1)}`,
+  username: 'A Faceless One',
   description: ['No description set.'],
   inventory: [],
   hp: 15,
