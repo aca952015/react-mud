@@ -1,6 +1,6 @@
 'use strict';
 
-import {truncateDescription, addDescriptionParagraph, clearDescription} from '../../app/actions/user-actions.js';
+import {truncateDescription, addDescriptionParagraph, clearDescription, loginUser, loginEquipment} from '../../app/actions/user-actions.js';
 
 describe('User actions', () => {
   describe('truncateDescription', () => {
@@ -18,6 +18,12 @@ describe('User actions', () => {
   describe('clearDescription', () => {
     it('should return an object with a type of CLEAR_DESCRIPTION', () => {
       expect(clearDescription()).toEqual({type: 'CLEAR_DESCRIPTION'});
+    });
+  });
+
+  describe('loginUser', () => {
+    it('should return an object with a type of "LOGIN_USER" and payload of whatever got passed in', () => {
+      expect(loginUser('bob')).toEqual({type: 'LOGIN_USER', payload: 'bob'});
     });
   });
 });
