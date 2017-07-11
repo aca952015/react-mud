@@ -1,5 +1,6 @@
 'use strict';
 
+import bcrypt from 'bcrypt';
 import {newMessage} from '../../app/actions/message-actions.js';
 import {createNew, setFirstPassword, incrementCreationStep, setUsername, setCreationStep} from '../../app/actions/login-actions.js';
 import loginHandler from '../../app/handlers/login-handler.js';
@@ -97,7 +98,13 @@ describe('loginHandler', () => {
     describe('On creationStep 2', () => {
       describe('With a password that matches the one from step one', () => {
         it('should emit a createCharacter object', () => {
-          expect(loginHandler('banana', undefined, {...props, creatingNew: true, creationStep: 2, firstPassword: 'banana'})).toEqual({
+          expect(loginHandler('banana', undefined, {
+            ...props,
+            creatingNew: true,
+            creationStep: 2,
+            firstPassword: bcrypt.hashSync('banana', 10)
+          }))
+          .toEqual({
             emitType: 'createCharacter',
             newUsername: props.newUsername,
             password: 'banana'
@@ -107,7 +114,13 @@ describe('loginHandler', () => {
 
       describe('With a password that doesn\'t match the one from step one', () => {
         it('should return the user to step 1 and inform them they entered a different password', () => {
-          expect(loginHandler('BANA', undefined, {...props, creatingNew: true, creationStep: 2, firstPassword: 'banana'})).toEqual({
+          expect(loginHandler('BANA', undefined, {
+            ...props,
+            creatingNew: true,
+            creationStep: 2,
+            firstPassword: bcrypt.hashSync('banana', 10)
+          }))
+          .toEqual({
             funcsToCall: [newMessage, setCreationStep],
             step: 1,
             feedback: 'Passwords don\'t match. Please enter a new password.'

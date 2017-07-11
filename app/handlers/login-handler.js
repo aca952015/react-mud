@@ -1,5 +1,6 @@
 'use strict';
 
+import bcrypt from 'bcrypt';
 import {newMessage} from '../actions/message-actions.js';
 import {createNew, setFirstPassword, incrementCreationStep, setUsername, setCreationStep} from '../actions/login-actions.js';
 
@@ -19,7 +20,7 @@ export default function loginHandler(command, args, props) {
     if (props.creationStep === 0) return {emitType: 'checkUsername', newUsername: command};
     if (props.creationStep === 1) return {funcsToCall: [newMessage, incrementCreationStep, setFirstPassword], firstPassword: command, feedback: 'Confirm password.'};
     if (props.creationStep === 2) {
-      if (command !== props.firstPassword) return {funcsToCall: [newMessage, setCreationStep], step: 1, feedback: 'Passwords don\'t match. Please enter a new password.'};
+      if (!bcrypt.compareSync(command, props.firstPassword)) return {funcsToCall: [newMessage, setCreationStep], step: 1, feedback: 'Passwords don\'t match. Please enter a new password.'};
       return {emitType: 'createCharacter', newUsername: props.newUsername, password: command};
     }
 
