@@ -63,4 +63,15 @@ describe('loginHandler', () => {
       });
     });
   });
+
+  describe('In the process of making a new character', () => {
+    describe('On creationStep 0', () => {
+      it('should check if the name entered is taken', () => {
+        expect(loginHandler('duder', undefined, {...props, creatingNew: true})).toEqual({
+          emitType: 'checkUsername',
+          newUsername: 'duder'
+        });
+      });
+    });
+  });
 });
