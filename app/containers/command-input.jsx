@@ -60,7 +60,7 @@ export class CommandInput extends Component {
       // Messages component scrolls down to the bottom of its overflow. If justHitEnter
       // is true, that component is scrolled to its bottom.
       this.props.changeEnterStatus(true);
-      this.props.dispatch(newMessage({playerInput: this.props.input}));
+      if (this.props.currentRoom !== 'Login Room') this.props.dispatch(newMessage({playerInput: this.props.input}));
 
       // If the last command entered is the same as the current command, don't update
       // prevCommands. Otherwise, push it to the prevCommands array.
@@ -101,10 +101,11 @@ export class CommandInput extends Component {
 export default connect(mapStateToProps)(CommandInput);
 
 CommandInput.propTypes = {
-  dispatch: PropTypes.func,
   input: PropTypes.string,
+  currentRoom: PropTypes.string,
   commandIndex: PropTypes.number,
   prevCommands: PropTypes.array,
+  dispatch: PropTypes.func,
   handleChange: PropTypes.func,
   changeEnterStatus: PropTypes.func,
   socket: PropTypes.object
