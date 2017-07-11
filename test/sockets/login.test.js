@@ -18,22 +18,25 @@ describe('login', () => {
   });
 
   afterEach(done => {
-    player1.disconnect();
-    done();
+    Character.remove({})
+    .then(() => {
+      player1.disconnect();
+      done();
+    });
   });
 
   afterAll(done => {
-    Character.remove({})
-    .then(() => {
-      closeServer();
-      done();
-    });
+    closeServer();
+    done();
   });
 
   describe('With a character not existing', () => {
     it('should emit a loginFail event', done => {
       player1.emit('login', {username: 'Davy', password: 'banana'});
-      player1.on('loginFail', () => done());
+      player1.on('loginFail', res => {
+        expect(res).toEqual({});
+        done();
+      });
     });
   });
 
@@ -52,6 +55,23 @@ describe('login', () => {
         expect(res.loginUser.password).toEqual(undefined);
         expect(res.loginUser.atk).toEqual(user.atk);
         expect(res.loginEquipment).toEqual(equipment);
+        done();
+      });
+    });
+  });
+
+  describe('With an existing character, but invalid password', () => {
+    beforeEach(done => {
+      new Character({...user, username: 'Davy', equipment})
+      .hashPassword('banana')
+      .then(char => char.save())
+      .then(done);
+    });
+
+    it('should emit a loginFail event', done => {
+      player1.emit('login', {username: 'Davy', password: 'apes'});
+      player1.on('loginFail', res => {
+        expect(res).toEqual('Wrong password');
         done();
       });
     });
