@@ -1,5 +1,6 @@
 'use strict';
 
+import bcrypt from 'bcrypt';
 import reducer, {initialState} from '../../app/reducers/login-reducer.js';
 
 describe('login reducer', () => {
@@ -28,11 +29,12 @@ describe('login reducer', () => {
   });
 
   describe('With action of SET_FIRST_PASSWORD', () => {
-    it('should update the firstPassword of state with the payload', () => {
-      expect(reducer(initialState, {type: 'SET_FIRST_PASSWORD', payload: 'banana'})).toEqual({
-        ...initialState,
-        firstPassword: 'banana'
-      });
+    it('should update the firstPassword of state with a hashed version of the payload', () => {
+      expect(bcrypt.compareSync(
+        'banana',
+        reducer(initialState, {type: 'SET_FIRST_PASSWORD', payload: 'banana'}).firstPassword)
+      )
+      .toEqual(true);
     });
   });
 });
