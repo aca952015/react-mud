@@ -21,5 +21,14 @@ describe('loginHandler', () => {
         });
       });
     });
+
+    describe('While already in the process of making a new character', () => {
+      it('should return a feedback error of already making a character', () => {
+        expect(loginHandler('new', undefined, {...props, creatingNew: true})).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You\'re already in the process of making a character.'
+        });
+      });
+    });
   });
 });
