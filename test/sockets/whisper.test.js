@@ -15,8 +15,11 @@ describe('Whisper', () => {
     alien.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
+      player1.emit('teleport', 'Nexus');
+      player2.emit('teleport', 'Nexus');
+      player2.emit('updateSocket');
       alien.emit('changeName', 'alien');
-      done();
+      player2.on('updateComplete', () => done());
     });
   });
 

@@ -15,7 +15,10 @@ describe('pickUpItem', () => {
     player2.on('connect', () => {
       player2.emit('changeName', 'player2');
       player1.emit('changeName', 'player1');
-      done();
+      player1.emit('teleport', 'Nexus');
+      player2.emit('teleport', 'Nexus');
+      player2.emit('updateSocket');
+      player2.on('updateComplete', () => done());
     });
   });
 
@@ -238,9 +241,12 @@ describe('pickUpItem', () => {
       describe('With no items in the room', () => {
         beforeEach(done => {
           player1.emit('teleport', 'Gallows');
-          player1.emit('pickUpItem', {item: 'all'});
-          player1.on('generalMessage', () => {
-            done();
+          player1.emit('updateSocket');
+          player1.on('updateComplete', () => {
+            player1.emit('pickUpItem', {item: 'all'});
+            player1.on('generalMessage', () => {
+              done();
+            });
           });
         });
         it('should return a feedback of "there\'s nothing in the room to get."', done => {
