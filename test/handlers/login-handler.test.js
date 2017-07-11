@@ -73,5 +73,15 @@ describe('loginHandler', () => {
         });
       });
     });
+
+    describe('On creationStep 1', () => {
+      it('should set the first password, then ask for the password again to confirm it', () => {
+        expect(loginHandler('banana', undefined, {...props, creatingNew: true, creationStep: 1})).toEqual({
+          funcsToCall: [newMessage, incrementCreationStep, setFirstPassword],
+          firstPassword: 'banana',
+          feedback: 'Confirm password.'
+        });
+      });
+    });
   });
 });
