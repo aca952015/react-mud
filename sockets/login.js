@@ -7,7 +7,7 @@ export default function login(socket) {
     Character.findOne({username: auth.username.toLowerCase()})
     .then(char => char.validatePassword(auth.password))
     .then(char => {
-      const loginUser = char;
+      const loginUser = JSON.parse(JSON.stringify(char));
       delete loginUser.equipment;
       delete loginUser.password;
       loginUser.username = `${loginUser.username[0].toUpperCase()}${loginUser.username.slice(1)}`;
@@ -27,6 +27,9 @@ export default function login(socket) {
 
       socket.emit('loginSuccessful', {loginUser, loginEquipment: equipment});
     })
-    .catch(() => socket.emit('loginFail'));
+    .catch(err => {
+      console.log(err);
+      socket.emit('loginFail');
+    });
   });
 }
