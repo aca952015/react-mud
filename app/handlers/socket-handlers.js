@@ -47,7 +47,7 @@ export default function socketHandlers(homeCtx) {
   // password was invalid.
   socket.on('loginFail', () => {
     props.dispatch(setCreationStep({step: 0}));
-    props.dispatch(newMessage({feedback: 'Invalid password for that character. Enter "new" or a character name to login.'}));
+    props.dispatch(newMessage({feedback: 'Invalid password or that character doesn\'t exist. Enter "new" or a character name to login.'}));
   });
 
   // nameAvailable is used for creating new characters. This event only gets emitted
