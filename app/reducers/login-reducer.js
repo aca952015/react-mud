@@ -1,6 +1,6 @@
 'use strict';
 
-const initialState = {
+export const initialState = {
   creatingNew: false,
   creationStep: 0,
   newUsername: 'default',
