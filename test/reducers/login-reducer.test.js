@@ -26,4 +26,13 @@ describe('login reducer', () => {
       });
     });
   });
+
+  describe('With action of SET_FIRST_PASSWORD', () => {
+    it('should update the firstPassword of state with the payload', () => {
+      expect(reducer(initialState, {type: 'SET_FIRST_PASSWORD', payload: 'banana'})).toEqual({
+        ...initialState,
+        firstPassword: 'banana'
+      });
+    });
+  });
 });
