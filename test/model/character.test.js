@@ -21,9 +21,27 @@ describe('Character model', () => {
   describe('hashPassword', () => {
     it('should return a hashed password', done => {
       someGuy.hashPassword('banana')
-      .then(user => {
-        expect(bcrypt.compareSync('banana', user.password)).toEqual(true);
+      .then(char => {
+        expect(bcrypt.compareSync('banana', char.password)).toEqual(true);
         done();
+      });
+    });
+  });
+
+  describe('validatePassword', () => {
+    beforeEach(done => {
+      someGuy.hashPassword('banana')
+      .then(done);
+    });
+
+    describe('With the right password', () => {
+      it('should return the user object', done => {
+        someGuy.validatePassword('banana')
+        .then(char => {
+          expect(char.username).toEqual(user.username.toLowerCase());
+          expect(char.atk).toEqual(user.atk);
+          done();
+        });
       });
     });
   });
