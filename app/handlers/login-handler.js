@@ -14,7 +14,7 @@ export default function loginHandler(command, args, props) {
     }
   }
 
-  if (command === 'new') {
+  if (command === 'new' && props.creationStep === 0) {
     return {
       funcsToCall: [newMessage, createNew],
       feedback: 'Please enter a name for your character.'

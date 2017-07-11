@@ -30,5 +30,15 @@ describe('loginHandler', () => {
         });
       });
     });
+
+    describe('While being asked to enter a password for a character that already exists', () => {
+      it('should return an emitter object with the username and password', () => {
+        expect(loginHandler('new', undefined, {...props, creationStep: 1})).toEqual({
+          emitType: 'login',
+          username: props.newUsername,
+          password: 'new'
+        });
+      });
+    });
   });
 });
