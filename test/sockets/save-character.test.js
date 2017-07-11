@@ -62,4 +62,14 @@ describe('save character', function() {
       });
     });
   });
+
+  describe('Updating a character that doesn\'t exist (for some reason)', () => {
+    it('should return a generalMessage with an error', done => {
+      player1.emit('saveCharacter', {_id: '4a', username: 'duder'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('Error saving character.');
+        done();
+      });
+    });
+  });
 });
