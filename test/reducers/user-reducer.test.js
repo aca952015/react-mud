@@ -50,7 +50,7 @@ describe('user reducer', () => {
   describe('With a ADD_DESCRIPTION_PARAGRAPH action', () => {
     describe('If the description is "No description set."', () => {
       it('should overwrite the description with the payload', () => {
-        expect(reducer({...initialState, description: ['No description set.']}, {type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'Desc1'})).toEqual({
+        expect(reducer(initialState, {type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'Desc1'})).toEqual({
           ...initialState,
           description: ['Desc1']
         });
@@ -59,9 +59,9 @@ describe('user reducer', () => {
 
     describe('If there is a description in place', () => {
       it('should add a new paragraph to the description', () => {
-        expect(reducer(initialState, {type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'Desc1'})).toEqual({
+        expect(reducer({...initialState, description: ['Desc2']}, {type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'Desc1'})).toEqual({
           ...initialState,
-          description: [...initialState.description, 'Desc1']
+          description: ['Desc2', 'Desc1']
         });
       });
     });

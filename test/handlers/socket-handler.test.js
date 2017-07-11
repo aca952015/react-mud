@@ -33,12 +33,17 @@ describe('socketHandlers', () => {
     player2 = io.connect(url, ioOptions);
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
+      player1.emit('teleport', 'Nexus');
       player2.emit('changeName', 'player2');
-      socketHandlers({
-        socket: player1,
-        props
+      player2.emit('teleport', 'Nexus');
+      player2.emit('updateSocket');
+      player2.on('updateComplete', () => {
+        socketHandlers({
+          socket: player1,
+          props
+        });
+        done();
       });
-      done();
     });
   });
 
