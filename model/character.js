@@ -10,7 +10,7 @@ const characterSchema = Schema({
   username: {type: String, required: true, lowercase: true, unique: true},
   description: [{type: String, required: true}],
   password: {type: String, required: true},
-  inventory: [{type: Object, required: true}],
+  inventory: Schema.Types.Mixed,
   hp: {type: Number, required: true},
   maxHP: {type: Number, required: true},
   mp: {type: Number, required: true},
@@ -23,17 +23,9 @@ const characterSchema = Schema({
   currentRoom: {type: String, required: true},
   combat: {
     active: {type: Boolean, required: true},
-    targets: [{type: Schema.Types.Mixed, required: true}]
+    targets: []
   },
-  equipment: {
-    head: Schema.Types.Mixed,
-    shoulders: Schema.Types.Mixed,
-    'main hand': Schema.Types.Mixed,
-    'off hand': Schema.Types.Mixed,
-    chest: Schema.Types.Mixed,
-    legs: Schema.Types.Mixed,
-    feet: Schema.Types.Mixed
-  }
+  equipment: Schema.Types.Mixed
 });
 
 characterSchema.methods.hashPassword = function(password) {
