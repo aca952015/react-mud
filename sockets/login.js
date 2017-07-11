@@ -27,9 +27,6 @@ export default function login(socket) {
 
       socket.emit('loginSuccessful', {loginUser, loginEquipment: equipment});
     })
-    .catch(err => {
-      console.log(err);
-      socket.emit('loginFail');
-    });
+    .catch(() => socket.emit('loginFail'));
   });
 }
