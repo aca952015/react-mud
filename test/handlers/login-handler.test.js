@@ -41,4 +41,16 @@ describe('loginHandler', () => {
       });
     });
   });
+
+  describe('If not in the process of making a character and not entering "new"', () => {
+    describe('On creationStep 0', () => {
+      it('should assume you entered a name and ask for a password', () => {
+        expect(loginHandler('someName', undefined, props)).toEqual({
+          funcsToCall: [newMessage, incrementCreationStep, setUsername],
+          newUsername: 'someName',
+          feedback: 'Enter the password for that character.'
+        });
+      });
+    });
+  });
 });
