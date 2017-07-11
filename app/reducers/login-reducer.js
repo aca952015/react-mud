@@ -1,6 +1,6 @@
 'use strict';
 
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export const initialState = {
   creatingNew: false,

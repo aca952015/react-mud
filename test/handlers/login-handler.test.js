@@ -1,6 +1,6 @@
 'use strict';
 
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import {newMessage} from '../../app/actions/message-actions.js';
 import {createNew, setFirstPassword, incrementCreationStep, setUsername, setCreationStep} from '../../app/actions/login-actions.js';
 import loginHandler from '../../app/handlers/login-handler.js';

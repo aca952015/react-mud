@@ -1,6 +1,6 @@
 'use strict';
 
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import reducer, {initialState} from '../../app/reducers/login-reducer.js';
 
 describe('login reducer', () => {
