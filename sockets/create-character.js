@@ -25,9 +25,8 @@ export default function createCharacter(socket) {
     char.hashPassword(password)
     .then(_char => _char.save())
     .then(_char => {
-      socket.emit('characterID', _char._id);
       socket.emit('generalMessage', {feedback: 'Character created.'});
-      socket.emit('loginSuccessful', {loginUser, loginEquipment});
+      socket.emit('loginSuccessful', {loginUser: {...loginUser, _id: _char._id}, loginEquipment});
     })
     .catch(err => socket.emit('generalMessage', {feedback: err}));
   });
