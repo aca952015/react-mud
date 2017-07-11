@@ -1,7 +1,6 @@
 'use strict';
 
 export default function reducer(state={}, action) {
-  if (action.type === 'SAVE_ID') return {...state, userID: action.payload};
   if (action.type === 'LOGIN_USER') return action.payload;
   if (action.type === 'TRUNCATE_DESCRIPTION') {
     let description = state.description.slice(0, state.description.length - 1);
