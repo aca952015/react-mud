@@ -4,7 +4,7 @@ import {newMessage} from '../actions/message-actions.js';
 import {getItem, dropItem, getAll, dropAll} from '../actions/inventory-actions.js';
 import {enterCombat, damageUser, slayEnemy} from '../actions/combat-actions.js';
 import {changeRoom} from '../actions/move-actions.js';
-import {saveID, loginUser, loginEquipment} from '../actions/user-actions.js';
+import {loginUser, loginEquipment} from '../actions/user-actions.js';
 import {setUsername, incrementCreationStep, endCreation, setCreationStep} from '../actions/login-actions.js';
 import whisperProcessor from '../processors/whisper-processor.js';
 import moveProcessor from '../processors/move-processor.js';
@@ -58,8 +58,6 @@ export default function socketHandlers(homeCtx) {
     props.dispatch(newMessage({feedback: 'Please enter a password for your character.'}));
   });
 
-  // Get the _id property back from a Mongoose Schema to reference for saving later.
-  socket.on('characterID', id => props.dispatch(saveID(id)));
   socket.on('move', result => props.dispatch(changeRoom(result)));
   socket.on('generalMessage', result => props.dispatch(newMessage(result)));
   socket.on('whisperSuccess', result => props.dispatch(newMessage(whisperProcessor(result, homeCtx.props.username))));
