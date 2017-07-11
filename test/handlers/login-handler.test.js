@@ -83,5 +83,17 @@ describe('loginHandler', () => {
         });
       });
     });
+
+    describe('On creationStep 2', () => {
+      describe('With a password that matches the one from step one', () => {
+        it('should emit a createCharacter object', () => {
+          expect(loginHandler('banana', undefined, {...props, creatingNew: true, creationStep: 2, firstPassword: 'banana'})).toEqual({
+            emitType: 'createCharacter',
+            newUsername: props.newUsername,
+            password: 'banana'
+          });
+        });
+      });
+    });
   });
 });
