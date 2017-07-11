@@ -26,4 +26,10 @@ describe('Login actions', () => {
       expect(setUsername({newUsername: 'dave'})).toEqual({type: 'SET_USERNAME', payload: 'dave'});
     });
   });
+
+  describe('setFirstPassword', () => {
+    it('should return an object with type "SET_FIRST_PASSWORD" and payload of the password passed in', () => {
+      expect(setFirstPassword({firstPassword: 'dave'})).toEqual({type: 'SET_FIRST_PASSWORD', payload: 'dave'});
+    });
+  });
 });
