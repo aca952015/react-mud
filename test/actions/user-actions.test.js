@@ -26,4 +26,10 @@ describe('User actions', () => {
       expect(loginUser('bob')).toEqual({type: 'LOGIN_USER', payload: 'bob'});
     });
   });
+
+  describe('loginEquipment', () => {
+    it('should return an object with a type of "LOGIN_EQUIPMENT" and payload of whatever got passed in', () => {
+      expect(loginEquipment({ayy: 'dude'})).toEqual({type: 'LOGIN_EQUIPMENT', payload: {ayy: 'dude'}});
+    });
+  });
 });
