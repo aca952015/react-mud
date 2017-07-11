@@ -44,5 +44,15 @@ describe('Character model', () => {
         });
       });
     });
+
+    describe('With the wrong password', () => {
+      it('should return the phrase "Wrong password"', done => {
+        someGuy.validatePassword('apes')
+        .catch(err => {
+          expect(err).toEqual('Wrong password');
+          done();
+        });
+      });
+    });
   });
 });
