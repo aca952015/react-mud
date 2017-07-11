@@ -14,4 +14,10 @@ describe('Login actions', () => {
       expect(createNew()).toEqual({type: 'NEW_CHARACTER'});
     });
   });
+
+  describe('endCreation', () => {
+    it('should return an object with type "CHARACTER_COMPLETE"', () => {
+      expect(endCreation()).toEqual({type: 'CHARACTER_COMPLETE'});
+    });
+  });
 });
