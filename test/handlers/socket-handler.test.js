@@ -12,6 +12,7 @@ import whisperProcessor from '../../app/processors/whisper-processor.js';
 import moveProcessor from '../../app/processors/move-processor.js';
 import {getItem, dropItem, getAll, dropAll} from '../../app/actions/inventory-actions.js';
 import {changeRoom} from '../../app/actions/move-actions.js';
+import {loginUser, loginEquipment} from '../../app/actions/user-actions.js';
 import newItem from '../../app/data/items.js';
 
 describe('socketHandlers', () => {
@@ -74,6 +75,27 @@ describe('socketHandlers', () => {
       player1.on('generalMessage', res => {
         expect(props.dispatch.calledWith(newMessage(res))).toEqual(true);
         done();
+      });
+    });
+  });
+
+  describe('initialConnect', () => {
+    let player3;
+
+    afterEach(done => {
+      player3.disconnect();
+      done();
+    });
+
+    it('should dispatch loginUser and loginEquipment', done => {
+      player3 = io.connect('http://0.0.0.0:5000', ioOptions);
+      player3.on('connect', () => {
+        socketHandlers({socket: player3, props});
+        player3.on('initialConnect', res => {
+          expect(props.dispatch.calledWith(loginUser(res.user))).toEqual(true);
+          expect(props.dispatch.calledWith(loginEquipment(res.equipment))).toEqual(true);
+          done();
+        });
       });
     });
   });
