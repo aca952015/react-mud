@@ -37,4 +37,13 @@ describe('login reducer', () => {
       .toEqual(true);
     });
   });
+
+  describe('With action of SET_CREATION_STEP', () => {
+    it('should update creationStep to the passed in step', () => {
+      expect(reducer(initialState, {type: 'SET_CREATION_STEP', payload: 4})).toEqual({
+        ...initialState,
+        creationStep: 4
+      });
+    });
+  });
 });
