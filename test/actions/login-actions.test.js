@@ -8,4 +8,10 @@ describe('Login actions', () => {
       expect(incrementCreationStep()).toEqual({type: 'INCREMENT_CREATION_STEP'});
     });
   });
+
+  describe('createNew', () => {
+    it('should return an object with type "NEW_CHARACTER"', () => {
+      expect(createNew()).toEqual({type: 'NEW_CHARACTER'});
+    });
+  });
 });
