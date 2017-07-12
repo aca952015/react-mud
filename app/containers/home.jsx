@@ -8,7 +8,7 @@ import Messages from './messages.jsx';
 import CommandInput from './command-input.jsx';
 import {Prompt} from '../components/prompt.jsx';
 import {updateInput} from '../actions/message-actions.js';
-import socketHandlers from '../handlers/socket-handlers.js';
+import socketHandlers from '../client_sockets/socket-handlers.js';
 
 function mapStateToProps(state) {
   return {
