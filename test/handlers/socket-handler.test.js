@@ -122,6 +122,31 @@ describe('socketHandlers', () => {
         });
       });
     });
+
+    describe('While originally elsewhere', () => {
+      let player4;
+      beforeEach(done => {
+        player4 = io.connect('http://0.0.0.0:5000', ioOptions);
+        props = {...props, currentRoom: 'Town Square'};
+        player4.on('connect', () => {
+          socketHandlers({socket: player4, props});
+          done();
+        });
+      });
+
+      afterEach(done => {
+        player4.disconnect();
+        done();
+      });
+
+      it('should call changeRoom with the proper room', done => {
+        player4.emit('createCharacter', {...user, newUsername: 'Davy', password: 'banana', equipment});
+        player4.on('loginSuccessful', () => {
+          expect(props.dispatch.calledWith(changeRoom('Town Square'))).toEqual(true);
+          done();
+        });
+      });
+    });
   });
 
   describe('whisperSuccess', () => {
