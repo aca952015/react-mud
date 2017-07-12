@@ -2,10 +2,13 @@
 
 import itemRespawnProcessor from '../../app/processors/item-respawn-processor.js';
 import newItem from '../../app/data/items.js';
+import newMob from '../../app/data/mobs.js';
 
 describe('item respawn processor', () => {
   let originalRoom = [newItem('equipment', 'leather helm'), newItem('equipment', 'leather helm'), newItem('keys', 'gallows key')];
   let currentRoom = [newItem('keys', 'gallows key'), newItem('equipment', 'leather helm'), newItem('equipment', 'leather helm')];
+  let originalMobs = [newMob('bat'), newMob('bat'), newMob('armored zombie')];
+  let currentMobs = [newMob('bat'), newMob('bat'), newMob('armored zombie')];
 
   describe('With a room that isn\'t missing any items', () => {
     it('should return an empty array', () => {
@@ -46,6 +49,12 @@ describe('item respawn processor', () => {
           name: 'gallows key'
         }
       ]);
+    });
+  });
+
+  describe('With a room not missing any mobs', () => {
+    it('should return an empty array', () => {
+      expect(itemRespawnProcessor(originalMobs, currentMobs)).toEqual([]);
     });
   });
 });
