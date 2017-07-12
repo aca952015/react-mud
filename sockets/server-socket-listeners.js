@@ -19,26 +19,28 @@ import checkUserName from './check-username.js';
 import createCharacter from './create-character.js';
 import login from './login.js';
 import saveCharacter from './save-character.js';
+import escapeCombat from './escape-combat.js';
 
 // All the various socket listeners for the server, compartmentalized for easy reference and debugging.
 export default function serverSocketListeners(io, socket, users, roomData, mobsInCombat) {
-  oneLineListeners(socket, users);
-  pickUpItem(socket, roomData);
-  look(socket, users, roomData);
-  dropItem(socket, roomData);
-  whisper(io, socket, users);
-  movement(socket, users, roomData);
-  unlock(socket, roomData);
-  kill(socket, roomData, mobsInCombat);
-  damage(socket, roomData, mobsInCombat);
-  give(socket, users);
-  put(socket, roomData);
-  lookInContainer(socket, roomData);
-  wearItem(socket);
-  removeItem(socket);
-  teleport(socket, users, roomData);
   checkUserName(socket);
   createCharacter(socket);
+  damage(socket, roomData, mobsInCombat);
+  dropItem(socket, roomData);
+  escapeCombat(io, socket, mobsInCombat);
+  give(socket, users);
+  kill(socket, roomData, mobsInCombat);
   login(socket);
+  look(socket, users, roomData);
+  lookInContainer(socket, roomData);
+  movement(socket, users, roomData);
+  oneLineListeners(socket, users);
+  pickUpItem(socket, roomData);
+  put(socket, roomData);
+  removeItem(socket);
   saveCharacter(socket);
+  teleport(socket, users, roomData);
+  unlock(socket, roomData);
+  wearItem(socket);
+  whisper(io, socket, users);
 }

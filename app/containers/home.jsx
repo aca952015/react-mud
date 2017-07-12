@@ -8,6 +8,7 @@ import Messages from './messages.jsx';
 import CommandInput from './command-input.jsx';
 import {Prompt} from '../components/prompt.jsx';
 import {updateInput} from '../actions/message-actions.js';
+import {escapeCombat} from '../actions/user-actions.js';
 import socketHandlers from '../client_sockets/socket-handlers.js';
 
 function mapStateToProps(state) {
@@ -37,13 +38,20 @@ export class Home extends Component {
   componentDidMount() {
     this.socket = io('/');
     socketHandlers(this); // There are a lot of socket listeners, so they are handled in their own file.
+
+    // Upon closing the tab, remove user from combat with all mobs, save the character on the server's
+    // database, then emit a disconnect event for the server to handle.
     window.addEventListener('beforeunload', () => {
-      const character = {
-        ...this.props.user,
-        equipment: this.props.equipment
-      };
-      this.socket.emit('saveCharacter', character);
-      this.socket.emit('disconnect');
+      Promise.resolve(this.props.dispatch(escapeCombat()))
+      .then(() => {
+        this.socket.emit('escapeCombat');
+        const character = {
+          ...this.props.user,
+          equipment: this.props.equipment
+        };
+        this.socket.emit('saveCharacter', character);
+        this.socket.emit('disconnect');
+      });
     });
     document.querySelector('input').focus();
   }
