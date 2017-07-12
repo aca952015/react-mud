@@ -13,4 +13,15 @@ describe('respawnItems', () => {
       expect(roomData['Nexus'].items).toEqual(roomReset['Nexus'].items);
     });
   });
+
+  describe('With a room missing something', () => {
+    describe('The first tick it\'s missing', () => {
+      it('should increase resetTimer to 1, but leave the items the same', () => {
+        roomData['Nexus'].items.splice(0, 1);
+        respawnItems(roomData, roomReset);
+        expect(roomData['Nexus'].resetTimer).toEqual(1);
+        expect(roomData['Nexus'].items).toEqual(roomReset['Nexus'].items.slice(1));
+      });
+    });
+  });
 });
