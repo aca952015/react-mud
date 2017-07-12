@@ -51,14 +51,9 @@ describe('save character', function() {
           head: helm
         }
       });
-      player1.emit('updateSocket');
-
-      player1.on('updateComplete', () => {
-        Character.findOne({username: 'bob'})
-        .then(char => {
-          expect(char.equipment.head).toEqual(helm);
-          done();
-        });
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('Character saved.');
+        done();
       });
     });
   });
