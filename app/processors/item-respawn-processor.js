@@ -5,7 +5,7 @@ export default function itemRespawnProcessor(originalArray, currentArray) {
   const originalCounts = originalArray.reduce((acc, item) => {
     acc[item.name] = {
       count: acc[item.name] ? acc[item.name].count + 1 : 1,
-      category: item.category
+      category: item.category ? item.category : null
     };
     return acc;
   }, {});
@@ -14,7 +14,7 @@ export default function itemRespawnProcessor(originalArray, currentArray) {
   const currentCounts = currentArray.reduce((acc, item) => {
     acc[item.name] = {
       count: acc[item.name] ? acc[item.name].count + 1 : 1,
-      category: item.category
+      category: item.category ? item.category : null
     };
     return acc;
   }, {});
@@ -32,7 +32,8 @@ export default function itemRespawnProcessor(originalArray, currentArray) {
     // we need to respawn 3 leather helms.
     if (!currentItemCounts) {
       for (let j = 0; j < originalItemCounts; j++) {
-        itemsToRespawn.push({category: originalCounts[originalKeys[i]].category, name: originalKeys[i]});
+        if (originalCounts[originalKeys[i]].category) itemsToRespawn.push({category: originalCounts[originalKeys[i]].category, name: originalKeys[i]});
+        else itemsToRespawn.push({name: originalKeys[i]});
       }
       continue;
     }
@@ -43,7 +44,8 @@ export default function itemRespawnProcessor(originalArray, currentArray) {
     // 1 leather helm needs to be respawned.
     if (currentItemCounts.count !== originalItemCounts) {
       for (let j = 0; j < originalItemCounts - currentItemCounts.count; j++) {
-        itemsToRespawn.push({category: originalCounts[originalKeys[i]].category, name: originalKeys[i]});
+        if (originalCounts[originalKeys[i]].category) itemsToRespawn.push({category: originalCounts[originalKeys[i]].category, name: originalKeys[i]});
+        else itemsToRespawn.push({name: originalKeys[i]});
       }
     }
   }

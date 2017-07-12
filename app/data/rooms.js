@@ -10,7 +10,8 @@ export const roomData = {
     exits: {},
     items: [],
     mobs: [],
-    resetTimer: 0
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Nexus': {
     roomName: 'Nexus',
@@ -67,7 +68,8 @@ export const roomData = {
       description: 'Really? Ztest? You thought to try looking at this?'
     }],
     mobs: [newMob('bat'), newMob('bat'), newMob('armored zombie')],
-    resetTimer: 0
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Secret Room': {
     roomName: 'Secret Room',
@@ -81,7 +83,8 @@ export const roomData = {
     },
     items: [],
     mobs: [],
-    resetTimer: 0
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Town Square': {
     roomName: 'Town Square',
@@ -99,7 +102,8 @@ export const roomData = {
     },
     items: [newItem('keys', 'useless key'), newItem('containers', 'backpack')],
     mobs: [newMob('bat'), newMob('bat')],
-    resetTimer: 0
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Gallows': {
     roomName: 'Gallows',
@@ -118,6 +122,7 @@ export const roomData = {
       description: 'It\'s a gallows, with a short noose hanging from it.'
     }],
     mobs: [],
-    resetTimer: 0
+    itemResetTimer: 0,
+    mobResetTimer: 0
   }
 };
