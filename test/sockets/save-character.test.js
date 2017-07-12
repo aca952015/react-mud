@@ -37,10 +37,12 @@ describe('save character', function() {
       .hashPassword('banana')
       .then(char => {
         this.tempChar = char._doc;
-        delete this.tempChar._id;
         return char.save();
       })
-      .then(done);
+      .then(() => {
+        delete this.tempChar._id;
+        done();
+      });
     });
 
     it('should update the character', done => {
