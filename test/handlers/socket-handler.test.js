@@ -2,6 +2,7 @@
 
 import io from 'socket.io-client';
 import sinon from 'sinon';
+import {Character} from '../../model/character.js';
 import socketHandlers from '../../app/handlers/socket-handlers.js';
 import newMob from '../../app/data/mobs.js';
 import closeServer from '../lib/test-server.js';
@@ -13,6 +14,9 @@ import moveProcessor from '../../app/processors/move-processor.js';
 import {getItem, dropItem, getAll, dropAll} from '../../app/actions/inventory-actions.js';
 import {changeRoom} from '../../app/actions/move-actions.js';
 import {loginUser, loginEquipment} from '../../app/actions/user-actions.js';
+import {initialState as user} from '../../app/data/user-initial-state.js';
+import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
+import {endCreation, setCreationStep} from '../../app/actions/login-actions.js';
 import newItem from '../../app/data/items.js';
 
 describe('socketHandlers', () => {
@@ -20,6 +24,7 @@ describe('socketHandlers', () => {
   require('../lib/test-server.js');
   let props = {
     username: 'player1',
+    currentRoom: 'Login Room',
     dispatch: sinon.spy(),
     character: {
       description: 'Test description'
@@ -49,9 +54,12 @@ describe('socketHandlers', () => {
   });
 
   afterEach(done => {
-    player1.disconnect();
-    player2.disconnect();
-    done();
+    Character.remove({})
+    .then(() => {
+      player1.disconnect();
+      player2.disconnect();
+      done();
+    });
   });
 
   afterAll(done => {
@@ -100,6 +108,22 @@ describe('socketHandlers', () => {
     });
   });
 
+  describe('loginSuccessful', () => {
+    describe('While in the Login Room', () => {
+      it('should dispatch endCreation, setCreationStep to 0, set the user\'s equipment and user stats, then teleport to the Nexus', done => {
+        player1.emit('createCharacter', {...user, newUsername: 'Bob', password: 'banana', equipment});
+        player1.on('loginSuccessful', res => {
+          expect(props.dispatch.calledWith(endCreation())).toEqual(true);
+          expect(props.dispatch.calledWith(setCreationStep({step: 0}))).toEqual(true);
+          expect(props.dispatch.calledWith(loginUser(res.loginUser))).toEqual(true);
+          expect(props.dispatch.calledWith(loginEquipment(res.loginEquipment))).toEqual(true);
+          expect(props.dispatch.calledWith(changeRoom('Nexus'))).toEqual(true);
+          done();
+        });
+      });
+    });
+  });
+
   describe('whisperSuccess', () => {
     it('should dispatch a newMessage with the result passed into the whisperProcessor', done => {
       player1.emit('whisper', {target: 'player2'});
@@ -112,7 +136,7 @@ describe('socketHandlers', () => {
 
   describe('whisperFail', () => {
     it('should dispatch a newMessage with the feedback "I don\'t see that person here."', done => {
-      player1.emit('whisper', {target: 'Bob'});
+      player1.emit('whisper', {target: 'Duder'});
       player1.on('whisperFail', () => {
         expect(props.dispatch.calledWith(newMessage({feedback: 'I don\'t see that person here.'}))).toEqual(true);
         done();
