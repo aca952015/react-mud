@@ -149,6 +149,19 @@ describe('socketHandlers', () => {
     });
   });
 
+  describe('loginFail', () => {
+    it('should set creationStep to 0 and dispatch a message of invalid login', done => {
+      player1.emit('login', {username: 'Bobby', password: 'ayy'});
+      player1.on('loginFail', () => {
+        expect(props.dispatch.calledWith(setCreationStep({step: 0}))).toEqual(true);
+        expect(props.dispatch.calledWith((newMessage({
+          feedback: 'Invalid password or that character doesn\'t exist. Enter "new" or a character name to login.'}
+        )))).toEqual(true);
+        done();
+      });
+    });
+  });
+
   describe('whisperSuccess', () => {
     it('should dispatch a newMessage with the result passed into the whisperProcessor', done => {
       player1.emit('whisper', {target: 'player2'});
