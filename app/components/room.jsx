@@ -15,7 +15,7 @@ export const Room = props => {
   return <div className="room">
     <h3>{room.roomName}</h3>
     <p>{room.desc}</p>
-    {items ? <ul className="items">{items}</ul> : null}
+    {items.length ? <ul className="items">{items}</ul> : null}
     <ul className="exits">Exits: [ {exits} ]</ul>
   </div>;
 };

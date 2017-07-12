@@ -78,6 +78,22 @@ describe('<Room />', () => {
     expect(room.find('ul').first().children('li').at(1).text()).toEqual(props.message.room.items[1].long);
   });
 
+  it('should not render items if there aren\'t any', () => {
+    props = {
+      message: {
+        room: {
+          roomName: 'Test room',
+          desc: 'Test desc',
+          exits: {},
+          items: []
+        }
+      }
+    };
+    room = shallow(<Room {...props} />);
+
+    expect(room.find('ul').first().text()).toEqual('Exits: [  ]');
+  });
+
   it('should render (#) for items that have multiples in the room', () => {
     props = {
       message: {
