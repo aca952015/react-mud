@@ -52,6 +52,7 @@ describe('save character', function() {
         }
       });
       player1.on('generalMessage', res => {
+        console.log(res.err);
         expect(res.feedback).toEqual('Character saved.');
         done();
       });
