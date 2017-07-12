@@ -30,6 +30,7 @@ const mobData = {
     long: 'A small, leathery-winged bat is here.',
     terms: ['small', 'bat'],
     hp: 5,
+    maxHP: 5,
     atk: 5,
     def: 0
   },
@@ -40,6 +41,7 @@ const mobData = {
     long: 'A zombie that\'s been outfitted with some leather armor is here.',
     terms: ['armored', 'zombie'],
     hp: 10,
+    maxHP: 10,
     atk: 2,
     def: 3
   }

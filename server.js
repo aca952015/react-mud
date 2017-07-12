@@ -45,6 +45,15 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ' vanishes into the nether.'});
+    let mobsFightingUser = mobsInCombat.filter(mob => mob.combat.targets.includes(socket.username));
+    mobsFightingUser.forEach(mob => {
+      mob.combat.targets.splice(mob.combat.targets.indexOf(socket.username), 1);
+      if (!mob.combat.targets.length) {
+        mobsInCombat.splice(mobsInCombat.indexOf(mob), 1);
+        mob.hp = mob.maxHP;
+      }
+      mob.combat.active = false;
+    });
     users.splice(users.indexOf(users.find(user => user.username === socket.username)), 1);
   });
 
