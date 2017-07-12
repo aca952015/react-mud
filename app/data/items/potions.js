@@ -8,6 +8,7 @@ export const potions = {
     short: 'a red potion',
     long: 'A flask, with a v-shaped bottom and a thin neck, filled with a red liquid, sits on the ground here.',
     terms: ['potion', 'red', 'flask', 'health'],
+    category: 'potions',
     type: 'items',
     drink: {
       effect: restoreStat,
@@ -22,6 +23,7 @@ export const potions = {
     short: 'a blue potion',
     long: 'A spherical container with a short neck, filled with a blue liquid, sits on the ground here.',
     terms: ['potion', 'blue', 'container', 'mana'],
+    category: 'potions',
     type: 'items',
     drink: {
       effect: restoreStat,

@@ -6,6 +6,7 @@ export const weapons = {
     short: 'a broad sword',
     long: 'A simple metal sword with a wide, flat blade lies on the ground here.',
     terms: ['metal', 'sword', 'broad', 'simple'],
+    category: 'weapons',
     type: 'weapons',
     drink: null,
     description: 'This is a placeholder description for a broad sword.',
