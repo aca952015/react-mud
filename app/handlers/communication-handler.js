@@ -25,4 +25,7 @@ export default function communicationHandler(command, args, props) {
       emitType: 'whisper'
     };
   }
+
+  // This should never be reached.
+  return {funcsToCall: [newMessage], feedback: 'Unknown error occurred. Try entering your command again.'};
 }

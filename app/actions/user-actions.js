@@ -28,3 +28,7 @@ export function loginEquipment(equipment) {
     payload: equipment
   };
 }
+
+export function tickRegen() {
+  return {type: 'TICK_REGEN'};
+}

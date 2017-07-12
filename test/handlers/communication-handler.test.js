@@ -41,4 +41,10 @@ describe('communicationHandler', () => {
       });
     });
   });
+
+  describe('Unknown error', () => {
+    it('should return an unknown error object', () => {
+      expect(communicationHandler('wat')).toEqual({...returnObj, feedback: 'Unknown error occurred. Try entering your command again.'});
+    });
+  });
 });

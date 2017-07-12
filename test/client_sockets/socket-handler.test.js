@@ -13,7 +13,7 @@ import whisperProcessor from '../../app/processors/whisper-processor.js';
 import moveProcessor from '../../app/processors/move-processor.js';
 import {getItem, dropItem, getAll, dropAll} from '../../app/actions/inventory-actions.js';
 import {changeRoom} from '../../app/actions/move-actions.js';
-import {loginUser, loginEquipment} from '../../app/actions/user-actions.js';
+import {loginUser, loginEquipment, tickRegen} from '../../app/actions/user-actions.js';
 import {initialState as user} from '../../app/data/user-initial-state.js';
 import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
 import {endCreation, setCreationStep, setUsername, incrementCreationStep} from '../../app/actions/login-actions.js';
@@ -323,6 +323,16 @@ describe('socketHandlers', () => {
       player1.emit('pickUpItem', {item: 'all'});
       player1.on('getAll', itemArray => {
         expect(props.dispatch.calledWith(getAll(itemArray))).toEqual(true);
+        done();
+      });
+    });
+  });
+
+  describe('tickListeners', () => {
+    it('should dispatch tickRegen', done => {
+      player1.emit('triggerTick');
+      player1.on('tick', () => {
+        expect(props.dispatch.calledWith(tickRegen())).toEqual(true);
         done();
       });
     });
