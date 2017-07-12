@@ -8,7 +8,7 @@ import Messages from './messages.jsx';
 import CommandInput from './command-input.jsx';
 import {Prompt} from '../components/prompt.jsx';
 import {updateInput} from '../actions/message-actions.js';
-import socketHandlers from '../handlers/socket-handlers.js';
+import socketHandlers from '../client_sockets/socket-handlers.js';
 
 function mapStateToProps(state) {
   return {
@@ -23,7 +23,9 @@ function mapStateToProps(state) {
     description: state.user.description,
     atk: state.user.atk,
     combat: state.user.combat,
-    equipment: state.equipment
+    currentRoom: state.user.currentRoom,
+    equipment: state.equipment,
+    user: state.user // Used for saving the character
   };
 }
 
@@ -35,7 +37,14 @@ export class Home extends Component {
   componentDidMount() {
     this.socket = io('/');
     socketHandlers(this); // There are a lot of socket listeners, so they are handled in their own file.
-    window.addEventListener('beforeunload', () => this.socket.emit('disconnect'));
+    window.addEventListener('beforeunload', () => {
+      const character = {
+        ...this.props.user,
+        equipment: this.props.equipment
+      };
+      this.socket.emit('saveCharacter', character);
+      this.socket.emit('disconnect');
+    });
     document.querySelector('input').focus();
   }
   handleChange = event => {
@@ -68,11 +77,13 @@ Home.propTypes = {
   dispatch: PropTypes.func,
   messages: PropTypes.array,
   inventory: PropTypes.array,
-  character: PropTypes.object,
   commandIndex: PropTypes.number,
-  combat: PropTypes.object,
   hp: PropTypes.number,
   mp: PropTypes.number,
   maxHP: PropTypes.number,
-  maxMP: PropTypes.number
+  maxMP: PropTypes.number,
+  character: PropTypes.object,
+  user: PropTypes.object,
+  combat: PropTypes.object,
+  equipment: PropTypes.object
 };

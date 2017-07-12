@@ -1,13 +1,12 @@
 'use strict';
 
-import reducer, {initialState} from '../../app/reducers/user-reducer.js';
+import reducer from '../../app/reducers/user-reducer.js';
+import {initialState} from '../../app/data/user-initial-state.js';
 import newItem from '../../app/data/items.js';
 
 describe('user reducer', () => {
-  it('should return the initialState with no information', () => {
-    let tempReducer = reducer(undefined, {});
-    tempReducer.username = initialState.username;
-    expect(tempReducer).toEqual(initialState);
+  it('should return an initialState of an empty object with no information', () => {
+    expect(reducer(undefined, {})).toEqual({});
   });
 
   describe('With a GET_ITEM action', () => {
@@ -16,6 +15,12 @@ describe('user reducer', () => {
         ...initialState,
         inventory: ['some item']
       });
+    });
+  });
+
+  describe('With a LOGIN_USER action', () => {
+    it('should update everything to the payload', () => {
+      expect(reducer(initialState, {type: 'LOGIN_USER', payload: 'all of it'})).toEqual('all of it');
     });
   });
 
@@ -51,7 +56,7 @@ describe('user reducer', () => {
   describe('With a ADD_DESCRIPTION_PARAGRAPH action', () => {
     describe('If the description is "No description set."', () => {
       it('should overwrite the description with the payload', () => {
-        expect(reducer({...initialState, description: ['No description set.']}, {type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'Desc1'})).toEqual({
+        expect(reducer(initialState, {type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'Desc1'})).toEqual({
           ...initialState,
           description: ['Desc1']
         });
@@ -60,9 +65,9 @@ describe('user reducer', () => {
 
     describe('If there is a description in place', () => {
       it('should add a new paragraph to the description', () => {
-        expect(reducer(initialState, {type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'Desc1'})).toEqual({
+        expect(reducer({...initialState, description: ['Desc2']}, {type: 'ADD_DESCRIPTION_PARAGRAPH', payload: 'Desc1'})).toEqual({
           ...initialState,
-          description: [...initialState.description, 'Desc1']
+          description: ['Desc2', 'Desc1']
         });
       });
     });

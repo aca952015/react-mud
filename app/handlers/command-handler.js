@@ -14,9 +14,13 @@ import removeHandler from './remove-handler.js';
 import wearHandler from './wear-handler.js';
 import examineHandler from './examine-handler.js';
 import descriptionHandler from './description-handler.js';
+import loginHandler from './login-handler.js';
 import {newMessage} from '../actions/message-actions.js';
 
 export default function commandHandler(command, args, props) {
+  // Disable commands other than "new" and character name if logging in
+  if (props.currentRoom === 'Login Room') return loginHandler(command, args, props);
+  
   const commandShorthand = {
     'e': 'east',
     'w': 'west',

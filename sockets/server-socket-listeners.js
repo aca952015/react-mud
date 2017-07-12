@@ -14,6 +14,11 @@ import damage from './damage.js';
 import removeItem from './remove-item.js';
 import wearItem from './wear-item.js';
 import oneLineListeners from './one-line-listeners.js';
+import teleport from './teleport.js';
+import checkUserName from './check-username.js';
+import createCharacter from './create-character.js';
+import login from './login.js';
+import saveCharacter from './save-character.js';
 
 // All the various socket listeners for the server, compartmentalized for easy reference and debugging.
 export default function serverSocketListeners(io, socket, users, roomData, mobsInCombat) {
@@ -31,4 +36,9 @@ export default function serverSocketListeners(io, socket, users, roomData, mobsI
   lookInContainer(socket, roomData);
   wearItem(socket);
   removeItem(socket);
+  teleport(socket, users, roomData);
+  checkUserName(socket);
+  createCharacter(socket);
+  login(socket);
+  saveCharacter(socket);
 }

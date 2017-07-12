@@ -4,7 +4,7 @@ import combatProcessor from '../../app/processors/combat-processor.js';
 import io from 'socket.io-client';
 import ioOptions from '../lib/io-options.js';
 import closeServer from '../lib/test-server.js';
-import {initialState} from '../../app/reducers/equipment-reducer.js';
+import {initialState} from '../../app/data/equipment-initial-state.js';
 import newItem from '../../app/data/items.js';
 
 describe('combatProcessor', () => {
@@ -22,7 +22,9 @@ describe('combatProcessor', () => {
     player1 = io.connect('http://0.0.0.0:5000', ioOptions);
     player1.on('connect', () => {
       player1.emit('changeName', 'player1');
-      done();
+      player1.emit('teleport', 'Nexus');
+      player1.emit('updateSocket');
+      player1.on('updateComplete', () => done());
     });
   });
 

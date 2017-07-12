@@ -15,7 +15,10 @@ describe('movement', () => {
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
-      done();
+      player1.emit('teleport', 'Nexus');
+      player2.emit('teleport', 'Nexus');
+      player2.emit('updateSocket');
+      player2.on('updateComplete', () => done());
     });
   });
 

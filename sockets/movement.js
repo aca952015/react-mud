@@ -1,8 +1,8 @@
 'use strict';
 
 export default function movement(socket, users, roomInfo) {
-  socket.join('Nexus');
-  socket.currentRoom = 'Nexus';
+  socket.join('Login Room');
+  socket.currentRoom = 'Login Room';
 
   socket.on('move', movement => {
     // Login has special functionality, so ignore most movement code if it's a login
