@@ -33,4 +33,19 @@ describe('item respawn processor', () => {
       ]);
     });
   });
+
+  describe('With a room missing only some of the original items', () => {
+    it('should respawn the correct number of items', () => {
+      expect(itemRespawnProcessor(originalRoom, [newItem('equipment', 'leather helm')])).toEqual([
+        {
+          category: 'equipment',
+          name: 'leather helm'
+        },
+        {
+          category: 'keys',
+          name: 'gallows key'
+        }
+      ]);
+    });
+  });
 });
