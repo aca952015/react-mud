@@ -45,14 +45,33 @@ describe('look', () => {
   });
 
   describe('Without a target', () => {
-    it('should show player1 the room\'s description and occupants of player2', done => {
-      player1.emit('look', {target: undefined});
-      player1.on('generalMessage', res => {
-        expect(res.room.roomName).toEqual(roomData['Nexus'].roomName);
-        expect(res.room.desc).toEqual(roomData['Nexus'].desc);
-        expect(res.room.exits).toEqual(roomData['Nexus'].exits);
-        expect(res.occupants).toEqual(['player2']);
-        done();
+    describe('In a room without examines', () => {
+      beforeEach(done => {
+        player1.emit('teleport', 'Login Room');
+        player1.emit('updateSocket');
+        player1.on('updateComplete', () => done());
+      });
+
+      it('should show player1 the room\'s description and occupants of player2', done => {
+        player1.emit('look', {target: undefined});
+        player1.on('generalMessage', res => {
+          expect(res.room.roomName).toEqual('Login Room');
+          expect(res.room.desc).toEqual(roomData['Login Room'].desc);
+          expect(res.room.exits).toEqual(roomData['Login Room'].exits);
+          expect(res.room.examines).toEqual(null);
+          done();
+        });
+      });
+    });
+
+    describe('In a room with examines', () => {
+      it('should return examines in the res.room object', done => {
+        player1.emit('look', {target: undefined});
+        player1.on('generalMessage', res => {
+          expect(res.room.examines).toEqual(roomData['Nexus'].examines);
+          expect(res.occupants).toEqual(['player2']);
+          done();
+        });
       });
     });
   });
@@ -210,11 +229,29 @@ describe('look', () => {
   });
 
   describe('At an invalid item', () => {
-    it('should say "I don\'t see that here."', done => {
-      player1.emit('look', {target: 'turtle'});
-      player1.on('generalMessage', res => {
-        expect(res.feedback).toEqual('I don\'t see that here.');
-        done();
+    describe('In a room with examines', () => {
+      it('should say "I don\'t see that here."', done => {
+        player1.emit('look', {target: 'turtle'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('I don\'t see that here.');
+          done();
+        });
+      });
+    });
+
+    describe('In a room without examines', () => {
+      beforeEach(done => {
+        player1.emit('teleport', 'Login Room');
+        player1.emit('updateSocket');
+        player1.on('updateComplete', () => done());
+      });
+      
+      it('should say "I don\'t see that here."', done => {
+        player1.emit('look', {target: 'turtle'});
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('I don\'t see that here.');
+          done();
+        });
       });
     });
   });
