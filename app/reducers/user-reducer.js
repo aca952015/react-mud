@@ -1,6 +1,16 @@
 'use strict';
 
 export default function reducer(state={}, action) {
+  if (action.type === 'TICK_REGEN') {
+    let currentHP = state.hp;
+    let currentMP = state.mp;
+    let divisor = state.combat.active ? 10 : 5;
+    currentHP += Math.round(state.maxHP / divisor);
+    currentMP += Math.round(state.maxMP / divisor);
+    if (currentHP > state.maxHP) currentHP = state.maxHP;
+    if (currentMP > state.maxMP) currentMP = state.maxMP;
+    return {...state, hp: currentHP, mp: currentMP};
+  }
   if (action.type === 'LOGIN_USER') return action.payload;
   if (action.type === 'TRUNCATE_DESCRIPTION') {
     let description = state.description.slice(0, state.description.length - 1);
