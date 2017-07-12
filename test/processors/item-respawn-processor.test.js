@@ -57,4 +57,10 @@ describe('item respawn processor', () => {
       expect(itemRespawnProcessor(originalMobs, currentMobs)).toEqual([]);
     });
   });
+
+  describe('With a room that has extra mobs', () => {
+    it('should return an empty array', () => {
+      expect(itemRespawnProcessor(originalMobs, [...currentMobs, newMob('bat')])).toEqual([]);
+    });
+  });
 });
