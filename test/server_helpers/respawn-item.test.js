@@ -23,5 +23,15 @@ describe('respawnItems', () => {
         expect(roomData['Nexus'].items).toEqual(roomReset['Nexus'].items.slice(1));
       });
     });
+
+    describe('When the timer has gone over 3', () => {
+      it('should respawn any missing items and set the resetTimer back to 0', () => {
+        roomData['Nexus'].resetTimer = 3;
+        respawnItems(roomData, roomReset);
+        expect(roomData['Nexus'].items[roomData['Nexus'].items.length - 1].name).toEqual('corpse');
+        expect(roomData['Nexus'].items[roomData['Nexus'].items.length - 1].short).toEqual('a corpse');
+        expect(roomData['Nexus'].resetTimer).toEqual(0);
+      });
+    });
   });
 });
