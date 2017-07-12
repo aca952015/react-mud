@@ -32,3 +32,7 @@ export function loginEquipment(equipment) {
 export function tickRegen() {
   return {type: 'TICK_REGEN'};
 }
+
+export function escapeCombat() {
+  return {type: 'ESCAPE_COMBAT'};
+}
