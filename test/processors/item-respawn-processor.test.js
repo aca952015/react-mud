@@ -63,4 +63,13 @@ describe('item respawn processor', () => {
       expect(itemRespawnProcessor(originalMobs, [...currentMobs, newMob('bat')])).toEqual([]);
     });
   });
+
+  describe('With a room missing all of one type of mob', () => {
+    it('should respawn the correct number of items', () => {
+      expect(itemRespawnProcessor(originalMobs, [newMob('armored zombie')])).toEqual([
+        {name: 'bat'},
+        {name: 'bat'}
+      ]);
+    });
+  });
 });
