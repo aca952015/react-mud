@@ -7,9 +7,9 @@ import inventoryHandlers from './inventory-handlers.js';
 import combatHandlers from './combat-handlers.js';
 
 export default function socketHandlers(homeCtx) {
-  loginHandlers({socket: homeCtx.socket, props: homeCtx.props});
-  commsHandlers({socket: homeCtx.socket, props: homeCtx.props});
-  moveListeners({socket: homeCtx.socket, props: homeCtx.props});
-  inventoryHandlers({socket: homeCtx.socket, props: homeCtx.props});
-  combatHandlers({socket: homeCtx.socket, props: homeCtx.props});
+  loginHandlers(homeCtx);
+  commsHandlers(homeCtx);
+  moveListeners(homeCtx);
+  inventoryHandlers(homeCtx);
+  combatHandlers(homeCtx);
 }

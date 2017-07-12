@@ -12,6 +12,7 @@ export default function loginHandlers(homeCtx) {
   // default user data and equipment to prevent errors.
   socket.on('initialConnect', char => {
     socket.emit('teleport', 'Login Room');
+    props.dispatch(changeRoom('Login Room'));
     props.dispatch(loginUser(char.user));
     props.dispatch(loginEquipment(char.equipment));
   });
