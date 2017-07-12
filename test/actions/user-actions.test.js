@@ -1,6 +1,6 @@
 'use strict';
 
-import {truncateDescription, addDescriptionParagraph, clearDescription, loginUser, loginEquipment} from '../../app/actions/user-actions.js';
+import {truncateDescription, addDescriptionParagraph, clearDescription, loginUser, loginEquipment, tickRegen} from '../../app/actions/user-actions.js';
 
 describe('User actions', () => {
   describe('truncateDescription', () => {
@@ -30,6 +30,12 @@ describe('User actions', () => {
   describe('loginEquipment', () => {
     it('should return an object with a type of "LOGIN_EQUIPMENT" and payload of whatever got passed in', () => {
       expect(loginEquipment({ayy: 'dude'})).toEqual({type: 'LOGIN_EQUIPMENT', payload: {ayy: 'dude'}});
+    });
+  });
+
+  describe('tickRegen', () => {
+    it('should return an object with a type of "TICK_REGEN"', () => {
+      expect(tickRegen()).toEqual({type: 'TICK_REGEN'});
     });
   });
 });
