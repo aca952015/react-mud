@@ -16,7 +16,7 @@ import {changeRoom} from '../../app/actions/move-actions.js';
 import {loginUser, loginEquipment} from '../../app/actions/user-actions.js';
 import {initialState as user} from '../../app/data/user-initial-state.js';
 import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
-import {endCreation, setCreationStep} from '../../app/actions/login-actions.js';
+import {endCreation, setCreationStep, setUsername, incrementCreationStep} from '../../app/actions/login-actions.js';
 import newItem from '../../app/data/items.js';
 
 describe('socketHandlers', () => {
@@ -157,6 +157,18 @@ describe('socketHandlers', () => {
         expect(props.dispatch.calledWith((newMessage({
           feedback: 'Invalid password or that character doesn\'t exist. Enter "new" or a character name to login.'}
         )))).toEqual(true);
+        done();
+      });
+    });
+  });
+
+  describe('nameAvailable', () => {
+    it('should call setUsername, incrementCreationStep, and give instructions to set a password', done => {
+      player1.emit('checkUsername', {newUsername: 'Stevie'});
+      player1.on('nameAvailable', name => {
+        expect(props.dispatch.calledWith((setUsername({newUsername: `${name[0].toUpperCase()}${name.slice(1)}`})))).toEqual(true);
+        expect(props.dispatch.calledWith((incrementCreationStep()))).toEqual(true);
+        expect(props.dispatch.calledWith((newMessage({feedback: 'Please enter a password for your character.'})))).toEqual(true);
         done();
       });
     });
