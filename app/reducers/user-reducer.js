@@ -21,6 +21,7 @@ export default function reducer(state={}, action) {
   if (action.type === 'DROP_ITEM') return dropItem(state, action);
   if (action.type === 'DRINK_POTION') return drinkPotion(state, action);
   if (action.type === 'ENTER_COMBAT') return {...state, combat: {active: true, targets: [...state.combat.targets, action.payload]}};
+  if (action.type === 'ESCAPE_COMBAT') return {...state, combat: {active: false, targets: []}};
   if (action.type === 'GET_ALL') return getAll(state, action);
   if (action.type === 'GET_FROM_CONTAINER') return getFromContainer(state, action);
   if (action.type === 'GET_ITEM' || action.type === 'QUIETLY_ADD_ITEM') return {...state, inventory: [...state.inventory, action.payload]};

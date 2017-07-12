@@ -9,7 +9,9 @@ export const roomData = {
     desc: 'Welcome to Tempest. To make a new character, type "new". To login to an existing character, enter the character\'s name.',
     exits: {},
     items: [],
-    mobs: []
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Nexus': {
     roomName: 'Nexus',
@@ -65,7 +67,9 @@ export const roomData = {
       terms: ['ztest'],
       description: 'Really? Ztest? You thought to try looking at this?'
     }],
-    mobs: [newMob('bat'), newMob('bat'), newMob('armored zombie')]
+    mobs: [newMob('bat'), newMob('bat'), newMob('armored zombie')],
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Secret Room': {
     roomName: 'Secret Room',
@@ -78,7 +82,9 @@ export const roomData = {
       }
     },
     items: [],
-    mobs: []
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Town Square': {
     roomName: 'Town Square',
@@ -95,7 +101,9 @@ export const roomData = {
       }
     },
     items: [newItem('keys', 'useless key'), newItem('containers', 'backpack')],
-    mobs: [newMob('bat'), newMob('bat')]
+    mobs: [newMob('bat'), newMob('bat')],
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Gallows': {
     roomName: 'Gallows',
@@ -113,6 +121,8 @@ export const roomData = {
       terms: ['gallows'],
       description: 'It\'s a gallows, with a short noose hanging from it.'
     }],
-    mobs: []
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0
   }
 };

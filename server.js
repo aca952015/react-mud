@@ -12,6 +12,7 @@ const webpackConfig = require('./webpack.config.js');
 import initialConnect from './sockets/initial-connect.js';
 import serverSocketListeners from './sockets/server-socket-listeners.js';
 import mobTargetSelector from './sockets/mob-target-selector.js';
+import respawnItems from './lib/respawn-items.js';
 import {roomData} from './app/data/rooms.js';
 
 dotenv.load();
@@ -23,14 +24,20 @@ const PORT = process.env.PORT || 3000;
 
 mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true});
+const roomReset = JSON.parse(JSON.stringify(roomData));
 
 app.use(express.static(`${__dirname}/build`));
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 
-// Every 30 seconds, emit a "tick" event.
+// Every 30 seconds, emit a "tick" event. Respawn items and mobs that need to be
+// respawned, if necessary.
+setInterval(() => {
+  io.sockets.emit('tick');
+  respawnItems(roomData, roomReset);
+}, 30000);
+
 // Every 2 seconds, emit combat ticks. Users autoattack if they're in combat on
 // combat ticks, as do mobs that are currently in combat.
-setInterval(() => io.sockets.emit('tick'), 30000);
 setInterval(() => {
   io.sockets.emit('combatTick');
   mobTargetSelector(mobsInCombat, users);

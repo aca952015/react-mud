@@ -141,6 +141,12 @@ describe('user reducer', () => {
     });
   });
 
+  describe('With an ESCAPE_COMBAT action', () => {
+    it('should exit the user from combat by changing active to false and emptying the array', () => {
+      expect(reducer({...initialState, combat: {active: true, targets: ['Dude1', 'Dude2']}}, {type: 'ESCAPE_COMBAT'})).toEqual(initialState);
+    });
+  });
+
   describe('GET_ALL', () => {
     describe('From the room or the contents of a container in the room', () => {
       it('should concatenate the current inventory with the item array from the payload', () => {

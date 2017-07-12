@@ -64,9 +64,13 @@ export class CommandInput extends Component {
 
       // If the last command entered is the same as the current command, don't update
       // prevCommands. Otherwise, push it to the prevCommands array.
-      let currCommand = this.props.input.toLowerCase();
-      let lastCommand = this.props.prevCommands.length ? this.props.prevCommands[this.props.prevCommands.length - 1].toLowerCase() : null;
-      if ((!lastCommand || currCommand !== lastCommand) && this.props.input) this.props.dispatch(updatePrevCommands(this.props.input));
+      // Don't push to the prevCommands array while in the Login Room so that passwords
+      // are not recorded.
+      if (this.props.currentRoom !== 'Login Room') {
+        let currCommand = this.props.input.toLowerCase();
+        let lastCommand = this.props.prevCommands.length ? this.props.prevCommands[this.props.prevCommands.length - 1].toLowerCase() : null;
+        if ((!lastCommand || currCommand !== lastCommand) && this.props.input) this.props.dispatch(updatePrevCommands(this.props.input));
+      }
 
       // If there are more than 20 prevCommands, truncate the array.
       if (this.props.prevCommands.length > 20) this.props.dispatch(truncatePrevCommands());
