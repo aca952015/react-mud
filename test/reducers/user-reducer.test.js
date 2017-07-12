@@ -18,6 +18,12 @@ describe('user reducer', () => {
     });
   });
 
+  describe('With a LOGIN_USER action', () => {
+    it('should update everything to the payload', () => {
+      expect(reducer(initialState, {type: 'LOGIN_USER', payload: 'all of it'})).toEqual('all of it');
+    });
+  });
+
   describe('With a TRUNCATE_DESCRIPTION action', () => {
     describe('With a one-paragraph description set', () => {
       it('should update the description to "No description set."', () => {
