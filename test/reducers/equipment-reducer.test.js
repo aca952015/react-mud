@@ -19,6 +19,12 @@ describe('Equipment reducer', () => {
     });
   });
 
+  describe('With type LOGIN_EQUIPMENT', () => {
+    it('should update the whole state to the payload', () => {
+      expect(reducer(initialState, {type: 'LOGIN_EQUIPMENT', payload: 'All of it'})).toEqual('All of it');
+    });
+  });
+
   describe('With type REMOVE_ITEM', () => {
     it('should update the appropriate wear slot to null', () => {
       let helm = newItem('equipment', 'leather helm');
