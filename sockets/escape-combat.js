@@ -11,7 +11,7 @@ export default function escapeCombat(io, socket, mobsInCombat) {
         mob.combat.active = false;
         return io.sockets.to(socket.currentRoom).emit('generalMessage', {feedback: `${mob.short[0].toUpperCase()}${mob.short.slice(1)} returns to full health.`});
       }
-      return socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${mob.short[0].toUpperCase()}${mob.short.slice(1)} turns their attention to other combatants as ${socket.username} vanishes.`});
+      return socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${mob.short[0].toUpperCase()}${mob.short.slice(1)} turns their attention to other combatants!`});
     });
   });
 }
