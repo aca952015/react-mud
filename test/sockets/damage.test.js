@@ -59,11 +59,37 @@ describe('damage', () => {
   });
 
   describe('With enough damage to kill the target', () => {
-    it('should emit a slayEnemy event', done => {
-      player1.emit('damage', dmgObj);
-      player1.on('slayEnemy', res => {
-        expect({...res, combat: {...res.combat, targets: ['player1']}}).toEqual({...dmgObj.enemy, hp: -1});
-        done();
+    describe('With a room that isn\'t already slated to be reset', () => {
+      it('should emit a slayEnemy event', done => {
+        player1.emit('damage', dmgObj);
+        player1.on('slayEnemy', res => {
+          expect({...res, combat: {...res.combat, targets: ['player1']}}).toEqual({...dmgObj.enemy, hp: -1});
+          done();
+        });
+      });
+    });
+
+    describe('With a room that is already slated to be reset', () => {
+      const tempDmgObj = {...dmgObj};
+      beforeEach(done => {
+        player1.emit('kill', {target: 'zombie'});
+        player1.on('enterCombat', res => {
+          tempDmgObj.enemy = res;
+          tempDmgObj.damage = 50;
+          done();
+        });
+      });
+
+      it('should emit a slayEnemy event', done => {
+        player1.emit('damage', tempDmgObj);
+        player1.on('slayEnemy', res => {
+          expect({...res, combat: {...res.combat, targets: ['player1']}}).toEqual({
+            ...tempDmgObj.enemy,
+            hp: res.maxHP - 50,
+            combat: {active: true, targets: ['player1']}
+          });
+          done();
+        });
       });
     });
   });

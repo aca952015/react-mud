@@ -2,7 +2,7 @@
 
 import newItem from '../app/data/items.js';
 
-export default function damage(socket, roomData, mobsInCombat) {
+export default function damage(socket, roomData, mobsInCombat, alteredRooms) {
   socket.on('damage', dmgObj => {
     // When the user emits a damage event, find the targeted mob. If it's already
     // been killed (say, by another player), return a slayEnemy event.
@@ -48,7 +48,9 @@ export default function damage(socket, roomData, mobsInCombat) {
       corpse.description = `The corpse of ${target.short} lies here.`;
 
       // Remove the mob from the mobsInCombat array so that they do not continue to attack the
-      // player as phantoms.
+      // player as phantoms. Push the room name to the alteredRooms array so the server knows
+      // to respawn mobs.
+      if (!alteredRooms.includes(socket.currentRoom)) alteredRooms.push(socket.currentRoom);
       mobsInCombat.splice(mobsInCombat.indexOf(mobsInCombat.find(mob => mob.id === target.id)), 1);
       roomData[socket.currentRoom].mobs.splice(roomData[socket.currentRoom].mobs.indexOf(target), 1);
       roomData[socket.currentRoom].items.push(corpse);

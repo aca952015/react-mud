@@ -22,10 +22,10 @@ import saveCharacter from './save-character.js';
 import escapeCombat from './escape-combat.js';
 
 // All the various socket listeners for the server, compartmentalized for easy reference and debugging.
-export default function serverSocketListeners(io, socket, users, roomData, mobsInCombat) {
+export default function serverSocketListeners(io, socket, users, roomData, mobsInCombat, alteredRooms) {
   checkUserName(socket);
   createCharacter(socket);
-  damage(socket, roomData, mobsInCombat);
+  damage(socket, roomData, mobsInCombat, alteredRooms);
   dropItem(socket, roomData);
   escapeCombat(io, socket, mobsInCombat);
   give(socket, users);
@@ -35,7 +35,7 @@ export default function serverSocketListeners(io, socket, users, roomData, mobsI
   lookInContainer(socket, roomData);
   movement(socket, users, roomData);
   oneLineListeners(socket, users);
-  pickUpItem(socket, roomData);
+  pickUpItem(socket, roomData, alteredRooms);
   put(socket, roomData);
   removeItem(socket);
   saveCharacter(socket);

@@ -33,7 +33,7 @@ app.use(webpackDevMiddleware(webpack(webpackConfig)));
 // respawned, if necessary.
 setInterval(() => {
   io.sockets.emit('tick');
-  respawnItems(roomData, roomReset);
+  respawnItems(roomData, roomReset, alteredRooms);
 }, 30000);
 
 // Every 2 seconds, emit combat ticks. Users autoattack if they're in combat on
@@ -45,6 +45,7 @@ setInterval(() => {
 
 const users = [];
 const mobsInCombat = [];
+const alteredRooms = [];
 
 io.on('connection', socket => {
   initialConnect(socket);
@@ -55,7 +56,7 @@ io.on('connection', socket => {
     users.splice(users.indexOf(users.find(user => user.username === socket.username)), 1);
   });
 
-  serverSocketListeners(io, socket, users, roomData, mobsInCombat);
+  serverSocketListeners(io, socket, users, roomData, mobsInCombat, alteredRooms);
 });
 
 server.listen(PORT);

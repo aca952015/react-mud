@@ -2,7 +2,7 @@
 
 import termsProcessor from '../app/processors/terms-processor.js';
 
-export default function pickUpItem(socket, roomData) {
+export default function pickUpItem(socket, roomData, alteredRooms) {
   const invalidTypes = {
     'corpse': true,
     'liquid': true
@@ -17,6 +17,8 @@ export default function pickUpItem(socket, roomData) {
       if (!validItems.length) return socket.emit('generalMessage', {feedback: 'There\'s nothing you can get.'});
 
       // For each item in the room, remove it from the room's items array, then add them all to the user's inventory.
+      // Add the room to the alteredRooms array so the server knows to respawn items.
+      if (!alteredRooms.includes(socket.currentRoom)) alteredRooms.push(socket.currentRoom);
       validItems.forEach(item => roomData[socket.currentRoom].items.splice(roomData[socket.currentRoom].items.indexOf(item), 1));
       socket.emit('getAll', {itemArray: validItems});
       socket.emit('generalMessage', {feedback: 'You get everything you can from the room.'});
@@ -29,6 +31,8 @@ export default function pickUpItem(socket, roomData) {
     if (!item) return socket.emit('generalMessage', {feedback: 'I don\'t see that item here.'});
     if (invalidTypes[item.type]) return socket.emit('generalMessage', {feedback: 'You can\'t pick that up.'});
 
+    // Add the room to the alteredRooms array so the server knows to respawn items.
+    if (!alteredRooms.includes(socket.currentRoom)) alteredRooms.push(socket.currentRoom);
     socket.emit('forceGet', item);
     socket.emit('generalMessage', {feedback: `You pick up ${item.short}.`});
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` picks up ${item.short}.`});
@@ -44,7 +48,7 @@ export default function pickUpItem(socket, roomData) {
     if (getObj.item === 'all') {
       if (!container.container.contains.length) return socket.emit('generalMessage', {feedback: 'There\'s nothing in that container to get.'});
       let validItems = container.container.contains.filter(item => !invalidTypes[item.type]);
-      
+
       validItems.forEach(item => container.container.contains.splice(container.container.contains.indexOf(item), 1));
       socket.emit('getAll', {itemArray: validItems});
       socket.emit('generalMessage', {feedback: `You get everything you can from ${container.short}.`});

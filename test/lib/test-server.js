@@ -16,6 +16,7 @@ mongoose.connect(process.env.MONGODB_URI, {useMongoClient: true});
 
 const users = [];
 const mobsInCombat = [];
+const alteredRooms = [];
 
 process.env.TESTING = true;
 
@@ -44,7 +45,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('updateSocket', () => socket.emit('updateComplete'));
   socket.on('testMobSelector', () => mobTargetSelector(mobsInCombat, users));
   socket.on('triggerTick', () => socket.emit('tick'));
-  serverSocketListeners(io, socket, users, roomData, mobsInCombat);
+  serverSocketListeners(io, socket, users, roomData, mobsInCombat, alteredRooms);
 });
 
 export default function closeServer() {
