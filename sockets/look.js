@@ -36,7 +36,10 @@ export default function look(socket, users, roomInfo) {
 
       // If a mob is a match, return the mob's description.
       if (lookTarget) {
-        socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.short}.`});
+        socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
+          from: socket.effects.death ? `The ghost of ${socket.username}` : socket.username,
+          feedback: ` looks at ${lookTarget.short}.`
+        });
         return showMeTheDescription(lookTarget);
       }
 
@@ -44,7 +47,10 @@ export default function look(socket, users, roomInfo) {
       lookTarget = termsProcessor(room.items, splitArgs);
 
       if (lookTarget) {
-        socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.short}.`});
+        socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
+          from: socket.effects.death ? `The ghost of ${socket.username}` : socket.username,
+          feedback: ` looks at ${lookTarget.short}.`
+        });
         return showMeTheDescription(lookTarget);
       }
 
@@ -53,7 +59,10 @@ export default function look(socket, users, roomInfo) {
 
       if (lookTarget) {
         let player = users.find(user => user.username === lookTarget);
-        socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, interaction: ' looks at ', target: lookTarget});
+        socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
+          from: socket.effects.death ? `The ghost of ${socket.username}` : socket.username,
+          interaction: ' looks at ',
+          target: lookTarget});
         return showMeTheDescription(player);
       }
 
@@ -61,13 +70,22 @@ export default function look(socket, users, roomInfo) {
       if (room.examines) lookTarget = termsProcessor(room.examines, splitArgs);
 
       if (lookTarget) {
-        socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks at ${lookTarget.name}.`});
+        socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
+          from: socket.effects.death ? `The ghost of ${socket.username}` : socket.username,
+          feedback: ` looks at ${lookTarget.name}.`
+        });
         return showMeTheDescription(lookTarget);
       }
 
       // If neither mobs, items, players, or examines return a match, there must not be a valid target
       return socket.emit('generalMessage', {feedback: 'I don\'t see that here.'});
     }
+
+    occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
+    .map(user => {
+      if (user.effects.death) return `The ghost of ${user.username}`;
+      return user.username;
+    });
 
     socket.emit('generalMessage', {occupants, room, mobs});
   });
