@@ -7,6 +7,6 @@ export default function tickListeners(homeCtx) {
   let props = homeCtx.props;
 
   socket.on('tick', () => {
-    props.dispatch(tickRegen());
+    if (!homeCtx.props.effects.death) props.dispatch(tickRegen());
   });
 }
