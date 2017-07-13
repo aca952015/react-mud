@@ -6,7 +6,7 @@ export default function communicationHandler(command, args, props) {
   if (command === 'say') {
     if (!args) return {funcsToCall: [newMessage], feedback: 'Say what?'};
     return {
-      from: props.username,
+      from: props.effects.death ? `The ghost of ${props.username}` : props.username,
       text: args,
       emitType: 'say',
       funcsToCall: [newMessage],
