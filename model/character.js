@@ -25,7 +25,8 @@ const characterSchema = Schema({
     active: {type: Boolean, required: true},
     targets: []
   },
-  equipment: Schema.Types.Mixed
+  equipment: Schema.Types.Mixed,
+  effects: Schema.Types.Mixed
 });
 
 characterSchema.methods.hashPassword = function(password) {
