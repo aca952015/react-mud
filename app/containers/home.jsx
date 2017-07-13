@@ -8,7 +8,7 @@ import Messages from './messages.jsx';
 import CommandInput from './command-input.jsx';
 import {Prompt} from '../components/prompt.jsx';
 import {updateInput} from '../actions/message-actions.js';
-import {escapeCombat} from '../actions/user-actions.js';
+import {escapeCombat} from '../actions/combat-actions.js';
 import socketHandlers from '../client_sockets/socket-handlers.js';
 
 function mapStateToProps(state) {
@@ -26,7 +26,8 @@ function mapStateToProps(state) {
     combat: state.user.combat,
     currentRoom: state.user.currentRoom,
     equipment: state.equipment,
-    user: state.user // Used for saving the character
+    user: state.user, // Used for saving the character
+    effects: state.effects
   };
 }
 
@@ -47,7 +48,8 @@ export class Home extends Component {
         this.socket.emit('escapeCombat');
         const character = {
           ...this.props.user,
-          equipment: this.props.equipment
+          equipment: this.props.equipment,
+          effects: this.props.effects
         };
         this.socket.emit('saveCharacter', character);
         this.socket.emit('disconnect');
@@ -93,5 +95,6 @@ Home.propTypes = {
   character: PropTypes.object,
   user: PropTypes.object,
   combat: PropTypes.object,
-  equipment: PropTypes.object
+  equipment: PropTypes.object,
+  effects: PropTypes.object
 };
