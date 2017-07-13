@@ -1,6 +1,6 @@
 'use strict';
 
-import {enterCombat, damageUser, slayEnemy} from '../../app/actions/combat-actions.js';
+import {enterCombat, damageUser, slayEnemy, escapeCombat} from '../../app/actions/combat-actions.js';
 
 describe('combat actions', () => {
   describe('enterCombat', () => {
@@ -18,6 +18,12 @@ describe('combat actions', () => {
   describe('slayEnemy', () => {
     it('should return a type of SLAY_ENEMY and a payload of what got passed in', () => {
       expect(slayEnemy('ayy')).toEqual({type: 'SLAY_ENEMY', payload: 'ayy'});
+    });
+  });
+
+  describe('escapeCombat', () => {
+    it('should return an object with a type of "ESCAPE_COMBAT"', () => {
+      expect(escapeCombat()).toEqual({type: 'ESCAPE_COMBAT'});
     });
   });
 });
