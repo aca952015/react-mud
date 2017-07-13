@@ -12,6 +12,13 @@ export function endCreation() {
   return {type: 'CHARACTER_COMPLETE'};
 }
 
+export function loginEffects(effects) {
+  return {
+    type: 'LOGIN_EFFECTS',
+    payload: effects
+  };
+}
+
 export function setUsername(username) {
   return {
     type: 'SET_USERNAME',
