@@ -16,7 +16,10 @@ export default function teleport(socket, users, roomInfo) {
 
     // Check players in the room besides the player
     let occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
-    .map(user => user.username);
+    .map(user => {
+      if (user.effects.death) return `The ghost of ${user.username}`;
+      return user.username;
+    });
 
     let mobs = roomInfo[socket.currentRoom].mobs;
 
