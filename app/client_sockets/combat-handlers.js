@@ -1,7 +1,7 @@
 'use strict';
 
 import {newMessage} from '../actions/message-actions.js';
-import {enterCombat, damageUser, slayEnemy} from '../actions/combat-actions.js';
+import {enterCombat, damageUser, slayEnemy, addEffect, escapeCombat} from '../actions/combat-actions.js';
 import combatProcessor from '../processors/combat-processor.js';
 
 export default function combatHandlers(homeCtx) {
@@ -25,21 +25,33 @@ export default function combatHandlers(homeCtx) {
     props.dispatch(enterCombat(target));
   });
   socket.on('damage', dmgObj => {
-    props.dispatch(damageUser(dmgObj.damage));
-    props.dispatch(newMessage({
-      combatLog: {
-        from: {
-          enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
-        },
-        pre: ' deals ',
-        damage: dmgObj.damage,
-        post: ' damage to ',
-        target: {
-          friendly: 'you'
-        },
-        punctuation: '.'
+    Promise.resolve(props.dispatch(damageUser(dmgObj.damage)))
+    .then(() => {
+      return Promise.resolve(props.dispatch(newMessage({
+        combatLog: {
+          from: {
+            enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
+          },
+          pre: ' deals ',
+          damage: dmgObj.damage,
+          post: ' damage to ',
+          target: {
+            friendly: 'you'
+          },
+          punctuation: '.'
+        }
+      })));
+    })
+    .then(() => {
+      if (homeCtx.props.hp <= 0 && !homeCtx.props.effects.death) {
+        props.dispatch(newMessage({feedback: 'You have been SLAIN!'}));
+        props.dispatch(escapeCombat());
+        socket.emit('escapeCombat');
+        socket.emit('playerDeath');
+        Promise.resolve(props.dispatch(addEffect('death')))
+        .then(() => socket.emit('updateEffects', homeCtx.props.effects));
       }
-    }));
+    });
   });
   socket.on('slayEnemy', enemy => props.dispatch(slayEnemy(enemy)));
   socket.on('combatTick', () => {
