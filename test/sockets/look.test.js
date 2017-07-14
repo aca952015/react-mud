@@ -104,6 +104,16 @@ describe('look', () => {
           done();
         });
       });
+
+      it('should return "The ghost of player3" as a looker', done => {
+        player3.emit('look', {target: 'player1'});
+        player1.on('generalMessage', res => {
+          expect(res.from).toEqual('The ghost of player3');
+          expect(res.interaction).toEqual(' looks at ');
+          expect(res.target).toEqual('player1');
+          done();
+        });
+      });
     });
   });
 
