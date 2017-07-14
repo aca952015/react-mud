@@ -25,33 +25,29 @@ export default function combatHandlers(homeCtx) {
     props.dispatch(enterCombat(target));
   });
   socket.on('damage', dmgObj => {
-    Promise.resolve(props.dispatch(damageUser(dmgObj.damage)))
-    .then(() => {
-      return Promise.resolve(props.dispatch(newMessage({
-        combatLog: {
-          from: {
-            enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
-          },
-          pre: ' deals ',
-          damage: dmgObj.damage,
-          post: ' damage to ',
-          target: {
-            friendly: 'you'
-          },
-          punctuation: '.'
-        }
-      })));
-    })
-    .then(() => {
-      if (homeCtx.props.hp <= 0 && !homeCtx.props.effects.death) {
-        props.dispatch(newMessage({feedback: 'You have been SLAIN!'}));
-        props.dispatch(escapeCombat());
-        socket.emit('escapeCombat');
-        socket.emit('playerDeath');
-        Promise.resolve(props.dispatch(addEffect('death')))
-        .then(() => socket.emit('updateEffects', homeCtx.props.effects));
+    props.dispatch(damageUser(dmgObj.damage));
+    props.dispatch(newMessage({
+      combatLog: {
+        from: {
+          enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
+        },
+        pre: ' deals ',
+        damage: dmgObj.damage,
+        post: ' damage to ',
+        target: {
+          friendly: 'you'
+        },
+        punctuation: '.'
       }
-    });
+    }));
+    if (homeCtx.props.hp - dmgObj.damage <= 0 && !homeCtx.props.effects.death) {
+      props.dispatch(newMessage({feedback: 'You have been SLAIN!'}));
+      props.dispatch(escapeCombat());
+      socket.emit('escapeCombat');
+      socket.emit('playerDeath');
+      props.dispatch(addEffect('death'));
+      socket.emit('updateEffects', {...homeCtx.props.effects, death: true});
+    }
   });
   socket.on('slayEnemy', enemy => props.dispatch(slayEnemy(enemy)));
   socket.on('combatTick', () => {
