@@ -22,8 +22,6 @@ process.env.TESTING = true;
 
 io.sockets.on('connection', function(socket) {
   initialConnect(socket);
-  socket.on('changeName', () => users.push(socket));
-  socket.on('disconnect', () => users.splice(users.indexOf(users.find(user => user.username === socket.username)), 1));
   socket.currentRoom = 'Nexus';
   socket.join('Nexus');
   socket.on('changeName', name => {
@@ -33,6 +31,7 @@ io.sockets.on('connection', function(socket) {
       socket.join('Town Square');
     }
     socket.username = name;
+    users.push(socket);
   });
   socket.on('testDamage', () => {
     socket.emit('damage', {

@@ -40,7 +40,7 @@ export default function serverSocketListeners(io, socket, users, roomData, mobsI
   put(socket, roomData);
   removeItem(socket);
   resurrect(socket, roomData);
-  saveCharacter(socket);
+  saveCharacter(socket, users);
   teleport(socket, users, roomData);
   unlock(socket, roomData);
   wearItem(socket);

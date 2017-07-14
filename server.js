@@ -51,11 +51,6 @@ io.on('connection', socket => {
   initialConnect(socket);
   socket.on('changeName', () => users.push(socket));
 
-  socket.on('disconnect', () => {
-    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ' vanishes into the nether.'});
-    users.splice(users.indexOf(users.find(user => user.username === socket.username)), 1);
-  });
-
   serverSocketListeners(io, socket, users, roomData, mobsInCombat, alteredRooms);
 });
 
