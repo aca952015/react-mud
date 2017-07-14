@@ -41,7 +41,7 @@ describe('escape combat', () => {
     it('should remove only that user from the mob\'s targets list and keep them in combat', done => {
       player1.emit('escapeCombat');
       player2.on('generalMessage', res => {
-        expect(res.feedback).toEqual('A small bat turns their attention to other combatants as player1 vanishes.');
+        expect(res.feedback).toEqual('A small bat turns their attention to other combatants!');
         done();
       });
     });

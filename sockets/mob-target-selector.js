@@ -8,6 +8,7 @@ export default function mobTargetSelector(mobsInCombat, users) {
     const targets = mobsInCombat[i].combat.targets;
     const selectedTarget = targets[Math.floor(Math.random() * targets.length)];
     const socket = users.find(user => user.username === selectedTarget);
+    if (!socket) return;
 
     // Get the def stat of all equipped items and add them together
     const defense = Object.keys(socket.equipment).reduce((acc, slot) => {

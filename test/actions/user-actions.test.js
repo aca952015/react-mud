@@ -1,6 +1,6 @@
 'use strict';
 
-import {truncateDescription, addDescriptionParagraph, clearDescription, loginUser, loginEquipment, tickRegen, escapeCombat} from '../../app/actions/user-actions.js';
+import {truncateDescription, addDescriptionParagraph, clearDescription, tickRegen} from '../../app/actions/user-actions.js';
 
 describe('User actions', () => {
   describe('truncateDescription', () => {
@@ -21,27 +21,9 @@ describe('User actions', () => {
     });
   });
 
-  describe('loginUser', () => {
-    it('should return an object with a type of "LOGIN_USER" and payload of whatever got passed in', () => {
-      expect(loginUser('bob')).toEqual({type: 'LOGIN_USER', payload: 'bob'});
-    });
-  });
-
-  describe('loginEquipment', () => {
-    it('should return an object with a type of "LOGIN_EQUIPMENT" and payload of whatever got passed in', () => {
-      expect(loginEquipment({ayy: 'dude'})).toEqual({type: 'LOGIN_EQUIPMENT', payload: {ayy: 'dude'}});
-    });
-  });
-
   describe('tickRegen', () => {
     it('should return an object with a type of "TICK_REGEN"', () => {
       expect(tickRegen()).toEqual({type: 'TICK_REGEN'});
-    });
-  });
-
-  describe('escapeCombat', () => {
-    it('should return an object with a type of "ESCAPE_COMBAT"', () => {
-      expect(escapeCombat()).toEqual({type: 'ESCAPE_COMBAT'});
     });
   });
 });

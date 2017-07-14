@@ -20,7 +20,8 @@ function mapStateToProps(state) {
     creatingNew: state.login.creatingNew,
     creationStep: state.login.creationStep,
     newUsername: state.login.newUsername,
-    firstPassword: state.login.firstPassword
+    firstPassword: state.login.firstPassword,
+    effects: state.effects
   };
 }
 

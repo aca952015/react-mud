@@ -50,20 +50,76 @@ describe('lookInContainer', () => {
   });
 
   describe('With a valid target', () => {
-    it('should return containedItems', done => {
-      player1.emit('lookInContainer', {container: 'corpse'});
-      player1.on('generalMessage', res => {
-        expect(res.containedItems).toEqual([
-          {
-            ...newItem('potions', 'health potion'),
-            id: res.containedItems[0].id
-          },
-          {
-            ...newItem('potions', 'health potion'),
-            id: res.containedItems[1].id
-          }
-        ]);
+    let player2;
+
+    describe('As an observer of a living user', () => {
+      beforeEach(done => {
+        player2 = io.connect('http://0.0.0.0:5000', ioOptions);
+        player2.on('connect', () => {
+          player2.emit('teleport', 'Nexus');
+          player2.emit('updateSocket');
+          player2.on('updateComplete', () => done());
+        });
+      });
+
+      afterEach(done => {
+        player2.disconnect();
         done();
+      });
+
+      it('should say the user looks in an item', done => {
+        player1.emit('lookInContainer', {container: 'corpse'});
+        player2.on('generalMessage', res => {
+          expect(res.from).toEqual('player1');
+          expect(res.feedback).toEqual(' looks in a corpse.');
+          done();
+        });
+      });
+    });
+
+    describe('As an observer of a ghost', () => {
+      beforeEach(done => {
+        player2 = io.connect('http://0.0.0.0:5000', ioOptions);
+        player2.on('connect', () => {
+          player2.emit('updateEffects', {death: true});
+          player2.emit('changeName', 'player2');
+          player2.emit('teleport', 'Nexus');
+          player2.emit('updateSocket');
+          player2.on('updateComplete', () => done());
+        });
+      });
+
+      afterEach(done => {
+        player2.disconnect();
+        done();
+      });
+
+      it('should say the ghost of so-and-so looks in a container', done => {
+        player2.emit('lookInContainer', {container: 'corpse'});
+        player1.on('generalMessage', res => {
+          expect(res.from).toEqual('The ghost of player2');
+          expect(res.feedback).toEqual(' looks in a corpse.');
+          done();
+        });
+      });
+    });
+
+    describe('As the looker', () => {
+      it('should return containedItems', done => {
+        player1.emit('lookInContainer', {container: 'corpse'});
+        player1.on('generalMessage', res => {
+          expect(res.containedItems).toEqual([
+            {
+              ...newItem('potions', 'health potion'),
+              id: res.containedItems[0].id
+            },
+            {
+              ...newItem('potions', 'health potion'),
+              id: res.containedItems[1].id
+            }
+          ]);
+          done();
+        });
       });
     });
   });

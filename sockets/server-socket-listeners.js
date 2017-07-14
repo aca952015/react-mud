@@ -20,6 +20,7 @@ import createCharacter from './create-character.js';
 import login from './login.js';
 import saveCharacter from './save-character.js';
 import escapeCombat from './escape-combat.js';
+import resurrect from './resurrect.js';
 
 // All the various socket listeners for the server, compartmentalized for easy reference and debugging.
 export default function serverSocketListeners(io, socket, users, roomData, mobsInCombat, alteredRooms) {
@@ -38,7 +39,8 @@ export default function serverSocketListeners(io, socket, users, roomData, mobsI
   pickUpItem(socket, roomData, alteredRooms);
   put(socket, roomData);
   removeItem(socket);
-  saveCharacter(socket);
+  resurrect(socket, roomData);
+  saveCharacter(socket, users);
   teleport(socket, users, roomData);
   unlock(socket, roomData);
   wearItem(socket);

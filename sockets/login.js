@@ -15,6 +15,7 @@ export default function login(socket) {
       const loginUser = JSON.parse(JSON.stringify(char));
       delete loginUser.equipment;
       delete loginUser.password;
+      delete loginUser.effects;
       loginUser.username = `${loginUser.username[0].toUpperCase()}${loginUser.username.slice(1)}`;
 
       // For some reason, the properties kept inverting themselves every other login - e.g., slots
@@ -30,7 +31,7 @@ export default function login(socket) {
         feet: char.equipment.feet
       };
 
-      socket.emit('loginSuccessful', {loginUser, loginEquipment: equipment});
+      socket.emit('loginSuccessful', {loginUser, loginEquipment: equipment, effects: char.effects});
     })
     .catch(err => socket.emit('loginFail', err));
   });

@@ -1,6 +1,6 @@
 'use strict';
 
-import {incrementCreationStep, createNew, endCreation, setUsername, setFirstPassword, setCreationStep} from '../../app/actions/login-actions.js';
+import {incrementCreationStep, createNew, endCreation, setUsername, setFirstPassword, setCreationStep, loginEffects, loginUser, loginEquipment} from '../../app/actions/login-actions.js';
 
 describe('Login actions', () => {
   describe('incrementCreationStep', () => {
@@ -36,6 +36,24 @@ describe('Login actions', () => {
   describe('setCreationStep', () => {
     it('should return an object with type "SET_CREATION_STEP" and payload of the number passed in', () => {
       expect(setCreationStep({step: 4})).toEqual({type: 'SET_CREATION_STEP', payload: 4});
+    });
+  });
+
+  describe('loginEffects', () => {
+    it('should return an object with type "LOGIN_EFFECTS" and payload of whatever was passed in', () => {
+      expect(loginEffects({yarp: 'yep'})).toEqual({type: 'LOGIN_EFFECTS', payload: {yarp: 'yep'}});
+    });
+  });
+
+  describe('loginUser', () => {
+    it('should return an object with a type of "LOGIN_USER" and payload of whatever got passed in', () => {
+      expect(loginUser('bob')).toEqual({type: 'LOGIN_USER', payload: 'bob'});
+    });
+  });
+
+  describe('loginEquipment', () => {
+    it('should return an object with a type of "LOGIN_EQUIPMENT" and payload of whatever got passed in', () => {
+      expect(loginEquipment({ayy: 'dude'})).toEqual({type: 'LOGIN_EQUIPMENT', payload: {ayy: 'dude'}});
     });
   });
 });

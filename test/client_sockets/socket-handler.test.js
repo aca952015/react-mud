@@ -8,15 +8,15 @@ import newMob from '../../app/data/mobs.js';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 import {newMessage} from '../../app/actions/message-actions.js';
-import {enterCombat, damageUser, slayEnemy} from '../../app/actions/combat-actions.js';
+import {enterCombat, damageUser, slayEnemy, escapeCombat, addEffect, removeEffect, fullRestore} from '../../app/actions/combat-actions.js';
 import whisperProcessor from '../../app/processors/whisper-processor.js';
 import moveProcessor from '../../app/processors/move-processor.js';
 import {getItem, dropItem, getAll, dropAll} from '../../app/actions/inventory-actions.js';
 import {changeRoom} from '../../app/actions/move-actions.js';
-import {loginUser, loginEquipment, tickRegen} from '../../app/actions/user-actions.js';
+import {tickRegen} from '../../app/actions/user-actions.js';
 import {initialState as user} from '../../app/data/user-initial-state.js';
 import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
-import {endCreation, setCreationStep, setUsername, incrementCreationStep} from '../../app/actions/login-actions.js';
+import {endCreation, setCreationStep, setUsername, incrementCreationStep, loginUser, loginEquipment, loginEffects} from '../../app/actions/login-actions.js';
 import newItem from '../../app/data/items.js';
 
 describe('socketHandlers', () => {
@@ -32,7 +32,8 @@ describe('socketHandlers', () => {
     combat: {
       active: true,
       targets: [{id: 1, target: 'Some test thing'}]
-    }
+    },
+    effects: {}
   };
   beforeEach(done => {
     player1 = io.connect(url, ioOptions);
@@ -117,6 +118,7 @@ describe('socketHandlers', () => {
           expect(props.dispatch.calledWith(setCreationStep({step: 0}))).toEqual(true);
           expect(props.dispatch.calledWith(loginUser(res.loginUser))).toEqual(true);
           expect(props.dispatch.calledWith(loginEquipment(res.loginEquipment))).toEqual(true);
+          expect(props.dispatch.calledWith(loginEffects(res.effects))).toEqual(true);
           expect(props.dispatch.calledWith(changeRoom('Nexus'))).toEqual(true);
           done();
         });
@@ -254,25 +256,83 @@ describe('socketHandlers', () => {
   });
 
   describe('damage', () => {
-    it('should dispatch damageUser and newMessage', done => {
-      player1.emit('testDamage');
-      player1.on('damage', dmgObj => {
-        expect(props.dispatch.calledWith(damageUser(dmgObj.damage))).toEqual(true);
-        expect(props.dispatch.calledWith((newMessage({
-          combatLog: {
-            from: {
-              enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
-            },
-            pre: ' deals ',
-            damage: dmgObj.damage,
-            post: ' damage to ',
-            target: {
-              friendly: 'you'
-            },
-            punctuation: '.'
-          }
-        })))).toEqual(true);
-        done();
+    describe('With less damage than the user\'s health', () => {
+      it('should dispatch damageUser and newMessage', done => {
+        player1.emit('testDamage');
+        player1.on('damage', dmgObj => {
+          expect(props.dispatch.calledWith(damageUser(dmgObj.damage))).toEqual(true);
+          expect(props.dispatch.calledWith((newMessage({
+            combatLog: {
+              from: {
+                enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
+              },
+              pre: ' deals ',
+              damage: dmgObj.damage,
+              post: ' damage to ',
+              target: {
+                friendly: 'you'
+              },
+              punctuation: '.'
+            }
+          })))).toEqual(true);
+          done();
+        });
+      });
+    });
+
+    describe('With enough damage to reduce the user to 0 or less HP', () => {
+      let player5;
+      let lowHealthPropsWhileAlive = {...props, dispatch: sinon.spy(), hp: 1};
+      let lowHealthPropsWhileDead = {...props, hp: 1, dispatch: sinon.spy(), effects: {death: true}};
+
+      describe('If they are not already dead', () => {
+        beforeEach(done => {
+          player5 = io.connect(url, ioOptions);
+          player5.on('connect', () => {
+            socketHandlers({socket: player5, props: lowHealthPropsWhileAlive});
+            done();
+          });
+        });
+
+        afterEach(done => {
+          player5.disconnect();
+          done();
+        });
+
+        it('should dispatch a SLAIN message, addEffect with death, and emit an update effects', done => {
+          player5.emit('testDamage');
+          player5.on('damage', () => {
+            expect(lowHealthPropsWhileAlive.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(true);
+            expect(lowHealthPropsWhileAlive.dispatch.calledWith(escapeCombat())).toEqual(true);
+            expect(lowHealthPropsWhileAlive.dispatch.calledWith(addEffect('death'))).toEqual(true);
+            done();
+          });
+        });
+      });
+
+      describe('If they\'ve already been killed', () => {
+        beforeEach(done => {
+          player5 = io.connect(url, ioOptions);
+          player5.on('connect', () => {
+            socketHandlers({socket: player5, props: lowHealthPropsWhileDead});
+            done();
+          });
+        });
+
+        afterEach(done => {
+          player5.disconnect();
+          done();
+        });
+
+        it('should not dispatch the various death effects', done => {
+          player5.emit('testDamage');
+          player5.on('damage', () => {
+            expect(lowHealthPropsWhileDead.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(false);
+            expect(lowHealthPropsWhileDead.dispatch.calledWith(escapeCombat())).toEqual(false);
+            expect(lowHealthPropsWhileDead.dispatch.calledWith(addEffect('death'))).toEqual(false);
+            done();
+          });
+        });
       });
     });
   });
@@ -329,10 +389,67 @@ describe('socketHandlers', () => {
   });
 
   describe('tickListeners', () => {
-    it('should dispatch tickRegen', done => {
-      player1.emit('triggerTick');
-      player1.on('tick', () => {
-        expect(props.dispatch.calledWith(tickRegen())).toEqual(true);
+    describe('If not dead', () => {
+      it('should dispatch tickRegen', done => {
+        player1.emit('triggerTick');
+        player1.on('tick', () => {
+          expect(props.dispatch.calledWith(tickRegen())).toEqual(true);
+          done();
+        });
+      });
+    });
+
+    describe('If dead', () => {
+      let player6, deadProps = {...props, dispatch: sinon.spy(), effects: {death: true}};
+      beforeEach(done => {
+        player6 = io.connect(url, ioOptions);
+        player6.on('connect', () => {
+          socketHandlers({socket: player6, props: deadProps});
+          done();
+        });
+      });
+
+      afterEach(done => {
+        player6.disconnect();
+        done();
+      });
+
+      it('should not call tickRegen', done => {
+        player6.emit('triggerTick');
+        player6.on('tick', () => {
+          expect(deadProps.dispatch.calledWith(tickRegen())).toEqual(false);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('resurrect', () => {
+    let player7, socketSpy, resProps = {...props, dispatch: sinon.spy(), maxHP: 20};
+    beforeEach(done => {
+      player7 = io.connect(url, ioOptions);
+      socketSpy = sinon.spy(player7, 'emit');
+      player7.emit('updateEffects', {death: true});
+      player7.emit('teleport', 'Nexus');
+      player7.emit('updateSocket');
+      player7.on('updateComplete', () => {
+        socketHandlers({socket: player7, props: resProps});
+        done();
+      });
+    });
+
+    afterEach(done => {
+      player7.disconnect();
+      done();
+    });
+
+    it('should dispatch fullRestore, damage the user for half health, remove the death effect, and emit the new effects', done => {
+      player7.emit('resurrect');
+      player7.on('resurrect', () => {
+        expect(resProps.dispatch.calledWith(fullRestore())).toEqual(true);
+        expect(resProps.dispatch.calledWith(damageUser(Math.round(resProps.maxHP / 2)))).toEqual(true);
+        expect(resProps.dispatch.calledWith(removeEffect('death'))).toEqual(true);
+        expect(socketSpy.calledWith('updateEffects', {})).toEqual(true);
         done();
       });
     });

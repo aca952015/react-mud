@@ -10,7 +10,10 @@ export const Communication = props => {
   // Give quotes a variable because the editor highlights strangely otherwise.
   let selfWhisper = props.message.commType === ' whispers something quietly.';
   let thirdParty = props.message.commType === ' whispers something to ';
-  let theFrom = props.message.from.toLowerCase() === props.username.toLowerCase() ? 'You' : props.message.from;
+  let ghostCheck = props.message.from.split('The ghost of ')[1];
+  if (ghostCheck) ghostCheck = ghostCheck.toLowerCase() === props.username.toLowerCase();
+  let theFrom = props.message.from.toLowerCase() === props.username.toLowerCase() || ghostCheck ? 'You' : props.message.from;
+
   let quotes = '"';
 
   // If there's a target, show it. Use the above variables to decide on correct grammar.

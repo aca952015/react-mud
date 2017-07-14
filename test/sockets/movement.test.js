@@ -53,26 +53,88 @@ describe('movement', () => {
       });
     });
 
-    it('should emit a generalMessage event with feedback, occupants, mobs, and room', done => {
-      player1.emit('move', {direction: 'down'});
-      player1.on('generalMessage', res => {
-        let townSquare = roomData['Town Square'];
-        expect(res.feedback).toEqual('You move down.');
-        expect(res.occupants).toEqual([]);
-        expect(res.room.name).toEqual(townSquare.name);
-        expect(res.room.desc).toEqual(townSquare.desc);
-        expect(res.room.exits).toEqual(townSquare.exits);
-        expect(res.mobs).toEqual(townSquare.mobs);
-        done();
+    describe('With no dead players', () => {
+      it('should emit a generalMessage event with feedback, occupants, mobs, and room', done => {
+        player1.emit('move', {direction: 'down'});
+        player1.on('generalMessage', res => {
+          let townSquare = roomData['Town Square'];
+          expect(res.feedback).toEqual('You move down.');
+          expect(res.occupants).toEqual([]);
+          expect(res.room.name).toEqual(townSquare.name);
+          expect(res.room.desc).toEqual(townSquare.desc);
+          expect(res.room.exits).toEqual(townSquare.exits);
+          expect(res.mobs).toEqual(townSquare.mobs);
+          done();
+        });
       });
     });
 
-    it('should emit a movementLeave event to other users in the room', done => {
-      player1.emit('move', {direction: 'down'});
-      player2.on('movementLeave', res => {
-        expect(res.username).toEqual('player1');
-        expect(res.direction).toEqual('down');
+    describe('With a dead player', () => {
+      let player3;
+      beforeEach(done => {
+        player3 = io.connect(url, ioOptions);
+        player3.on('connect', () => {
+          player3.emit('teleport', 'Nexus');
+          player3.emit('changeName', 'player3');
+          player3.emit('updateEffects', {death: true});
+          player3.emit('updateSocket');
+          player1.emit('move', {direction: 'down'});
+          player3.on('updateComplete', () => done());
+        });
+      });
+
+      afterEach(done => {
+        player3.disconnect();
         done();
+      });
+
+      it('should show a ghost in the occupants', done => {
+        player1.emit('move', {direction: 'up'});
+        player1.on('generalMessage', res => {
+          expect(res.occupants).toEqual(['player2', 'The ghost of player3']);
+          done();
+        });
+      });
+    });
+
+    describe('To other users in the room', () => {
+      describe('If the mover is alive', () => {
+        it('should emit a movementLeave event to other users in the room', done => {
+          player1.emit('move', {direction: 'down'});
+          player2.on('movementLeave', res => {
+            expect(res.username).toEqual('player1');
+            expect(res.direction).toEqual('down');
+            done();
+          });
+        });
+      });
+
+      describe('If the mover is dead', () => {
+        let player3;
+
+        beforeEach(done => {
+          player3 = io.connect(url, ioOptions);
+          player3.on('connect', () => {
+            player3.emit('teleport', 'Nexus');
+            player3.emit('changeName', 'player3');
+            player3.emit('updateEffects', {death: true});
+            player3.emit('updateSocket');
+            player3.on('updateComplete', () => done());
+          });
+        });
+
+        afterEach(done => {
+          player3.disconnect();
+          done();
+        });
+
+        it('should emit a movementLeave event with a ghost from', done => {
+          player3.emit('move', {direction: 'down'});
+          player1.on('movementLeave', res => {
+            expect(res.username).toEqual('The ghost of player3');
+            done();
+          });
+        });
       });
     });
   });

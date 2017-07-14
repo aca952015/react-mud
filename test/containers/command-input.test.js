@@ -18,7 +18,8 @@ describe('<CommandInput />', () => {
       dispatch: sinon.spy(),
       prevCommands: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21'],
       commandIndex: 1,
-      username: 'Tester'
+      username: 'Tester',
+      effects: {}
     };
     commandInput = shallow(<CommandInput {...props} />);
     done();

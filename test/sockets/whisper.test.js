@@ -36,13 +36,35 @@ describe('Whisper', () => {
   });
 
   describe('With a valid whisper target in the room', () => {
-    it('should emit a whisperSuccess event to everyone', done => {
-      player1.emit('whisper', {target: 'player2', text: 'ayy'});
-      player1.on('whisperSuccess', res => {
-        expect(res.text).toEqual('ayy');
-        expect(res.from).toEqual('player1');
-        expect(res.target).toEqual('player2');
-        done();
+    describe('With a living whisperer', () => {
+      it('should emit a whisperSuccess event to everyone', done => {
+        player1.emit('whisper', {target: 'player2', text: 'ayy'});
+        player1.on('whisperSuccess', res => {
+          expect(res.text).toEqual('ayy');
+          expect(res.from).toEqual('player1');
+          expect(res.target).toEqual('player2');
+          done();
+        });
+      });
+    });
+
+    describe('With a dead whisperer to a dead target', () => {
+      beforeEach(done => {
+        player1.emit('updateEffects', {death: true});
+        player2.emit('updateEffects', {death: true});
+        player1.emit('updateSocket');
+        player2.emit('updateSocket');
+        player2.on('updateComplete', () => done());
+      });
+
+      it('should emit a whisperSuccess event to everyone with a ghost', done => {
+        player1.emit('whisper', {target: 'player2', text: 'ayy'});
+        player1.on('whisperSuccess', res => {
+          expect(res.text).toEqual('ayy');
+          expect(res.from).toEqual('The ghost of player1');
+          expect(res.target).toEqual('The ghost of player2');
+          done();
+        });
       });
     });
   });

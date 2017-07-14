@@ -18,7 +18,11 @@ describe('give', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
       alien.emit('changeName', 'alien');
-      done();
+      player1.emit('updateEffects', {});
+      player2.emit('updateEffects', {});
+      alien.emit('updateEffects', {});
+      alien.emit('updateSocket');
+      alien.on('updateComplete', () => done());
     });
   });
 
@@ -80,13 +84,41 @@ describe('give', () => {
 
   describe('To a valid player in the same room', () => {
     describe('With a give event', () => {
-      it('should emit a generalMessage event', done => {
-        player1.emit('give', {...giveObj, target: 'player2'});
-        player2.on('generalMessage', res => {
-          expect(res.from).toEqual('player1');
-          expect(res.interaction).toEqual(` gives ${giveObj.item.short} to `);
-          expect(res.target).toEqual('player2');
+      describe('To a living person', () => {
+        it('should emit a generalMessage event', done => {
+          player1.emit('give', {...giveObj, target: 'player2'});
+          player2.on('generalMessage', res => {
+            expect(res.from).toEqual('player1');
+            expect(res.interaction).toEqual(` gives ${giveObj.item.short} to `);
+            expect(res.target).toEqual('player2');
+            done();
+          });
+        });
+      });
+
+      describe('To a ghost', () => {
+        let player3;
+        beforeEach(done => {
+          player3 = io.connect('http://0.0.0.0:5000', ioOptions);
+          player3.on('connect', () => {
+            player3.emit('changeName', 'player3');
+            player3.emit('updateEffects', {death: true});
+            player3.emit('updateSocket');
+            player3.on('updateComplete', () => done());
+          });
+        });
+
+        afterEach(done => {
+          player3.disconnect();
           done();
+        });
+
+        it('should emit a generalMessage event saying they can\'t do that', done => {
+          player1.emit('give', {...giveObj, target: 'player3'});
+          player1.on('generalMessage', res => {
+            expect(res.feedback).toEqual('You can\'t give things to ghosts.');
+            done();
+          });
         });
       });
     });

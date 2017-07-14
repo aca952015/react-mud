@@ -10,6 +10,9 @@ export default function lookInContainer(socket, roomData) {
     if (!container.container) return socket.emit('generalMessage', {feedback: 'That isn\'t a container.'});
 
     socket.emit('generalMessage', {containedItems: container.container.contains});
-    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` looks in ${container.short}.`});
+    socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
+      from: socket.effects.death ? `The ghost of ${socket.username}` : socket.username,
+      feedback: ` looks in ${container.short}.`
+    });
   });
 }

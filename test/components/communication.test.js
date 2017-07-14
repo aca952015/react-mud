@@ -50,6 +50,19 @@ describe('<Communication />', () => {
     expect(comms.find('span').at(2).text()).toEqual(`\"${props.message.text}\"`);
   });
 
+  it('should render "The ghost of so-and-so says" if the from has The ghost of in it', () => {
+    props = {
+      username: 'Tester',
+      message: {
+        from: 'The ghost of TestR',
+        commType: ' says, ',
+        text: 'Ayy'
+      }
+    };
+    comms = shallow(<Communication {...props} />);
+    expect(comms.find('span.source').first().text()).toEqual('The ghost of TestR');
+  });
+
   it('should render \'You whisper to <target>, "Message"\' when a user enters "whisper <target> <message>"', () => {
     props = {
       username: 'TestR',

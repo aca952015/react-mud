@@ -12,6 +12,27 @@ export function endCreation() {
   return {type: 'CHARACTER_COMPLETE'};
 }
 
+export function loginEffects(effects) {
+  return {
+    type: 'LOGIN_EFFECTS',
+    payload: effects
+  };
+}
+
+export function loginUser(char) {
+  return {
+    type: 'LOGIN_USER',
+    payload: char
+  };
+}
+
+export function loginEquipment(equipment) {
+  return {
+    type: 'LOGIN_EQUIPMENT',
+    payload: equipment
+  };
+}
+
 export function setUsername(username) {
   return {
     type: 'SET_USERNAME',

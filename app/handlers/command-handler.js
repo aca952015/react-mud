@@ -20,7 +20,7 @@ import {newMessage} from '../actions/message-actions.js';
 export default function commandHandler(command, args, props) {
   // Disable commands other than "new" and character name if logging in
   if (props.currentRoom === 'Login Room') return loginHandler(command, args, props);
-  
+
   const commandShorthand = {
     'e': 'east',
     'w': 'west',
@@ -36,6 +36,25 @@ export default function commandHandler(command, args, props) {
     'rm': 'remove',
     'desc': 'description'
   };
+
+  const deathFunctions = [
+    'say',
+    'whisper',
+    'east',
+    'north',
+    'west',
+    'south',
+    'up',
+    'down',
+    'look',
+    'who',
+    'help',
+    'inventory',
+    'examine',
+    'equipment',
+    'description',
+    'resurrect'
+  ];
 
   const helperFunctions = {
     'say': communicationHandler,
@@ -62,11 +81,19 @@ export default function commandHandler(command, args, props) {
     'wear': wearHandler,
     'remove': removeHandler,
     'equipment': {funcsToCall: [newMessage], equipment: props.equipment},
-    'description': descriptionHandler
+    'description': descriptionHandler,
+    'resurrect': {emitType: 'resurrect'}
   };
 
   if (commandShorthand[command]) command = commandShorthand[command];
   if (args && commandShorthand[args.toLowerCase()]) args = commandShorthand[args.toLowerCase()];
+
+  if (props.effects.death && !deathFunctions.includes(command)) {
+    return {
+      funcsToCall: [newMessage],
+      feedback: 'You can\'t do that while dead. You\'ll have to get resurrected first.'
+    };
+  }
 
   if (helperFunctions[command]) {
     if (typeof(helperFunctions[command]) === 'object') return helperFunctions[command];

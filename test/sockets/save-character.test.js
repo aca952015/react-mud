@@ -37,12 +37,12 @@ describe('save character', function() {
       .hashPassword('banana')
       .then(char => {
         this.tempChar = char._doc;
+        this.tempChar.effects = {};
+        char.effects = {};
+        char.markModified('effects');
         return char.save();
       })
-      .then(() => {
-        delete this.tempChar._id;
-        done();
-      });
+      .then(done);
     });
 
     it('should update the character', done => {
@@ -52,7 +52,7 @@ describe('save character', function() {
         equipment: {
           ...this.tempChar.equipment,
           head: helm
-        }
+        },
       });
       player1.on('generalMessage', res => {
         expect(res.feedback).toEqual('Character saved.');
@@ -65,7 +65,7 @@ describe('save character', function() {
     it('should return a generalMessage with an error', done => {
       player1.emit('saveCharacter', {_id: '4a', username: 'duder'});
       player1.on('generalMessage', res => {
-        expect(res.feedback).toEqual('Error saving character.');
+        expect(res.feedback).toEqual(`Error saving character: ${res.err.message}.`);
         done();
       });
     });

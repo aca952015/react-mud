@@ -12,7 +12,8 @@ export default function createCharacter(socket) {
     const tempCharacter = {
       ...equipment,
       ...user,
-      username: character.newUsername
+      username: character.newUsername,
+      effects: {}
     };
 
     const loginUser = {
@@ -26,7 +27,7 @@ export default function createCharacter(socket) {
     .then(_char => _char.save())
     .then(_char => {
       socket.emit('generalMessage', {feedback: 'Character created.'});
-      socket.emit('loginSuccessful', {loginUser: {...loginUser, _id: _char._id}, loginEquipment});
+      socket.emit('loginSuccessful', {loginUser: {...loginUser, _id: _char._id}, loginEquipment, effects: tempCharacter.effects});
     })
     .catch(err => socket.emit('generalMessage', {feedback: err}));
   });

@@ -1,7 +1,7 @@
 'use strict';
 
 import {newMessage} from '../actions/message-actions.js';
-import {enterCombat, damageUser, slayEnemy} from '../actions/combat-actions.js';
+import {enterCombat, damageUser, slayEnemy, addEffect, escapeCombat} from '../actions/combat-actions.js';
 import combatProcessor from '../processors/combat-processor.js';
 
 export default function combatHandlers(homeCtx) {
@@ -40,6 +40,14 @@ export default function combatHandlers(homeCtx) {
         punctuation: '.'
       }
     }));
+    if (homeCtx.props.hp - dmgObj.damage <= 0 && !homeCtx.props.effects.death) {
+      props.dispatch(newMessage({feedback: 'You have been SLAIN!'}));
+      props.dispatch(escapeCombat());
+      socket.emit('escapeCombat');
+      socket.emit('playerDeath');
+      props.dispatch(addEffect('death'));
+      socket.emit('updateEffects', {...homeCtx.props.effects, death: true});
+    }
   });
   socket.on('slayEnemy', enemy => props.dispatch(slayEnemy(enemy)));
   socket.on('combatTick', () => {

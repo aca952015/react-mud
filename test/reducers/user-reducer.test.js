@@ -147,6 +147,12 @@ describe('user reducer', () => {
     });
   });
 
+  describe('With a FULL_RESTORE action', () => {
+    it('should set the user\'s HP and MP to max', () => {
+      expect(reducer({...initialState, hp: initialState.maxHP - 5, mp: initialState.maxMP - 5}, {type: 'FULL_RESTORE'})).toEqual(initialState);
+    });
+  });
+
   describe('GET_ALL', () => {
     describe('From the room or the contents of a container in the room', () => {
       it('should concatenate the current inventory with the item array from the payload', () => {
