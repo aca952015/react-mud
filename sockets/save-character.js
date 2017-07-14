@@ -6,6 +6,8 @@ export default function disconnect(socket, users) {
   socket.on('saveCharacter', character => {
     Character.findById(character._id)
     .then(char => {
+      delete character._id; // Used to prevent issues of trying to overwrite IDs and getting errors
+      
       // findByIdAndUpdate does not work on effects, so it must be saved using the markModified and
       // manual save functions.
       char.effects = character.effects;
