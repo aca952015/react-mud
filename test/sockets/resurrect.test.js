@@ -52,4 +52,24 @@ describe('resurrect', () => {
       });
     });
   });
+
+  describe('If the user isn\'t dead', () => {
+    it('should tell the user they aren\'t dead', done => {
+      player2.emit('resurrect');
+      player2.on('generalMessage', res => {
+        expect(res.feedback).toEqual('You aren\'t dead.');
+        done();
+      });
+    });
+  });
+
+  describe('If the user is a dead and in front of a healer', () => {
+    it('should return a generalMessage with a blessing', done => {
+      player1.emit('resurrect');
+      player1.on('generalMessage', res => {
+        expect(res.interaction).toEqual(' closes her eyes, utters a blessing, and holds her palms above ');
+        done();
+      });
+    });
+  });
 });
