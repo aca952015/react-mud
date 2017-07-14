@@ -44,6 +44,16 @@ describe('Kill', () => {
     });
   });
 
+  describe('On a non-killable target', () => {
+    it('should return feedback that that target can\'t be attacked', done => {
+      player1.emit('kill', {target: 'healer'});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('You can\'t attack them.');
+        done();
+      });
+    });
+  });
+
   describe('With dot notation', () => {
     describe('On an enemy that exists', () => {
       describe('With fuzzy matching', () => {
