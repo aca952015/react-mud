@@ -35,6 +35,22 @@ describe('whisperProcessor', () => {
         });
       });
     });
+
+    describe('If the user is dead', () => {
+      it('should return a whisper object with the appropriate fields', () => {
+        let result = {
+          from: 'TestR',
+          target: 'The ghost of TestR',
+          text: 'Ayy'
+        };
+        expect(whisperProcessor(result, 'TestR')).toEqual({
+          text: result.text,
+          from: 'You ',
+          target: null,
+          commType: 'whisper to yourself, '
+        });
+      });
+    });
   });
 
   describe('If the whisperer is another user, targeting the user', () => {
