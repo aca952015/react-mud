@@ -5,7 +5,8 @@ export default function whisperProcessor(result, username) {
   // If the message is to yourself, toYourself is true.
   // If the user is a third party to a user whispering to themselves, sameTarget is true.
   let toYourself = result.target.toLowerCase() === username.toLowerCase();
-  let ghostCheck = result.from.split('The ghost of ')[1].toLowerCase();
+  let ghostCheck = result.from.split('The ghost of ')[1];
+  if (ghostCheck) ghostCheck = ghostCheck.toLowerCase();
   let sameTarget = result.from.toLowerCase() === result.target.toLowerCase();
   if (!sameTarget) sameTarget = ghostCheck === result.target.toLowerCase();
 
