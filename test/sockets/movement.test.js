@@ -53,17 +53,47 @@ describe('movement', () => {
       });
     });
 
-    it('should emit a generalMessage event with feedback, occupants, mobs, and room', done => {
-      player1.emit('move', {direction: 'down'});
-      player1.on('generalMessage', res => {
-        let townSquare = roomData['Town Square'];
-        expect(res.feedback).toEqual('You move down.');
-        expect(res.occupants).toEqual([]);
-        expect(res.room.name).toEqual(townSquare.name);
-        expect(res.room.desc).toEqual(townSquare.desc);
-        expect(res.room.exits).toEqual(townSquare.exits);
-        expect(res.mobs).toEqual(townSquare.mobs);
+    describe('With no dead players', () => {
+      it('should emit a generalMessage event with feedback, occupants, mobs, and room', done => {
+        player1.emit('move', {direction: 'down'});
+        player1.on('generalMessage', res => {
+          let townSquare = roomData['Town Square'];
+          expect(res.feedback).toEqual('You move down.');
+          expect(res.occupants).toEqual([]);
+          expect(res.room.name).toEqual(townSquare.name);
+          expect(res.room.desc).toEqual(townSquare.desc);
+          expect(res.room.exits).toEqual(townSquare.exits);
+          expect(res.mobs).toEqual(townSquare.mobs);
+          done();
+        });
+      });
+    });
+
+    describe('With a dead player', () => {
+      let player3;
+      beforeEach(done => {
+        player3 = io.connect(url, ioOptions);
+        player3.on('connect', () => {
+          player3.emit('teleport', 'Nexus');
+          player3.emit('changeName', 'player3');
+          player3.emit('updateEffects', {death: true});
+          player3.emit('updateSocket');
+          player1.emit('move', {direction: 'down'});
+          player3.on('updateComplete', () => done());
+        });
+      });
+
+      afterEach(done => {
+        player3.disconnect();
         done();
+      });
+
+      it('should show a ghost in the occupants', done => {
+        player1.emit('move', {direction: 'up'});
+        player1.on('generalMessage', res => {
+          expect(res.occupants).toEqual(['player2', 'The ghost of player3']);
+          done();
+        });
       });
     });
 

@@ -9,7 +9,7 @@ export default function movement(socket, users, roomInfo) {
     if (movement.direction !== 'login') {
       if (roomInfo[socket.currentRoom].exits[movement.direction].locked) return socket.emit('generalMessage', {feedback: 'That way is locked.'});
       socket.broadcast.to(socket.currentRoom).emit('movementLeave', {
-        username: socket.effects.death ? `The ghost of ${socket.username}` : socket.username, 
+        username: socket.effects.death ? `The ghost of ${socket.username}` : socket.username,
         direction: movement.direction});
       socket.leave(socket.currentRoom);
 
