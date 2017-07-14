@@ -279,39 +279,37 @@ describe('socketHandlers', () => {
       });
     });
 
-    // describe('With enough damage to reduce the user to 0 or less HP', () => {
-    //   let player5;
-    //   let lowHealthPropsWhileAlive = {...props, hp: 1};
-    //   let lowHealthPropsWhileDead = {...props, hp: 1, effects: {death: true}};
-    //
-    //   describe('If they are not already dead', () => {
-    //     beforeEach(done => {
-    //       lowHealthPropsWhileAlive = {...props, hp: 1};
-    //       player5 = io.connect(url, ioOptions);
-    //       player5.on('connect', () => {
-    //         socketHandlers({socket: player5, lowHealthPropsWhileAlive});
-    //         done();
-    //       });
-    //     });
-    //
-    //     afterEach(done => {
-    //       player5.disconnect();
-    //       done();
-    //     });
-    //
-    //     it('should dispatch a SLAIN message, addEffect with death, and emit an update effects', done => {
-    //       player5.emit('testDamage');
-    //       player5.on('damage', () => {
-    //         // expect(lowHealthPropsWhileAlive.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(true);
-    //         // expect(lowHealthPropsWhileAlive.dispatch.calledWith(escapeCombat())).toEqual(true);
-    //         // expect(lowHealthPropsWhileAlive.socket.emit.calledWith('escapeCombat')).toEqual(true);
-    //         // expect(lowHealthPropsWhileAlive.socket.emit.calledWith('playerDeath')).toEqual(true);
-    //         // expect(lowHealthPropsWhileAlive.dispatch.calledWith(addEffect('death'))).toEqual(true);
-    //         done();
-    //       });
-    //     });
-    //   });
-    // });
+    describe('With enough damage to reduce the user to 0 or less HP', () => {
+      let player5;
+      let lowHealthPropsWhileAlive = {...props, dispatch: sinon.spy(), hp: 1};
+      let lowHealthPropsWhileDead = {...props, hp: 1, dispatch: sinon.spy(), effects: {death: true}};
+
+      describe('If they are not already dead', () => {
+        beforeEach(done => {
+          lowHealthPropsWhileAlive = {...props, hp: 1};
+          player5 = io.connect(url, ioOptions);
+          player5.on('connect', () => {
+            socketHandlers({socket: player5, props: lowHealthPropsWhileAlive});
+            done();
+          });
+        });
+
+        afterEach(done => {
+          player5.disconnect();
+          done();
+        });
+
+        it('should dispatch a SLAIN message, addEffect with death, and emit an update effects', done => {
+          player5.emit('testDamage');
+          player5.on('damage', () => {
+            expect(lowHealthPropsWhileAlive.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(true);
+            expect(lowHealthPropsWhileAlive.dispatch.calledWith(escapeCombat())).toEqual(true);
+            expect(lowHealthPropsWhileAlive.dispatch.calledWith(addEffect('death'))).toEqual(true);
+            done();
+          });
+        });
+      });
+    });
   });
 
   describe('slayEnemy', () => {
