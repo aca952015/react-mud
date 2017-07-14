@@ -9,7 +9,9 @@ export default function rezzHandler(homeCtx) {
   socket.on('resurrect', () => {
     props.dispatch(fullRestore());
     props.dispatch(damageUser(Math.round(homeCtx.props.maxHP / 2)));
-    Promise.resolve(props.dispatch(removeEffect('death')))
-    .then(() => socket.emit('updateEffects', homeCtx.props.effects));
+    props.dispatch(removeEffect('death'));
+    let transmittedEffects = {...homeCtx.props.effects};
+    delete transmittedEffects.death;
+    socket.emit('updateEffects', transmittedEffects);
   });
 }
