@@ -40,7 +40,7 @@ export default function combatHandlers(homeCtx) {
         punctuation: '.'
       }
     }));
-    if (homeCtx.props.hp - dmgObj.damage <= 0 && !homeCtx.props.effects.death) {
+    if (homeCtx.props.hp <= 0 && !homeCtx.props.effects.death) {
       props.dispatch(newMessage({feedback: 'You have been SLAIN!'}));
       props.dispatch(escapeCombat());
       socket.emit('escapeCombat');
