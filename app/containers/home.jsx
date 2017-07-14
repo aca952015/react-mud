@@ -8,6 +8,7 @@ import Messages from './messages.jsx';
 import CommandInput from './command-input.jsx';
 import {Prompt} from '../components/prompt.jsx';
 import {updateInput} from '../actions/message-actions.js';
+import saveCharacter from '../../lib/save-character.js';
 import socketHandlers from '../client_sockets/socket-handlers.js';
 
 function mapStateToProps(state) {
@@ -42,14 +43,7 @@ export class Home extends Component {
     // Upon closing the tab, remove user from combat with all mobs, save the character on the server's
     // database, then emit a disconnect event for the server to handle.
     window.addEventListener('beforeunload', () => {
-      const character = {
-        ...this.props.user,
-        equipment: this.props.equipment,
-        effects: this.props.effects
-      };
-      this.socket.emit('saveCharacter', character);
-      this.socket.emit('escapeCombat');
-      this.socket.emit('disconnect');
+      saveCharacter(this);
     });
     document.querySelector('input').focus();
   }
