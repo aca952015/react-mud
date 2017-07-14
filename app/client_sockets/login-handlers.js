@@ -2,6 +2,7 @@
 
 import {loginUser, loginEquipment} from '../actions/user-actions.js';
 import {setUsername, incrementCreationStep, endCreation, setCreationStep, loginEffects} from '../actions/login-actions.js';
+import {escapeCombat} from '../actions/combat-actions.js';
 import {newMessage} from '../actions/message-actions.js';
 import {changeRoom} from '../actions/move-actions.js';
 
@@ -25,11 +26,13 @@ export default function loginHandlers(homeCtx) {
     socket.emit('changeName', char.loginUser.username);
     socket.emit('changeDescription', {playerDescription: char.loginUser.description});
     socket.emit('updateEquipment', char.loginEquipment);
+    socket.emit('updateEffects', char.effects);
     props.dispatch(endCreation());
     props.dispatch(setCreationStep({step: 0}));
     props.dispatch(loginUser(char.loginUser));
     props.dispatch(loginEquipment(char.loginEquipment));
     props.dispatch(loginEffects(char.effects));
+    props.dispatch(escapeCombat());
     if (homeCtx.props.currentRoom === 'Login Room') {
       props.dispatch(changeRoom('Nexus'));
       socket.emit('teleport', 'Nexus');
