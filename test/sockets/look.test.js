@@ -309,12 +309,42 @@ describe('look', () => {
   });
 
   describe('With the user seeing a player look at an examine', () => {
-    it('should show "player1 looks at <examine name>."', done => {
-      player1.emit('look', {target: 'ztest'});
-      player2.on('generalMessage', res => {
-        expect(res.feedback).toEqual(` looks at ${roomData['Nexus'].examines[0].name}.`);
-        expect(res.from).toEqual('player1');
+    describe('If the player is alive', () => {
+      it('should show "player1 looks at <examine name>."', done => {
+        player1.emit('look', {target: 'ztest'});
+        player2.on('generalMessage', res => {
+          expect(res.feedback).toEqual(` looks at ${roomData['Nexus'].examines[0].name}.`);
+          expect(res.from).toEqual('player1');
+          done();
+        });
+      });
+    });
+
+    describe('If the player is dead', () => {
+      let player3;
+      beforeEach(done => {
+        player3 = io.connect('http://0.0.0.0:5000', ioOptions);
+        player3.on('connect', () => {
+          player3.emit('changeName', 'player3');
+          player3.emit('teleport', 'Nexus');
+          player3.emit('updateEffects', {death: true});
+          player3.emit('updateSocket');
+          player3.on('updateComplete', () => done());
+        });
+      });
+
+      afterEach(done => {
+        player3.disconnect();
         done();
+      });
+
+      it('should show "the ghost of so-and-so" looks at an item', done => {
+        player3.emit('look', {target: 'ztest'});
+        player1.on('generalMessage', res => {
+          expect(res.from).toEqual('The ghost of player3');
+          expect(res.feedback).toEqual(' looks at ztest.');
+          done();
+        });
       });
     });
   });
