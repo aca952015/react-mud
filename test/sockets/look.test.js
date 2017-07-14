@@ -159,8 +159,37 @@ describe('look', () => {
           });
         });
       });
+
+      describe('If the user is dead', () => {
+        let player3;
+
+        beforeEach(done => {
+          player3 = io.connect('http://0.0.0.0:5000', ioOptions);
+          player3.on('connect', () => {
+            player3.emit('changeName', 'player3');
+            player3.emit('teleport', 'Nexus');
+            player3.emit('updateEffects', {death: true});
+            player3.emit('updateSocket');
+            player3.on('updateComplete', () => done());
+          });
+        });
+
+        afterEach(done => {
+          player3.disconnect();
+          done();
+        });
+
+        it('should show "the ghost of so-and-so" looks at an item', done => {
+          player3.emit('look', {target: 'pot'});
+          player1.on('generalMessage', res => {
+            expect(res.from).toEqual('The ghost of player3');
+            expect(res.feedback).toEqual(' looks at a red potion.');
+            done();
+          });
+        });
+      });
     });
-    
+
     describe('With fuzzy matching', () => {
       it('should show the first matching item\'s description', done => {
         player1.emit('look', {target: 'pot'});
