@@ -124,10 +124,38 @@ describe('give', () => {
     });
 
     describe('With a giveAll event', () => {
-      it('should emit a forceDropAll event', done => {
-        player1.emit('giveAll', {itemArray: [newItem('potions', 'health potion')], target: 'player2'});
-        player1.on('forceDropAll', () => {
+      describe('To a ghost', () => {
+        let player3;
+        beforeEach(done => {
+          player3 = io.connect('http://0.0.0.0:5000', ioOptions);
+          player3.on('connect', () => {
+            player3.emit('changeName', 'player3');
+            player3.emit('updateEffects', {death: true});
+            player3.emit('updateSocket');
+            player3.on('updateComplete', () => done());
+          });
+        });
+
+        afterEach(done => {
+          player3.disconnect();
           done();
+        });
+
+        it('should emit a generalMessage event saying they can\'t do that', done => {
+          player1.emit('giveAll', {itemArray: [...giveObj], target: 'player3'});
+          player1.on('generalMessage', res => {
+            expect(res.feedback).toEqual('You can\'t give things to ghosts.');
+            done();
+          });
+        });
+      });
+
+      describe('To a living person', () => {
+        it('should emit a forceDropAll event', done => {
+          player1.emit('giveAll', {itemArray: [newItem('potions', 'health potion')], target: 'player2'});
+          player1.on('forceDropAll', () => {
+            done();
+          });
         });
       });
 

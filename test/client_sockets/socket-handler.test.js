@@ -101,8 +101,8 @@ describe('socketHandlers', () => {
       player3.on('connect', () => {
         socketHandlers({socket: player3, props});
         player3.on('initialConnect', res => {
-          expect(props.dispatch.calledWith(loginUser(res.user))).toEqual(true);
-          expect(props.dispatch.calledWith(loginEquipment(res.equipment))).toEqual(true);
+          expect(props.dispatch.calledWith(loginUser({loginUser: res.user}))).toEqual(true);
+          expect(props.dispatch.calledWith(loginEquipment({loginEquipment: res.equipment}))).toEqual(true);
           done();
         });
       });
@@ -116,9 +116,9 @@ describe('socketHandlers', () => {
         player1.on('loginSuccessful', res => {
           expect(props.dispatch.calledWith(endCreation())).toEqual(true);
           expect(props.dispatch.calledWith(setCreationStep({step: 0}))).toEqual(true);
-          expect(props.dispatch.calledWith(loginUser(res.loginUser))).toEqual(true);
-          expect(props.dispatch.calledWith(loginEquipment(res.loginEquipment))).toEqual(true);
-          expect(props.dispatch.calledWith(loginEffects(res.effects))).toEqual(true);
+          expect(props.dispatch.calledWith(loginUser({loginUser: res.loginUser}))).toEqual(true);
+          expect(props.dispatch.calledWith(loginEquipment({loginEquipment: res.loginEquipment}))).toEqual(true);
+          expect(props.dispatch.calledWith(loginEffects({loginEffects: res.effects}))).toEqual(true);
           expect(props.dispatch.calledWith(changeRoom('Nexus'))).toEqual(true);
           done();
         });
@@ -282,8 +282,8 @@ describe('socketHandlers', () => {
 
     describe('With enough damage to reduce the user to 0 or less HP', () => {
       let player5;
-      let lowHealthPropsWhileAlive = {...props, dispatch: sinon.spy(), hp: 1};
-      let lowHealthPropsWhileDead = {...props, hp: 1, dispatch: sinon.spy(), effects: {death: true}};
+      let lowHealthPropsWhileAlive = {...props, dispatch: sinon.spy(), hp: 0};
+      let lowHealthPropsWhileDead = {...props, hp: 0, dispatch: sinon.spy(), effects: {death: true}};
 
       describe('If they are not already dead', () => {
         beforeEach(done => {
@@ -450,6 +450,40 @@ describe('socketHandlers', () => {
         expect(resProps.dispatch.calledWith(damageUser(Math.round(resProps.maxHP / 2)))).toEqual(true);
         expect(resProps.dispatch.calledWith(removeEffect('death'))).toEqual(true);
         expect(socketSpy.calledWith('updateEffects', {})).toEqual(true);
+        done();
+      });
+    });
+  });
+
+  describe('already connected', () => {
+    let player8, connectProps = {...props, dispatch: sinon.spy()};
+    beforeEach(done => {
+      new Character({...user, username: 'Bobby-Jo', equipment, effects: {}})
+      .hashPassword('banana')
+      .then(char => char.save())
+      .then(() => {
+        player1.emit('changeName', 'Bobby-Jo');
+        player8 = io.connect(url, ioOptions);
+        player8.on('connect', () => {
+          socketHandlers({socket: player8, props: connectProps});
+          done();
+        });
+      });
+    });
+
+    afterEach(done => {
+      Character.remove({})
+      .then(() => {
+        player8.disconnect();
+        done();
+      });
+    });
+
+    it('should return a generalMessage telling the player they\'re already connected', done => {
+      player8.emit('login', {password: 'banana', username: 'Bobby-Jo'});
+      player8.on('alreadyConnected', () => {
+        expect(connectProps.dispatch.calledWith(newMessage({feedback: 'That user is already logged in. Enter "new" or a character name to login.'})))
+        .toEqual(true);
         done();
       });
     });

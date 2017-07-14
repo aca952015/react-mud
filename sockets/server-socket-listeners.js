@@ -21,6 +21,7 @@ import login from './login.js';
 import saveCharacter from './save-character.js';
 import escapeCombat from './escape-combat.js';
 import resurrect from './resurrect.js';
+import quit from './quit.js';
 
 // All the various socket listeners for the server, compartmentalized for easy reference and debugging.
 export default function serverSocketListeners(io, socket, users, roomData, mobsInCombat, alteredRooms) {
@@ -31,13 +32,14 @@ export default function serverSocketListeners(io, socket, users, roomData, mobsI
   escapeCombat(io, socket, mobsInCombat);
   give(socket, users);
   kill(socket, roomData, mobsInCombat);
-  login(socket);
+  login(socket, users);
   look(socket, users, roomData);
   lookInContainer(socket, roomData);
   movement(socket, users, roomData);
   oneLineListeners(socket, users);
   pickUpItem(socket, roomData, alteredRooms);
   put(socket, roomData);
+  quit(socket);
   removeItem(socket);
   resurrect(socket, roomData);
   saveCharacter(socket, users);

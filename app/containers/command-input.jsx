@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {updateInput, updateCommandIndex, newMessage, updatePrevCommands, truncatePrevCommands} from '../actions/message-actions.js';
+import saveCharacter from '../../lib/save-character.js';
 import commandHandler from '../handlers/command-handler.js';
 
 function mapStateToProps(state) {
@@ -21,7 +22,8 @@ function mapStateToProps(state) {
     creationStep: state.login.creationStep,
     newUsername: state.login.newUsername,
     firstPassword: state.login.firstPassword,
-    effects: state.effects
+    effects: state.effects,
+    user: state.user // used for logout and saving characters
   };
 }
 
@@ -91,6 +93,7 @@ export class CommandInput extends Component {
       // Without the check for funcsToCall, checking length will error out. Sometimes
       // there are no funcsToCall, so this conditional checks for both.
       if (result.funcsToCall && result.funcsToCall.length) result.funcsToCall.forEach(func => this.props.dispatch(func(result)));
+      if (result.emitType === 'quit') saveCharacter(this);
       this.props.socket.emit(result.emitType, result);
       this.props.dispatch(updateInput(''));
     }

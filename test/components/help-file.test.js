@@ -26,9 +26,12 @@ describe('<HelpFile /> with the say help file', () => {
     const help = shallow(<HelpFile helpObj={helpObj} />);
     expect(help.find('li').first().props().dangerouslySetInnerHTML.__html).toEqual(`<span class="help-topics">COMBAT</span>
       <span class="help-topics">COMMUNICATION</span>
+      <span class="help-topics">DEATH</span>
       <span class="help-topics">EQUIPMENT</span>
+      <span class="help-topics">FUZZY MATCHING</span>
       <span class="help-topics">ITEMS</span>
       <span class="help-topics">MOVEMENT</span>
-      <span class="help-topics">PREVIOUS_COMMANDS</span>`);
+      <span class="help-topics">PREVIOUS COMMANDS</span>
+      <span class="help-topics">SAVING CHARACTERS</span>`);
   });
 });

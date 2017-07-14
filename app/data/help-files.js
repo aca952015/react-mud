@@ -6,10 +6,13 @@ export const helpFile = {
     text: [
       `<span class="help-topics">COMBAT</span>
       <span class="help-topics">COMMUNICATION</span>
+      <span class="help-topics">DEATH</span>
       <span class="help-topics">EQUIPMENT</span>
+      <span class="help-topics">FUZZY MATCHING</span>
       <span class="help-topics">ITEMS</span>
       <span class="help-topics">MOVEMENT</span>
-      <span class="help-topics">PREVIOUS_COMMANDS</span>`
+      <span class="help-topics">PREVIOUS COMMANDS</span>
+      <span class="help-topics">SAVING CHARACTERS</span>`
     ]
   },
   'auto_attacks': {
@@ -31,6 +34,13 @@ export const helpFile = {
       <span class="help-topics">SAY</span>
       <span class="help-topics">WHISPER</span>
       <span class="help-topics">WHO</span>`
+    ]
+  },
+  'death': {
+    title: 'Death',
+    text: [
+      'If your character is reduced to 0 or less HP, you will be killed. Dead players appear as ghosts to other players and have a limited set of commands they can use. You can still move, communicate, and look around, but most physical actions are not available until you\'ve found a way to get resurrected.',
+      'You will also not regenerate HP or MP while dead. There is no way to restore yourself except resurrection.'
     ]
   },
   'description': {
@@ -68,6 +78,14 @@ export const helpFile = {
   'exits': {
     title: '<span class="highlight">UP DOWN EAST WEST NORTH SOUTH</span> (shortcuts: U D E W N S)',
     text: ['In order to move from one room to the other, you simply type the exit you want to use, typically a cardinal direction. For example, if a room has exits: <span class="highlight">[ down  east ]</span>, you can type <span class="highlight">DOWN</span> or <span class="highlight">EAST</span> in order to move in either direction. If an exit has parentheses around it, it is locked and cannot be moved through unless it is unlocked with the correct key.']
+  },
+  'fuzzy matching': {
+    title: 'Fuzzy matching',
+    text: [
+      'Many arguments will target the first matching mob, item, examine, or help file with only partial matching. For example, "<span class="highlight">KILL ZOM</span>" is acceptable shorthand for KILL ZOMBIE. "<span class="highlight">LOOK IN BACK</span>" is acceptable shorthand for LOOK IN BACKPACK.',
+      'Dot notation can be used in combination with this, as well as command shortcuts. "<span class="highlight">GET 2.POT 2.BAC</span>" is acceptable shorthand for getting the second potion from your second backpack. "<span class="highlight">L IN 2.COR</span>" is acceptable for looking in the second corpse of the room.',
+      'Players cannot be targeted using shorthand and commands must either be fully typed out or use the shortcuts mentioned in their help files.'
+    ]
   },
   'get': {
     title: '<span class="highlight">GET {item}</span> -or- <span class="highlight">GET {item} {container}</span> (optionally: <span class="highlight">GET {item} FROM {container}</span>)',
@@ -124,7 +142,7 @@ export const helpFile = {
       <span class="help-topics">UNLOCK</span>`
     ]
   },
-  'previous_commands': {
+  'previous commands': {
     title: 'Cycle through previous commands',
     text: ['If you have a keyboard available, you can press the <span class="highlight">up or down arrow keys</span> to cycle through previous input, through your last 20 commands. Entering the same command more than once in a row will count as a single instance of entering input for the purposes of this cycling.']
   },
@@ -139,6 +157,13 @@ export const helpFile = {
   'remove': {
     title: '<span class="highlight">REMOVE {item}</span> -or- <span class="highlight">REMOVE ALL</span> (optionally: <span class="highlight">RM {item}</span>)',
     text: ['Will remove an item you\'re currently wearing and put it back in your inventory. <span class="highlight">REMOVE ALL</span> will remove all your equipment and put it in your inventory. Dot notation can be used to target specific items, starting from the head down. For example, if you are wearing a leather helm and a leather breastplate, you can <span class="highlight">REMOVE 2.LEATHER</span> to remove the breastplate.']
+  },
+  'saving characters': {
+    title: '<span class="highlight">SAVING AND LOGGING OUT</span>',
+    text: [
+      'Entering the <span class="highlight">QUIT</span> command will save your character and log you out, taking you back to the Login Room. Saving your character stores current stats, inventory, equipment, effects, and description.',
+      'The server will also attempt to save your character if you close the tab or window, but this <span class="highlight">can have unintended side effects</span>. It\'s best to type <span class="highlight">QUIT</span> before leaving.'
+    ]
   },
   'say': {
     title: '<span class="highlight">SAY {message}</span>',
