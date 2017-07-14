@@ -246,12 +246,42 @@ describe('look', () => {
   });
 
   describe('With the user seeing a player look at a mob', () => {
-    it('should show "player1 looks at <mob short>".', done => {
-      player1.emit('look', {target: 'bat'});
-      player2.on('generalMessage', res => {
-        expect(res.from).toEqual('player1');
-        expect(res.feedback).toEqual(` looks at ${newMob('bat').short}.`);
+    describe('If the player is alive', () => {
+      it('should show "player1 looks at <mob short>".', done => {
+        player1.emit('look', {target: 'bat'});
+        player2.on('generalMessage', res => {
+          expect(res.from).toEqual('player1');
+          expect(res.feedback).toEqual(` looks at ${newMob('bat').short}.`);
+          done();
+        });
+      });
+    });
+
+    describe('If the player is dead', () => {
+      let player3;
+      beforeEach(done => {
+        player3 = io.connect('http://0.0.0.0:5000', ioOptions);
+        player3.on('connect', () => {
+          player3.emit('changeName', 'player3');
+          player3.emit('teleport', 'Nexus');
+          player3.emit('updateEffects', {death: true});
+          player3.emit('updateSocket');
+          player3.on('updateComplete', () => done());
+        });
+      });
+
+      afterEach(done => {
+        player3.disconnect();
         done();
+      });
+
+      it('should show "the ghost of so-and-so" looks at an item', done => {
+        player3.emit('look', {target: 'zomb'});
+        player1.on('generalMessage', res => {
+          expect(res.from).toEqual('The ghost of player3');
+          expect(res.feedback).toEqual(' looks at an armored zombie.');
+          done();
+        });
       });
     });
   });
