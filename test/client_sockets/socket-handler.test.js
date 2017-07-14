@@ -16,7 +16,7 @@ import {changeRoom} from '../../app/actions/move-actions.js';
 import {tickRegen} from '../../app/actions/user-actions.js';
 import {initialState as user} from '../../app/data/user-initial-state.js';
 import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
-import {endCreation, setCreationStep, setUsername, incrementCreationStep, loginUser, loginEquipment} from '../../app/actions/login-actions.js';
+import {endCreation, setCreationStep, setUsername, incrementCreationStep, loginUser, loginEquipment, loginEffects} from '../../app/actions/login-actions.js';
 import newItem from '../../app/data/items.js';
 
 describe('socketHandlers', () => {
@@ -118,6 +118,7 @@ describe('socketHandlers', () => {
           expect(props.dispatch.calledWith(setCreationStep({step: 0}))).toEqual(true);
           expect(props.dispatch.calledWith(loginUser(res.loginUser))).toEqual(true);
           expect(props.dispatch.calledWith(loginEquipment(res.loginEquipment))).toEqual(true);
+          expect(props.dispatch.calledWith(loginEffects(res.effects))).toEqual(true);
           expect(props.dispatch.calledWith(changeRoom('Nexus'))).toEqual(true);
           done();
         });
