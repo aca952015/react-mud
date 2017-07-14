@@ -12,4 +12,10 @@ describe('Effects reducer', () => {
       expect(reducer({}, {type: 'ADD_EFFECT', payload: 'death'})).toEqual({death: true});
     });
   });
+
+  describe('With an action of REMOVE_EFFECT', () => {
+    it('should delete the payload\'s property from the state', () => {
+      expect(reducer({death: true, test: true}, {type: 'REMOVE_EFFECT', payload: 'test'})).toEqual({death: true});
+    });
+  });
 });
