@@ -20,17 +20,19 @@ describe('whisperProcessor', () => {
   });
 
   describe('If the whisperer is the user and they\'re whispering to themself', () => {
-    it('should return a whisper object with the appropriate fields', () => {
-      let result = {
-        from :'TestR',
-        target: 'TestR',
-        text: 'Ayy'
-      };
-      expect(whisperProcessor(result, 'TestR')).toEqual({
-        text: result.text,
-        from: 'You ',
-        target: null,
-        commType: 'whisper to yourself, '
+    describe('If the user is alive', () => {
+      it('should return a whisper object with the appropriate fields', () => {
+        let result = {
+          from :'TestR',
+          target: 'TestR',
+          text: 'Ayy'
+        };
+        expect(whisperProcessor(result, 'TestR')).toEqual({
+          text: result.text,
+          from: 'You ',
+          target: null,
+          commType: 'whisper to yourself, '
+        });
       });
     });
   });
@@ -67,16 +69,33 @@ describe('whisperProcessor', () => {
   });
 
   describe('If the whisperer is another user, targeting themself', () => {
-    it('should return a whisper object with the appropriate fields', () => {
-      let result = {
-        from: 'TestR',
-        target: 'TestR',
-        text: 'Ayy'
-      };
-      expect(whisperProcessor(result, 'tester')).toEqual({
-        from: result.from,
-        commType: ' whispers something quietly.',
-        target: null
+    describe('If the whisperer is not dead', () => {
+      it('should return a whisper object with the appropriate fields', () => {
+        let result = {
+          from: 'TestR',
+          target: 'TestR',
+          text: 'Ayy'
+        };
+        expect(whisperProcessor(result, 'tester')).toEqual({
+          from: result.from,
+          commType: ' whispers something quietly.',
+          target: null
+        });
+      });
+    });
+
+    describe('If the whisperer is dead', () => {
+      it('should return a whisper object with the appropriate fields', () => {
+        let result = {
+          from: 'The ghost of TestR',
+          target: 'TestR',
+          text: 'Ayy'
+        };
+        expect(whisperProcessor(result, 'tester')).toEqual({
+          from: result.from,
+          commType: ' whispers something quietly.',
+          target: null
+        });
       });
     });
   });
