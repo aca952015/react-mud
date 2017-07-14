@@ -88,16 +88,33 @@ describe('whisperProcessor', () => {
   });
 
   describe('If the whisperer is another user, targeting a third user', () => {
-    it('should return a whisper object with the appropriate fields', () => {
-      let result = {
-        from: 'TestR',
-        target: 'Duder',
-        text: 'Ayy'
-      };
-      expect(whisperProcessor(result, 'tester')).toEqual({
-        from: result.from,
-        target: result.target,
-        commType: ' whispers something to '
+    describe('If the target is alive', () => {
+      it('should return a whisper object with the appropriate fields', () => {
+        let result = {
+          from: 'TestR',
+          target: 'Duder',
+          text: 'Ayy'
+        };
+        expect(whisperProcessor(result, 'tester')).toEqual({
+          from: result.from,
+          target: result.target,
+          commType: ' whispers something to '
+        });
+      });
+    });
+
+    describe('If the target is dead', () => {
+      it('should return a whisper object with the appropriate fields', () => {
+        let result = {
+          from: 'TestR',
+          target: 'The ghost of Duder',
+          text: 'Ayy'
+        };
+        expect(whisperProcessor(result, 'tester')).toEqual({
+          from: result.from,
+          target: 'the ghost of Duder',
+          commType: ' whispers something to '
+        });
       });
     });
   });
