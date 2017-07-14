@@ -11,7 +11,7 @@ export default function lookInContainer(socket, roomData) {
 
     socket.emit('generalMessage', {containedItems: container.container.contains});
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
-      from: socket.effects.death ? `The ghost of ${socket.username}` : socket.username, 
+      from: socket.effects.death ? `The ghost of ${socket.username}` : socket.username,
       feedback: ` looks in ${container.short}.`
     });
   });
