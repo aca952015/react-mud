@@ -454,4 +454,38 @@ describe('socketHandlers', () => {
       });
     });
   });
+
+  describe('already connected', () => {
+    let player8, connectProps = {...props, dispatch: sinon.spy()};
+    beforeEach(done => {
+      new Character({...user, username: 'Bobby-Jo', equipment, effects: {}})
+      .hashPassword('banana')
+      .then(char => char.save())
+      .then(() => {
+        player1.emit('changeName', 'Bobby-Jo');
+        player8 = io.connect(url, ioOptions);
+        player8.on('connect', () => {
+          socketHandlers({socket: player8, props: connectProps});
+          done();
+        });
+      });
+    });
+
+    afterEach(done => {
+      Character.remove({})
+      .then(() => {
+        player8.disconnect();
+        done();
+      });
+    });
+
+    it('should return a generalMessage telling the player they\'re already connected', done => {
+      player8.emit('login', {password: 'banana', username: 'Bobby-Jo'});
+      player8.on('alreadyConnected', () => {
+        expect(connectProps.dispatch.calledWith(newMessage({feedback: 'That user is already logged in. Enter "new" or a character name to login.'})))
+        .toEqual(true);
+        done();
+      });
+    });
+  });
 });
