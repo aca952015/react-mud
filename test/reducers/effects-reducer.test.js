@@ -18,4 +18,10 @@ describe('Effects reducer', () => {
       expect(reducer({death: true, test: true}, {type: 'REMOVE_EFFECT', payload: 'test'})).toEqual({death: true});
     });
   });
+
+  describe('With an action of LOGIN_EFFECTS', () => {
+    it('should set the state to the payload', () => {
+      expect(reducer({}, {type: 'LOGIN_EFFECTS', payload: 'Ayy'})).toEqual('Ayy');
+    });
+  });
 });
