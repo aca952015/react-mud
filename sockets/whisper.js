@@ -9,7 +9,7 @@ export default function whisper(io, socket, users) {
 
     io.sockets.to(socket.currentRoom).emit('whisperSuccess', {
       text: result.text,
-      from: socket.effects.death ? `The ghost of ${socket.username}` : socket.username, 
+      from: socket.effects.death ? `The ghost of ${socket.username}` : socket.username,
       target: whisperTarget.username});
     return;
   });
