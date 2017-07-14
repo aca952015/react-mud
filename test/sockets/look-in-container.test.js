@@ -56,8 +56,6 @@ describe('lookInContainer', () => {
       beforeEach(done => {
         player2 = io.connect('http://0.0.0.0:5000', ioOptions);
         player2.on('connect', () => {
-          player2.emit('updateEffects', {});
-          player2.emit('changeName', 'player2');
           player2.emit('teleport', 'Nexus');
           player2.emit('updateSocket');
           player2.on('updateComplete', () => done());
@@ -73,6 +71,33 @@ describe('lookInContainer', () => {
         player1.emit('lookInContainer', {container: 'corpse'});
         player2.on('generalMessage', res => {
           expect(res.from).toEqual('player1');
+          expect(res.feedback).toEqual(' looks in a corpse.');
+          done();
+        });
+      });
+    });
+
+    describe('As an observer of a ghost', () => {
+      beforeEach(done => {
+        player2 = io.connect('http://0.0.0.0:5000', ioOptions);
+        player2.on('connect', () => {
+          player2.emit('updateEffects', {death: true});
+          player2.emit('changeName', 'player2');
+          player2.emit('teleport', 'Nexus');
+          player2.emit('updateSocket');
+          player2.on('updateComplete', () => done());
+        });
+      });
+
+      afterEach(done => {
+        player2.disconnect();
+        done();
+      });
+
+      it('should say the ghost of so-and-so looks in a container', done => {
+        player2.emit('lookInContainer', {container: 'corpse'});
+        player1.on('generalMessage', res => {
+          expect(res.from).toEqual('The ghost of player2');
           expect(res.feedback).toEqual(' looks in a corpse.');
           done();
         });
