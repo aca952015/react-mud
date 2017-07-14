@@ -74,6 +74,37 @@ describe('look', () => {
         });
       });
     });
+
+    describe('In a room with a ghost occupant', () => {
+      let player3;
+
+      beforeEach(done => {
+        player3 = io.connect('http://0.0.0.0:5000', ioOptions);
+        player3.on('connect', () => {
+          player3.emit('updateEffects', {death: true});
+          player3.emit('teleport', 'Nexus');
+          player3.emit('changeName', 'player3');
+          player3.emit('updateEquipment', {
+            head: null
+          });
+          player3.emit('updateSocket');
+          player3.on('updateComplete', () => done());
+        });
+      });
+
+      afterEach(done => {
+        player3.disconnect();
+        done();
+      });
+
+      it('should return "The ghost of player3" as an occupant', done => {
+        player1.emit('look', {target: undefined});
+        player1.on('generalMessage', res => {
+          expect(res.occupants).toEqual(['player2', 'The ghost of player3']);
+          done();
+        });
+      });
+    });
   });
 
   describe('With the user looking at a player', () => {
@@ -245,7 +276,7 @@ describe('look', () => {
         player1.emit('updateSocket');
         player1.on('updateComplete', () => done());
       });
-      
+
       it('should say "I don\'t see that here."', done => {
         player1.emit('look', {target: 'turtle'});
         player1.on('generalMessage', res => {

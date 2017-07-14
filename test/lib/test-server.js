@@ -22,6 +22,7 @@ process.env.TESTING = true;
 
 io.sockets.on('connection', function(socket) {
   initialConnect(socket);
+  socket.on('disconnect', () => users.splice(users.indexOf(users.find(user => user.username === socket.username)), 1));
   socket.currentRoom = 'Nexus';
   socket.join('Nexus');
   socket.on('changeName', name => {
