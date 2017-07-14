@@ -13,10 +13,10 @@ import whisperProcessor from '../../app/processors/whisper-processor.js';
 import moveProcessor from '../../app/processors/move-processor.js';
 import {getItem, dropItem, getAll, dropAll} from '../../app/actions/inventory-actions.js';
 import {changeRoom} from '../../app/actions/move-actions.js';
-import {loginUser, loginEquipment, tickRegen} from '../../app/actions/user-actions.js';
+import {tickRegen} from '../../app/actions/user-actions.js';
 import {initialState as user} from '../../app/data/user-initial-state.js';
 import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
-import {endCreation, setCreationStep, setUsername, incrementCreationStep} from '../../app/actions/login-actions.js';
+import {endCreation, setCreationStep, setUsername, incrementCreationStep, loginUser, loginEquipment} from '../../app/actions/login-actions.js';
 import newItem from '../../app/data/items.js';
 
 describe('socketHandlers', () => {

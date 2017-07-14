@@ -19,6 +19,20 @@ export function loginEffects(effects) {
   };
 }
 
+export function loginUser(char) {
+  return {
+    type: 'LOGIN_USER',
+    payload: char
+  };
+}
+
+export function loginEquipment(equipment) {
+  return {
+    type: 'LOGIN_EQUIPMENT',
+    payload: equipment
+  };
+}
+
 export function setUsername(username) {
   return {
     type: 'SET_USERNAME',
