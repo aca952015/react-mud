@@ -8,7 +8,7 @@ import newMob from '../../app/data/mobs.js';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 import {newMessage} from '../../app/actions/message-actions.js';
-import {enterCombat, damageUser, slayEnemy, escapeCombat, addEffect, removeEffect} from '../../app/actions/combat-actions.js';
+import {enterCombat, damageUser, slayEnemy, escapeCombat, addEffect, removeEffect, fullRestore} from '../../app/actions/combat-actions.js';
 import whisperProcessor from '../../app/processors/whisper-processor.js';
 import moveProcessor from '../../app/processors/move-processor.js';
 import {getItem, dropItem, getAll, dropAll} from '../../app/actions/inventory-actions.js';
@@ -420,6 +420,37 @@ describe('socketHandlers', () => {
           expect(deadProps.dispatch.calledWith(tickRegen())).toEqual(false);
           done();
         });
+      });
+    });
+  });
+
+  describe('resurrect', () => {
+    let player7, socketSpy, resProps = {...props, dispatch: sinon.spy(), maxHP: 20};
+    beforeEach(done => {
+      player7 = io.connect(url, ioOptions);
+      socketSpy = sinon.spy(player7, 'emit');
+      player7.emit('updateEffects', {death: true});
+      player7.emit('teleport', 'Nexus');
+      player7.emit('updateSocket');
+      player7.on('updateComplete', () => {
+        socketHandlers({socket: player7, props: resProps});
+        done();
+      });
+    });
+
+    afterEach(done => {
+      player7.disconnect();
+      done();
+    });
+
+    it('should dispatch fullRestore, damage the user for half health, remove the death effect, and emit the new effects', done => {
+      player7.emit('resurrect');
+      player7.on('resurrect', () => {
+        expect(resProps.dispatch.calledWith(fullRestore())).toEqual(true);
+        expect(resProps.dispatch.calledWith(damageUser(Math.round(resProps.maxHP / 2)))).toEqual(true);
+        expect(resProps.dispatch.calledWith(removeEffect('death'))).toEqual(true);
+        expect(socketSpy.calledWith('updateEffects', {})).toEqual(true);
+        done();
       });
     });
   });
