@@ -42,4 +42,42 @@ describe('teleport', () => {
       done();
     });
   });
+
+  describe('With a ghost in the room', () => {
+    let player3;
+
+    beforeEach(done => {
+      player3 = io.connect('http://0.0.0.0:5000', ioOptions);
+      player3.on('connect', () => {
+        player3.emit('changeName', 'player3');
+        player3.emit('teleport', 'Gallows');
+        player3.emit('updateEffects', {death: true});
+        player3.emit('updateSocket');
+        player3.on('updateComplete', () => done());
+      });
+    });
+
+    afterEach(done => {
+      player3.disconnect();
+      done();
+    });
+
+    it('should show ghosts if there are any', done => {
+      player1.emit('teleport', 'Gallows');
+      player1.on('generalMessage', res => {
+        expect(res.occupants).toEqual(['The ghost of player3']);
+        done();
+      });
+    });
+  });
+
+  describe('To a room with no examines', () => {
+    it('should not have any examines in the response', done => {
+      player1.emit('teleport', 'Login Room');
+      player1.on('generalMessage', res => {
+        expect(res.room.examines).toEqual(null);
+        done();
+      });
+    });
+  });
 });
