@@ -13,8 +13,8 @@ export default function loginHandlers(homeCtx) {
   socket.on('initialConnect', char => {
     socket.emit('teleport', 'Login Room');
     props.dispatch(changeRoom('Login Room'));
-    props.dispatch(loginUser(char.user));
-    props.dispatch(loginEquipment(char.equipment));
+    props.dispatch(loginUser({loginUser: char.user}));
+    props.dispatch(loginEquipment({loginEquipment: char.equipment}));
   });
 
   // Once the server has sent a loginSuccessful event, update the username, equipment,
@@ -28,9 +28,9 @@ export default function loginHandlers(homeCtx) {
     socket.emit('updateEffects', char.effects);
     props.dispatch(endCreation());
     props.dispatch(setCreationStep({step: 0}));
-    props.dispatch(loginUser(char.loginUser));
-    props.dispatch(loginEquipment(char.loginEquipment));
-    props.dispatch(loginEffects(char.effects));
+    props.dispatch(loginUser({loginUser: char.loginUser}));
+    props.dispatch(loginEquipment({loginEquipment: char.loginEquipment}));
+    props.dispatch(loginEffects({loginEffects: char.effects}));
     props.dispatch(escapeCombat());
     if (homeCtx.props.currentRoom === 'Login Room') {
       props.dispatch(changeRoom('Nexus'));
@@ -47,6 +47,13 @@ export default function loginHandlers(homeCtx) {
   socket.on('loginFail', () => {
     props.dispatch(setCreationStep({step: 0}));
     props.dispatch(newMessage({feedback: 'Invalid password or that character doesn\'t exist. Enter "new" or a character name to login.'}));
+  });
+
+  // If someone is already logged in with a character's name, return to step 0 and inform
+  // the user of such.
+  socket.on('alreadyConnected', () => {
+    props.dispatch(setCreationStep({step: 0}));
+    props.dispatch(newMessage({feedback: 'That user is already logged in. Enter "new" or a character name to login.'}));
   });
 
   // nameAvailable is used for creating new characters. This event only gets emitted
