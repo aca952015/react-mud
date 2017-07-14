@@ -2,11 +2,14 @@
 
 import {Character} from '../model/character.js';
 
-export default function login(socket) {
+export default function login(socket, users) {
   socket.on('login', auth => {
     Character.findOne({username: auth.username.toLowerCase()})
     .then(char => char.validatePassword(auth.password))
     .then(char => {
+      const alreadyConnected = users.find(user => user.username.toLowerCase() === char.username);
+      if (alreadyConnected) return socket.emit('alreadyConnected');
+
       // My attempts to send back a user without a password or equipment have proven
       // fruitless using Object.assign or any version of copying the char object.
       // I have attempted directly deleting properties off the char and that doesn't
