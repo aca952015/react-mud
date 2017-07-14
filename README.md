@@ -1,7 +1,7 @@
 # React MUD
 
-[![Coverage Status](https://coveralls.io/repos/github/BatemanVO/react-mud/badge.svg?branch=master)](https://coveralls.io/github/BatemanVO/react-mud?branch=master)
-<img src="https://travis-ci.org/BatemanVO/react-mud.svg?branch=master">
+[![Coverage Status](https://coveralls.io/repos/github/BatemanVO/react-mud/badge.svg?branch=staging)](https://coveralls.io/github/BatemanVO/react-mud?branch=staging)
+<img src="https://travis-ci.org/BatemanVO/react-mud.svg?branch=staging">
 
 ## What is a MUD?
 MUD stands for "Multi-User Dungeon." Essentially, it's a text-based game that many people can connect to and interact in. They're sort of a pre-cursor to modern MMOs - if you were to strip away graphics and GUIs, they'd be quite similar.
