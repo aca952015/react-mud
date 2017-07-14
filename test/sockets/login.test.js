@@ -44,7 +44,11 @@ describe('login', () => {
     beforeEach(done => {
       new Character({...user, username: 'Davy', equipment})
       .hashPassword('banana')
-      .then(char => char.save())
+      .then(char => {
+        char.effects = {death: true};
+        char.markModified('effects');
+        return char.save();
+      })
       .then(done);
     });
 
@@ -53,6 +57,7 @@ describe('login', () => {
       player1.on('loginSuccessful', res => {
         expect(res.loginUser.username).toEqual('Davy');
         expect(res.loginUser.password).toEqual(undefined);
+        expect(res.effects).toEqual({death: true});
         expect(res.loginUser.atk).toEqual(user.atk);
         expect(res.loginEquipment).toEqual(equipment);
         done();
