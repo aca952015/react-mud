@@ -15,21 +15,21 @@ export function endCreation() {
 export function loginEffects(effects) {
   return {
     type: 'LOGIN_EFFECTS',
-    payload: effects
+    payload: effects.loginEffects
   };
 }
 
 export function loginUser(char) {
   return {
     type: 'LOGIN_USER',
-    payload: char
+    payload: char.loginUser
   };
 }
 
 export function loginEquipment(equipment) {
   return {
     type: 'LOGIN_EQUIPMENT',
-    payload: equipment
+    payload: equipment.loginEquipment
   };
 }
 
