@@ -41,19 +41,19 @@ describe('Login actions', () => {
 
   describe('loginEffects', () => {
     it('should return an object with type "LOGIN_EFFECTS" and payload of whatever was passed in', () => {
-      expect(loginEffects({yarp: 'yep'})).toEqual({type: 'LOGIN_EFFECTS', payload: {yarp: 'yep'}});
+      expect(loginEffects({loginEffects: {yarp: 'yep'}})).toEqual({type: 'LOGIN_EFFECTS', payload: {yarp: 'yep'}});
     });
   });
 
   describe('loginUser', () => {
     it('should return an object with a type of "LOGIN_USER" and payload of whatever got passed in', () => {
-      expect(loginUser('bob')).toEqual({type: 'LOGIN_USER', payload: 'bob'});
+      expect(loginUser({loginUser: 'bob'})).toEqual({type: 'LOGIN_USER', payload: 'bob'});
     });
   });
 
   describe('loginEquipment', () => {
     it('should return an object with a type of "LOGIN_EQUIPMENT" and payload of whatever got passed in', () => {
-      expect(loginEquipment({ayy: 'dude'})).toEqual({type: 'LOGIN_EQUIPMENT', payload: {ayy: 'dude'}});
+      expect(loginEquipment({loginEquipment: {ayy: 'dude'}})).toEqual({type: 'LOGIN_EQUIPMENT', payload: {ayy: 'dude'}});
     });
   });
 });
