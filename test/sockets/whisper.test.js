@@ -48,11 +48,13 @@ describe('Whisper', () => {
       });
     });
 
-    describe('With a dead whisperer', () => {
+    describe('With a dead whisperer to a dead target', () => {
       beforeEach(done => {
         player1.emit('updateEffects', {death: true});
+        player2.emit('updateEffects', {death: true});
         player1.emit('updateSocket');
-        player1.on('updateComplete', () => done());
+        player2.emit('updateSocket');
+        player2.on('updateComplete', () => done());
       });
 
       it('should emit a whisperSuccess event to everyone with a ghost', done => {
@@ -60,7 +62,7 @@ describe('Whisper', () => {
         player1.on('whisperSuccess', res => {
           expect(res.text).toEqual('ayy');
           expect(res.from).toEqual('The ghost of player1');
-          expect(res.target).toEqual('player2');
+          expect(res.target).toEqual('The ghost of player2');
           done();
         });
       });
