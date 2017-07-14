@@ -13,9 +13,19 @@ describe('communicationHandler', () => {
     });
 
     it('should return a say object with args', () => {
-      expect(communicationHandler('say', 'hello', props)).toEqual({
+      expect(communicationHandler('say', 'hello', {...props, effects: {death: false}})).toEqual({
         ...returnObj,
         from: props.username,
+        text: 'hello',
+        emitType: 'say',
+        commType: ' say, '
+      });
+    });
+
+    it('should return a ghost from say object with args if the user is dead', () => {
+      expect(communicationHandler('say', 'hello', {...props, effects: {death: true}})).toEqual({
+        ...returnObj,
+        from: `The ghost of ${props.username}`,
         text: 'hello',
         emitType: 'say',
         commType: ' say, '
