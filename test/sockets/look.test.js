@@ -148,6 +148,19 @@ describe('look', () => {
   });
 
   describe('With the user looking at an item', () => {
+    describe('To an observer', () => {
+      describe('If the user is living', () => {
+        it('should show "so-and-so" looks at the item\'s short', done => {
+          player1.emit('look', {target: 'pot'});
+          player2.on('generalMessage', res => {
+            expect(res.from).toEqual('player1');
+            expect(res.feedback).toEqual(' looks at a red potion.');
+            done();
+          });
+        });
+      });
+    });
+    
     describe('With fuzzy matching', () => {
       it('should show the first matching item\'s description', done => {
         player1.emit('look', {target: 'pot'});
