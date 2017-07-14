@@ -38,4 +38,10 @@ describe('combat actions', () => {
       expect(removeEffect('test')).toEqual({type: 'REMOVE_EFFECT', payload: 'test'});
     });
   });
+
+  describe('fullRestore', () => {
+    it('should return an object with type "FULL_RESTORE"', () => {
+      expect(fullRestore()).toEqual({type: 'FULL_RESTORE'});
+    });
+  });
 });
