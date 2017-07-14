@@ -286,7 +286,6 @@ describe('socketHandlers', () => {
 
       describe('If they are not already dead', () => {
         beforeEach(done => {
-          lowHealthPropsWhileAlive = {...props, hp: 1};
           player5 = io.connect(url, ioOptions);
           player5.on('connect', () => {
             socketHandlers({socket: player5, props: lowHealthPropsWhileAlive});
@@ -305,6 +304,31 @@ describe('socketHandlers', () => {
             expect(lowHealthPropsWhileAlive.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(true);
             expect(lowHealthPropsWhileAlive.dispatch.calledWith(escapeCombat())).toEqual(true);
             expect(lowHealthPropsWhileAlive.dispatch.calledWith(addEffect('death'))).toEqual(true);
+            done();
+          });
+        });
+      });
+
+      describe('If they\'ve already been killed', () => {
+        beforeEach(done => {
+          player5 = io.connect(url, ioOptions);
+          player5.on('connect', () => {
+            socketHandlers({socket: player5, props: lowHealthPropsWhileDead});
+            done();
+          });
+        });
+
+        afterEach(done => {
+          player5.disconnect();
+          done();
+        });
+
+        it('should not dispatch the various death effects', done => {
+          player5.emit('testDamage');
+          player5.on('damage', () => {
+            expect(lowHealthPropsWhileDead.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(false);
+            expect(lowHealthPropsWhileDead.dispatch.calledWith(escapeCombat())).toEqual(false);
+            expect(lowHealthPropsWhileDead.dispatch.calledWith(addEffect('death'))).toEqual(false);
             done();
           });
         });
