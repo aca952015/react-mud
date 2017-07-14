@@ -27,4 +27,25 @@ describe('saveCharacter', () => {
       expect(homeCtx.socket.emit.calledWith('disconnect')).toEqual(true);
     });
   });
+
+  describe('From the quit command', () => {
+    it('should get the socket from the homeCtx props', () => {
+      homeCtx = {
+        props: {
+          ...homeCtx.props,
+          socket: {
+            emit: sinon.spy()
+          }
+        }
+      };
+      saveCharacter(homeCtx);
+      expect(homeCtx.props.socket.emit.calledWith('saveCharacter', {
+        ...homeCtx.props.user,
+        equipment: homeCtx.props.equipment,
+        effects: homeCtx.props.effects
+      })).toEqual(true);
+      expect(homeCtx.props.socket.emit.calledWith('escapeCombat')).toEqual(true);
+      expect(homeCtx.props.socket.emit.calledWith('disconnect')).toEqual(true);
+    });
+  });
 });
