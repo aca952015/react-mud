@@ -32,4 +32,10 @@ describe('combat actions', () => {
       expect(addEffect('test')).toEqual({type: 'ADD_EFFECT', payload :'test'});
     });
   });
+
+  describe('removeEffect', () => {
+    it('should return an object with type "REMOVE_EFFECT" and payload of the effect', () => {
+      expect(removeEffect('test')).toEqual({type: 'REMOVE_EFFECT', payload: 'test'});
+    });
+  });
 });
