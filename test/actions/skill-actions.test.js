@@ -5,13 +5,13 @@ import {startCooldown, endCooldown, setSkills} from '../../app/actions/skill-act
 describe('skill actions', () => {
   describe('startCooldown', () => {
     it('should return an object with type "ON_COOLDOWN" and payload of the name passed in', () => {
-      expect(startCooldown('slash')).toEqual({type: 'ON_COOLDOWN', payload: 'slash'});
+      expect(startCooldown({skillName: 'slash'})).toEqual({type: 'ON_COOLDOWN', payload: 'slash'});
     });
   });
 
   describe('endCooldown', () => {
     it('should return an object with type "OFF_COOLDOWN" and payload of the name passed in', () => {
-      expect(endCooldown('slash')).toEqual({type: 'OFF_COOLDOWN', payload: 'slash'});
+      expect(endCooldown({skillName: 'slash'})).toEqual({type: 'OFF_COOLDOWN', payload: 'slash'});
     });
   });
 

@@ -6,7 +6,7 @@ import {createNew} from '../../app/actions/login-actions.js';
 
 describe('CommandHandler', () => {
   it('should return an object with the feedback "I\'m not sure what you\'re trying to do" with a bad command', () => {
-    expect(commandHandler('Yo', null, {effects: {death: false}, inventory: []})).toEqual({funcsToCall: [newMessage], feedback: 'I\'m not sure what you\'re trying to do.'});
+    expect(commandHandler('Yo', null, {effects: {death: false}, skills: {}, inventory: []})).toEqual({funcsToCall: [newMessage], feedback: 'I\'m not sure what you\'re trying to do.'});
   });
 
   it('should properly understand args shorthand', () => {

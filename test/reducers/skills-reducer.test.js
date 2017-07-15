@@ -5,7 +5,7 @@ import {warriorSkills} from '../../app/data/skills/warrior-skills.js';
 
 describe('skills reducer', () => {
   it('should have an initialState of an empty object', () => {
-    expect(reducer(undefined, {})).toEqual({});
+    expect(reducer(undefined, {})).toEqual({...warriorSkills});
   });
 
   describe('With an action of "ON_COOLDOWN"', () => {
