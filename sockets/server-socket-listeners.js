@@ -22,6 +22,7 @@ import saveCharacter from './save-character.js';
 import escapeCombat from './escape-combat.js';
 import resurrect from './resurrect.js';
 import quit from './quit.js';
+import skill from './skill.js';
 
 // All the various socket listeners for the server, compartmentalized for easy reference and debugging.
 export default function serverSocketListeners(io, socket, users, roomData, mobsInCombat, alteredRooms) {
@@ -47,4 +48,5 @@ export default function serverSocketListeners(io, socket, users, roomData, mobsI
   unlock(socket, roomData);
   wearItem(socket);
   whisper(io, socket, users);
+  skill(socket, roomData, mobsInCombat, alteredRooms);
 }
