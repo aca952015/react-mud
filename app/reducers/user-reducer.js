@@ -41,5 +41,5 @@ export default function reducer(state={}, action) {
     if (description.length < 1) description = ['No description set.'];
     return {...state, description};
   }
-  return state;
+  return {...state};
 }

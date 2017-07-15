@@ -14,5 +14,5 @@ export default function reducer(state={}, action) {
     newState[action.payload.slot] = null;
     return newState;
   }
-  return state;
+  return {...state};
 }
