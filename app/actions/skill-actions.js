@@ -13,3 +13,10 @@ export function endCooldown(skillName) {
     payload: skillName
   };
 }
+
+export function setSkills(classSkills) {
+  return {
+    type: 'SET_SKILLS',
+    payload: classSkills
+  };
+}
