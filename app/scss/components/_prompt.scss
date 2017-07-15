@@ -23,9 +23,32 @@
     }
   }
 
-  p:last-child {
+  p:nth-child(2) {
     span {
       color: $blue-deep;
     }
+  }
+
+  section {
+    display: inline-block;
+    width: 20vw;
+    height: 3vh;
+    background: $black;
+    position: relative;
+
+    span {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 2vw;
+      z-index: 3;
+      color: $white;
+    }
+  }
+}
+
+@keyframes countdown {
+  100% {
+    width: 0;
   }
 }
