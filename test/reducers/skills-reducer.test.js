@@ -14,4 +14,12 @@ describe('skills reducer', () => {
       });
     });
   });
+
+  describe('With an action of "OFF_COOLDOWN"', () => {
+    it('should set the passed in skill onCooldown to false', () => {
+      expect(reducer({slash: {onCooldown: true}}, {type: 'OFF_COOLDOWN', payload: 'slash'})).toEqual({
+        slash: {onCooldown: false}
+      });
+    });
+  });
 });
