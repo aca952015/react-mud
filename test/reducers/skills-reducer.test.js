@@ -1,6 +1,7 @@
 'use strict';
 
 import reducer from '../../app/reducers/skill-reducer.js';
+import {warriorSkills} from '../../app/data/skills/warrior-skills.js';
 
 describe('skills reducer', () => {
   it('should have an initialState of an empty object', () => {
@@ -20,6 +21,12 @@ describe('skills reducer', () => {
       expect(reducer({slash: {onCooldown: true}}, {type: 'OFF_COOLDOWN', payload: 'slash'})).toEqual({
         slash: {onCooldown: false}
       });
+    });
+  });
+
+  describe('With an action of SET_SKILLS', () => {
+    it('should return an object of the associated class skill list', () => {
+      expect(reducer(undefined, {type: 'SET_SKILLS', payload: 'warriorSkills'})).toEqual(warriorSkills);
     });
   });
 });
