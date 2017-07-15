@@ -27,7 +27,9 @@ function mapStateToProps(state) {
     currentRoom: state.user.currentRoom,
     equipment: state.equipment,
     user: state.user, // Used for saving the character
-    effects: state.effects
+    effects: state.effects,
+    skills: state.skills,
+    globalCooldown: state.skills.globalCooldown
   };
 }
 
@@ -61,7 +63,11 @@ export class Home extends Component {
         messages={this.props.messages}
         changeEnterStatus={this.changeEnterStatus}
         inventory={this.props.inventory} />
-      <Prompt hp={this.props.hp} mp={this.props.mp} maxHP={this.props.maxHP} maxMP={this.props.maxMP} />
+      <Prompt hp={this.props.hp}
+        mp={this.props.mp}
+        maxHP={this.props.maxHP}
+        maxMP={this.props.maxMP}
+        globalCooldown={this.props.globalCooldown} />
       <CommandInput
         socket={this.socket}
         handleChange={this.handleChange}
@@ -86,5 +92,6 @@ Home.propTypes = {
   user: PropTypes.object,
   combat: PropTypes.object,
   equipment: PropTypes.object,
-  effects: PropTypes.object
+  effects: PropTypes.object,
+  globalCooldown: PropTypes.bool
 };
