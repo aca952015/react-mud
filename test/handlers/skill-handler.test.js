@@ -4,10 +4,11 @@ import skillHandler from '../../app/handlers/skill-handler.js';
 import {warriorSkills} from '../../app/data/skills/warrior-skills.js';
 import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
 import {newMessage} from '../../app/actions/message-actions.js';
+import {startCooldown} from '../../app/actions/skill-actions.js';
 import newMob from '../../app/data/mobs.js';
 
 describe('skillHandler', () => {
-  let props = {
+  const props = {
     skills: warriorSkills,
     effects: {death: false},
     globalCooldown: false,
@@ -20,12 +21,50 @@ describe('skillHandler', () => {
     username: 'Dave'
   };
 
+  const response = {
+    funcsToCall: [startCooldown, newMessage],
+    skillName: 'slash',
+    emitType: 'skill',
+    damage: 3,
+    enemy: props.combat.targets[0],
+    echoLog: {
+      from: {
+        friendly: props.username
+      },
+      pre: warriorSkills['slash'].roomEcho,
+      damage: 3,
+      post: ' damage to ',
+      target: {
+        enemy: props.combat.targets[0].short
+      },
+      punctuation: '.'
+    },
+    combatLog: {
+      from: {
+        friendly: 'You'
+      },
+      pre: warriorSkills['slash'].playerEcho,
+      damage: 3,
+      post: ' damage to ',
+      target: {
+        enemy: props.combat.targets[0].short
+      },
+      punctuation: '.'
+    }
+  };
+
   describe('If the user is not in combat', () => {
     it('should return feedback saying "You aren\'t in combat."', () => {
       expect(skillHandler(props.skills['slash'], 'bat', {...props, combat: {active: false, targets: []}})).toEqual({
         funcsToCall: [newMessage],
         feedback: 'You aren\'t in combat.'
       });
+    });
+  });
+
+  describe('Without arguments', () => {
+    it('should randomly target an enemy the user is fighting', () => {
+      expect(skillHandler(props.skills['slash'], undefined, props)).toEqual(response);
     });
   });
 });
