@@ -26,4 +26,10 @@ describe('skill actions', () => {
       expect(startGlobalCooldown()).toEqual({type: 'START_GLOBAL_COOLDOWN'});
     });
   });
+
+  describe('endGlobalCooldown', () => {
+    it('should return an object with type "END_GLOBAL_COOLDOWN"', () => {
+      expect(endGlobalCooldown()).toEqual({type: 'END_GLOBAL_COOLDOWN'});
+    });
+  });
 });
