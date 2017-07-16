@@ -1,6 +1,6 @@
 'use strict';
 
-import {startCooldown, endCooldown, setSkills} from '../../app/actions/skill-actions.js';
+import {startCooldown, endCooldown, startGlobalCooldown, endGlobalCooldown, setSkills} from '../../app/actions/skill-actions.js';
 
 describe('skill actions', () => {
   describe('startCooldown', () => {
@@ -18,6 +18,12 @@ describe('skill actions', () => {
   describe('setSkills', () => {
     it('should return an object with type "SET_SKILLS" and payload of the class name passed in', () => {
       expect(setSkills('warriorSkills')).toEqual({type: 'SET_SKILLS', payload: 'warriorSkills'});
+    });
+  });
+
+  describe('startGlobalCooldown', () => {
+    it('should return an object with type "START_GLOBAL_COOLDOWN"', () => {
+      expect(startGlobalCooldown()).toEqual({type: 'START_GLOBAL_COOLDOWN'});
     });
   });
 });
