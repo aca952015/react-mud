@@ -37,6 +37,6 @@ export default function damage(socket, roomData, mobsInCombat, alteredRooms) {
         punctuation: '.'
       }
     });
-    if (target.hp < 1) if (target.hp < 1) slayEnemy(target, roomData, alteredRooms, mobsInCombat, socket);
+    if (target.hp < 1) slayEnemy(target, roomData, alteredRooms, mobsInCombat, socket);
   });
 }
