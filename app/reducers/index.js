@@ -6,11 +6,13 @@ import messages from './message-reducer.js';
 import equipment from './equipment-reducer.js';
 import login from './login-reducer.js';
 import effects from './effects-reducer.js';
+import skills from './skill-reducer.js';
 
 export default combineReducers({
   user,
   messages,
   equipment,
   login,
-  effects
+  effects,
+  skills
 });
