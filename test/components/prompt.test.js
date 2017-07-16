@@ -24,4 +24,18 @@ describe('<Prompt />', () => {
     expect(prompt.find('p').at(1).children('span').at(1).text()).toEqual(' / ');
     expect(prompt.find('p').at(1).children('span').last().text()).toEqual(`${props.maxMP}`);
   });
+
+  it('should display a section with a span of globalCooldown and a div with a style of globalTimerBarStyles with globalCooldown', () => {
+    props = {...props, globalCooldown: true};
+    prompt = shallow(<Prompt {...props} />);
+
+    expect(prompt.find('section').children('span').text()).toEqual('Global Cooldown');
+    expect(prompt.find('section').children('div').props().style).toEqual({
+      width: '20vw',
+      height: '3vh',
+      background: '#ff0000',
+      position: 'absolute',
+      animation: 'countdown 2s forwards linear'
+    });
+  });
 });
