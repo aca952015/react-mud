@@ -29,4 +29,10 @@ describe('skills reducer', () => {
       expect(reducer(undefined, {type: 'SET_SKILLS', payload: 'warriorSkills'})).toEqual(warriorSkills);
     });
   });
+
+  describe('With an action of START_GLOBAL_COOLDOWN', () => {
+    it('should set globalCooldown to true', () => {
+      expect(reducer(undefined, {type: 'START_GLOBAL_COOLDOWN'})).toEqual({...warriorSkills, globalCooldown: true});
+    });
+  });
 });
