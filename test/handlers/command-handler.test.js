@@ -3,6 +3,7 @@
 import commandHandler from '../../app/handlers/command-handler.js';
 import {newMessage} from '../../app/actions/message-actions.js';
 import {createNew} from '../../app/actions/login-actions.js';
+import {warriorSkills} from '../../app/data/skills/warrior-skills.js';
 
 describe('CommandHandler', () => {
   it('should return an object with the feedback "I\'m not sure what you\'re trying to do" with a bad command', () => {
@@ -42,6 +43,17 @@ describe('CommandHandler', () => {
         expect(commandHandler('get', 'potion', {effects: {death: true}})).toEqual({
           funcsToCall: [newMessage],
           feedback: 'You can\'t do that while dead. You\'ll have to get resurrected first.'
+        });
+      });
+    });
+  });
+
+  describe('With a skill', () => {
+    describe('If the globalCooldown is still active', () => {
+      it('should tell the user "You\'ll have to wait for the global cooldown to finish."', () => {
+        expect(commandHandler('slash', 'bat', {skills: warriorSkills, globalCooldown: true, effects: {death: false}})).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You\'ll have to wait for the global cooldown to finish.'
         });
       });
     });
