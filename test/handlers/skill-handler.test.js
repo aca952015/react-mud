@@ -6,6 +6,7 @@ import {initialState as equipment} from '../../app/data/equipment-initial-state.
 import {newMessage} from '../../app/actions/message-actions.js';
 import {startCooldown} from '../../app/actions/skill-actions.js';
 import newMob from '../../app/data/mobs.js';
+import newItem from '../../app/data/items.js';
 
 describe('skillHandler', () => {
   const props = {
@@ -80,6 +81,18 @@ describe('skillHandler', () => {
   describe('With args on an enemy the user is fighting', () => {
     it('should return a skillHandler response', () => {
       expect(skillHandler(props.skills['slash'], 'bat', props)).toEqual(response);
+    });
+  });
+
+  describe('With equipment', () => {
+    it('should amplify a damaging skill\'s damage', () => {
+      expect(skillHandler(props.skills['slash'], 'bat', {...props, equipment: {...props.equipment, 'main hand': newItem('weapons', 'broad sword')}}))
+      .toEqual({
+        ...response,
+        damage: 8,
+        echoLog: {...response.echoLog, damage: 8},
+        combatLog: {...response.combatLog, damage: 8}
+      });
     });
   });
 });
