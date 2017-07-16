@@ -73,4 +73,14 @@ describe('skill', () => {
       });
     });
   });
+
+  describe('With a target already dead', () => {
+    it('should return a slayEnemy event', done => {
+      player1.emit('skill', {enemy: target, damage: 20, echoLog: {}});
+      player1.on('slayEnemy', res => {
+        expect(res).toEqual(target);
+        done();
+      });
+    });
+  });
 });
