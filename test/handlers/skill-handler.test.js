@@ -76,4 +76,10 @@ describe('skillHandler', () => {
       });
     });
   });
+
+  describe('With args on an enemy the user is fighting', () => {
+    it('should return a skillHandler response', () => {
+      expect(skillHandler(props.skills['slash'], 'bat', props)).toEqual(response);
+    });
+  });
 });
