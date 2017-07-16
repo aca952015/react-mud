@@ -53,8 +53,24 @@ describe('skill', () => {
         });
       });
     });
+
+    describe('With enough damage to kill the target', () => {
+      it('should call slayEnemy', done => {
+        player1.emit('skill', {enemy: target, damage: 20, echoLog: {}});
+        player1.on('generalMessage', res => {
+          expect(res.combatLog).toEqual({
+            from: {
+              friendly: 'You'
+            },
+            interaction: ' have slain ',
+            target: {
+              enemy: target.short
+            },
+            punctuation: '!'
+          });
+          done();
+        });
+      });
+    });
   });
-  // describe('With the target already dead', () => {
-  //
-  // });
 });
