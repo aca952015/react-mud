@@ -67,4 +67,13 @@ describe('skillHandler', () => {
       expect(skillHandler(props.skills['slash'], undefined, props)).toEqual(response);
     });
   });
+
+  describe('With args, but an enemy the user isn\'t fighting', () => {
+    it('should return feedback saying "You don\'t appear to be fighting that."', () => {
+      expect(skillHandler(props.skills['slash'], 'zombie', props)).toEqual({
+        funcsToCall: [newMessage],
+        feedback: 'You don\'t appear to be fighting that.'
+      });
+    });
+  });
 });
