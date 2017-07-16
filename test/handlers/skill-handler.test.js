@@ -95,4 +95,17 @@ describe('skillHandler', () => {
       });
     });
   });
+
+  describe('Against an enemy with high def', () => {
+    let zombie = newMob('armored zombie');
+    it('should return a response with 1 damage', () => {
+      expect(skillHandler(props.skills['slash'], 'zom', {...props, combat: {...props.combat, targets: [zombie]}})).toEqual({
+        ...response,
+        enemy: zombie,
+        damage: 1,
+        echoLog: {...response.echoLog, target: {enemy: zombie.short}, damage: 1},
+        combatLog: {...response.combatLog, target: {enemy: zombie.short}, damage: 1}
+      });
+    });
+  });
 });
