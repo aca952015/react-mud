@@ -7,7 +7,7 @@ import {initialState as equipment} from '../../app/data/equipment-initial-state.
 import {newMessage, updatePrevCommands, updateCommandIndex, updateInput, truncatePrevCommands} from '../../app/actions/message-actions.js';
 import {CommandInput} from '../../app/containers/command-input.jsx';
 import {warriorSkills} from '../../app/data/skills/warrior-skills.js';
-import {startGlobalCooldown} from '../../app/actions/skill-actions.js';
+import {startGlobalCooldown, startCooldown} from '../../app/actions/skill-actions.js';
 import newMob from '../../app/data/mobs.js';
 
 describe('<CommandInput />', () => {
@@ -95,6 +95,27 @@ describe('<CommandInput />', () => {
       commandInput = shallow(<CommandInput {...skillProps} />);
       commandInput.find('input').simulate('keyUp', {keyCode: 13});
       expect(skillProps.dispatch.calledWith(startGlobalCooldown())).toEqual(true);
+    });
+
+    describe('With a skill that has a cooldownTimer', () => {
+      it('should dispatch startCooldown with the skillName', () => {
+        const timerSkillProps = {
+          ...props,
+          input: 'slash',
+          skills: {
+            ...warriorSkills,
+            slash: {
+              ...warriorSkills.slash,
+              cooldownTimer: 500
+            }
+          },
+          combat: {active: true, targets: [newMob('bat')]
+          }
+        };
+        commandInput = shallow(<CommandInput {...timerSkillProps} />);
+        commandInput.find('input').simulate('keyUp', {keyCode: 13});
+        expect(timerSkillProps.dispatch.calledWith(startCooldown('slash'))).toEqual(true);
+      });
     });
   });
 });
