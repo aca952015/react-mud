@@ -24,6 +24,7 @@ export default function skillHandler(skill, args, props) {
     emitType: 'skill',
     damage,
     enemy,
+    cooldownTimer: skill.cooldownTimer ? skill.cooldownTimer : undefined,
     echoLog: {
       from: {
         friendly: props.username

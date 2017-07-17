@@ -3,8 +3,12 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import sinon from 'sinon';
+import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
 import {newMessage, updatePrevCommands, updateCommandIndex, updateInput, truncatePrevCommands} from '../../app/actions/message-actions.js';
 import {CommandInput} from '../../app/containers/command-input.jsx';
+import {warriorSkills} from '../../app/data/skills/warrior-skills.js';
+import {startGlobalCooldown, startCooldown} from '../../app/actions/skill-actions.js';
+import newMob from '../../app/data/mobs.js';
 
 describe('<CommandInput />', () => {
   let props, commandInput;
@@ -19,7 +23,13 @@ describe('<CommandInput />', () => {
       prevCommands: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21'],
       commandIndex: 1,
       username: 'Tester',
-      effects: {}
+      effects: {},
+      equipment,
+      combat: {
+        active: false,
+        targets: []
+      },
+      skills: warriorSkills
     };
     commandInput = shallow(<CommandInput {...props} />);
     done();
@@ -68,5 +78,44 @@ describe('<CommandInput />', () => {
     commandInput = shallow(<CommandInput {...props} />);
     commandInput.find('input').simulate('keyUp', {keyCode: 40});
     expect(props.dispatch.calledWith(updateCommandIndex(-1))).toEqual(true);
+  });
+
+  it('should call saveCharacter if the emitType of the result is quit', () => {
+    const quitProps = {...props, input: 'quit'};
+    commandInput = shallow(<CommandInput {...quitProps} />);
+    const saveCharacterStub = sinon.stub(commandInput.instance(), 'saveCharacter');
+    commandInput.instance().forceUpdate();
+    commandInput.find('input').simulate('keyUp', {keyCode: 13});
+    expect(saveCharacterStub.called).toEqual(true);
+  });
+
+  describe('If a skill is called', () => {
+    it('should dispatch startGlobalCooldown', () => {
+      const skillProps = {...props, input: 'slash', combat: {active: true, targets: [newMob('bat')]}};
+      commandInput = shallow(<CommandInput {...skillProps} />);
+      commandInput.find('input').simulate('keyUp', {keyCode: 13});
+      expect(skillProps.dispatch.calledWith(startGlobalCooldown())).toEqual(true);
+    });
+
+    describe('With a skill that has a cooldownTimer', () => {
+      it('should dispatch startCooldown with the skillName', () => {
+        const timerSkillProps = {
+          ...props,
+          input: 'slash',
+          skills: {
+            ...warriorSkills,
+            slash: {
+              ...warriorSkills.slash,
+              cooldownTimer: 500
+            }
+          },
+          combat: {active: true, targets: [newMob('bat')]
+          }
+        };
+        commandInput = shallow(<CommandInput {...timerSkillProps} />);
+        commandInput.find('input').simulate('keyUp', {keyCode: 13});
+        expect(timerSkillProps.dispatch.calledWith(startCooldown('slash'))).toEqual(true);
+      });
+    });
   });
 });

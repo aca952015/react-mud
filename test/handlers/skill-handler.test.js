@@ -108,4 +108,13 @@ describe('skillHandler', () => {
       });
     });
   });
+
+  describe('With a skill that has a cooldownTimer', () => {
+    it('should return a response object with a cooldownTimer property', () => {
+      expect(skillHandler({...props.skills['slash'], cooldownTimer: 500}, 'bat', props)).toEqual({
+        ...response,
+        cooldownTimer: 500
+      });
+    });
+  });
 });

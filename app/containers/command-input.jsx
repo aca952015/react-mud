@@ -35,6 +35,7 @@ export class CommandInput extends Component {
   constructor(props) {
     super(props);
   }
+  saveCharacter = () => saveCharacter(this)
   handleCommand = event => {
     // If the user hits up or down, they're trying to cycle through previous commands.
     if (event.keyCode === 38 || event.keyCode === 40) {
@@ -93,14 +94,14 @@ export class CommandInput extends Component {
       // to pass to this.props.dispatch and potentially with something that needs
       // to be emitted to the server to handle.
       let result = commandHandler(command, args, this.props);
-      
+
       // Without the check for funcsToCall, checking length will error out. Sometimes
       // there are no funcsToCall, so this conditional checks for both.
       if (result.funcsToCall && result.funcsToCall.length) result.funcsToCall.forEach(func => this.props.dispatch(func(result)));
 
       // If the emitType is quit, additionally save the character to the database before firing
       // any other functions.
-      if (result.emitType === 'quit') saveCharacter(this);
+      if (result.emitType === 'quit') this.saveCharacter();
 
       // If the skillHandler was invoked, start the global cooldown and end it 2 seconds later.
       // If the skill has a longer cooldown than the global cooldown, start that specific skill's
