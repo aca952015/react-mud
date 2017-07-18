@@ -25,21 +25,24 @@ export default function combatHandlers(homeCtx) {
     props.dispatch(enterCombat(target));
   });
   socket.on('damage', dmgObj => {
-    props.dispatch(damageUser(dmgObj.damage));
-    props.dispatch(newMessage({
-      combatLog: {
-        from: {
-          enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
-        },
-        pre: ' deals ',
-        damage: dmgObj.damage,
-        post: ' damage to ',
-        target: {
-          friendly: 'you'
-        },
-        punctuation: '.'
-      }
-    }));
+    props.dispatch(damageUser({damage: dmgObj.damage}));
+    if (dmgObj.enemy) {
+      props.dispatch(newMessage({
+        combatLog: {
+          from: {
+            enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
+          },
+          pre: ' deals ',
+          damage: dmgObj.damage,
+          post: ' damage to ',
+          target: {
+            friendly: 'you'
+          },
+          punctuation: '.'
+        }
+      }));
+    }
+
     if (homeCtx.props.hp <= 0 && !homeCtx.props.effects.death) {
       props.dispatch(newMessage({feedback: 'You have been SLAIN!'}));
       props.dispatch(escapeCombat());
