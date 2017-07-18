@@ -10,7 +10,7 @@ export function enterCombat(target) {
 export function damageUser(damage) {
   return {
     type: 'DAMAGE_USER',
-    payload: damage
+    payload: damage.damage
   };
 }
 
