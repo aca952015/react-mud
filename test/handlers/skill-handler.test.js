@@ -2,6 +2,7 @@
 
 import skillHandler from '../../app/handlers/skill-handler.js';
 import {warriorSkills} from '../../app/data/skills/warrior-skills.js';
+import {clericSkills} from '../../app/data/skills/cleric-skills.js';
 import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
 import {newMessage} from '../../app/actions/message-actions.js';
 import {startCooldown} from '../../app/actions/skill-actions.js';
@@ -10,11 +11,17 @@ import newItem from '../../app/data/items.js';
 
 describe('skillHandler', () => {
   const props = {
-    skills: warriorSkills,
+    skills: {
+      ...warriorSkills,
+      ...clericSkills
+    },
     effects: {death: false},
     globalCooldown: false,
     equipment,
     atk: 2,
+    mat: 2,
+    def: 0,
+    mdf: 0,
     combat: {
       active: true,
       targets: [newMob('bat')]
@@ -55,11 +62,53 @@ describe('skillHandler', () => {
     }
   };
 
+  const healingResponse = {
+    funcsToCall: [startCooldown],
+    skillName: 'heal',
+    emitType: 'skill',
+    skillTypes: props.skills.heal.skillTypes,
+    damage: -3,
+    cooldownTimer: undefined,
+    enemy: props.username,
+    echoLog: {
+      from: {
+        friendly: props.username
+      },
+      pre: clericSkills['heal'].roomEcho,
+      damage: -3,
+      post: ' health to ',
+      target: {
+        friendly: props.username
+      },
+      punctuation: '.'
+    },
+    combatLog: {
+      from: {
+        friendly: 'You'
+      },
+      pre: clericSkills['heal'].playerEcho,
+      damage: -3,
+      post: ' health to ',
+      target: {
+        friendly: props.username
+      },
+      punctuation: '.'
+    }
+  };
+
   describe('If the user is not in combat', () => {
-    it('should return feedback saying "You aren\'t in combat."', () => {
-      expect(skillHandler(props.skills['slash'], 'bat', {...props, combat: {active: false, targets: []}})).toEqual({
-        funcsToCall: [newMessage],
-        feedback: 'You aren\'t in combat.'
+    describe('Using a damage skill', () => {
+      it('should return feedback saying "You aren\'t in combat."', () => {
+        expect(skillHandler(props.skills['slash'], 'bat', {...props, combat: {active: false, targets: []}})).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You aren\'t in combat.'
+        });
+      });
+    });
+
+    describe('Using a healing skill', () => {
+      it('should return the healingResponse object', () => {
+        expect(skillHandler(props.skills['heal'], undefined, {...props, combat: {active: false, targets: []}})).toEqual(healingResponse);
       });
     });
   });
