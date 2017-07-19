@@ -16,10 +16,6 @@ export default function skillAndTargetsProcessor(command, args, props) {
       if (args.split(' ').length > 1) return {targetedSkill, args: args.split(' ')[1]};
       return {targetedSkill, args: undefined};
     }
-
-    regEx = new RegExp(`^${command}`, 'i');
-    targetedSkill = skills.find(skill => skill.match(regEx));
-    return {targetedSkill, args};
   }
 
   let regEx = new RegExp(`^${command}`, 'i');
