@@ -17,7 +17,7 @@ export default function skill(socket, roomData, mobsInCombat, alteredRooms, user
     }
 
     target = users.find(user => user.username.toLowerCase() === skillObj.enemy.toLowerCase());
-    if (!target || target.currentRoom !== socket.currentRoom) return socket.emit('I don\'t see that person here.');
+    if (!target || target.currentRoom !== socket.currentRoom) return socket.emit('generalMessage', {feedback: 'I don\'t see that person here.'});
     if (target.effects.death) return socket.emit('generalMessage', {feedback: 'You can\'t heal a ghost.'});
 
     // If the user is targeting themselves, update the combatLogs accordingly.
