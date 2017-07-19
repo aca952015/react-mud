@@ -137,8 +137,19 @@ describe('skillHandler', () => {
   });
 
   describe('With args on an enemy the user is fighting', () => {
-    it('should return a skillHandler response', () => {
-      expect(skillHandler(props.skills['slash'], 'bat', props)).toEqual(response);
+    describe('With a damage skill', () => {
+      it('should return a skillHandler response', () => {
+        expect(skillHandler(props.skills['slash'], 'bat', props)).toEqual(response);
+      });
+    });
+
+    describe('With a healing skill', () => {
+      it('should return an error that the user can\'t heal enemies', () => {
+        expect(skillHandler(props.skills['heal'], 'bat', props)).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You can\'t heal enemies.'
+        });
+      });
     });
   });
 
