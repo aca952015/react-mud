@@ -48,5 +48,5 @@ export default function serverSocketListeners(io, socket, users, roomData, mobsI
   unlock(socket, roomData);
   wearItem(socket);
   whisper(io, socket, users);
-  skill(socket, roomData, mobsInCombat, alteredRooms);
+  skill(socket, roomData, mobsInCombat, alteredRooms, users);
 }
