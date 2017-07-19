@@ -52,4 +52,13 @@ describe('skillAndTargetsProcessor', () => {
       });
     });
   });
+
+  describe('With an argument of "slash"', () => {
+    it('should return a skill of "slash" and args of undefined', () => {
+      expect(skillAndTargetsProcessor('slash', undefined, props)).toEqual({
+        targetedSkill: 'slash',
+        args: undefined
+      });
+    });
+  });
 });
