@@ -44,6 +44,15 @@ describe('skillAndTargetsProcessor', () => {
     });
   });
 
+  describe('With an argument of "sear bat"', () => {
+    it('should return a skill of "searing light" and args of "bat"', () => {
+      expect(skillAndTargetsProcessor('sear', 'bat', props)).toEqual({
+        targetedSkill: 'searing light',
+        args: 'bat'
+      });
+    });
+  });
+
   describe('With an argument of "slash bat"', () => {
     it('should return a skill of "slash" and args of "bat"', () =>{
       expect(skillAndTargetsProcessor('slash', 'bat', props)).toEqual({
