@@ -61,4 +61,13 @@ describe('skillAndTargetsProcessor', () => {
       });
     });
   });
+
+  describe('With an argument of "sear"', () => {
+    it('should return a skill of "searing light" and args of undefined', () => {
+      expect(skillAndTargetsProcessor('sear', undefined, props)).toEqual({
+        targetedSkill: 'searing light',
+        args: undefined
+      });
+    });
+  });
 });
