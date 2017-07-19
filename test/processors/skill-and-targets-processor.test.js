@@ -70,4 +70,13 @@ describe('skillAndTargetsProcessor', () => {
       });
     });
   });
+
+  describe('With an argument of "he"', () => {
+    it('should return a skill of "heal" and args of undefined', () => {
+      expect(skillAndTargetsProcessor('he', undefined, props)).toEqual({
+        targetedSkill: 'heal',
+        args: undefined
+      });
+    });
+  });
 });
