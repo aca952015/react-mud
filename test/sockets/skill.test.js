@@ -13,7 +13,7 @@ describe('skill', () => {
     player2 = io.connect('http://0.0.0.0:5000', ioOptions);
     player3 = io.connect('http://0.0.0.0:5000', ioOptions);
     player1.on('connect', () => {
-      player2.emit('changeName', 'player1');
+      player2.emit('changeName', 'player2');
       player2.emit('updateEquipment', equipment);
       player2.emit('updateEffects', {});
       player3.emit('teleport', 'Nexus');
@@ -121,6 +121,23 @@ describe('skill', () => {
             done();
           });
         });
+      });
+    });
+  });
+
+  describe('With a dead target', () => {
+    beforeEach(done => {
+      player2.emit('teleport', 'Nexus');
+      player2.emit('updateEffects', {death: true});
+      player2.emit('updateSocket');
+      player2.on('updateComplete', () => done());
+    });
+
+    it('should return that you can\'t heal ghosts', done => {
+      player1.emit('skill', {enemy: 'player2', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {target: {friendly: 'player2'}}, combatLog: {target: {friendly: 'player2'}}});
+      player1.on('generalMessage', res => {
+        expect(res.feedback).toEqual('You can\'t heal a ghost.');
+        done();
       });
     });
   });
