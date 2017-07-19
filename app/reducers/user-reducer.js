@@ -16,7 +16,11 @@ export default function reducer(state={}, action) {
   if (action.type === 'ADD_TO_CONTAINER') return addToContainer(state, action);
   if (action.type === 'CHANGE_ROOM') return {...state, currentRoom: action.payload};
   if (action.type === 'CLEAR_DESCRIPTION') return {...state, description: ['No description set.']};
-  if (action.type === 'DAMAGE_USER') return {...state, hp: state.hp - action.payload};
+  if (action.type === 'DAMAGE_USER') {
+    let currentHP = state.hp - action.payload;
+    if (currentHP > state.maxHP) currentHP = state.maxHP; // Healing causes negative damage, so check for overheal
+    return {...state, hp: currentHP};
+  }
   if (action.type === 'DROP_ALL') return {...state, inventory: []};
   if (action.type === 'DROP_ITEM') return dropItem(state, action);
   if (action.type === 'DRINK_POTION') return drinkPotion(state, action);

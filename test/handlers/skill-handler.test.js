@@ -2,6 +2,7 @@
 
 import skillHandler from '../../app/handlers/skill-handler.js';
 import {warriorSkills} from '../../app/data/skills/warrior-skills.js';
+import {clericSkills} from '../../app/data/skills/cleric-skills.js';
 import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
 import {newMessage} from '../../app/actions/message-actions.js';
 import {startCooldown} from '../../app/actions/skill-actions.js';
@@ -10,11 +11,17 @@ import newItem from '../../app/data/items.js';
 
 describe('skillHandler', () => {
   const props = {
-    skills: warriorSkills,
+    skills: {
+      ...warriorSkills,
+      ...clericSkills
+    },
     effects: {death: false},
     globalCooldown: false,
     equipment,
     atk: 2,
+    mat: 2,
+    def: 0,
+    mdf: 0,
     combat: {
       active: true,
       targets: [newMob('bat')]
@@ -23,9 +30,10 @@ describe('skillHandler', () => {
   };
 
   const response = {
-    funcsToCall: [startCooldown, newMessage],
+    funcsToCall: [startCooldown],
     skillName: 'slash',
     emitType: 'skill',
+    skillTypes: props.skills.slash.skillTypes,
     damage: 3,
     enemy: props.combat.targets[0],
     echoLog: {
@@ -54,18 +62,68 @@ describe('skillHandler', () => {
     }
   };
 
+  const healingResponse = {
+    funcsToCall: [startCooldown],
+    skillName: 'heal',
+    emitType: 'skill',
+    skillTypes: props.skills.heal.skillTypes,
+    damage: -3,
+    cooldownTimer: undefined,
+    enemy: props.username,
+    echoLog: {
+      from: {
+        friendly: props.username
+      },
+      pre: clericSkills['heal'].roomEcho,
+      damage: -3,
+      post: ' health to ',
+      target: {
+        friendly: props.username
+      },
+      punctuation: '.'
+    },
+    combatLog: {
+      from: {
+        friendly: 'You'
+      },
+      pre: clericSkills['heal'].playerEcho,
+      damage: -3,
+      post: ' health to ',
+      target: {
+        friendly: props.username
+      },
+      punctuation: '.'
+    }
+  };
+
   describe('If the user is not in combat', () => {
-    it('should return feedback saying "You aren\'t in combat."', () => {
-      expect(skillHandler(props.skills['slash'], 'bat', {...props, combat: {active: false, targets: []}})).toEqual({
-        funcsToCall: [newMessage],
-        feedback: 'You aren\'t in combat.'
+    describe('Using a damage skill', () => {
+      it('should return feedback saying "You aren\'t in combat."', () => {
+        expect(skillHandler(props.skills['slash'], 'bat', {...props, combat: {active: false, targets: []}})).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You aren\'t in combat.'
+        });
+      });
+    });
+
+    describe('Using a healing skill', () => {
+      it('should return the healingResponse object', () => {
+        expect(skillHandler(props.skills['heal'], undefined, {...props, combat: {active: false, targets: []}})).toEqual(healingResponse);
       });
     });
   });
 
   describe('Without arguments', () => {
-    it('should randomly target an enemy the user is fighting', () => {
-      expect(skillHandler(props.skills['slash'], undefined, props)).toEqual(response);
+    describe('Using a damage skill', () => {
+      it('should randomly target an enemy the user is fighting', () => {
+        expect(skillHandler(props.skills['slash'], undefined, props)).toEqual(response);
+      });
+    });
+
+    describe('Using a healing skill', () => {
+      it('should target the user', () => {
+        expect(skillHandler(props.skills['heal'], undefined, props)).toEqual(healingResponse);
+      });
     });
   });
 
@@ -78,20 +136,101 @@ describe('skillHandler', () => {
     });
   });
 
+  describe('Healing a target', () => {
+    describe('and the target is the user', () => {
+      it('should return a healingResponse object', () => {
+        expect(skillHandler(props.skills['heal'], props.username, props)).toEqual(healingResponse);
+      });
+    });
+
+    describe('And the target is not the user', () => {
+      it('should make the target a camelcased version of args for the server to handle', () => {
+        expect(skillHandler(props.skills['heal'], 'bob', props)).toEqual({
+          ...healingResponse,
+          enemy: 'Bob',
+          combatLog: {
+            ...healingResponse.combatLog,
+            target: {
+              friendly: 'Bob'
+            }
+          },
+          echoLog: {
+            ...healingResponse.echoLog,
+            target: {
+              friendly: 'Bob'
+            }
+          }
+        });
+      });
+    });
+  });
+
   describe('With args on an enemy the user is fighting', () => {
-    it('should return a skillHandler response', () => {
-      expect(skillHandler(props.skills['slash'], 'bat', props)).toEqual(response);
+    describe('With a damage skill', () => {
+      it('should return a skillHandler response', () => {
+        expect(skillHandler(props.skills['slash'], 'bat', props)).toEqual(response);
+      });
+    });
+
+    describe('With a healing skill', () => {
+      it('should return an error that the user can\'t heal enemies', () => {
+        expect(skillHandler(props.skills['heal'], 'bat', props)).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You can\'t heal enemies.'
+        });
+      });
     });
   });
 
   describe('With equipment', () => {
-    it('should amplify a damaging skill\'s damage', () => {
-      expect(skillHandler(props.skills['slash'], 'bat', {...props, equipment: {...props.equipment, 'main hand': newItem('weapons', 'broad sword')}}))
-      .toEqual({
-        ...response,
-        damage: 8,
-        echoLog: {...response.echoLog, damage: 8},
-        combatLog: {...response.combatLog, damage: 8}
+    describe('With a physical skill', () => {
+      it('should amplify a damaging skill\'s damage', () => {
+        expect(skillHandler(props.skills['slash'], 'bat', {...props, equipment: {...props.equipment, 'main hand': newItem('weapons', 'broad sword')}}))
+        .toEqual({
+          ...response,
+          damage: 8,
+          echoLog: {...response.echoLog, damage: 8},
+          combatLog: {...response.combatLog, damage: 8}
+        });
+      });
+    });
+
+    describe('With a magical skill', () => {
+      let bat = newMob('bat');
+
+      it('should amplify a damaging skill\'s damage', () => {
+        expect(skillHandler(props.skills['searing light'], 'bat', {
+          ...props,
+          equipment: {
+            ...props.equipment,
+            'main hand': newItem('weapons', 'holy mace')
+          },
+          combat: {
+            active: true,
+            targets: [bat]
+          }
+        }))
+        .toEqual({
+          ...response,
+          enemy: bat,
+          skillName: 'searing light',
+          damage: 8,
+          skillTypes: ['damage', 'magical'],
+          echoLog: {
+            ...response.echoLog,
+            pre: clericSkills['searing light'].roomEcho,
+            post: clericSkills['searing light'].postMessage,
+            target: {enemy: bat.short},
+            damage: 8
+          },
+          combatLog: {
+            ...response.combatLog,
+            pre: clericSkills['searing light'].playerEcho,
+            post: clericSkills['searing light'].postMessage,
+            target: {enemy: bat.short},
+            damage: 8
+          }
+        });
       });
     });
   });
@@ -105,6 +244,34 @@ describe('skillHandler', () => {
         damage: 1,
         echoLog: {...response.echoLog, target: {enemy: zombie.short}, damage: 1},
         combatLog: {...response.combatLog, target: {enemy: zombie.short}, damage: 1}
+      });
+    });
+  });
+
+  describe('Against an enemy with high mdf', () => {
+    let zombie = newMob('armored zombie');
+    zombie.mdf = 30;
+    it('should return a response with 1 damage', () => {
+      expect(skillHandler(props.skills['searing light'], 'zombie', {...props, combat: {...props.combat, targets: [zombie]}})).toEqual({
+        ...response,
+        enemy: zombie,
+        skillName: 'searing light',
+        damage: 1,
+        skillTypes: ['damage', 'magical'],
+        echoLog: {
+          ...response.echoLog,
+          pre: clericSkills['searing light'].roomEcho,
+          post: clericSkills['searing light'].postMessage,
+          target: {enemy: zombie.short},
+          damage: 1
+        },
+        combatLog: {
+          ...response.combatLog,
+          pre: clericSkills['searing light'].playerEcho,
+          post: clericSkills['searing light'].postMessage,
+          target: {enemy: zombie.short},
+          damage: 1
+        }
       });
     });
   });

@@ -11,6 +11,7 @@ export const nonCombatNPCs = {
     maxHP: 500,
     atk: 50,
     def: 50,
+    mdf: 50,
     nonCombat: true
   }
 };

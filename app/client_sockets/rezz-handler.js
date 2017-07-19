@@ -8,7 +8,7 @@ export default function rezzHandler(homeCtx) {
 
   socket.on('resurrect', () => {
     props.dispatch(fullRestore());
-    props.dispatch(damageUser(Math.round(homeCtx.props.maxHP / 2)));
+    props.dispatch(damageUser({damage: Math.round(homeCtx.props.maxHP / 2)}));
     props.dispatch(removeEffect('death'));
     let transmittedEffects = {...homeCtx.props.effects};
     delete transmittedEffects.death;

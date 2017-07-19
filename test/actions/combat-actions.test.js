@@ -11,7 +11,7 @@ describe('combat actions', () => {
 
   describe('damageUser', () => {
     it('should return a type of DAMAGE_USER and a payload of what got passed in', () => {
-      expect(damageUser(2)).toEqual({type: 'DAMAGE_USER', payload: 2});
+      expect(damageUser({damage: 2})).toEqual({type: 'DAMAGE_USER', payload: 2});
     });
   });
 

@@ -17,6 +17,7 @@ import descriptionHandler from './description-handler.js';
 import loginHandler from './login-handler.js';
 import quitHandler from './quit-handler.js';
 import skillHandler from './skill-handler.js';
+import skillAndTargetsProcessor from '../processors/skill-and-targets-processor.js';
 import {newMessage} from '../actions/message-actions.js';
 
 export default function commandHandler(command, args, props) {
@@ -104,9 +105,13 @@ export default function commandHandler(command, args, props) {
     return helperFunctions[command](command, args, props);
   }
 
-  if (props.skills[command]) {
+  const targetedSkillObject = skillAndTargetsProcessor(command, args, props);
+  const targetedSkill = targetedSkillObject.targetedSkill;
+  args = targetedSkillObject.args;
+
+  if (props.skills[targetedSkill]) {
     if (props.globalCooldown) return {funcsToCall: [newMessage], feedback: 'You\'ll have to wait for the global cooldown to finish.'};
-    return skillHandler(props.skills[command], args, props);
+    return skillHandler(props.skills[targetedSkill], args, props);
   }
 
   return {

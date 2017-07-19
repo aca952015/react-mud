@@ -10,6 +10,7 @@ describe('<CombatLog />', () => {
   describe('With a basic interaction from a user against a target', () => {
     it('should contain the text "You do some stuff to test target."', () => {
       props = {
+        username: 'Bob',
         message: {
           combatLog: {
             from: {
@@ -36,6 +37,7 @@ describe('<CombatLog />', () => {
   describe('With a basic interaction from a target against a user', () => {
     it('should contain the text "Some dude targets you."', () => {
       props = {
+        username: 'Bob',
         message: {
           combatLog: {
             from: {
@@ -61,6 +63,7 @@ describe('<CombatLog />', () => {
   describe('With damage from user to a target', () => {
     it('should contain the text "You deal 2 damage to target."', () => {
       props = {
+        username: 'Bob',
         message: {
           combatLog: {
             from: {
@@ -90,6 +93,7 @@ describe('<CombatLog />', () => {
   describe('With damage from a target to a user', () => {
     it('should contain the text "Target deals 2 damage to you."', () => {
       props = {
+        username: 'Bob',
         message: {
           combatLog: {
             from: {
@@ -99,7 +103,7 @@ describe('<CombatLog />', () => {
             damage: 2,
             post: ' damage to ',
             target: {
-              friendly: 'you'
+              friendly: 'bob'
             },
             punctuation: '.'
           }
@@ -113,6 +117,31 @@ describe('<CombatLog />', () => {
       expect(combatLog.find('span').children('span').first().text()).toEqual(' deals ');
       expect(combatLog.find('span').children('span').at(1).text()).toEqual('2');
       expect(combatLog.find('span').children('span').at(2).text()).toEqual(' damage to ');
+    });
+  });
+
+  describe('With healing from a target to a user', () => {
+    it('should contain the text "User restores 5 health to you and highlight the 5 in green"', () => {
+      props = {
+        username: 'Bob',
+        message: {
+          combatLog: {
+            from: {
+              friendly: 'Steve'
+            },
+            pre: ' restores ',
+            damage: 5,
+            post: ' health to ',
+            target: {
+              friendly: 'BoB'
+            },
+            punctuation: '.'
+          }
+        }
+      };
+      combatLog = shallow(<CombatLog {...props} />);
+      expect(combatLog.find('p').text()).toEqual('Steve restores 5 health to you.');
+      expect(combatLog.find('span').children('span').at(1).props().className).toEqual('healing');
     });
   });
 });

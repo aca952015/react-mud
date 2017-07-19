@@ -2,7 +2,7 @@
 
 import {classSkills} from '../data/class-skills.js';
 
-export default function reducer(state={...classSkills['warriorSkills']}, action) {
+export default function reducer(state={...classSkills['warriorSkills'], ...classSkills['clericSkills']}, action) {
   if (action.type === 'SET_SKILLS') return {...classSkills[action.payload]};
   if (action.type === 'ON_COOLDOWN') {
     let newState = {...state};
