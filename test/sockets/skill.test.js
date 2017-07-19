@@ -44,7 +44,7 @@ describe('skill', () => {
           player2.emit('teleport', 'Nexus');
           player2.emit('updateSocket');
           player2.on('updateComplete', () => {
-            player1.emit('skill', {enemy: target, damage: 5, echoLog: {}});
+            player1.emit('skill', {enemy: target, skillTypes: ['physical', 'damage'], damage: 5, echoLog: {}});
             player2.on('generalMessage', response => {
               expect(response.combatLog).toEqual({});
               done();
@@ -56,18 +56,9 @@ describe('skill', () => {
 
     describe('With enough damage to kill the target', () => {
       it('should call slayEnemy', done => {
-        player1.emit('skill', {enemy: target, damage: 20, echoLog: {}});
-        player1.on('generalMessage', res => {
-          expect(res.combatLog).toEqual({
-            from: {
-              friendly: 'You'
-            },
-            interaction: ' have slain ',
-            target: {
-              enemy: target.short
-            },
-            punctuation: '!'
-          });
+        player1.emit('skill', {enemy: target, skillTypes: ['damage', 'physical'], damage: 20, echoLog: {}});
+        player1.on('slayEnemy', res => {
+          expect(res).toEqual({...target, hp: target.maxHP - 25, combat: {active: true, targets: ['player1']}});
           done();
         });
       });
@@ -76,7 +67,7 @@ describe('skill', () => {
 
   describe('With a target already dead', () => {
     it('should return a slayEnemy event', done => {
-      player1.emit('skill', {enemy: target, damage: 20, echoLog: {}});
+      player1.emit('skill', {enemy: target, skillTypes: ['damage', 'physical'], damage: 20, echoLog: {}});
       player1.on('slayEnemy', res => {
         expect(res).toEqual(target);
         done();
