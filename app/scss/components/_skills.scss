@@ -1,0 +1,92 @@
+.skills {
+  margin-bottom: 1vh;
+  width: 40vw;
+
+  .dual-box {
+    width: 100%;
+    margin-bottom: 1vh;
+    float: left;
+  }
+
+  .dual-box:last-child {
+    margin-bottom: 0;
+  }
+
+  .level-box {
+    width: 20vw;
+    float: left;
+
+    p {
+      width: 8vw;
+      float: left;
+    }
+
+    .skill-list {
+      width: 12vw;
+      float: left;
+    }
+  }
+
+  .level-box:nth-child(2n) {
+    float: right;
+  }
+}
+
+@media only screen and (max-width: 970px) {
+  .skills {
+    width: 65vw;
+
+    .level-box {
+      width: 32.5vw;
+
+      p {
+        width: 12vw;
+      }
+
+      .skill-list {
+        width: 20.5vw;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 570px) {
+  .skills {
+    width: 100vw;
+
+    .level-box {
+      width: 50vw;
+
+      p {
+        width: 17vw;
+      }
+
+      .skill-list {
+        width: 33vw;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 415px) {
+  .skills {
+    width: 100%;
+
+    .dual-box {
+      float: none;
+    }
+
+    .level-box {
+      width: 100%;
+      float: none;
+
+      p {
+        width: 40%;
+      }
+
+      .skill-list {
+        width: 60%;
+      }
+    }
+  }
+}
