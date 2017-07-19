@@ -108,10 +108,10 @@ export default function commandHandler(command, args, props) {
   const regEx = new RegExp(`^${command}`, 'i');
   const skills = Object.keys(props.skills);
   const targetedSkill = skills.find(skill => skill.match(regEx));
-
+  
   if (props.skills[targetedSkill]) {
     if (props.globalCooldown) return {funcsToCall: [newMessage], feedback: 'You\'ll have to wait for the global cooldown to finish.'};
-    return skillHandler(props.skills[command], args, props);
+    return skillHandler(props.skills[targetedSkill], args, props);
   }
 
   return {
