@@ -142,6 +142,27 @@ describe('skillHandler', () => {
         expect(skillHandler(props.skills['heal'], props.username, props)).toEqual(healingResponse);
       });
     });
+
+    describe('And the target is not the user', () => {
+      it('should make the target a camelcased version of args for the server to handle', () => {
+        expect(skillHandler(props.skills['heal'], 'bob', props)).toEqual({
+          ...healingResponse,
+          enemy: 'Bob',
+          combatLog: {
+            ...healingResponse.combatLog,
+            target: {
+              friendly: 'Bob'
+            }
+          },
+          echoLog: {
+            ...healingResponse.echoLog,
+            target: {
+              friendly: 'Bob'
+            }
+          }
+        });
+      });
+    });
   });
 
   describe('With args on an enemy the user is fighting', () => {
