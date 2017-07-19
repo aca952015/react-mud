@@ -17,7 +17,7 @@ export const clericSkills = {
     skillName: 'searing light',
     onCooldown: false,
     atkMultiplier: 0,
-    matMultiplier: 1.3,
+    matMultiplier: 1.5,
     addHealing: 0,
     addDamage: 3,
     playerEcho: ' conjure forth a burst of holy light, dealing ',

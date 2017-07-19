@@ -49,7 +49,7 @@ export default function skillHandler(skill, args, props) {
   // Magic abilities work the same way, except with MAT, but target MDF should not be factored in to friendly
   // targets (since it will be a heal if it's targeting a friendly).
   let damage = (Math.round((props.atk + equipmentAtk) * skill.atkMultiplier) + skill.addDamage) - target.def;
-  let matDamage = (Math.round(props.mat + equipmentMat) * skill.matMultiplier + skill.addHealing);
+  let matDamage = (Math.round((props.mat + equipmentMat) * skill.matMultiplier) + skill.addHealing);
   if (skill.skillTypes.includes('damage')) {
     matDamage -= target.mdf;
 

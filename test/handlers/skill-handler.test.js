@@ -183,13 +183,54 @@ describe('skillHandler', () => {
   });
 
   describe('With equipment', () => {
-    it('should amplify a damaging skill\'s damage', () => {
-      expect(skillHandler(props.skills['slash'], 'bat', {...props, equipment: {...props.equipment, 'main hand': newItem('weapons', 'broad sword')}}))
-      .toEqual({
-        ...response,
-        damage: 8,
-        echoLog: {...response.echoLog, damage: 8},
-        combatLog: {...response.combatLog, damage: 8}
+    describe('With a physical skill', () => {
+      it('should amplify a damaging skill\'s damage', () => {
+        expect(skillHandler(props.skills['slash'], 'bat', {...props, equipment: {...props.equipment, 'main hand': newItem('weapons', 'broad sword')}}))
+        .toEqual({
+          ...response,
+          damage: 8,
+          echoLog: {...response.echoLog, damage: 8},
+          combatLog: {...response.combatLog, damage: 8}
+        });
+      });
+    });
+
+    describe('With a magical skill', () => {
+      let bat = newMob('bat');
+
+      it('should amplify a damaging skill\'s damage', () => {
+        expect(skillHandler(props.skills['searing light'], 'bat', {
+          ...props,
+          equipment: {
+            ...props.equipment,
+            'main hand': newItem('weapons', 'holy mace')
+          },
+          combat: {
+            active: true,
+            targets: [bat]
+          }
+        }))
+        .toEqual({
+          ...response,
+          enemy: bat,
+          skillName: 'searing light',
+          damage: 8,
+          skillTypes: ['damage', 'magical'],
+          echoLog: {
+            ...response.echoLog,
+            pre: clericSkills['searing light'].roomEcho,
+            post: clericSkills['searing light'].postMessage,
+            target: {enemy: bat.short},
+            damage: 8
+          },
+          combatLog: {
+            ...response.combatLog,
+            pre: clericSkills['searing light'].playerEcho,
+            post: clericSkills['searing light'].postMessage,
+            target: {enemy: bat.short},
+            damage: 8
+          }
+        });
       });
     });
   });
