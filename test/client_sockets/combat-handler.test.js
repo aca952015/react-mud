@@ -99,6 +99,45 @@ describe('combat client sockets', () => {
   });
 
   describe('damage', () => {
+    describe('If there is only a damage property', () => {
+      it('should only dispatch damageUser', done => {
+        socketHandlers({socket: player2, props});
+        
+        player1.emit('skill', {
+          skillTypes: ['healing', 'magical'],
+          damage: -3,
+          enemy: 'player2',
+          echoLog: {
+            from: {
+              friendly: 'player1'
+            },
+            pre: ' emits a soothing blue aura, restoring ',
+            damage: -3,
+            post: ' health to ',
+            target: {
+              friendly: 'player2'
+            }
+          },
+          combatLog: {
+            from: {
+              friendly: 'You'
+            },
+            pre: ' emit a soothing blue aura, restoring ',
+            damage: -3,
+            post: ' health to ',
+            target: {
+              friendly: 'player2'
+            }
+          }
+        });
+        player2.on('damage', res => {
+          expect(res.enemy).toEqual(undefined);
+          expect(props.dispatch.calledWith(damageUser({damage: res.damage}))).toEqual(true);
+          done();
+        });
+      });
+    });
+
     describe('With less damage than the user\'s health', () => {
       it('should dispatch damageUser and newMessage', done => {
         player1.emit('testDamage');
