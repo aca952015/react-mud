@@ -77,8 +77,18 @@ describe('user reducer', () => {
   });
 
   describe('DAMAGE_USER', () => {
-    it('should reduce the user\'s HP by the damage in the payload', () => {
-      expect(reducer(initialState, {type: 'DAMAGE_USER', payload: 2})).toEqual({...initialState, hp: initialState.hp - 2});
+    describe('With a positive number', () => {
+      it('should reduce the user\'s HP by the damage in the payload', () => {
+        expect(reducer(initialState, {type: 'DAMAGE_USER', payload: 2})).toEqual({...initialState, hp: initialState.hp - 2});
+      });
+    });
+
+    describe('With a negative number', () => {
+      describe('That doesn\'t fully heal the user', () => {
+        it('should increase the user\'s HP by the amout healed', () => {
+          expect(reducer({...initialState, hp: 10}, {type: 'DAMAGE_USER', payload: -5})).toEqual({...initialState, hp: 15});
+        });
+      });
     });
   });
 
