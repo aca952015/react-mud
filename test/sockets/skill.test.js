@@ -85,6 +85,16 @@ describe('skill', () => {
     describe('With a healing skill', () => {
       describe('On a user not in the room', () => {
         it('should return an error that the user isn\'t seen', done => {
+          player1.emit('skill', {enemy: 'player2', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
+          player1.on('generalMessage', res => {
+            expect(res.feedback).toEqual('I don\'t see that person here.');
+            done();
+          });
+        });
+      });
+
+      describe('On a valid target, but not in the room', () => {
+        it('should return an error that the user isn\'t seen', done => {
           player1.emit('skill', {enemy: 'Davy', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
           player1.on('generalMessage', res => {
             expect(res.feedback).toEqual('I don\'t see that person here.');
