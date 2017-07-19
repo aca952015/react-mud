@@ -2,10 +2,11 @@
 
 import reducer from '../../app/reducers/skill-reducer.js';
 import {warriorSkills} from '../../app/data/skills/warrior-skills.js';
+import {clericSkills} from '../../app/data/skills/cleric-skills.js';
 
 describe('skills reducer', () => {
   it('should have an initialState of an empty object', () => {
-    expect(reducer(undefined, {})).toEqual({...warriorSkills});
+    expect(reducer(undefined, {})).toEqual({...warriorSkills, ...clericSkills});
   });
 
   describe('With an action of "ON_COOLDOWN"', () => {
@@ -32,7 +33,7 @@ describe('skills reducer', () => {
 
   describe('With an action of START_GLOBAL_COOLDOWN', () => {
     it('should set globalCooldown to true', () => {
-      expect(reducer(undefined, {type: 'START_GLOBAL_COOLDOWN'})).toEqual({...warriorSkills, globalCooldown: true});
+      expect(reducer(undefined, {type: 'START_GLOBAL_COOLDOWN'})).toEqual({...warriorSkills, ...clericSkills, globalCooldown: true});
     });
   });
 
