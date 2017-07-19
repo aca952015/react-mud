@@ -45,7 +45,7 @@ export default class Messages extends Component {
         {message.room ? <Room message={message}/> : null}
         {message.occupants ? <Occupants message={message}/> : null}
         {message.mobs ? <Mobs message={message}/> : null}
-        {message.combatLog ? <CombatLog message={message}/> : null}
+        {message.combatLog ? <CombatLog username={this.props.username} message={message}/> : null}
         {message.containedItems ? <Containers message={message}/> : null}
         {message.onlineUsers ? <OnlineUsers message={message}/> : null}
         {message.commType ? <Communication username={this.props.username} message={message}/> : null}
