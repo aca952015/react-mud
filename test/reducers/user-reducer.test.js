@@ -89,6 +89,12 @@ describe('user reducer', () => {
           expect(reducer({...initialState, hp: 10}, {type: 'DAMAGE_USER', payload: -5})).toEqual({...initialState, hp: 15});
         });
       });
+
+      describe('That overheals', () => {
+        it('should increase the user\'s HP to the max', () => {
+          expect(reducer({...initialState, hp: initialState.maxHP - 1}, {type: 'DAMAGE_USER', payload: -9001})).toEqual({...initialState, hp: initialState.maxHP});
+        });
+      });
     });
   });
 
