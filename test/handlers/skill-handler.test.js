@@ -207,6 +207,34 @@ describe('skillHandler', () => {
     });
   });
 
+  describe('Against an enemy with high mdf', () => {
+    let zombie = newMob('armored zombie');
+    zombie.mdf = 30;
+    it('should return a response with 1 damage', () => {
+      expect(skillHandler(props.skills['searing light'], 'zombie', {...props, combat: {...props.combat, targets: [zombie]}})).toEqual({
+        ...response,
+        enemy: zombie,
+        skillName: 'searing light',
+        damage: 1,
+        skillTypes: ['damage', 'magical'],
+        echoLog: {
+          ...response.echoLog,
+          pre: clericSkills['searing light'].roomEcho,
+          post: clericSkills['searing light'].postMessage,
+          target: {enemy: zombie.short},
+          damage: 1
+        },
+        combatLog: {
+          ...response.combatLog,
+          pre: clericSkills['searing light'].playerEcho,
+          post: clericSkills['searing light'].postMessage,
+          target: {enemy: zombie.short},
+          damage: 1
+        }
+      });
+    });
+  });
+
   describe('With a skill that has a cooldownTimer', () => {
     it('should return a response object with a cooldownTimer property', () => {
       expect(skillHandler({...props.skills['slash'], cooldownTimer: 500}, 'bat', props)).toEqual({

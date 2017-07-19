@@ -60,6 +60,7 @@ export default function skillHandler(skill, args, props) {
 
   // If the skill is a heal, then it "deals negative damage" to the target.
   if (skill.skillTypes.includes('healing')) damage = -(Math.abs(matDamage));
+  if (skill.skillTypes.includes('damage') && skill.skillTypes.includes('magical')) damage = matDamage;
 
   // Figure out if the target object needs to be friendly or enemy for display purposes
   const targetEnemyOrFriendly = {};

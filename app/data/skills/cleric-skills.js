@@ -12,5 +12,17 @@ export const clericSkills = {
     roomEcho: ' emits a soothing blue aura, restoring ',
     postMessage: ' health to ',
     skillTypes: ['healing', 'magical']
+  },
+  'searing light': {
+    skillName: 'searing light',
+    onCooldown: false,
+    atkMultiplier: 0,
+    matMultiplier: 1.3,
+    addHealing: 0,
+    addDamage: 3,
+    playerEcho: ' conjure forth a burst of holy light, dealing ',
+    roomEcho: ' conjures forth a burst of holy light, dealing ',
+    postMessage: ' damage to ',
+    skillTypes: ['damage', 'magical']
   }
 };
