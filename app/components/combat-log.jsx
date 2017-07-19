@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
 
 export const CombatLog = props => {
   const combatLog = props.message.combatLog;
+  const friendlyTarget = combatLog.target.friendly;
+  if (friendlyTarget  && friendlyTarget.toLowerCase() === props.username.toLowerCase()) combatLog.target.friendly = 'you';
+  let damageHighlightClass = combatLog.target.friendly && combatLog.from.friendly ? 'healing' : 'damage';
+
   return <div className="combat-log">
     <p>
       {/* The from, pre, interaction, damage, post, and target fields, using friendly and enemy,
@@ -14,7 +18,7 @@ export const CombatLog = props => {
       {combatLog.damage ?
         <span>
           <span>{combatLog.pre}</span>
-          <span className="damage">{combatLog.damage}</span>
+          <span className={damageHighlightClass}>{Math.abs(combatLog.damage)}</span>
           <span>{combatLog.post}</span>
         </span>
       : null}
@@ -25,5 +29,6 @@ export const CombatLog = props => {
 };
 
 CombatLog.propTypes = {
-  message: PropTypes.object
+  message: PropTypes.object,
+  username: PropTypes.string
 };
