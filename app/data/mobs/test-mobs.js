@@ -10,7 +10,8 @@ export const testMobs = {
     hp: 5,
     maxHP: 5,
     atk: 5,
-    def: 0
+    def: 0,
+    mdf: 0
   },
   'armored zombie': {
     name: 'armored zombie',
@@ -21,6 +22,7 @@ export const testMobs = {
     hp: 10,
     maxHP: 10,
     atk: 2,
-    def: 3
+    def: 3,
+    mdf: 0
   }
 };
