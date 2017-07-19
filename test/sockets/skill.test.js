@@ -17,7 +17,7 @@ describe('skill', () => {
       player2.emit('updateEquipment', equipment);
       player2.emit('updateEffects', {});
       player3.emit('teleport', 'Nexus');
-      player3.emit('changeName', 'plaeyr3');
+      player3.emit('changeName', 'player3');
       player3.emit('updateEquipment', equipment);
       player3.emit('updateEffects', {});
       player1.emit('changeName', 'player1');
@@ -108,6 +108,16 @@ describe('skill', () => {
           player1.emit('skill', {enemy: 'player1', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {target: {}}, combatLog: {target: {}}});
           player1.on('generalMessage', res => {
             expect(res.combatLog.target.friendly).toEqual('yourself');
+            done();
+          });
+        });
+      });
+
+      describe('If another player is the target', () => {
+        it('should emit the combatLog to the player', done => {
+          player1.emit('skill', {enemy: 'player3', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {target: {friendly: 'player3'}}, combatLog: {target: {friendly: 'player3'}}});
+          player1.on('generalMessage', res => {
+            expect(res.combatLog.target.friendly).toEqual('player3');
             done();
           });
         });
