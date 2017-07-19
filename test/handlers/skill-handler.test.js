@@ -114,8 +114,16 @@ describe('skillHandler', () => {
   });
 
   describe('Without arguments', () => {
-    it('should randomly target an enemy the user is fighting', () => {
-      expect(skillHandler(props.skills['slash'], undefined, props)).toEqual(response);
+    describe('Using a damage skill', () => {
+      it('should randomly target an enemy the user is fighting', () => {
+        expect(skillHandler(props.skills['slash'], undefined, props)).toEqual(response);
+      });
+    });
+
+    describe('Using a healing skill', () => {
+      it('should target the user', () => {
+        expect(skillHandler(props.skills['heal'], undefined, props)).toEqual(healingResponse);
+      });
     });
   });
 

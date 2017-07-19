@@ -11,7 +11,7 @@ export default function skillHandler(skill, args, props) {
   // or the user if it's a defensive skill
   if (!args) {
     target = props.combat.targets[Math.floor(Math.random() * props.combat.targets.length)];
-    if (!target && skill.skillTypes.includes('healing')) target = props.username;
+    if (skill.skillTypes.includes('healing')) target = props.username;
   }
 
   // If the user specifies a target, look for the target in current enemies first.
