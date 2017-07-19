@@ -83,9 +83,9 @@ describe('skill', () => {
     });
 
     describe('With a healing skill', () => {
-      describe('On a user not in the room', () => {
+      describe('On a user not connected', () => {
         it('should return an error that the user isn\'t seen', done => {
-          player1.emit('skill', {enemy: 'player2', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
+          player1.emit('skill', {enemy: 'Davy', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
           player1.on('generalMessage', res => {
             expect(res.feedback).toEqual('I don\'t see that person here.');
             done();
@@ -95,9 +95,19 @@ describe('skill', () => {
 
       describe('On a valid target, but not in the room', () => {
         it('should return an error that the user isn\'t seen', done => {
-          player1.emit('skill', {enemy: 'Davy', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
+          player1.emit('skill', {enemy: 'player2', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
           player1.on('generalMessage', res => {
             expect(res.feedback).toEqual('I don\'t see that person here.');
+            done();
+          });
+        });
+      });
+
+      describe('If the user is the target', () => {
+        it('should change the combatLog accordingly', done => {
+          player1.emit('skill', {enemy: 'player1', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {target: {}}, combatLog: {target: {}}});
+          player1.on('generalMessage', res => {
+            expect(res.combatLog.target.friendly).toEqual('yourself');
             done();
           });
         });
