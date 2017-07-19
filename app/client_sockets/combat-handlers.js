@@ -24,6 +24,7 @@ export default function combatHandlers(homeCtx) {
     }));
     props.dispatch(enterCombat(target));
   });
+  
   socket.on('damage', dmgObj => {
     props.dispatch(damageUser({damage: dmgObj.damage}));
     if (dmgObj.enemy) {
