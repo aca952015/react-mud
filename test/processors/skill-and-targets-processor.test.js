@@ -43,4 +43,13 @@ describe('skillAndTargetsProcessor', () => {
       });
     });
   });
+
+  describe('With an argument of "slash bat"', () => {
+    it('should return a skill of "slash" and args of "bat"', () =>{
+      expect(skillAndTargetsProcessor('slash', 'bat', props)).toEqual({
+        targetedSkill: 'slash',
+        args: 'bat'
+      });
+    });
+  });
 });
