@@ -23,9 +23,10 @@ describe('skillHandler', () => {
   };
 
   const response = {
-    funcsToCall: [startCooldown, newMessage],
+    funcsToCall: [startCooldown],
     skillName: 'slash',
     emitType: 'skill',
+    skillTypes: props.skills.slash.skillTypes,
     damage: 3,
     enemy: props.combat.targets[0],
     echoLog: {
