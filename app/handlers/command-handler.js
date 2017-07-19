@@ -104,7 +104,12 @@ export default function commandHandler(command, args, props) {
     return helperFunctions[command](command, args, props);
   }
 
-  if (props.skills[command]) {
+  // Fuzzy match to see if the command matches a skill the user knows
+  const regEx = new RegExp(`^${command}`, 'i');
+  const skills = Object.keys(props.skills);
+  const targetedSkill = skills.find(skill => skill.match(regEx));
+
+  if (props.skills[targetedSkill]) {
     if (props.globalCooldown) return {funcsToCall: [newMessage], feedback: 'You\'ll have to wait for the global cooldown to finish.'};
     return skillHandler(props.skills[command], args, props);
   }
