@@ -57,7 +57,8 @@ export default function commandHandler(command, args, props) {
     'equipment',
     'description',
     'resurrect',
-    'quit'
+    'quit',
+    'skills'
   ];
 
   const helperFunctions = {
@@ -87,7 +88,8 @@ export default function commandHandler(command, args, props) {
     'equipment': {funcsToCall: [newMessage], equipment: props.equipment},
     'description': descriptionHandler,
     'resurrect': {emitType: 'resurrect'},
-    'quit': quitHandler
+    'quit': quitHandler,
+    'skills': {funcsToCall: [newMessage], skills: props.skills}
   };
 
   if (commandShorthand[command]) command = commandShorthand[command];
