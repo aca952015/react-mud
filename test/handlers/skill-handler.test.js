@@ -136,6 +136,14 @@ describe('skillHandler', () => {
     });
   });
 
+  describe('Healing a target', () => {
+    describe('and the target is the user', () => {
+      it('should return a healingResponse object', () => {
+        expect(skillHandler(props.skills['heal'], props.username, props)).toEqual(healingResponse);
+      });
+    });
+  });
+
   describe('With args on an enemy the user is fighting', () => {
     describe('With a damage skill', () => {
       it('should return a skillHandler response', () => {
