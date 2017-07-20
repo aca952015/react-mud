@@ -182,7 +182,7 @@ export const helpFile = {
     title: '<span class="highlight">SKILLS</span>',
     text: [
       'By itself, <span class="highlight">SKILLS</span> will show you a list of all skills available to your class and the level you learn them. In order to use a skill, simply type the name of the skill and targets as necessary. For example, "<span class="highlight">HEAL BOB</span>" will use the heal skill, targeting Bob.',
-      'You can type <span class="highlight">HELP {skill}</span>" to learn more about that skill.',
+      'You can type <span class="highlight">HELP {skill}</span> to learn more about that skill.',
       'If you don\'t specify a target, an offensive skill will be used on a random enemy you are currently fighting and a defensive skill will be cast on yourself. You can also cast a spell on yourself by targeting your name.',
       'Skills can also be fuzzy matched. "<span class="highlight">SEAR BAT</span>" will cast "searing light" on a target of "bat". See HELP FUZZY MATCHING for more information.'
     ]
