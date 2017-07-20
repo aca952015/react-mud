@@ -3,6 +3,7 @@
 export const clericSkills = {
   heal: {
     skillName: 'heal',
+    level: 1,
     onCooldown: false,
     atkMultiplier: 0,
     matMultiplier: 1.5,
@@ -15,6 +16,7 @@ export const clericSkills = {
   },
   'searing light': {
     skillName: 'searing light',
+    level: 1,
     onCooldown: false,
     atkMultiplier: 0,
     matMultiplier: 1.5,

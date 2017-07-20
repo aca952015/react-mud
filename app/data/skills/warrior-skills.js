@@ -3,6 +3,7 @@
 export const warriorSkills = {
   slash: {
     skillName: 'slash',
+    level: 1,
     onCooldown: false,
     atkMultiplier: 1.5,
     matMultiplier: 0,

@@ -24,6 +24,7 @@ export const helpFile = {
     text: [
       `<span class="help-topics">KILL</span>
       <span class="help-topics">AUTO_ATTACKS</span>
+      <span class="help-topics">SKILLS</span>
       <span class="help-topics">TICKS</span>`
     ]
   },
@@ -82,7 +83,7 @@ export const helpFile = {
   'fuzzy matching': {
     title: 'Fuzzy matching',
     text: [
-      'Many arguments will target the first matching mob, item, examine, or help file with only partial matching. For example, "<span class="highlight">KILL ZOM</span>" is acceptable shorthand for KILL ZOMBIE. "<span class="highlight">LOOK IN BACK</span>" is acceptable shorthand for LOOK IN BACKPACK.',
+      'Many arguments will target the first matching mob, item, examine, skill, or help file with only partial matching. For example, "<span class="highlight">KILL ZOM</span>" is acceptable shorthand for KILL ZOMBIE. "<span class="highlight">LOOK IN BACK</span>" is acceptable shorthand for LOOK IN BACKPACK.',
       'Dot notation can be used in combination with this, as well as command shortcuts. "<span class="highlight">GET 2.POT 2.BAC</span>" is acceptable shorthand for getting the second potion from your second backpack. "<span class="highlight">L IN 2.COR</span>" is acceptable for looking in the second corpse of the room.',
       'Players cannot be targeted using shorthand and commands must either be fully typed out or use the shortcuts mentioned in their help files.'
     ]
@@ -99,6 +100,10 @@ export const helpFile = {
   'give': {
     title: '<span class="highlight">GIVE {item} {target}</span> -or- <span class="highlight">GIVE ALL {target}</span>',
     text: ['Will try to give the item from your inventory to another player in the same room. GIVE ALL will give everything you\'re carrying to the target. If you are not carrying the item or it\'s in a container, the command will fail. Dot notation can be used to give a specific item. For example, if you\'re carrying 2 potions, you can <span class="highlight">GIVE 2.POTION {target}</span>.']
+  },
+  'heal': {
+    title: '<span class="highlight">HEAL {target}</span>',
+    text: ['Heals the target for 1.5 times your total MAT power. Can be cast outside of combat.']
   },
   'inventory': {
     title: '<span class="highlight">INVENTORY</span> (shortcuts: I or INV)',
@@ -168,6 +173,23 @@ export const helpFile = {
   'say': {
     title: '<span class="highlight">SAY {message}</span>',
     text: ['Will have your character say something to everyone in your current room.']
+  },
+  'searing light': {
+    title: '<span class="highlight">SEARING LIGHT {target}</span>',
+    text: ['Will blast your target with holy fire, dealing 1.5 times your total MAT damage minus the target\'s MDF.']
+  },
+  'skills': {
+    title: '<span class="highlight">SKILLS</span>',
+    text: [
+      'By itself, <span class="highlight">SKILLS</span> will show you a list of all skills available to your class and the level you learn them. In order to use a skill, simply type the name of the skill and targets as necessary. For example, "<span class="highlight">HEAL BOB</span>" will use the heal skill, targeting Bob.',
+      'You can type <span class="highlight">HELP {skill}</span> to learn more about that skill.',
+      'If you don\'t specify a target, an offensive skill will be used on a random enemy you are currently fighting and a defensive skill will be cast on yourself. You can also cast a spell on yourself by targeting your name.',
+      'Skills can also be fuzzy matched. "<span class="highlight">SEAR BAT</span>" will cast "searing light" on a target of "bat". See HELP FUZZY MATCHING for more information.'
+    ]
+  },
+  'slash': {
+    title: '<span class="highlight">SLASH {target}</span>',
+    text: ['Will slash your opponent and deal 1.5 times your total ATK power to the target, minus their DEF.']
   },
   'stats': {
     title: 'Equipment stats',
