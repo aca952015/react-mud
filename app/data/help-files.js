@@ -24,6 +24,7 @@ export const helpFile = {
     text: [
       `<span class="help-topics">KILL</span>
       <span class="help-topics">AUTO_ATTACKS</span>
+      <span class="help-topics">SKILLS</span>
       <span class="help-topics">TICKS</span>`
     ]
   },
@@ -82,7 +83,7 @@ export const helpFile = {
   'fuzzy matching': {
     title: 'Fuzzy matching',
     text: [
-      'Many arguments will target the first matching mob, item, examine, or help file with only partial matching. For example, "<span class="highlight">KILL ZOM</span>" is acceptable shorthand for KILL ZOMBIE. "<span class="highlight">LOOK IN BACK</span>" is acceptable shorthand for LOOK IN BACKPACK.',
+      'Many arguments will target the first matching mob, item, examine, skill, or help file with only partial matching. For example, "<span class="highlight">KILL ZOM</span>" is acceptable shorthand for KILL ZOMBIE. "<span class="highlight">LOOK IN BACK</span>" is acceptable shorthand for LOOK IN BACKPACK.',
       'Dot notation can be used in combination with this, as well as command shortcuts. "<span class="highlight">GET 2.POT 2.BAC</span>" is acceptable shorthand for getting the second potion from your second backpack. "<span class="highlight">L IN 2.COR</span>" is acceptable for looking in the second corpse of the room.',
       'Players cannot be targeted using shorthand and commands must either be fully typed out or use the shortcuts mentioned in their help files.'
     ]
@@ -168,6 +169,14 @@ export const helpFile = {
   'say': {
     title: '<span class="highlight">SAY {message}</span>',
     text: ['Will have your character say something to everyone in your current room.']
+  },
+  'skills': {
+    title: '<span class="highlight">SKILLS</span>',
+    text: [
+      'By itself, <span class="highlight">SKILLS</span> will show you a list of all skills available to your class and the level you learn them. In order to use a skill, simply type the name of the skill and targets as necessary. For example, "<span class="highlight">HEAL BOB</span>" will use the heal skill, targeting Bob.',
+      'If you don\'t specify a target, an offensive skill will be used on a random enemy you are currently fighting and a defensive skill will be cast on yourself. You can also cast a spell on yourself by targeting your name.',
+      'Skills can also be fuzzy matched. "<span class="highlight">SEAR BAT</span>" will cast "searing light" on a target of "bat". See HELP FUZZY MATCHING for more information.'
+    ]
   },
   'stats': {
     title: 'Equipment stats',
