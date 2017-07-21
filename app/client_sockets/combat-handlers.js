@@ -2,6 +2,7 @@
 
 import {newMessage} from '../actions/message-actions.js';
 import {enterCombat, damageUser, slayEnemy, addEffect, escapeCombat} from '../actions/combat-actions.js';
+import {startCooldown, endCooldown, startGlobalCooldown, endGlobalCooldown} from '../actions/skill-actions.js';
 import combatProcessor from '../processors/combat-processor.js';
 
 export default function combatHandlers(homeCtx) {
@@ -24,22 +25,26 @@ export default function combatHandlers(homeCtx) {
     }));
     props.dispatch(enterCombat(target));
   });
+
   socket.on('damage', dmgObj => {
-    props.dispatch(damageUser(dmgObj.damage));
-    props.dispatch(newMessage({
-      combatLog: {
-        from: {
-          enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
-        },
-        pre: ' deals ',
-        damage: dmgObj.damage,
-        post: ' damage to ',
-        target: {
-          friendly: 'you'
-        },
-        punctuation: '.'
-      }
-    }));
+    props.dispatch(damageUser({damage: dmgObj.damage}));
+    if (dmgObj.enemy) {
+      props.dispatch(newMessage({
+        combatLog: {
+          from: {
+            enemy: `${dmgObj.enemy.short[0].toUpperCase()}${dmgObj.enemy.short.slice(1)}`,
+          },
+          pre: ' deals ',
+          damage: dmgObj.damage,
+          post: ' damage to ',
+          target: {
+            friendly: 'you'
+          },
+          punctuation: '.'
+        }
+      }));
+    }
+
     if (homeCtx.props.hp <= 0 && !homeCtx.props.effects.death) {
       props.dispatch(newMessage({feedback: 'You have been SLAIN!'}));
       props.dispatch(escapeCombat());
@@ -55,5 +60,13 @@ export default function combatHandlers(homeCtx) {
     // component. The current state can only be correctly referred to by using homeCtx.props instead of
     // assigning homeCtx.props to a variable and using that.
     if (homeCtx.props.combat.active) combatProcessor(socket, homeCtx.props);
+  });
+  socket.on('startCooldown', skill => {
+    props.dispatch(startGlobalCooldown());
+    setTimeout(() => props.dispatch(endGlobalCooldown()), 2000);
+    if (skill.cooldownTimer) {
+      props.dispatch(startCooldown({skillName: skill.skillName}));
+      setTimeout(() => props.dispatch(endCooldown({skillName: skill.skillName})), skill.cooldownTimer);
+    }
   });
 }

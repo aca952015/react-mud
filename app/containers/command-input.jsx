@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {updateInput, updateCommandIndex, newMessage, updatePrevCommands, truncatePrevCommands} from '../actions/message-actions.js';
+import {startCooldown, endCooldown, startGlobalCooldown, endGlobalCooldown} from '../actions/skill-actions.js';
 import saveCharacter from '../../lib/save-character.js';
 import commandHandler from '../handlers/command-handler.js';
 
@@ -18,11 +19,17 @@ function mapStateToProps(state) {
     combat: state.user.combat,
     currentRoom: state.user.currentRoom,
     equipment: state.equipment,
+    atk: state.user.atk,
+    mat: state.user.mat,
+    def: state.user.def,
+    mdf: state.user.mdf,
     creatingNew: state.login.creatingNew,
     creationStep: state.login.creationStep,
     newUsername: state.login.newUsername,
     firstPassword: state.login.firstPassword,
     effects: state.effects,
+    skills: state.skills,
+    globalCooldown: state.skills.globalCooldown,
     user: state.user // used for logout and saving characters
   };
 }
@@ -31,6 +38,7 @@ export class CommandInput extends Component {
   constructor(props) {
     super(props);
   }
+  saveCharacter = () => saveCharacter(this)
   handleCommand = event => {
     // If the user hits up or down, they're trying to cycle through previous commands.
     if (event.keyCode === 38 || event.keyCode === 40) {
@@ -93,7 +101,22 @@ export class CommandInput extends Component {
       // Without the check for funcsToCall, checking length will error out. Sometimes
       // there are no funcsToCall, so this conditional checks for both.
       if (result.funcsToCall && result.funcsToCall.length) result.funcsToCall.forEach(func => this.props.dispatch(func(result)));
-      if (result.emitType === 'quit') saveCharacter(this);
+
+      // If the emitType is quit, additionally save the character to the database before firing
+      // any other functions.
+      if (result.emitType === 'quit') this.saveCharacter();
+
+      // If the skillHandler was invoked, start the global cooldown and end it 2 seconds later.
+      // If the skill has a longer cooldown than the global cooldown, start that specific skill's
+      // cooldown and end it when the skill's cooldownTimer ends.
+      if (result.funcsToCall && result.funcsToCall.includes(startCooldown)) {
+        this.props.dispatch(startGlobalCooldown());
+        setTimeout(() => this.props.dispatch(endGlobalCooldown()), 2000);
+        if (result.cooldownTimer) {
+          this.props.dispatch(startCooldown({skillName: result.skillName}));
+          setTimeout(() => this.props.dispatch(endCooldown({skillName: result.skillName})), result.cooldownTimer);
+        }
+      }
       this.props.socket.emit(result.emitType, result);
       this.props.dispatch(updateInput(''));
     }

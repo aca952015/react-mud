@@ -27,7 +27,8 @@ describe('<Messages />', () => {
     'HelpFile',
     'Inventory',
     'Equipment',
-    'PlayerDescription'
+    'PlayerDescription',
+    'Skills'
   ];
 
   it('should not render any children by default', () => {
@@ -216,6 +217,17 @@ describe('<Messages />', () => {
 
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('PlayerDescription').length).toEqual(1);
+    undefineds.forEach(node => expect(messageComponent.find(node).node).toEqual(undefined));
+  });
+
+  it('should render only a Skills child with a skills message', () => {
+    props = {
+      messages: [{skills: {'slash': {level: 1}}}]
+    };
+    const undefineds = nodes.filter(node => node !== 'Skills');
+
+    messageComponent = shallow(<Messages {...props} />);
+    expect(messageComponent.find('Skills').length).toEqual(1);
     undefineds.forEach(node => expect(messageComponent.find(node).node).toEqual(undefined));
   });
 });

@@ -24,5 +24,5 @@ export default function reducer(state=initialState, action) {
     const newStep = state.creationStep + 1;
     return {...state, creationStep: newStep};
   }
-  return state;
+  return {...state};
 }

@@ -16,6 +16,8 @@ import examineHandler from './examine-handler.js';
 import descriptionHandler from './description-handler.js';
 import loginHandler from './login-handler.js';
 import quitHandler from './quit-handler.js';
+import skillHandler from './skill-handler.js';
+import skillAndTargetsProcessor from '../processors/skill-and-targets-processor.js';
 import {newMessage} from '../actions/message-actions.js';
 
 export default function commandHandler(command, args, props) {
@@ -55,7 +57,8 @@ export default function commandHandler(command, args, props) {
     'equipment',
     'description',
     'resurrect',
-    'quit'
+    'quit',
+    'skills'
   ];
 
   const helperFunctions = {
@@ -85,7 +88,8 @@ export default function commandHandler(command, args, props) {
     'equipment': {funcsToCall: [newMessage], equipment: props.equipment},
     'description': descriptionHandler,
     'resurrect': {emitType: 'resurrect'},
-    'quit': quitHandler
+    'quit': quitHandler,
+    'skills': {funcsToCall: [newMessage], skills: props.skills}
   };
 
   if (commandShorthand[command]) command = commandShorthand[command];
@@ -101,6 +105,15 @@ export default function commandHandler(command, args, props) {
   if (helperFunctions[command]) {
     if (typeof(helperFunctions[command]) === 'object') return helperFunctions[command];
     return helperFunctions[command](command, args, props);
+  }
+
+  const targetedSkillObject = skillAndTargetsProcessor(command, args, props);
+  const targetedSkill = targetedSkillObject.targetedSkill;
+  args = targetedSkillObject.args;
+
+  if (props.skills[targetedSkill]) {
+    if (props.globalCooldown) return {funcsToCall: [newMessage], feedback: 'You\'ll have to wait for the global cooldown to finish.'};
+    return skillHandler(props.skills[targetedSkill], args, props);
   }
 
   return {
