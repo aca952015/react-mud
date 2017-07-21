@@ -8,6 +8,7 @@ import newMob from '../../app/data/mobs.js';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 import {newMessage} from '../../app/actions/message-actions.js';
+import {startCooldown, startGlobalCooldown} from '../../app/actions/skill-actions.js';
 import {enterCombat, damageUser, slayEnemy, escapeCombat, addEffect} from '../../app/actions/combat-actions.js';
 
 describe('combat client sockets', () => {
@@ -226,6 +227,19 @@ describe('combat client sockets', () => {
       player1.on('slayEnemy', res => {
         expect(props.dispatch.calledWith(slayEnemy(res))).toEqual(true);
         done();
+      });
+    });
+  });
+
+  describe('startCooldown', () => {
+    describe('With no cooldownTimer', () => {
+      it('should only dispatch startGlobalCooldown', done => {
+        player1.emit('skill', {enemy: 'player2', funcsToCall: [], skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
+        player1.on('startCooldown', res => {
+          expect(props.dispatch.calledWith(startGlobalCooldown())).toEqual(true);
+          expect(props.dispatch.calledWith(startCooldown({skillName: res.skillName}))).toEqual(false);
+          done();
+        });
       });
     });
   });
