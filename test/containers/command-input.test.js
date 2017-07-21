@@ -114,7 +114,7 @@ describe('<CommandInput />', () => {
         };
         commandInput = shallow(<CommandInput {...timerSkillProps} />);
         commandInput.find('input').simulate('keyUp', {keyCode: 13});
-        expect(timerSkillProps.dispatch.calledWith(startCooldown('slash'))).toEqual(true);
+        expect(timerSkillProps.dispatch.calledWith(startCooldown({skillName: 'slash'}))).toEqual(true);
       });
     });
   });
