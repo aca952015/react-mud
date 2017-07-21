@@ -36,6 +36,7 @@ describe('skillHandler', () => {
     skillTypes: props.skills.slash.skillTypes,
     damage: 3,
     enemy: props.combat.targets[0],
+    cooldownTimer: undefined,
     echoLog: {
       from: {
         friendly: props.username
@@ -147,6 +148,7 @@ describe('skillHandler', () => {
       it('should make the target a camelcased version of args for the server to handle', () => {
         expect(skillHandler(props.skills['heal'], 'bob', props)).toEqual({
           ...healingResponse,
+          funcsToCall: [],
           enemy: 'Bob',
           combatLog: {
             ...healingResponse.combatLog,
@@ -214,21 +216,21 @@ describe('skillHandler', () => {
           ...response,
           enemy: bat,
           skillName: 'searing light',
-          damage: 8,
+          damage: 11,
           skillTypes: ['damage', 'magical'],
           echoLog: {
             ...response.echoLog,
             pre: clericSkills['searing light'].roomEcho,
             post: clericSkills['searing light'].postMessage,
             target: {enemy: bat.short},
-            damage: 8
+            damage: 11
           },
           combatLog: {
             ...response.combatLog,
             pre: clericSkills['searing light'].playerEcho,
             post: clericSkills['searing light'].postMessage,
             target: {enemy: bat.short},
-            damage: 8
+            damage: 11
           }
         });
       });

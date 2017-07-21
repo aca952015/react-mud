@@ -8,6 +8,7 @@ import newMob from '../../app/data/mobs.js';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 import {newMessage} from '../../app/actions/message-actions.js';
+import {startCooldown, startGlobalCooldown} from '../../app/actions/skill-actions.js';
 import {enterCombat, damageUser, slayEnemy, escapeCombat, addEffect} from '../../app/actions/combat-actions.js';
 
 describe('combat client sockets', () => {
@@ -102,9 +103,10 @@ describe('combat client sockets', () => {
     describe('If there is only a damage property', () => {
       it('should only dispatch damageUser', done => {
         socketHandlers({socket: player2, props});
-        
+
         player1.emit('skill', {
           skillTypes: ['healing', 'magical'],
+          funcsToCall: [],
           damage: -3,
           enemy: 'player2',
           echoLog: {
@@ -225,6 +227,29 @@ describe('combat client sockets', () => {
       player1.on('slayEnemy', res => {
         expect(props.dispatch.calledWith(slayEnemy(res))).toEqual(true);
         done();
+      });
+    });
+  });
+
+  describe('startCooldown', () => {
+    describe('With no cooldownTimer', () => {
+      it('should only dispatch startGlobalCooldown', done => {
+        player1.emit('skill', {enemy: 'player2', funcsToCall: [], skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
+        player1.on('startCooldown', res => {
+          expect(props.dispatch.calledWith(startGlobalCooldown())).toEqual(true);
+          expect(props.dispatch.calledWith(startCooldown({skillName: res.skillName}))).toEqual(false);
+          done();
+        });
+      });
+    });
+
+    describe('With a cooldownTimer', () => {
+      it('should dispatch cooldownTimer with the skill\'s name', done => {
+        player1.emit('skill', {enemy: 'player2', funcsToCall: [], skillTypes: ['healing', 'maigcal'], damage: -5, cooldownTimer: 5000, echoLog: {}, combatLog: {}});
+        player1.on('startCooldown', res => {
+          expect(props.dispatch.calledWith(startCooldown({skillName: res.skillName}))).toEqual(true);
+          done();
+        });
       });
     });
   });

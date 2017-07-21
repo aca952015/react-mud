@@ -176,7 +176,7 @@ export const helpFile = {
   },
   'searing light': {
     title: '<span class="highlight">SEARING LIGHT {target}</span>',
-    text: ['Will blast your target with holy fire, dealing 1.5 times your total MAT damage minus the target\'s MDF.']
+    text: ['Will blast your target with holy fire, dealing 1.5 times your total MAT plus 3 damage minus the target\'s MDF.']
   },
   'skills': {
     title: '<span class="highlight">SKILLS</span>',
