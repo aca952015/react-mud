@@ -27,6 +27,10 @@ export default function skill(socket, roomData, mobsInCombat, alteredRooms, user
     }
 
     socket.emit('generalMessage', {combatLog: skillObj.combatLog});
+    if (!skillObj.funcsToCall.length) socket.emit('startCooldown', {
+      skillName: skillObj.skillName,
+      cooldownTimer: skillObj.cooldownTimer
+    });
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {combatLog: skillObj.echoLog});
     target.emit('damage', {damage: skillObj.damage});
   });
