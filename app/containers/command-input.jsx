@@ -113,8 +113,8 @@ export class CommandInput extends Component {
         this.props.dispatch(startGlobalCooldown());
         setTimeout(() => this.props.dispatch(endGlobalCooldown()), 2000);
         if (result.cooldownTimer) {
-          this.props.dispatch(startCooldown(result.skillName));
-          setTimeout(() => this.props.dispatch(endCooldown(result.skillName)), result.cooldownTimer);
+          this.props.dispatch(startCooldown({skillName: result.skillName}));
+          setTimeout(() => this.props.dispatch(endCooldown({skillName: result.skillName})), result.cooldownTimer);
         }
       }
       this.props.socket.emit(result.emitType, result);

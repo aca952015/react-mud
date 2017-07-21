@@ -65,8 +65,8 @@ export default function combatHandlers(homeCtx) {
     props.dispatch(startGlobalCooldown());
     setTimeout(() => props.dispatch(endGlobalCooldown()), 2000);
     if (skill.cooldownTimer) {
-      this.props.dispatch(startCooldown(skill.skillName));
-      setTimeout(() => this.props.dispatch(endCooldown(skill.skillName)), skill.cooldownTimer);
+      props.dispatch(startCooldown({skillName: skill.skillName}));
+      setTimeout(() => props.dispatch(endCooldown({skillName: skill.skillName})), skill.cooldownTimer);
     }
   });
 }

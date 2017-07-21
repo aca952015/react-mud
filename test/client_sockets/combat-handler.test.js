@@ -242,5 +242,15 @@ describe('combat client sockets', () => {
         });
       });
     });
+
+    describe('With a cooldownTimer', () => {
+      it('should dispatch cooldownTimer with the skill\'s name', done => {
+        player1.emit('skill', {enemy: 'player2', funcsToCall: [], skillTypes: ['healing', 'maigcal'], damage: -5, cooldownTimer: 5000, echoLog: {}, combatLog: {}});
+        player1.on('startCooldown', res => {
+          expect(props.dispatch.calledWith(startCooldown({skillName: res.skillName}))).toEqual(true);
+          done();
+        });
+      });
+    });
   });
 });
