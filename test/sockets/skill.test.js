@@ -3,6 +3,7 @@
 import io from 'socket.io-client';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options';
+import {startCooldown} from '../../app/actions/skill-actions.js';
 import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
 
 describe('skill', () => {
@@ -63,7 +64,7 @@ describe('skill', () => {
 
       describe('With enough damage to kill the target', () => {
         it('should call slayEnemy', done => {
-          player1.emit('skill', {enemy: target, skillTypes: ['damage', 'physical'], damage: 20, echoLog: {}});
+          player1.emit('skill', {enemy: target, funcsToCall: [], skillTypes: ['damage', 'physical'], damage: 20, echoLog: {}});
           player1.on('slayEnemy', res => {
             expect(res).toEqual({...target, hp: target.maxHP - 25, combat: {active: true, targets: ['player1']}});
             done();
@@ -74,7 +75,7 @@ describe('skill', () => {
 
     describe('With a target already dead', () => {
       it('should return a slayEnemy event', done => {
-        player1.emit('skill', {enemy: target, skillTypes: ['damage', 'physical'], damage: 20, echoLog: {}});
+        player1.emit('skill', {enemy: target, funcsToCall: [], skillTypes: ['damage', 'physical'], damage: 20, echoLog: {}});
         player1.on('slayEnemy', res => {
           expect(res).toEqual(target);
           done();
@@ -85,7 +86,7 @@ describe('skill', () => {
     describe('With a healing skill', () => {
       describe('On a user not connected', () => {
         it('should return an error that the user isn\'t seen', done => {
-          player1.emit('skill', {enemy: 'Davy', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
+          player1.emit('skill', {enemy: 'Davy', funcsToCall: [], skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
           player1.on('generalMessage', res => {
             expect(res.feedback).toEqual('I don\'t see that person here.');
             done();
@@ -95,7 +96,7 @@ describe('skill', () => {
 
       describe('On a valid target, but not in the room', () => {
         it('should return an error that the user isn\'t seen', done => {
-          player1.emit('skill', {enemy: 'player2', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
+          player1.emit('skill', {enemy: 'player2', funcsToCall: [], skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
           player1.on('generalMessage', res => {
             expect(res.feedback).toEqual('I don\'t see that person here.');
             done();
@@ -105,7 +106,7 @@ describe('skill', () => {
 
       describe('If the user is the target', () => {
         it('should change the combatLog accordingly', done => {
-          player1.emit('skill', {enemy: 'player1', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {target: {}}, combatLog: {target: {}}});
+          player1.emit('skill', {enemy: 'player1', funcsToCall: [startCooldown], skillTypes: ['healing', 'magical'], damage: -5, echoLog: {target: {}}, combatLog: {target: {}}});
           player1.on('generalMessage', res => {
             expect(res.combatLog.target.friendly).toEqual('yourself');
             done();
@@ -115,7 +116,7 @@ describe('skill', () => {
 
       describe('If another player is the target', () => {
         it('should emit the combatLog to the player', done => {
-          player1.emit('skill', {enemy: 'player3', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {target: {friendly: 'player3'}}, combatLog: {target: {friendly: 'player3'}}});
+          player1.emit('skill', {enemy: 'player3', funcsToCall: [], skillTypes: ['healing', 'magical'], damage: -5, echoLog: {target: {friendly: 'player3'}}, combatLog: {target: {friendly: 'player3'}}});
           player1.on('generalMessage', res => {
             expect(res.combatLog.target.friendly).toEqual('player3');
             done();
@@ -134,7 +135,7 @@ describe('skill', () => {
     });
 
     it('should return that you can\'t heal ghosts', done => {
-      player1.emit('skill', {enemy: 'player2', skillTypes: ['healing', 'magical'], damage: -5, echoLog: {target: {friendly: 'player2'}}, combatLog: {target: {friendly: 'player2'}}});
+      player1.emit('skill', {enemy: 'player2', funcsToCall: [], skillTypes: ['healing', 'magical'], damage: -5, echoLog: {target: {friendly: 'player2'}}, combatLog: {target: {friendly: 'player2'}}});
       player1.on('generalMessage', res => {
         expect(res.feedback).toEqual('You can\'t heal a ghost.');
         done();

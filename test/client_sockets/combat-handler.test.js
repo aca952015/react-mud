@@ -102,9 +102,10 @@ describe('combat client sockets', () => {
     describe('If there is only a damage property', () => {
       it('should only dispatch damageUser', done => {
         socketHandlers({socket: player2, props});
-        
+
         player1.emit('skill', {
           skillTypes: ['healing', 'magical'],
+          funcsToCall: [],
           damage: -3,
           enemy: 'player2',
           echoLog: {
