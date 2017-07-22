@@ -289,6 +289,28 @@ describe('combat client sockets', () => {
         });
       });
     });
+
+    describe('If the player is not in combat', () => {
+      let combatTickProps = {...props, dispatch: sinon.spy(), sp: 5, combat: {active: false, targets: []}};
+      beforeEach(done => {
+        player10 = io.connect(url, ioOptions);
+        player10.on('connect', () => {
+          socketHandlers({socket: player10, props: combatTickProps});
+          done();
+        });
+      });
+
+      it('should dispatch changeStat with 4 SP', done => {
+        player10.emit('triggerCombatTick');
+        player10.on('combatTick', () => {
+          expect(combatTickProps.dispatch.calledWith(changeStat({
+            statToChange: 'sp',
+            amount: 4
+          }))).toEqual(true);
+          done();
+        });
+      });
+    });
   });
 
   describe('startCooldown', () => {
