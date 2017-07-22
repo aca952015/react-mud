@@ -45,6 +45,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('updateSocket', () => socket.emit('updateComplete'));
   socket.on('testMobSelector', () => mobTargetSelector(mobsInCombat, users));
   socket.on('triggerTick', () => socket.emit('tick'));
+  socket.on('triggerCombatTick', () => socket.emit('combatTick'));
   serverSocketListeners(io, socket, users, roomData, mobsInCombat, alteredRooms);
 });
 
