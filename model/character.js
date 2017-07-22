@@ -15,6 +15,8 @@ const characterSchema = Schema({
   maxHP: {type: Number, required: true},
   mp: {type: Number, required: true},
   maxMP: {type: Number, required: true},
+  sp: {type: Number, required: true},
+  maxSP: {type: Number, required: true},
   level: {type: Number, required: true},
   atk: {type: Number, required: true},
   def: {type: Number, required: true},
