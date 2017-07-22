@@ -160,6 +160,23 @@ describe('skillHandler', () => {
       });
     });
 
+    describe('With a negative value', () => {
+      it('should heal for at least 1', () => {
+        expect(skillHandler(props.skills['heal'], undefined, {...props, mat: -10})).toEqual({
+          ...healingResponse,
+          damage: -1,
+          echoLog: {
+            ...healingResponse.echoLog,
+            damage: -1
+          },
+          combatLog: {
+            ...healingResponse.combatLog,
+            damage: -1
+          }
+        });
+      });
+    });
+
     describe('and the target is the user', () => {
       it('should return a healingResponse object', () => {
         expect(skillHandler(props.skills['heal'], props.username, props)).toEqual(healingResponse);
