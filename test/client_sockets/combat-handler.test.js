@@ -242,6 +242,55 @@ describe('combat client sockets', () => {
     });
   });
 
+  describe('combatTick', () => {
+    let player10;
+
+    afterEach(done => {
+      player10.disconnect();
+      done();
+    });
+
+    describe('If the player is in combat', () => {
+      beforeEach(done => {
+        player10 = io.connect(url, ioOptions);
+        player10.on('connect', () => {
+          player10.emit('changeName', 'player10');
+          socketHandlers({
+            socket: player10,
+            props: {
+              ...props,
+              equipment: {
+                head: null,
+                shoulders: null,
+                chest: null,
+                'main hand': null,
+                'off hand': null,
+                legs: null,
+                feet: null
+              },
+              combat: {
+                active: true,
+                targets: [newMob('bat')]
+              }
+            }
+          });
+          done();
+        });
+      });
+
+      it('should dispatch changeStat with -2 SP', done => {
+        player10.emit('triggerCombatTick');
+        player10.on('combatTick', () => {
+          expect(props.dispatch.calledWith(changeStat({
+            statToChange: 'sp',
+            amount: -2
+          }))).toEqual(true);
+          done();
+        });
+      });
+    });
+  });
+
   describe('startCooldown', () => {
     describe('With no cooldownTimer', () => {
       it('should only dispatch startGlobalCooldown', done => {
