@@ -1,6 +1,7 @@
 'use strict';
 
-import {removeEffect, damageUser, fullRestore} from '../actions/combat-actions.js';
+import {removeEffect, fullRestore} from '../actions/combat-actions.js';
+import {changeStat} from '../actions/user-actions.js';
 
 export default function rezzHandler(homeCtx) {
   let socket = homeCtx.socket;
@@ -8,7 +9,10 @@ export default function rezzHandler(homeCtx) {
 
   socket.on('resurrect', () => {
     props.dispatch(fullRestore());
-    props.dispatch(damageUser({damage: Math.round(homeCtx.props.maxHP / 2)}));
+    props.dispatch(changeStat({
+      statToChange: 'hp',
+      amount: Math.round(homeCtx.props.maxHP / 2)
+    }));
     props.dispatch(removeEffect('death'));
     let transmittedEffects = {...homeCtx.props.effects};
     delete transmittedEffects.death;
