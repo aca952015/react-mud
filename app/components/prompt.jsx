@@ -15,6 +15,7 @@ export const Prompt = props => {
   return <div className="prompt">
     <p>HP: <span>{props.hp}</span><span> / </span><span>{props.maxHP}</span></p>
     <p>MP: <span>{props.mp}</span><span> / </span><span>{props.maxMP}</span></p>
+    <p>SP: <span>{props.sp}</span><span> / </span><span>{props.maxSP}</span></p>
     {props.globalCooldown ? <section>
       <span>Global Cooldown</span>
       <div style={globalTimerBarStyles}></div>
@@ -27,6 +28,8 @@ Prompt.propTypes = {
   globalCooldown: PropTypes.bool,
   hp: PropTypes.number,
   mp: PropTypes.number,
+  sp: PropTypes.number,
   maxHP: PropTypes.number,
-  maxMP: PropTypes.number
+  maxMP: PropTypes.number,
+  maxSP: PropTypes.number
 };

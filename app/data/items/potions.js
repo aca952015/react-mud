@@ -1,6 +1,6 @@
 'use strict';
 
-import {restoreStat} from '../../actions/item-actions.js';
+import {changeStat} from '../../actions/user-actions.js';
 
 export const potions = {
   'health potion': {
@@ -11,7 +11,7 @@ export const potions = {
     category: 'potions',
     type: 'items',
     drink: {
-      effect: restoreStat,
+      effect: changeStat,
       statToChange: 'hp',
       amount: 10,
       desc: 'A soothing glow passes over you, healing some of your wounds.'
@@ -26,7 +26,7 @@ export const potions = {
     category: 'potions',
     type: 'items',
     drink: {
-      effect: restoreStat,
+      effect: changeStat,
       statToChange: 'mp',
       amount: 10,
       desc: 'A cool sensation washes over you, restoring some of your magical energy.'

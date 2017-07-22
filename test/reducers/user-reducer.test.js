@@ -67,33 +67,43 @@ describe('user reducer', () => {
     });
   });
 
-  describe('With a CLEAR_DESCRIPTION action', () => {
-    it('should set the description to "No description set."', () => {
-      expect(reducer(initialState, {type: 'CLEAR_DESCRIPTION'})).toEqual({
-        ...initialState,
-        description: ['No description set.']
-      });
-    });
-  });
-
-  describe('DAMAGE_USER', () => {
+  describe('CHANGE_STAT', () => {
     describe('With a positive number', () => {
       it('should reduce the user\'s HP by the damage in the payload', () => {
-        expect(reducer(initialState, {type: 'DAMAGE_USER', payload: 2})).toEqual({...initialState, hp: initialState.hp - 2});
+        expect(reducer(initialState, {type: 'CHANGE_STAT', payload: {statToChange: 'hp', amount: 2}}))
+        .toEqual({...initialState, hp: initialState.hp - 2});
       });
     });
 
     describe('With a negative number', () => {
       describe('That doesn\'t fully heal the user', () => {
         it('should increase the user\'s HP by the amout healed', () => {
-          expect(reducer({...initialState, hp: 10}, {type: 'DAMAGE_USER', payload: -5})).toEqual({...initialState, hp: 15});
+          expect(reducer({...initialState, hp: 10}, {type: 'CHANGE_STAT', payload: {statToChange: 'hp', amount: -5}}))
+          .toEqual({...initialState, hp: 15});
         });
       });
 
       describe('That overheals', () => {
         it('should increase the user\'s HP to the max', () => {
-          expect(reducer({...initialState, hp: initialState.maxHP - 1}, {type: 'DAMAGE_USER', payload: -9001})).toEqual({...initialState, hp: initialState.maxHP});
+          expect(reducer({...initialState, hp: initialState.maxHP - 1}, {type: 'CHANGE_STAT', payload: {statToChange: 'hp', amount: -9001}}))
+          .toEqual({...initialState, hp: initialState.maxHP});
         });
+      });
+
+      describe('That overkills', () => {
+        it('should set the user\'s HP to 0', () => {
+          expect(reducer(initialState, {type: 'CHANGE_STAT', payload: {statToChange: 'hp', amount: 9001}}))
+          .toEqual({...initialState, hp: 0});
+        });
+      });
+    });
+  });
+
+  describe('With a CLEAR_DESCRIPTION action', () => {
+    it('should set the description to "No description set."', () => {
+      expect(reducer(initialState, {type: 'CLEAR_DESCRIPTION'})).toEqual({
+        ...initialState,
+        description: ['No description set.']
       });
     });
   });
@@ -113,34 +123,6 @@ describe('user reducer', () => {
       expect(reducer({...initialState, inventory: tempInventory}, {type: 'DROP_ITEM', payload: 'item1'})).toEqual({
         ...initialState,
         inventory: ['item2', 'item1']
-      });
-    });
-  });
-
-  describe('DRINK_POTION', () => {
-    describe('With a valid stat', () => {
-      describe('With the stat increase being less than the max', () => {
-        it('should update the user\'s appropriate stat with the payload\'s amount', () => {
-          expect(reducer({...initialState, hp: 5}, {type: 'DRINK_POTION', payload: {statToChange: 'hp', amount: 10}})).toEqual({
-            ...initialState,
-            hp: 15
-          });
-        });
-      });
-
-      describe('With the stat increase going over the max', () => {
-        it('should update the user\'s appropriate stat to the max', () => {
-          expect(reducer({...initialState, hp: 15, maxHP: 20}, {type: 'DRINK_POTION', payload: {statToChange: 'hp', amount: 30}})).toEqual({
-            ...initialState,
-            hp: 20
-          });
-        });
-      });
-    });
-
-    describe('With no stat to change', () => {
-      it('should just return the initialState', () => {
-        expect(reducer(initialState, {type: 'DRINK_POTION', payload: {effect: 'buff'}})).toEqual(initialState);
       });
     });
   });

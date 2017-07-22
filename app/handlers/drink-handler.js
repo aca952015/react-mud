@@ -17,7 +17,7 @@ export default function drinkHandler(command, args, props) {
 
   return {
     funcsToCall: [newMessage, drinkEffects.effect, quietlyAddItem, dropItem],
-    amount: drinkEffects.amount,
+    amount: -(drinkEffects.amount),
     statToChange: drinkEffects.statToChange,
     feedback: drinkEffects.desc,
     emitType: 'drink',

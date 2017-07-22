@@ -4,6 +4,11 @@ export const clericSkills = {
   heal: {
     skillName: 'heal',
     level: 1,
+    cost: {
+      stat: 'mp',
+      value: 4
+    },
+    generateSP: 3,
     onCooldown: false,
     atkMultiplier: 0,
     matMultiplier: 1.5,
@@ -17,6 +22,11 @@ export const clericSkills = {
   'searing light': {
     skillName: 'searing light',
     level: 1,
+    cost: {
+      stat: 'sp',
+      value: 5
+    },
+    generateSP: 0,
     onCooldown: false,
     atkMultiplier: 0,
     matMultiplier: 1.5,

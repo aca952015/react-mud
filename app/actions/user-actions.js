@@ -18,3 +18,13 @@ export function clearDescription() {
 export function tickRegen() {
   return {type: 'TICK_REGEN'};
 }
+
+export function changeStat(item) {
+  return {
+    type: 'CHANGE_STAT',
+    payload: {
+      statToChange: item.statToChange,
+      amount: item.amount
+    }
+  };
+}

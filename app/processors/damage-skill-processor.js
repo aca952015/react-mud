@@ -2,11 +2,13 @@
 
 import {newMessage} from '../actions/message-actions.js';
 import {startCooldown} from '../actions/skill-actions.js';
+import {changeStat} from '../actions/user-actions.js';
 import termsProcessor from './terms-processor.js';
 import equipmentStatProcessor from './equipment-stat-processor.js';
 
 export default function damageSkillProcessor(skill, args, props) {
   if (!props.combat.active && skill.skillTypes.includes('damage')) return {funcsToCall: [newMessage], feedback: 'You aren\'t in combat.'};
+  if (props[skill.cost.stat] < skill.cost.value) return {funcsToCall: [newMessage], feedback: `You don't have enough ${skill.cost.stat.toUpperCase()} to do that.`};
 
   let target;
 
@@ -22,8 +24,15 @@ export default function damageSkillProcessor(skill, args, props) {
     (Math.round((props.atk + equipmentStats.atk) * skill.atkMultiplier) + skill.addDamage) - target.def;
   if (damage < 1) damage = 1;
 
+  props.dispatch(changeStat({
+    statToChange: skill.cost.stat,
+    amount: skill.cost.value
+  }));
+
   return {
-    funcsToCall: [startCooldown],
+    funcsToCall: [startCooldown, changeStat],
+    statToChange: 'sp',
+    amount: -(skill.generateSP),
     skillName: skill.skillName,
     emitType: 'skill',
     skillTypes: skill.skillTypes,
