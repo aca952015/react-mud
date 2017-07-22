@@ -8,6 +8,7 @@ export const warriorSkills = {
       stat: 'sp',
       value: 4
     },
+    generateSP: 0,
     onCooldown: false,
     atkMultiplier: 1.5,
     matMultiplier: 0,

@@ -8,6 +8,7 @@ export const clericSkills = {
       stat: 'mp',
       value: 4
     },
+    generateSP: 3,
     onCooldown: false,
     atkMultiplier: 0,
     matMultiplier: 1.5,
@@ -25,6 +26,7 @@ export const clericSkills = {
       stat: 'sp',
       value: 5
     },
+    generateSP: 0,
     onCooldown: false,
     atkMultiplier: 0,
     matMultiplier: 1.5,
