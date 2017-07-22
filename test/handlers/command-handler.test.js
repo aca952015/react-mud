@@ -54,7 +54,7 @@ describe('CommandHandler', () => {
   describe('With a skill', () => {
     describe('If the globalCooldown is still active', () => {
       it('should tell the user "You\'ll have to wait for the global cooldown to finish."', () => {
-        expect(commandHandler('slash', 'bat', {skills: warriorSkills, globalCooldown: true, effects: {death: false}})).toEqual({
+        expect(commandHandler('slash', 'bat', {skills: warriorSkills, dispatch: function() {}, globalCooldown: true, effects: {death: false}})).toEqual({
           funcsToCall: [newMessage],
           feedback: 'You\'ll have to wait for the global cooldown to finish.'
         });
@@ -66,6 +66,7 @@ describe('CommandHandler', () => {
         let props = {
           skills: warriorSkills,
           effects: {death: false},
+          dispatch: function() {},
           globalCooldown: false,
           equipment,
           atk: 2,
