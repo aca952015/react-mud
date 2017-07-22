@@ -24,6 +24,7 @@ describe('skillHandler', () => {
     mat: 2,
     def: 0,
     mdf: 0,
+    mp: 5,
     combat: {
       active: true,
       targets: [newMob('bat')]
@@ -150,6 +151,15 @@ describe('skillHandler', () => {
   });
 
   describe('Healing a target', () => {
+    describe('Without enough resources', () => {
+      it('should return an error of not having enough SP', () => {
+        expect(skillHandler(props.skills['heal'], undefined, {...props, mp: 0})).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You don\'t have enough MP to use that.'
+        });
+      });
+    });
+
     describe('and the target is the user', () => {
       it('should return a healingResponse object', () => {
         expect(skillHandler(props.skills['heal'], props.username, props)).toEqual(healingResponse);
@@ -181,8 +191,19 @@ describe('skillHandler', () => {
 
   describe('With args on an enemy the user is fighting', () => {
     describe('With a damage skill', () => {
-      it('should return a skillHandler response', () => {
-        expect(skillHandler(props.skills['slash'], 'bat', props)).toEqual(response);
+      describe('With enough MP or SP to use it', () => {
+        it('should return a skillHandler response', () => {
+          expect(skillHandler(props.skills['slash'], 'bat', props)).toEqual(response);
+        });
+      });
+
+      describe('Without enough', () => {
+        it('should return an error of not being able to use it', () => {
+          expect(skillHandler(props.skills['slash'], 'bat', {...props, sp: 0})).toEqual({
+            funcsToCall: [newMessage],
+            feedback: 'You don\'t have enough SP to do that.'
+          });
+        });
       });
     });
 
@@ -263,29 +284,31 @@ describe('skillHandler', () => {
   });
 
   describe('Against an enemy with high mdf', () => {
-    let zombie = newMob('armored zombie');
-    zombie.mdf = 30;
-    it('should return a response with 1 damage', () => {
-      expect(skillHandler(props.skills['searing light'], 'zombie', {...props, combat: {...props.combat, targets: [zombie]}})).toEqual({
-        ...response,
-        enemy: zombie,
-        skillName: 'searing light',
-        damage: 1,
-        skillTypes: ['damage', 'magical'],
-        echoLog: {
-          ...response.echoLog,
-          pre: clericSkills['searing light'].roomEcho,
-          post: clericSkills['searing light'].postMessage,
-          target: {enemy: zombie.short},
-          damage: 1
-        },
-        combatLog: {
-          ...response.combatLog,
-          pre: clericSkills['searing light'].playerEcho,
-          post: clericSkills['searing light'].postMessage,
-          target: {enemy: zombie.short},
-          damage: 1
-        }
+    describe('With enough resources to cast', () => {
+      let zombie = newMob('armored zombie');
+      zombie.mdf = 30;
+      it('should return a response with 1 damage', () => {
+        expect(skillHandler(props.skills['searing light'], 'zombie', {...props, combat: {...props.combat, targets: [zombie]}})).toEqual({
+          ...response,
+          enemy: zombie,
+          skillName: 'searing light',
+          damage: 1,
+          skillTypes: ['damage', 'magical'],
+          echoLog: {
+            ...response.echoLog,
+            pre: clericSkills['searing light'].roomEcho,
+            post: clericSkills['searing light'].postMessage,
+            target: {enemy: zombie.short},
+            damage: 1
+          },
+          combatLog: {
+            ...response.combatLog,
+            pre: clericSkills['searing light'].playerEcho,
+            post: clericSkills['searing light'].postMessage,
+            target: {enemy: zombie.short},
+            damage: 1
+          }
+        });
       });
     });
   });
