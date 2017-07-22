@@ -160,6 +160,15 @@ describe('skillHandler', () => {
       });
     });
 
+    describe('With an ability with a cooldown', () => {
+      it('should return a cooldownTimer of the cooldownTimer', () => {
+        expect(skillHandler({...props.skills['heal'], cooldownTimer: 5000}, undefined, props)).toEqual({
+          ...healingResponse,
+          cooldownTimer: 5000
+        });
+      });
+    });
+
     describe('With a negative value', () => {
       it('should heal for at least 1', () => {
         expect(skillHandler(props.skills['heal'], undefined, {...props, mat: -10})).toEqual({
