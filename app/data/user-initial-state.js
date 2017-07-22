@@ -8,6 +8,8 @@ export const initialState = {
   maxHP: 20,
   mp: 20,
   maxMP: 20,
+  sp: 0,
+  maxSP: 100,
   level: 1,
   atk: 2,
   def: 0,
