@@ -89,6 +89,13 @@ describe('user reducer', () => {
           .toEqual({...initialState, hp: initialState.maxHP});
         });
       });
+
+      describe('That overkills', () => {
+        it('should set the user\'s HP to 0', () => {
+          expect(reducer(initialState, {type: 'CHANGE_STAT', payload: {statToChange: 'hp', amount: 9001}}))
+          .toEqual({...initialState, hp: 0});
+        });
+      });
     });
   });
 
