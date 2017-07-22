@@ -1,11 +1,13 @@
 'use strict';
 
+import sinon from 'sinon';
 import skillHandler from '../../app/handlers/skill-handler.js';
 import {warriorSkills} from '../../app/data/skills/warrior-skills.js';
 import {clericSkills} from '../../app/data/skills/cleric-skills.js';
 import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
 import {newMessage} from '../../app/actions/message-actions.js';
 import {startCooldown} from '../../app/actions/skill-actions.js';
+import {changeStat} from '../../app/actions/user-actions.js';
 import newMob from '../../app/data/mobs.js';
 import newItem from '../../app/data/items.js';
 
@@ -26,13 +28,16 @@ describe('skillHandler', () => {
       active: true,
       targets: [newMob('bat')]
     },
-    username: 'Dave'
+    username: 'Dave',
+    dispatch: sinon.spy()
   };
 
   const response = {
-    funcsToCall: [startCooldown],
+    funcsToCall: [startCooldown, changeStat],
     skillName: 'slash',
     emitType: 'skill',
+    amount: -0,
+    statToChange: 'sp',
     skillTypes: props.skills.slash.skillTypes,
     damage: 3,
     enemy: props.combat.targets[0],
@@ -64,9 +69,16 @@ describe('skillHandler', () => {
   };
 
   const healingResponse = {
-    funcsToCall: [startCooldown],
+    funcsToCall: [startCooldown, changeStat],
     skillName: 'heal',
     emitType: 'skill',
+    skillCost: {
+      stat: 'mp',
+      value: 4
+    },
+    statToChange: 'sp',
+    amount: -3,
+    generateSP: -3,
     skillTypes: props.skills.heal.skillTypes,
     damage: -3,
     cooldownTimer: undefined,
