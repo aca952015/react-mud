@@ -1,7 +1,7 @@
 'use strict';
 
 import addToContainer from './lib/user_reducer/add-to-container.js';
-import drinkPotion from './lib/user_reducer/drink-potion.js';
+import changeStat from './lib/user_reducer/change-stat.js';
 import dropItem from './lib/user_reducer/drop-item.js';
 import getAll from './lib/user_reducer/get-all.js';
 import getFromContainer from './lib/user_reducer/get-from-container.js';
@@ -15,15 +15,10 @@ export default function reducer(state={}, action) {
   }
   if (action.type === 'ADD_TO_CONTAINER') return addToContainer(state, action);
   if (action.type === 'CHANGE_ROOM') return {...state, currentRoom: action.payload};
+  if (action.type === 'CHANGE_STAT') return changeStat(state, action);
   if (action.type === 'CLEAR_DESCRIPTION') return {...state, description: ['No description set.']};
-  if (action.type === 'DAMAGE_USER') {
-    let currentHP = state.hp - action.payload;
-    if (currentHP > state.maxHP) currentHP = state.maxHP; // Healing causes negative damage, so check for overheal
-    return {...state, hp: currentHP};
-  }
   if (action.type === 'DROP_ALL') return {...state, inventory: []};
   if (action.type === 'DROP_ITEM') return dropItem(state, action);
-  if (action.type === 'DRINK_POTION') return drinkPotion(state, action);
   if (action.type === 'ENTER_COMBAT') return {...state, combat: {active: true, targets: [...state.combat.targets, action.payload]}};
   if (action.type === 'ESCAPE_COMBAT') return {...state, combat: {active: false, targets: []}};
   if (action.type === 'FULL_RESTORE') return {...state, hp: state.maxHP, mp: state.maxMP};
