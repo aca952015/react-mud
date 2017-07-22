@@ -9,7 +9,8 @@ import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 import {newMessage} from '../../app/actions/message-actions.js';
 import {startCooldown, startGlobalCooldown} from '../../app/actions/skill-actions.js';
-import {enterCombat, damageUser, slayEnemy, escapeCombat, addEffect} from '../../app/actions/combat-actions.js';
+import {enterCombat, slayEnemy, escapeCombat, addEffect} from '../../app/actions/combat-actions.js';
+import {changeStat} from '../../app/actions/user-actions.js';
 
 describe('combat client sockets', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
@@ -101,11 +102,15 @@ describe('combat client sockets', () => {
 
   describe('damage', () => {
     describe('If there is only a damage property', () => {
-      it('should only dispatch damageUser', done => {
+      it('should only dispatch changeStat', done => {
         socketHandlers({socket: player2, props});
 
         player1.emit('skill', {
           skillTypes: ['healing', 'magical'],
+          skillCost: {
+            stat: 'hp',
+            value: 4
+          },
           funcsToCall: [],
           damage: -3,
           enemy: 'player2',
@@ -134,17 +139,23 @@ describe('combat client sockets', () => {
         });
         player2.on('damage', res => {
           expect(res.enemy).toEqual(undefined);
-          expect(props.dispatch.calledWith(damageUser({damage: res.damage}))).toEqual(true);
+          expect(props.dispatch.calledWith(changeStat({
+            statToChange: 'hp',
+            amount: res.damage
+          }))).toEqual(true);
           done();
         });
       });
     });
 
     describe('With less damage than the user\'s health', () => {
-      it('should dispatch damageUser and newMessage', done => {
+      it('should dispatch changeStat and newMessage', done => {
         player1.emit('testDamage');
         player1.on('damage', dmgObj => {
-          expect(props.dispatch.calledWith(damageUser({damage: dmgObj.damage}))).toEqual(true);
+          expect(props.dispatch.calledWith(changeStat({
+            statToChange: 'hp',
+            amount: dmgObj.damage
+          }))).toEqual(true);
           expect(props.dispatch.calledWith((newMessage({
             combatLog: {
               from: {
@@ -234,8 +245,27 @@ describe('combat client sockets', () => {
   describe('startCooldown', () => {
     describe('With no cooldownTimer', () => {
       it('should only dispatch startGlobalCooldown', done => {
-        player1.emit('skill', {enemy: 'player2', funcsToCall: [], skillTypes: ['healing', 'magical'], damage: -5, echoLog: {}, combatLog: {}});
+        player1.emit('skill', {
+          enemy: 'player2',
+          skillCost: {
+            stat: 'hp',
+            value: 4
+          },
+          funcsToCall: [],
+          skillTypes: ['healing', 'magical'],
+          damage: -5,
+          echoLog: {},
+          combatLog: {}
+        });
         player1.on('startCooldown', res => {
+          expect(props.dispatch.calledWith(changeStat({
+            statToChange: res.statToDeduct,
+            amount: res.deductAmount
+          })));
+          expect(props.dispatch.calledWith(changeStat({
+            statToChange: res.statToChange,
+            amount: res.amount
+          })));
           expect(props.dispatch.calledWith(startGlobalCooldown())).toEqual(true);
           expect(props.dispatch.calledWith(startCooldown({skillName: res.skillName}))).toEqual(false);
           done();
@@ -245,7 +275,19 @@ describe('combat client sockets', () => {
 
     describe('With a cooldownTimer', () => {
       it('should dispatch cooldownTimer with the skill\'s name', done => {
-        player1.emit('skill', {enemy: 'player2', funcsToCall: [], skillTypes: ['healing', 'maigcal'], damage: -5, cooldownTimer: 5000, echoLog: {}, combatLog: {}});
+        player1.emit('skill', {
+          enemy: 'player2',
+          skillCost: {
+            stat: 'hp',
+            value: 4
+          },
+          cooldownTimer: 5000,
+          funcsToCall: [],
+          skillTypes: ['healing', 'magical'],
+          damage: -5,
+          echoLog: {},
+          combatLog: {}
+        });
         player1.on('startCooldown', res => {
           expect(props.dispatch.calledWith(startCooldown({skillName: res.skillName}))).toEqual(true);
           done();
