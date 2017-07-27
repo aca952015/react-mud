@@ -6,8 +6,13 @@ import newMob from '../mobs.js';
 export const Academy = {
   'Academy Entrance': {
     roomName: 'Academy Entrance',
-    desc: 'Welcome to the Academy. Type HELP to get a list of commands available.',
-    exits: {},
+    desc: 'This is the training academy. Here, you can learn about how to move around and interact with the world of Tempest. Type HELP for a list of topics to learn more about.',
+    exits: {
+      north: {
+        exit: 'Academy Foyer',
+        locked: false
+      },
+    },
     items: [],
     examines: [],
     mobs: [],
