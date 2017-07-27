@@ -8,7 +8,7 @@ export default function getHandler(command, args, props) {
   const invalidTypes = {
     'corpse': true,
     'liquid': true,
-    'doodads': true
+    'doodad': true
   };
 
   if (!args) return {funcsToCall: [newMessage], feedback: 'Get what?'};

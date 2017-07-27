@@ -6,7 +6,7 @@ export default function pickUpItem(socket, roomData, alteredRooms) {
   const invalidTypes = {
     'corpse': true,
     'liquid': true,
-    'doodads': true
+    'doodad': true
   };
 
   // Picking up an item from the room directly, not in a container
