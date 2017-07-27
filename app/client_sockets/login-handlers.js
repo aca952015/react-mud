@@ -33,8 +33,8 @@ export default function loginHandlers(homeCtx) {
     props.dispatch(loginEffects({loginEffects: char.effects}));
     props.dispatch(escapeCombat());
     if (homeCtx.props.currentRoom === 'Login Room') {
-      props.dispatch(changeRoom('Nexus'));
-      socket.emit('teleport', 'Nexus');
+      props.dispatch(changeRoom('Login Room'));
+      socket.emit('teleport', 'Login Room');
       return socket.emit('move', {direction: 'login'});
     }
     props.dispatch(changeRoom(homeCtx.props.currentRoom));
