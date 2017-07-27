@@ -6,14 +6,14 @@ import newMob from '../mobs.js';
 export const Academy = {
   'Academy Entrance': {
     roomName: 'Academy Entrance',
-    desc: 'This is the training academy. Here, you can learn about how to move around and interact with the world of Tempest. Type HELP for a list of topics to learn more about.',
+    desc: 'Simple wooden columns flank the entrance into Tempest\'s training academy, stretching up to a high ceiling. A pair of crossed swords sits above a fireplace, resting off to one side, a quietly crackling flame warming the walkway as it approaches the foyer to the North. To the South, a large, oak-framed doorway leads back out into the rainy cobblestone streets.',
     exits: {
       north: {
         exit: 'Academy Foyer',
         locked: false
       },
     },
-    items: [],
+    items: [newItem('doodads', 'academy entrance sign')],
     examines: [],
     mobs: [],
     itemResetTimer: 0,
