@@ -5,7 +5,8 @@ import termsProcessor from '../app/processors/terms-processor.js';
 export default function pickUpItem(socket, roomData, alteredRooms) {
   const invalidTypes = {
     'corpse': true,
-    'liquid': true
+    'liquid': true,
+    'doodads': true
   };
 
   // Picking up an item from the room directly, not in a container
