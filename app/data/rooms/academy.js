@@ -19,4 +19,22 @@ export const academy = {
     itemResetTimer: 0,
     mobResetTimer: 0
   },
+  'Academy Foyer': {
+    roomName: 'Academy Foyer',
+    desc: 'A large marble floor stretches across the foyer here, merging into a stone hallway to the West and wooden floors to the South and East. A fireplace is embedded against the far wall to the North. Stone columns run from the floor up to the ceiling, a few of them chipped and marked at various points in their length. A musty smell pervades the room - an indication of some large mold growths from somewhere unseen.',
+    exits: {
+      south: {
+        exit: 'Academy Entrance',
+        locked: false
+      },
+      west: {
+        exit: 'Hallway to Combat Training',
+        locked: false
+      },
+      east: {
+        exit: 'Hallway to Movement Training',
+        locked: false
+      }
+    }
+  }
 };
