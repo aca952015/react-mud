@@ -72,6 +72,10 @@ export const helpFile = {
       <span class="help-topics">WEAR</span>`
     ]
   },
+  'equipment stats': {
+    title: 'EQUIPMENT STATS',
+    text: ['Each piece of armor you wear will increase your defense (DEF) or magic defense (MDF), while each weapon will increase your attack (ATK) or magic attack (MAT). These values are used to calculate how much damage your auto-attacks and special abilities do.']
+  },
   'examine': {
     title: '<span class="highlight">EXAMINE {target}</span> (shortcut: EX)',
     text: ['Will show you the description of an item in your inventory. If you want to look at an item in the room, use the LOOK command (help LOOK). You can examine a specific item in your inventory if you have multiples by using dot notation, such as <span class="highlight">EX 2.KEY</span> or <span class="highlight">EX 3.POTION</span> to look at the second key in your inventory or the third potion.']
@@ -102,7 +106,7 @@ export const helpFile = {
     text: ['Will try to give the item from your inventory to another player in the same room. GIVE ALL will give everything you\'re carrying to the target. If you are not carrying the item or it\'s in a container, the command will fail. Dot notation can be used to give a specific item. For example, if you\'re carrying 2 potions, you can <span class="highlight">GIVE 2.POTION {target}</span>.']
   },
   'heal': {
-    title: '<span class="highlight">HEAL {target}</span>',
+    title: '<span class="highlight">HEAL {target}</span> (cost: 4 MP)',
     text: ['Heals the target for 1.5 times your total MAT power. Can be cast outside of combat.']
   },
   'inventory': {
@@ -147,6 +151,15 @@ export const helpFile = {
       <span class="help-topics">UNLOCK</span>`
     ]
   },
+  'player stats': {
+    title: 'PLAYER STATS',
+    text: [
+      'Your player has a handful of stats. ATK and MAT are short for <span class="highlight">ATTACK</span> and <span class="highlight">MAGIC ATTACK</span>. As a general rule, ATK is used for calculating damage with physical attacks and abilities, while MAT is used for calculating damage and healing with magical abilities.',
+      'DEF and MDF are short for <span class="highlight">DEFENSE</span> and <span class="highlight">MAGIC DEFENSE</span>. They are the counterparts, respectively, to ATK and MAT - DEF is your physical defense and MDF is your magical defense.',
+      'You also have HP, short for <span class="highlight">HIT POINTS</span>, MP, short for <span class="highlight">MAGIC POINTS</span>, and SP, short for <span class="highlight">SKILL POINTS</span>. HP is a representation of how much damage your character can take before dying. MP and SP are tied to skill costs, which you can learn more about with HELP SKILL COSTS.',
+      'You will gain more HP and MP every time you level up, the amount of which will depend on your class. SP has a fixed cap of 100.'
+    ]
+  },
   'previous commands': {
     title: 'Cycle through previous commands',
     text: ['If you have a keyboard available, you can press the <span class="highlight">up or down arrow keys</span> to cycle through previous input, through your last 20 commands. Entering the same command more than once in a row will count as a single instance of entering input for the purposes of this cycling.']
@@ -175,7 +188,7 @@ export const helpFile = {
     text: ['Will have your character say something to everyone in your current room.']
   },
   'searing light': {
-    title: '<span class="highlight">SEARING LIGHT {target}</span>',
+    title: '<span class="highlight">SEARING LIGHT {target}</span> (cost: 5 SP)',
     text: ['Will blast your target with holy fire, dealing 1.5 times your total MAT plus 3 damage minus the target\'s MDF.']
   },
   'skills': {
@@ -187,13 +200,25 @@ export const helpFile = {
       'Skills can also be fuzzy matched. "<span class="highlight">SEAR BAT</span>" will cast "searing light" on a target of "bat". See HELP FUZZY MATCHING for more information.'
     ]
   },
+  'skill costs': {
+    title: 'SKILL COSTS',
+    text: [
+      'Your special abilities typically require the use of a limited resource, either MP or SP. MP is tied to your basic abilities and usually represents the use of some kind of magical skill or ability. MP will naturally regenerate every tick (HELP TICKS), but can also be restored through potions or potentially other sources.',
+      'SP is generated through auto attacks in combat and the use of your more basic abilities. SP abilities generally represent more powerful skills. SP quickly decays when not in combat.',
+      'If you do not have enough MP or SP to use an ability, you will have to generate more of either before you can use it. Costs are listed in the help files for each ability.'
+    ]
+  },
   'slash': {
-    title: '<span class="highlight">SLASH {target}</span>',
+    title: '<span class="highlight">SLASH {target}</span> (cost: 4 SP)',
     text: ['Will slash your opponent and deal 1.5 times your total ATK power to the target, minus their DEF.']
   },
   'stats': {
-    title: 'Equipment stats',
-    text: ['Each piece of armor you wear will increase your defense (DEF) or magic defense (MDF), while each weapon will increase your attack (ATK) or magic attack (MAT). These values are used to calculate how much damage your auto-attacks and special abilities do.']
+    title: 'STATS',
+    text: [
+      `<span class="help-topics">EQUIPMENT STATS</span>
+      <span class="help-topics">PLAYER STATS</span>
+      <span class="help-topics">SKILL COSTS</span>`
+    ]
   },
   'ticks': {
     title: 'TICKS',
