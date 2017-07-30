@@ -26,7 +26,7 @@ export default function combatHandlers(homeCtx) {
     }));
     props.dispatch(enterCombat(target));
   });
-
+  socket.on('addEffect', effectObj => props.dispatch(addEffect(effectObj)));
   socket.on('damage', dmgObj => {
     props.dispatch(changeStat({
       statToChange: 'hp',
