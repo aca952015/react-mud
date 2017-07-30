@@ -100,6 +100,29 @@ describe('combat client sockets', () => {
     });
   });
 
+  describe('addEffect', () => {
+    it('should call props.dispatch with an addEffect of the payload', done => {
+      player1.emit('skill', {
+        effectName: 'test',
+        effects: 'none',
+        skillTypes: ['effect', 'buff'],
+        skillCost: {'stat': 'mp', value: 3},
+        funcsToCall: [],
+        enemy: 'player1',
+        echoLog: {
+          target: {}
+        },
+        combatLog: {
+          target: {}
+        }
+      });
+      player1.on('addEffect', payload => {
+        expect(props.dispatch.calledWith(addEffect(payload))).toEqual(true);
+        done();
+      });
+    });
+  });
+
   describe('damage', () => {
     describe('If there is only a damage property', () => {
       it('should only dispatch changeStat', done => {
@@ -199,7 +222,7 @@ describe('combat client sockets', () => {
           player5.on('damage', () => {
             expect(lowHealthPropsWhileAlive.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(true);
             expect(lowHealthPropsWhileAlive.dispatch.calledWith(escapeCombat())).toEqual(true);
-            expect(lowHealthPropsWhileAlive.dispatch.calledWith(addEffect('death'))).toEqual(true);
+            expect(lowHealthPropsWhileAlive.dispatch.calledWith(addEffect({effectName: 'death', effects: true}))).toEqual(true);
             done();
           });
         });
@@ -224,7 +247,7 @@ describe('combat client sockets', () => {
           player5.on('damage', () => {
             expect(lowHealthPropsWhileDead.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(false);
             expect(lowHealthPropsWhileDead.dispatch.calledWith(escapeCombat())).toEqual(false);
-            expect(lowHealthPropsWhileDead.dispatch.calledWith(addEffect('death'))).toEqual(false);
+            expect(lowHealthPropsWhileDead.dispatch.calledWith(addEffect({effectName: 'death', effects: true}))).toEqual(false);
             done();
           });
         });

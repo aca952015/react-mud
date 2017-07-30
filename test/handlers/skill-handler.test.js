@@ -8,6 +8,7 @@ import {initialState as equipment} from '../../app/data/equipment-initial-state.
 import {newMessage} from '../../app/actions/message-actions.js';
 import {startCooldown} from '../../app/actions/skill-actions.js';
 import {changeStat} from '../../app/actions/user-actions.js';
+import {addEffect} from '../../app/actions/combat-actions.js';
 import newMob from '../../app/data/mobs.js';
 import newItem from '../../app/data/items.js';
 
@@ -110,6 +111,41 @@ describe('skillHandler', () => {
     }
   };
 
+  const effectResponse = {
+    funcsToCall: [],
+    statToChange: 'sp',
+    effectName: 'infusion',
+    effects: {atk: 3, mat: 3},
+    amount: -(3),
+    skillName: 'infusion',
+    skillCost: {stat: 'mp', value: 3},
+    generateSP: -(3),
+    emitType: 'skill',
+    skillTypes: ['effect', 'buff'],
+    enemy: props.username,
+    cooldownTimer: undefined,
+    echoLog: {
+      from: {
+        friendly: props.username
+      },
+      interaction: ' unleashes a holy infusion of might towards ',
+      target: {
+        friendly: props.username
+      },
+      punctuation: '.'
+    },
+    combatLog: {
+      from: {
+        friendly: 'You'
+      },
+      interaction: ' unleash a holy infusion of might towards ',
+      target: {
+        friendly: props.username
+      },
+      punctuation: '.'
+    }
+  };
+
   describe('If the user is not in combat', () => {
     describe('Using a damage skill', () => {
       it('should return feedback saying "You aren\'t in combat."', () => {
@@ -123,6 +159,34 @@ describe('skillHandler', () => {
     describe('Using a healing skill', () => {
       it('should return the healingResponse object', () => {
         expect(skillHandler(props.skills['heal'], undefined, {...props, combat: {active: false, targets: []}})).toEqual(healingResponse);
+      });
+    });
+
+    describe('Using an effect skill', () => {
+      describe('On another player', () => {
+        it('should return an object with a target of the args', () => {
+          expect(skillHandler(props.skills['infusion'], 'Bob', props)).toEqual({
+            ...effectResponse,
+            enemy: 'Bob',
+            echoLog: {
+              ...effectResponse.echoLog,
+              target: {friendly: 'Bob'}
+            },
+            combatLog: {
+              ...effectResponse.combatLog,
+              target: {friendly: 'Bob'}
+            }
+          });
+        });
+      });
+
+      describe('On the user', () => {
+        it('should return the effectResponse', () => {
+          expect(skillHandler(props.skills['infusion'], 'Dave', props)).toEqual({
+            ...effectResponse,
+            funcsToCall: [startCooldown, changeStat, addEffect]
+          });
+        });
       });
     });
   });
@@ -139,6 +203,15 @@ describe('skillHandler', () => {
         expect(skillHandler(props.skills['heal'], undefined, props)).toEqual(healingResponse);
       });
     });
+
+    describe('Using an effect skill', () => {
+      it('should return the effectResponse', () => {
+        expect(skillHandler(props.skills['infusion'], undefined, props)).toEqual({
+          ...effectResponse,
+          funcsToCall: [startCooldown, changeStat, addEffect]
+        });
+      });
+    });
   });
 
   describe('With args, but an enemy the user isn\'t fighting', () => {
@@ -146,6 +219,62 @@ describe('skillHandler', () => {
       expect(skillHandler(props.skills['slash'], 'zombie', props)).toEqual({
         funcsToCall: [newMessage],
         feedback: 'You don\'t appear to be fighting that.'
+      });
+    });
+  });
+
+  describe('With an effects skill', () => {
+    describe('With not enough MP', () =>  {
+      it('should return that the user doesn\'t have enough MP', () => {
+        expect(skillHandler(props.skills['infusion'], undefined, {...props, mp: 0})).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You don\'t have enough MP to use that.'
+        });
+      });
+    });
+
+    describe('With a cooldown timer', () => {
+      it('should return an effectResponse with a cooldown timer', () => {
+        expect(skillHandler({...props.skills['infusion'], cooldownTimer: 5000}, undefined, props)).toEqual({
+          ...effectResponse,
+          funcsToCall: [startCooldown, changeStat, addEffect],
+          cooldownTimer: 5000
+        });
+      });
+    });
+
+    describe('In combat', () => {
+      describe('On an enemy', () => {
+        describe('With a non debuff skill', () => {
+          it('should return feedback saying "You can\'t use that on enemies."', () =>  {
+            expect(skillHandler(props.skills['infusion'], 'bat', {...props, combat: {active: true, targets: [newMob('bat')]}})).toEqual({
+              funcsToCall: [newMessage],
+              feedback: 'You can\'t use that on enemies.'
+            });
+          });
+        });
+
+        describe('With a debuff', () => {
+          it('should return an effectResponse with the enemy targeted', () => {
+            expect(skillHandler({...props.skills['infusion'], skillTypes: [...props.skills['infusion'].skillTypes, 'debuff']},
+              'bat',
+              {...props, combat: {active: true, targets: [newMob('bat')]}
+              })).
+            toEqual({
+              ...effectResponse,
+              enemy: 'Bat',
+              skillTypes: ['effect', 'buff', 'debuff'],
+              echoLog: {
+                ...effectResponse.echoLog,
+                target: {friendly: 'Bat'}
+              },
+              combatLog: {
+                ...effectResponse.combatLog,
+                target: {friendly: 'Bat'}
+              }
+            });
+          });
+        });
       });
     });
   });
@@ -217,11 +346,28 @@ describe('skillHandler', () => {
 
   describe('With args on an enemy the user is fighting', () => {
     describe('With a damage skill', () => {
+      describe('With effects on', () => {
+        it('should update values accordingly', () => {
+          expect(skillHandler(props.skills['slash'], 'bat', {...props, effects: {infusion: {atk: 3, mat: 3}}})).toEqual({
+            ...response,
+            damage: 8,
+            combatLog: {
+              ...response.combatLog,
+              damage: 8
+            },
+            echoLog: {
+              ...response.echoLog,
+              damage: 8
+            }
+          });
+        });
+      });
       describe('With enough MP or SP to use it', () => {
         it('should return a skillHandler response', () => {
           expect(skillHandler(props.skills['slash'], 'bat', props)).toEqual(response);
         });
       });
+
 
       describe('Without enough', () => {
         it('should return an error of not being able to use it', () => {

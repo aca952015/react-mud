@@ -19,6 +19,30 @@ export const clericSkills = {
     postMessage: ' health to ',
     skillTypes: ['healing', 'magical']
   },
+  'infusion': {
+    skillName: 'infusion',
+    level: 1,
+    cost: {
+      stat: 'mp',
+      value: 3
+    },
+    generateSP: 3,
+    onCooldown: false,
+    atkMultiplier: 0,
+    matMultiplier: 0,
+    addHealing: 0,
+    addDamage: 0,
+    playerEcho: ' unleash a holy infusion of might towards ',
+    roomEcho: ' unleashes a holy infusion of might towards ',
+    skillTypes: ['effect', 'buff'],
+    addEffect: {
+      effectName: 'infusion',
+      effects: {
+        atk: 3,
+        mat: 3
+      }
+    }
+  },
   'searing light': {
     skillName: 'searing light',
     level: 1,

@@ -3,7 +3,7 @@
 export default function reducer(state={}, action) {
   if (action.type === 'ADD_EFFECT') {
     let tempState = {...state};
-    tempState[action.payload] = true;
+    tempState[action.payload.effectName] = action.payload.effects;
     return tempState;
   }
   if (action.type === 'LOGIN_EFFECTS') return action.payload;
