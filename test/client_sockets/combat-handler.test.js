@@ -199,7 +199,7 @@ describe('combat client sockets', () => {
           player5.on('damage', () => {
             expect(lowHealthPropsWhileAlive.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(true);
             expect(lowHealthPropsWhileAlive.dispatch.calledWith(escapeCombat())).toEqual(true);
-            expect(lowHealthPropsWhileAlive.dispatch.calledWith(addEffect('death'))).toEqual(true);
+            expect(lowHealthPropsWhileAlive.dispatch.calledWith(addEffect({effectName: 'death', effects: true}))).toEqual(true);
             done();
           });
         });
@@ -224,7 +224,7 @@ describe('combat client sockets', () => {
           player5.on('damage', () => {
             expect(lowHealthPropsWhileDead.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(false);
             expect(lowHealthPropsWhileDead.dispatch.calledWith(escapeCombat())).toEqual(false);
-            expect(lowHealthPropsWhileDead.dispatch.calledWith(addEffect('death'))).toEqual(false);
+            expect(lowHealthPropsWhileDead.dispatch.calledWith(addEffect({effectName: 'death', effects: true}))).toEqual(false);
             done();
           });
         });
