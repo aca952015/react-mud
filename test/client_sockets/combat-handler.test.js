@@ -100,6 +100,29 @@ describe('combat client sockets', () => {
     });
   });
 
+  describe('addEffect', () => {
+    it('should call props.dispatch with an addEffect of the payload', done => {
+      player1.emit('skill', {
+        effectName: 'test',
+        effects: 'none',
+        skillTypes: ['effect', 'buff'],
+        skillCost: {'stat': 'mp', value: 3},
+        funcsToCall: [],
+        enemy: 'player1',
+        echoLog: {
+          target: {}
+        },
+        combatLog: {
+          target: {}
+        }
+      });
+      player1.on('addEffect', payload => {
+        expect(props.dispatch.calledWith(addEffect(payload))).toEqual(true);
+        done();
+      });
+    });
+  });
+
   describe('damage', () => {
     describe('If there is only a damage property', () => {
       it('should only dispatch changeStat', done => {
