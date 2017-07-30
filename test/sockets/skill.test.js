@@ -43,6 +43,25 @@ describe('skill', () => {
   });
 
   describe('With a living target', () => {
+    describe('Buffing a target', () => {
+      it('should emit an addEffect message to the target', done => {
+        player1.emit('skill', {
+          enemy: 'player3',
+          funcsToCall: [],
+          skillCost: {
+            stat: 'mp',
+            value: 4
+          },
+          skillTypes: ['effect', 'buff'],
+          echoLog: {target: {friendly: 'player3'}},
+          combatLog: {target: {friendly: 'player3'}}
+        });
+        player3.on('addEffect', () => {
+          done();
+        });
+      });
+    });
+
     describe('With a damage skill', () => {
       describe('Still alive after the skill', () => {
         it('should emit to the room a generalMessage with a combatLog', done => {
@@ -197,22 +216,44 @@ describe('skill', () => {
       player2.on('updateComplete', () => done());
     });
 
-    it('should return that you can\'t heal ghosts', done => {
-      player1.emit('skill', {
-        enemy: 'player2',
-        funcsToCall: [],
-        skillCost: {
-          stat: 'mp',
-          value: 4
-        },
-        skillTypes: ['healing', 'magical'],
-        damage: -5,
-        echoLog: {target: {friendly: 'player2'}},
-        combatLog: {target: {friendly: 'player2'}}
+    describe('With a healing skill', () => {
+      it('should return that you can\'t heal ghosts', done => {
+        player1.emit('skill', {
+          enemy: 'player2',
+          funcsToCall: [],
+          skillCost: {
+            stat: 'mp',
+            value: 4
+          },
+          skillTypes: ['healing', 'magical'],
+          damage: -5,
+          echoLog: {target: {friendly: 'player2'}},
+          combatLog: {target: {friendly: 'player2'}}
+        });
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('You can\'t heal a ghost.');
+          done();
+        });
       });
-      player1.on('generalMessage', res => {
-        expect(res.feedback).toEqual('You can\'t heal a ghost.');
-        done();
+    });
+
+    describe('With a buff', () => {
+      it('should return that "you can\'t target ghosts with that."', done => {
+        player1.emit('skill', {
+          enemy: 'player2',
+          funcsToCall: [],
+          skillCost: {
+            stat: 'mp',
+            value: 4
+          },
+          skillTypes: ['effect', 'buff'],
+          echoLog: {target: {friendly: 'player2'}},
+          combatLog: {target: {friendly: 'player2'}}
+        });
+        player1.on('generalMessage', res => {
+          expect(res.feedback).toEqual('You can\'t target ghosts with that.');
+          done();
+        });
       });
     });
   });
