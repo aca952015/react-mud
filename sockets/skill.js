@@ -18,7 +18,10 @@ export default function skill(socket, roomData, mobsInCombat, alteredRooms, user
 
     target = users.find(user => user.username.toLowerCase() === skillObj.enemy.toLowerCase());
     if (!target || target.currentRoom !== socket.currentRoom) return socket.emit('generalMessage', {feedback: 'I don\'t see that person here.'});
-    if (target.effects.death) return socket.emit('generalMessage', {feedback: 'You can\'t heal a ghost.'});
+    if (target.effects.death) {
+      if (skillObj.skillTypes.includes('healing')) return socket.emit('generalMessage', {feedback: 'You can\'t heal a ghost.'});
+      else return socket.emit('generalMessage', {feedback: 'You can\'t target ghosts with that.'});
+    }
 
     // If the user is targeting themselves, update the combatLogs accordingly.
     if (target.username.toLowerCase() === socket.username.toLowerCase()) {
@@ -36,6 +39,8 @@ export default function skill(socket, roomData, mobsInCombat, alteredRooms, user
       amount: skillObj.generateSP
     });
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {combatLog: skillObj.echoLog});
-    target.emit('damage', {damage: skillObj.damage});
+    if (skillObj.skillTypes.includes('healing')) return target.emit('damage', {damage: skillObj.damage});
+
+    target.emit('addEffect', {effectName: skillObj.effectName, effects: skillObj.effects});
   });
 }
