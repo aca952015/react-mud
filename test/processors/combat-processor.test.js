@@ -15,6 +15,16 @@ describe('combatProcessor', () => {
       active: true,
       targets: []
     },
+    equipment: {
+      head: null,
+      shoulders: null,
+      'main hand': newItem('weapons', 'broad sword'),
+      'off hand': null,
+      chest: null,
+      legs: null,
+      feet: null
+    },
+    effects: {},
     atk: 2
   };
 
