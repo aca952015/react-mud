@@ -28,11 +28,31 @@ export const academy = {
         locked: false
       },
       west: {
-        exit: 'Hallway to Combat Training',
+        exit: 'Combat Training Hall',
         locked: false
       },
       east: {
-        exit: 'Hallway to Movement Training',
+        exit: 'Movement Training Hall',
+        locked: false
+      }
+    }
+  },
+  'Combat Training Hall': {
+    roomName: 'Combat Training Hall',
+    desc: 'The combat hall.',
+    exits: {
+      east: {
+        exit: 'Academy Foyer',
+        locked: false
+      }
+    }
+  },
+  'Movement Training Hall': {
+    roomName: 'Movement Training Hall',
+    desc: 'The movement hall.',
+    exits: {
+      west: {
+        exit: 'Academy Foyer',
         locked: false
       }
     }
