@@ -16,6 +16,7 @@ import {Equipment} from '../components/equipment.jsx';
 import {PlayerInput} from '../components/player-input.jsx';
 import {PlayerDescription} from '../components/player-description.jsx';
 import {Skills} from '../components/skills.jsx';
+import {Effects} from '../components/effects.jsx';
 
 export default class Messages extends Component {
   constructor(props) {
@@ -47,6 +48,7 @@ export default class Messages extends Component {
         {message.occupants ? <Occupants message={message}/> : null}
         {message.mobs ? <Mobs message={message}/> : null}
         {message.skills ? <Skills skills={message.skills}/> : null}
+        {message.effects ? <Effects effects={message.effects}/> : null}
         {message.combatLog ? <CombatLog username={this.props.username} message={message}/> : null}
         {message.containedItems ? <Containers message={message}/> : null}
         {message.onlineUsers ? <OnlineUsers message={message}/> : null}
