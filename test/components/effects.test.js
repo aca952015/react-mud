@@ -8,7 +8,7 @@ describe('<Effects />', () => {
   const props = {
     effects: {
       infusion: {
-        mat: 3,
+        mat: -3,
         atk: 3
       }
     }
