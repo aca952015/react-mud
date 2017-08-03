@@ -28,7 +28,8 @@ describe('<Messages />', () => {
     'Inventory',
     'Equipment',
     'PlayerDescription',
-    'Skills'
+    'Skills',
+    'Effects'
   ];
 
   it('should not render any children by default', () => {
@@ -228,6 +229,24 @@ describe('<Messages />', () => {
 
     messageComponent = shallow(<Messages {...props} />);
     expect(messageComponent.find('Skills').length).toEqual(1);
+    undefineds.forEach(node => expect(messageComponent.find(node).node).toEqual(undefined));
+  });
+
+  it('should render only an Effects child with an effects message', () => {
+    props = {
+      messages: [{
+        effects: {
+          infusion: {
+            mat: 3,
+            atk: 3
+          }
+        }
+      }]
+    };
+    const undefineds = nodes.filter(node => node !== 'Effects');
+
+    messageComponent = shallow(<Messages {...props} />);
+    expect(messageComponent.find('Effects').length).toEqual(1);
     undefineds.forEach(node => expect(messageComponent.find(node).node).toEqual(undefined));
   });
 });
