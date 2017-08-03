@@ -23,6 +23,7 @@ export const Effects = props => {
     <p className="header">Effect</p>
     <p className="header">Affects</p>
     <ul>{effectBlocks}</ul>
+    <div className="clearfix" style={{'clear': 'both'}}></div>
   </div>;
 };
 
