@@ -1,0 +1,42 @@
+.effects {
+  width: 70%;
+  margin-bottom: 1vh;
+
+  .header {
+    float: left;
+    width: 50%;
+    text-align: center;
+    border-bottom: 1px solid $white;
+
+    &:first-child {
+      border-right: 1px solid $white;
+    }
+
+    &:nth-child(2) {
+      width: calc(50% - 1px);
+    }
+  }
+
+  .effect-block {
+    border-bottom: 1px solid $white;
+
+    p {
+      float: left;
+      width: 50%;
+      padding: 1vh 0;
+      text-align: center;
+    }
+
+    ul {
+      float: left;
+      width: calc(50% - 1px);
+      margin: 0 auto;
+      padding: 1vh 0;
+      border-left: 1px solid $white;
+    }
+
+    li {
+      text-align: center;
+    }
+  }
+}

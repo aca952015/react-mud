@@ -3,34 +3,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/*
-
-  Effect            |            Affects
-  Infusion          |      Atk:    +3
-                    |      Mat:    +3
-  --------------------------------------
-  HP Buff           |      MaxHP:  +25
-*/
 export const Effects = props => {
   const effectBlocks = Object.keys(props.effects).map((effectName, i) => {
     const allEffects = Object.keys(props.effects[effectName]).map((effectStat, j) => {
       return <li key={j}>
-        <span>{effectStat}: </span>
+        <span>{`${effectStat[0].toUpperCase()}${effectStat.slice(1)}`}: </span>
         <span>{props.effects[effectName][effectStat] > 0 ? '+' : '-'}{props.effects[effectName][effectStat]}</span>
       </li>;
     });
 
     return <div key={i} className="effect-block">
-      <p>{effectName}</p>
+      <p>{`${effectName[0].toUpperCase()}${effectName.slice(1)}`}</p>
       <ul>{allEffects}</ul>
+      <div className="clearfix" style={{'clear': 'both'}}></div>
     </div>;
   });
-  /*
-  {
-    atk: 3,
-    mat: 3
-  }
-  */
 
   return <div className="effects">
     <p className="header">Effect</p>
