@@ -89,7 +89,8 @@ export default function commandHandler(command, args, props) {
     'description': descriptionHandler,
     'resurrect': {emitType: 'resurrect'},
     'quit': quitHandler,
-    'skills': {funcsToCall: [newMessage], skills: props.skills}
+    'skills': {funcsToCall: [newMessage], skills: props.skills},
+    'effects': {funcsToCall: [newMessage], effects: props.effects}
   };
 
   if (commandShorthand[command]) command = commandShorthand[command];
