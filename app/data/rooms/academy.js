@@ -44,6 +44,20 @@ export const academy = {
       east: {
         exit: 'Academy Foyer',
         locked: false
+      },
+      north: {
+        exit: 'Skill Room',
+        locked: false
+      }
+    }
+  },
+  'Skill Room': {
+    roomName: 'Skill Room',
+    desc: 'A room to train users in how to use skills.',
+    exits: {
+      south: {
+        exit: 'Combat Training Hall',
+        locked: false
       }
     }
   },
@@ -56,5 +70,5 @@ export const academy = {
         locked: false
       }
     }
-  }
+  },
 };
