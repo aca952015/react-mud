@@ -39,7 +39,8 @@ export const clericSkills = {
       effectName: 'infusion',
       effects: {
         atk: 3,
-        mat: 3
+        mat: 3,
+        duration: 2
       }
     }
   },

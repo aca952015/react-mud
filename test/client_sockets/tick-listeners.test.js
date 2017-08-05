@@ -7,6 +7,7 @@ import socketHandlers from '../../app/client_sockets/socket-handlers.js';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 import {tickRegen} from '../../app/actions/user-actions.js';
+import {decrementEffectDurations} from '../../app/actions/skill-actions.js';
 
 describe('Tick client listeners', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
@@ -57,8 +58,16 @@ describe('Tick client listeners', () => {
     closeServer();
     done();
   });
-  
+
   describe('tickListeners', () => {
+    it('should call decrementEffectDurations', done => {
+      player1.emit('triggerTick');
+      player1.on('tick', () => {
+        expect(props.dispatch.calledWith(decrementEffectDurations())).toEqual(true);
+        done();
+      });
+    });
+
     describe('If not dead', () => {
       it('should dispatch tickRegen', done => {
         player1.emit('triggerTick');
