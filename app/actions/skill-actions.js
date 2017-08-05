@@ -28,3 +28,7 @@ export function setSkills(classSkills) {
     payload: classSkills
   };
 }
+
+export function decrementEffectDurations() {
+  return {type: 'DECREMENT_EFFECT_DURATIONS'};
+}
