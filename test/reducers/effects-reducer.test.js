@@ -24,4 +24,14 @@ describe('Effects reducer', () => {
       expect(reducer({}, {type: 'LOGIN_EFFECTS', payload: 'Ayy'})).toEqual('Ayy');
     });
   });
+
+  describe('With an action of DECREMENT_EFFECT_DURATIONS', () => {
+    it('should reduce the duration of effects by 1', () => {
+      expect(reducer({infusion: {duration: 2}}, {type: 'DECREMENT_EFFECT_DURATIONS'})).toEqual({infusion: {duration: 1}});
+    });
+
+    it('should remove effects if it\'s the last tick', () => {
+      expect(reducer({infusion: {duration: 1}}, {type: 'DECREMENT_EFFECT_DURATIONS'})).toEqual({});
+    });
+  });
 });
