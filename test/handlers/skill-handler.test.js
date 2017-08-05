@@ -115,7 +115,7 @@ describe('skillHandler', () => {
     funcsToCall: [],
     statToChange: 'sp',
     effectName: 'infusion',
-    effects: {atk: 3, mat: 3},
+    effects: {atk: 3, mat: 3, duration: 2},
     amount: -(3),
     skillName: 'infusion',
     skillCost: {stat: 'mp', value: 3},
