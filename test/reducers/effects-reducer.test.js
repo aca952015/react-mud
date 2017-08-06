@@ -26,6 +26,10 @@ describe('Effects reducer', () => {
   });
 
   describe('With an action of DECREMENT_EFFECT_DURATIONS', () => {
+    it('should not try to change durations if there isn\'t one', () => {
+      expect(reducer({death: true}, {type: 'DECREMENT_EFFECT_DURATIONS'})).toEqual({death: true});
+    });
+
     it('should reduce the duration of effects by 1', () => {
       expect(reducer({infusion: {duration: 2}}, {type: 'DECREMENT_EFFECT_DURATIONS'})).toEqual({infusion: {duration: 1}});
     });
