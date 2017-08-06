@@ -103,18 +103,18 @@ describe('combat client sockets', () => {
 
   describe('addEffect', () => {
     it('should call props.dispatch with an addEffect of the payload', done => {
-      player1.emit('skill', {
+      player2.emit('skill', {
         effectName: 'test',
         effects: 'none',
         skillTypes: ['effect', 'buff'],
         skillCost: {'stat': 'mp', value: 3},
-        funcsToCall: [],
+        funcsToCall: [addEffect],
         enemy: 'player1',
         echoLog: {
-          target: {}
+          target: {friendly: 'player1'}
         },
         combatLog: {
-          target: {}
+          target: {friendly: 'player1'}
         }
       });
       player1.on('addEffect', payload => {
