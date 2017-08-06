@@ -4,6 +4,7 @@ import {newMessage} from '../actions/message-actions.js';
 import {enterCombat, slayEnemy, addEffect, escapeCombat} from '../actions/combat-actions.js';
 import {startCooldown, endCooldown, startGlobalCooldown, endGlobalCooldown} from '../actions/skill-actions.js';
 import {changeStat} from '../actions/user-actions.js';
+import {loginEffects} from '../actions/login-actions.js';
 import combatProcessor from '../processors/combat-processor.js';
 
 export default function combatHandlers(homeCtx) {
@@ -52,12 +53,9 @@ export default function combatHandlers(homeCtx) {
     if (homeCtx.props.hp <= 0 && !homeCtx.props.effects.death) {
       props.dispatch(newMessage({feedback: 'You have been SLAIN!'}));
       props.dispatch(escapeCombat());
+      props.dispatch(loginEffects({loginEffects: {death: true}}));
       socket.emit('escapeCombat');
       socket.emit('playerDeath');
-      props.dispatch(addEffect({
-        effectName: 'death',
-        effects:  true
-      }));
       socket.emit('updateEffects', {...homeCtx.props.effects, death: true});
     }
   });
