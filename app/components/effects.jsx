@@ -17,7 +17,7 @@ export const Effects = props => {
 
     const tickGrammar = props.effects[effectName].duration === 1 ? 'tick' : 'ticks';
     return <div key={i} className="effect-block">
-      <p>{`${effectName[0].toUpperCase()}${effectName.slice(1)}`} ({props.effects[effectName].duration} {tickGrammar})</p>
+      <p>{`${effectName[0].toUpperCase()}${effectName.slice(1)}`} {props.effects[effectName].duration ? `(${props.effects[effectName].duration} ${tickGrammar})` : null }</p>
       <ul>{allEffects}</ul>
       <div className="clearfix" style={{'clear': 'both'}}></div>
     </div>;
