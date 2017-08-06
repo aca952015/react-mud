@@ -11,6 +11,7 @@ import {newMessage} from '../../app/actions/message-actions.js';
 import {startCooldown, startGlobalCooldown} from '../../app/actions/skill-actions.js';
 import {enterCombat, slayEnemy, escapeCombat, addEffect} from '../../app/actions/combat-actions.js';
 import {changeStat} from '../../app/actions/user-actions.js';
+import {loginEffects} from '../../app/actions/login-actions.js';
 
 describe('combat client sockets', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
@@ -222,7 +223,7 @@ describe('combat client sockets', () => {
           player5.on('damage', () => {
             expect(lowHealthPropsWhileAlive.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(true);
             expect(lowHealthPropsWhileAlive.dispatch.calledWith(escapeCombat())).toEqual(true);
-            expect(lowHealthPropsWhileAlive.dispatch.calledWith(addEffect({effectName: 'death', effects: true}))).toEqual(true);
+            expect(lowHealthPropsWhileAlive.dispatch.calledWith(loginEffects({loginEffects: {death: true}}))).toEqual(true);
             done();
           });
         });

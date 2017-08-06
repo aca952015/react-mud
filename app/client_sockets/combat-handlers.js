@@ -56,7 +56,7 @@ export default function combatHandlers(homeCtx) {
       props.dispatch(loginEffects({loginEffects: {death: true}}));
       socket.emit('escapeCombat');
       socket.emit('playerDeath');
-      socket.emit('updateEffects', {...homeCtx.props.effects, death: true});
+      socket.emit('updateEffects', {death: true});
     }
   });
   socket.on('slayEnemy', enemy => props.dispatch(slayEnemy(enemy)));
