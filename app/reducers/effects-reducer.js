@@ -4,6 +4,7 @@ export default function reducer(state={}, action) {
   if (action.type === 'ADD_EFFECT') {
     let tempState = {...state};
     tempState[action.payload.effectName] = action.payload.effects;
+    if (action.payload.expirationMessage) tempState[action.payload.effectName].expirationMessage = action.payload.expirationMessage;
     return tempState;
   }
   if (action.type === 'LOGIN_EFFECTS') return action.payload;
