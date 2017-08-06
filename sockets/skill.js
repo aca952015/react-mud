@@ -41,6 +41,6 @@ export default function skill(socket, roomData, mobsInCombat, alteredRooms, user
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {combatLog: skillObj.echoLog});
     if (skillObj.skillTypes.includes('healing')) return target.emit('damage', {damage: skillObj.damage});
 
-    target.emit('addEffect', {effectName: skillObj.effectName, effects: skillObj.effects});
+    if (target.username.toLowerCase() !== socket.username.toLowerCase()) target.emit('addEffect', {effectName: skillObj.effectName, effects: skillObj.effects, expirationMessage: skillObj.expirationMessage});
   });
 }
