@@ -11,6 +11,17 @@ describe('Effects reducer', () => {
     it('should set that state to a boolean of true as a property on the state object', () => {
       expect(reducer({}, {type: 'ADD_EFFECT', payload: {effectName: 'death', effects: true}})).toEqual({death: true});
     });
+
+    it('should create an expirationMessage property if there is one', () => {
+      expect(reducer({}, {type: 'ADD_EFFECT', payload: {effectName: 'infusion', effects: {atk: 3, mat: 3, duration: 1}, expirationMessage: 'derp'}})).toEqual({
+        infusion: {
+          atk: 3,
+          mat: 3,
+          duration: 1,
+          expirationMessage: 'derp'
+        }
+      });
+    });
   });
 
   describe('With an action of REMOVE_EFFECT', () => {
