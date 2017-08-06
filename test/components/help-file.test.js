@@ -27,6 +27,7 @@ describe('<HelpFile /> with the say help file', () => {
     expect(help.find('li').first().props().dangerouslySetInnerHTML.__html).toEqual(`<span class="help-topics">COMBAT</span>
       <span class="help-topics">COMMUNICATION</span>
       <span class="help-topics">DEATH</span>
+      <span class="help-topics">EFFECTS</span>
       <span class="help-topics">EQUIPMENT</span>
       <span class="help-topics">FUZZY MATCHING</span>
       <span class="help-topics">ITEMS</span>
