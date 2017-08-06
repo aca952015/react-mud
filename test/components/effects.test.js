@@ -28,4 +28,10 @@ describe('<Effects />', () => {
 
     expect(effects.find('.effect-block').children('p').text()).toEqual('Infusion (2 ticks)');
   });
+
+  it('should not render ticks if there isn\'t a duration', () => {
+    props.effects = {death: true};
+    effects = shallow(<Effects {...props} />);
+    expect(effects.find('.effect-block').children('p').text()).toEqual('Death ');
+  });
 });
