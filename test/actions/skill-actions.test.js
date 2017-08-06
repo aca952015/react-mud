@@ -1,6 +1,6 @@
 'use strict';
 
-import {startCooldown, endCooldown, startGlobalCooldown, endGlobalCooldown, setSkills} from '../../app/actions/skill-actions.js';
+import {startCooldown, endCooldown, startGlobalCooldown, endGlobalCooldown, setSkills, decrementEffectDurations} from '../../app/actions/skill-actions.js';
 
 describe('skill actions', () => {
   describe('startCooldown', () => {
@@ -30,6 +30,12 @@ describe('skill actions', () => {
   describe('endGlobalCooldown', () => {
     it('should return an object with type "END_GLOBAL_COOLDOWN"', () => {
       expect(endGlobalCooldown()).toEqual({type: 'END_GLOBAL_COOLDOWN'});
+    });
+  });
+
+  describe('decrementEffectDurations', () => {
+    it('should return an object with type "DECREMENT_EFFECT_DURATIONS"', () => {
+      expect(decrementEffectDurations()).toEqual({type: 'DECREMENT_EFFECT_DURATIONS'});
     });
   });
 });

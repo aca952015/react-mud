@@ -7,6 +7,8 @@ import socketHandlers from '../../app/client_sockets/socket-handlers.js';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 import {tickRegen} from '../../app/actions/user-actions.js';
+import {decrementEffectDurations} from '../../app/actions/skill-actions.js';
+import {newMessage} from '../../app/actions/message-actions.js';
 
 describe('Tick client listeners', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
@@ -22,7 +24,7 @@ describe('Tick client listeners', () => {
       active: true,
       targets: [{id: 1, target: 'Some test thing'}]
     },
-    effects: {}
+    effects: {infusion: {atk: 3, mat: 3, duration: 1, expirationMessage: 'Test'}}
   };
 
   beforeEach(done => {
@@ -57,8 +59,24 @@ describe('Tick client listeners', () => {
     closeServer();
     done();
   });
-  
+
   describe('tickListeners', () => {
+    it('should call decrementEffectDurations', done => {
+      player1.emit('triggerTick');
+      player1.on('tick', () => {
+        expect(props.dispatch.calledWith(decrementEffectDurations())).toEqual(true);
+        done();
+      });
+    });
+
+    it('should dispatch newMessage for any effects about to expire', done => {
+      player1.emit('triggerTick');
+      player1.on('tick', () => {
+        expect(props.dispatch.calledWith(newMessage({feedback: props.effects.infusion.expirationMessage}))).toEqual(true);
+        done();
+      });
+    });
+
     describe('If not dead', () => {
       it('should dispatch tickRegen', done => {
         player1.emit('triggerTick');

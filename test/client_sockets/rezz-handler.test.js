@@ -6,7 +6,8 @@ import {Character} from '../../model/character.js';
 import socketHandlers from '../../app/client_sockets/socket-handlers.js';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
-import {damageUser, removeEffect, fullRestore} from '../../app/actions/combat-actions.js';
+import {removeEffect, fullRestore} from '../../app/actions/combat-actions.js';
+import {changeStat} from '../../app/actions/user-actions.js';
 
 describe('Resurrect client listeners', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
@@ -81,7 +82,10 @@ describe('Resurrect client listeners', () => {
       player7.emit('resurrect');
       player7.on('resurrect', () => {
         expect(resProps.dispatch.calledWith(fullRestore())).toEqual(true);
-        expect(resProps.dispatch.calledWith(damageUser({damage: Math.round(resProps.maxHP / 2)}))).toEqual(true);
+        expect(resProps.dispatch.calledWith(changeStat({
+          statToChange: 'hp',
+          amount: Math.round(resProps.maxHP / 2)
+        }))).toEqual(true);
         expect(resProps.dispatch.calledWith(removeEffect('death'))).toEqual(true);
         expect(socketSpy.calledWith('updateEffects', {})).toEqual(true);
         done();

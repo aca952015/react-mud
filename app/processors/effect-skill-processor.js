@@ -3,46 +3,40 @@
 import {newMessage} from '../actions/message-actions.js';
 import {startCooldown} from '../actions/skill-actions.js';
 import {changeStat} from '../actions/user-actions.js';
+import {addEffect} from '../actions/combat-actions.js';
 import termsProcessor from './terms-processor.js';
-import equipmentStatProcessor from './equipment-stat-processor.js';
-import effectStatProcessor from './effect-stat-processor.js';
 
-export default function healingSkillProcessor(skill, args, props) {
+export default function effectSkillProcessor(skill, args, props) {
   if (props[skill.cost.stat] < skill.cost.value) return {funcsToCall: [newMessage], feedback: `You don't have enough ${skill.cost.stat.toUpperCase()} to use that.`};
   let target;
 
   if (!args) target = props.username;
   else {
     target = termsProcessor(props.combat.targets, args.split('.'));
-    if (target) return {funcsToCall: [newMessage], feedback: 'You can\'t heal enemies.'};
+    if (target && !skill.skillTypes.includes('debuff')) return {funcsToCall: [newMessage], feedback: 'You can\'t use that on enemies.'};
     target = `${args[0].toUpperCase()}${args.slice(1).toLowerCase()}`;
     if (target.toLowerCase() === props.username.toLowerCase()) target = props.username;
   }
 
-  let damage = Math.round((props.mat + equipmentStatProcessor(props.equipment).mat + effectStatProcessor(props.effects).mat) * skill.matMultiplier) + skill.addHealing;
-  if (damage < 1) damage = 1;
-
-  damage = -(Math.abs(damage));
-
   const returnObj = {
     funcsToCall: [],
     statToChange: 'sp',
+    effectName: skill.addEffect.effectName,
+    effects: skill.addEffect.effects,
+    expirationMessage: skill.addEffect.expirationMessage,
     amount: -(skill.generateSP),
     skillName: skill.skillName,
     skillCost: skill.cost,
     generateSP: -(skill.generateSP),
     emitType: 'skill',
     skillTypes: skill.skillTypes,
-    damage,
     enemy: target,
     cooldownTimer: skill.cooldownTimer ? skill.cooldownTimer : undefined,
     echoLog: {
       from: {
         friendly: props.username
       },
-      pre: skill.roomEcho,
-      damage,
-      post: skill.postMessage,
+      interaction: skill.roomEcho,
       target: {
         friendly: target
       },
@@ -52,9 +46,7 @@ export default function healingSkillProcessor(skill, args, props) {
       from: {
         friendly: 'You'
       },
-      pre: skill.playerEcho,
-      damage,
-      post: skill.postMessage,
+      interaction: skill.playerEcho,
       target: {
         friendly: target
       },
@@ -69,6 +61,7 @@ export default function healingSkillProcessor(skill, args, props) {
     }));
     returnObj.funcsToCall.push(startCooldown);
     returnObj.funcsToCall.push(changeStat);
+    returnObj.funcsToCall.push(addEffect);
   }
 
   return returnObj;

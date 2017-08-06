@@ -29,6 +29,12 @@
     }
   }
 
+  p:nth-child(3) {
+    span {
+      color: $bright-green;
+    }
+  }
+
   section {
     display: inline-block;
     width: 20vw;

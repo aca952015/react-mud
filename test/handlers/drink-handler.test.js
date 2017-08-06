@@ -23,7 +23,7 @@ describe('drinkHandler', () => {
         let response = drinkHandler('drink', '3.potion', props);
         expect(response).toEqual({
           funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
-          amount: itemData['potions']['health potion'].drink.amount,
+          amount: -(itemData['potions']['health potion'].drink.amount),
           statToChange: itemData['potions']['health potion'].drink.statToChange,
           feedback: itemData['potions']['health potion'].drink.desc,
           emitType: 'drink',
@@ -41,7 +41,7 @@ describe('drinkHandler', () => {
         let response = drinkHandler('drink', '3.po', props);
         expect(response).toEqual({
           funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
-          amount: itemData['potions']['health potion'].drink.amount,
+          amount: -(itemData['potions']['health potion'].drink.amount),
           statToChange: itemData['potions']['health potion'].drink.statToChange,
           feedback: itemData['potions']['health potion'].drink.desc,
           emitType: 'drink',
@@ -60,7 +60,7 @@ describe('drinkHandler', () => {
       let response = drinkHandler('drink', '3.PoTiOn', props);
       expect(response).toEqual({
         funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
-        amount: itemData['potions']['health potion'].drink.amount,
+        amount: -(itemData['potions']['health potion'].drink.amount),
         statToChange: itemData['potions']['health potion'].drink.statToChange,
         feedback: itemData['potions']['health potion'].drink.desc,
         emitType: 'drink',
@@ -78,7 +78,7 @@ describe('drinkHandler', () => {
       let response = drinkHandler('drink', 'potion', props);
       expect(response).toEqual({
         funcsToCall: [newMessage, itemData['potions']['health potion'].drink.effect, quietlyAddItem, dropItem],
-        amount: itemData['potions']['health potion'].drink.amount,
+        amount: -(itemData['potions']['health potion'].drink.amount),
         statToChange: itemData['potions']['health potion'].drink.statToChange,
         feedback: itemData['potions']['health potion'].drink.desc,
         emitType: 'drink',

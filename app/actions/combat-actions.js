@@ -7,13 +7,6 @@ export function enterCombat(target) {
   };
 }
 
-export function damageUser(damage) {
-  return {
-    type: 'DAMAGE_USER',
-    payload: damage.damage
-  };
-}
-
 export function slayEnemy(target) {
   return {
     type: 'SLAY_ENEMY',
