@@ -23,6 +23,7 @@ export default function effectSkillProcessor(skill, args, props) {
     statToChange: 'sp',
     effectName: skill.addEffect.effectName,
     effects: skill.addEffect.effects,
+    expirationMessage: skill.addEffect.expirationMessage,
     amount: -(skill.generateSP),
     skillName: skill.skillName,
     skillCost: skill.cost,
