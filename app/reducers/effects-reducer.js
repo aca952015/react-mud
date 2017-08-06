@@ -15,10 +15,12 @@ export default function reducer(state={}, action) {
   if (action.type === 'DECREMENT_EFFECT_DURATIONS') {
     const tempState = JSON.parse(JSON.stringify(state));
     for (let key in state) {
-      let remainingDuration = state[key].duration;
-      remainingDuration--;
-      if (remainingDuration < 1) delete tempState[key];
-      else tempState[key].duration = remainingDuration;
+      if (state[key].duration) {
+        let remainingDuration = state[key].duration;
+        remainingDuration--;
+        if (remainingDuration < 1) delete tempState[key];
+        else tempState[key].duration = remainingDuration;
+      }
     }
     return tempState;
   }
