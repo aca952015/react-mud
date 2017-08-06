@@ -7,6 +7,7 @@ export const helpFile = {
       `<span class="help-topics">COMBAT</span>
       <span class="help-topics">COMMUNICATION</span>
       <span class="help-topics">DEATH</span>
+      <span class="help-topics">EFFECTS</span>
       <span class="help-topics">EQUIPMENT</span>
       <span class="help-topics">FUZZY MATCHING</span>
       <span class="help-topics">ITEMS</span>
@@ -62,6 +63,14 @@ export const helpFile = {
     text: [
       'Will drop an item from your inventory into the room you\'re currently in. DROP ALL will drop everything you\'re carrying. Every item has a handful of terms you can use to refer to it. For example, if your inventory has "a small black key", you can drop it with <span class="highlight">DROP KEY</span>, <span class="highlight">DROP SMALL</span>, or <span class="highlight">DROP BLACK</span>.',
       'If you want to drop a specific item, based on its order in your inventory, you can use dot notation with the index of the item you want. For example, if you have two keys, and you want to drop the second one, you can type <span class="highlight">DROP 2.KEY</span>.'
+    ]
+  },
+  'effects': {
+    title: '<span class="highlight">EFFECTS</span> (shortcut: EFF)',
+    text: [
+      'Will show you all effects you\'re currently being affected by, along with a summary of what the effect is doing and how much longer it will last. Effects that have a duration will last for a certain number of ticks, at which point they will wear off.',
+      'If an effect does not have a duration listed, then it is a permanent effect that must be removed through some other means. As an example, death is a permanent effect until you have been resurrected.',
+      'Having the same effect put on you again will simply refresh its duration.'
     ]
   },
   'equipment': {
