@@ -116,6 +116,7 @@ describe('skillHandler', () => {
     statToChange: 'sp',
     effectName: 'infusion',
     effects: {atk: 3, mat: 3, duration: 2},
+    expirationMessage: 'You no longer feel a holy infusion of might.',
     amount: -(3),
     skillName: 'infusion',
     skillCost: {stat: 'mp', value: 3},
