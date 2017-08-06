@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 export const Effects = props => {
   const effectBlocks = Object.keys(props.effects).map((effectName, i) => {
     const allEffects = Object.keys(props.effects[effectName]).reduce((acc, effectStat, j) => {
-      if (effectStat !== 'duration') {
+      if (effectStat !== 'duration' && effectStat !== 'expirationMessage') {
         acc.push(<li key={j}>
           <span>{`${effectStat[0].toUpperCase()}${effectStat.slice(1)}`}: </span>
           <span>{props.effects[effectName][effectStat] > 0 ? '+' : '-'}{props.effects[effectName][effectStat]}</span>
