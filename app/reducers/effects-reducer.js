@@ -4,6 +4,7 @@ export default function reducer(state={}, action) {
   if (action.type === 'ADD_EFFECT') {
     let tempState = {...state};
     tempState[action.payload.effectName] = action.payload.effects;
+    if (action.payload.expirationMessage) tempState[action.payload.effectName].expirationMessage = action.payload.expirationMessage;
     return tempState;
   }
   if (action.type === 'LOGIN_EFFECTS') return action.payload;
@@ -15,10 +16,12 @@ export default function reducer(state={}, action) {
   if (action.type === 'DECREMENT_EFFECT_DURATIONS') {
     const tempState = JSON.parse(JSON.stringify(state));
     for (let key in state) {
-      let remainingDuration = state[key].duration;
-      remainingDuration--;
-      if (remainingDuration < 1) delete tempState[key];
-      else tempState[key].duration = remainingDuration;
+      if (state[key].duration) {
+        let remainingDuration = state[key].duration;
+        remainingDuration--;
+        if (remainingDuration < 1) delete tempState[key];
+        else tempState[key].duration = remainingDuration;
+      }
     }
     return tempState;
   }

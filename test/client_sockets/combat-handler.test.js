@@ -11,6 +11,7 @@ import {newMessage} from '../../app/actions/message-actions.js';
 import {startCooldown, startGlobalCooldown} from '../../app/actions/skill-actions.js';
 import {enterCombat, slayEnemy, escapeCombat, addEffect} from '../../app/actions/combat-actions.js';
 import {changeStat} from '../../app/actions/user-actions.js';
+import {loginEffects} from '../../app/actions/login-actions.js';
 
 describe('combat client sockets', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
@@ -102,18 +103,18 @@ describe('combat client sockets', () => {
 
   describe('addEffect', () => {
     it('should call props.dispatch with an addEffect of the payload', done => {
-      player1.emit('skill', {
+      player2.emit('skill', {
         effectName: 'test',
         effects: 'none',
         skillTypes: ['effect', 'buff'],
         skillCost: {'stat': 'mp', value: 3},
-        funcsToCall: [],
+        funcsToCall: [addEffect],
         enemy: 'player1',
         echoLog: {
-          target: {}
+          target: {friendly: 'player1'}
         },
         combatLog: {
-          target: {}
+          target: {friendly: 'player1'}
         }
       });
       player1.on('addEffect', payload => {
@@ -222,7 +223,7 @@ describe('combat client sockets', () => {
           player5.on('damage', () => {
             expect(lowHealthPropsWhileAlive.dispatch.calledWith(newMessage({feedback: 'You have been SLAIN!'}))).toEqual(true);
             expect(lowHealthPropsWhileAlive.dispatch.calledWith(escapeCombat())).toEqual(true);
-            expect(lowHealthPropsWhileAlive.dispatch.calledWith(addEffect({effectName: 'death', effects: true}))).toEqual(true);
+            expect(lowHealthPropsWhileAlive.dispatch.calledWith(loginEffects({loginEffects: {death: true}}))).toEqual(true);
             done();
           });
         });

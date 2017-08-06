@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options';
 import {startCooldown} from '../../app/actions/skill-actions.js';
+import {addEffect} from '../../app/actions/combat-actions.js';
 import {initialState as equipment} from '../../app/data/equipment-initial-state.js';
 
 describe('skill', () => {
@@ -44,20 +45,39 @@ describe('skill', () => {
 
   describe('With a living target', () => {
     describe('Buffing a target', () => {
-      it('should emit an addEffect message to the target', done => {
-        player1.emit('skill', {
-          enemy: 'player3',
-          funcsToCall: [],
-          skillCost: {
-            stat: 'mp',
-            value: 4
-          },
-          skillTypes: ['effect', 'buff'],
-          echoLog: {target: {friendly: 'player3'}},
-          combatLog: {target: {friendly: 'player3'}}
+      describe('On another user', () => {
+        it('should emit an addEffect message to the target', done => {
+          player1.emit('skill', {
+            enemy: 'player3',
+            funcsToCall: [],
+            skillCost: {
+              stat: 'mp',
+              value: 4
+            },
+            skillTypes: ['effect', 'buff'],
+            echoLog: {target: {friendly: 'player3'}},
+            combatLog: {target: {friendly: 'player3'}}
+          });
+          player3.on('addEffect', () => {
+            done();
+          });
         });
-        player3.on('addEffect', () => {
-          done();
+      });
+
+      describe('On the same user', () => {
+        it('should not emit anything  extra', done => {
+          player1.emit('skill', {
+            enemy: 'player1',
+            funcsToCall: [addEffect],
+            skillCost: {
+              stat: 'mp',
+              value: 4
+            },
+            skillTypes: ['effect', 'buff'],
+            echoLog: {target: {friendly: 'player1'}},
+            combatLog: {target: {friendly: 'player1'}}
+          });
+          player1.on('generalMessage', () => done());
         });
       });
     });

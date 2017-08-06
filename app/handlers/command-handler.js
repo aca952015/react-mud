@@ -37,7 +37,8 @@ export default function commandHandler(command, args, props) {
     'ex': 'examine',
     'eq': 'equipment',
     'rm': 'remove',
-    'desc': 'description'
+    'desc': 'description',
+    'eff': 'effects'
   };
 
   const deathFunctions = [
@@ -58,7 +59,8 @@ export default function commandHandler(command, args, props) {
     'description',
     'resurrect',
     'quit',
-    'skills'
+    'skills',
+    'effects'
   ];
 
   const helperFunctions = {

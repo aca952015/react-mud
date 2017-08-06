@@ -41,7 +41,8 @@ export const clericSkills = {
         atk: 3,
         mat: 3,
         duration: 2
-      }
+      },
+      expirationMessage: 'You no longer feel a holy infusion of might.'
     }
   },
   'searing light': {
