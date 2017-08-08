@@ -27,5 +27,10 @@ describe('Cleric skills', () => {
       clericSkills['conviction'].applyFunction(dispatch);
       expect(dispatch.calledWith(changeStat({statToChange: 'maxHP', amount: -10}))).toEqual(true);
     });
+
+    it('should call changeStat, changing maxHP by 10, as its expireFunction', () => {
+      clericSkills['conviction'].expireFunction(dispatch);
+      expect(dispatch.calledWith(changeStat({statToChange: 'maxHP', amount: 10}))).toEqual(true);
+    });
   });
 });
