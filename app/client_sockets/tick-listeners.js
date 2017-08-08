@@ -11,7 +11,10 @@ export default function tickListeners(homeCtx) {
   socket.on('tick', () => {
     if (!homeCtx.props.effects.death) props.dispatch(tickRegen());
     const expiringEffects = Object.values(homeCtx.props.effects).filter(effect => effect.duration && effect.duration <= 1);
-    expiringEffects.forEach(effect => props.dispatch(newMessage({feedback: effect.expirationMessage})));
+    expiringEffects.forEach(effect => {
+      effect.expireFunction(props.dispatch);
+      props.dispatch(newMessage({feedback: effect.expirationMessage}));
+    });
     props.dispatch(decrementEffectDurations());
   });
 }

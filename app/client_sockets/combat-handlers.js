@@ -6,6 +6,12 @@ import {startCooldown, endCooldown, startGlobalCooldown, endGlobalCooldown} from
 import {changeStat} from '../actions/user-actions.js';
 import {loginEffects} from '../actions/login-actions.js';
 import combatProcessor from '../processors/combat-processor.js';
+import {classSkills} from '../data/class-skills.js';
+
+const allSkills = {
+  ...classSkills['warriorSkills'],
+  ...classSkills['clericSkills']
+};
 
 export default function combatHandlers(homeCtx) {
   let socket = homeCtx.socket;
@@ -27,7 +33,13 @@ export default function combatHandlers(homeCtx) {
     }));
     props.dispatch(enterCombat(target));
   });
-  socket.on('addEffect', effectObj => props.dispatch(addEffect(effectObj)));
+  socket.on('addEffect', effectObj => {
+    if (allSkills[effectObj.skillName].applyFunction) {
+      allSkills[effectObj.skillName].applyFunction(props.dispatch);
+      effectObj.expireFunction = allSkills[effectObj.skillName].expireFunction;
+    }
+    props.dispatch(addEffect(effectObj));
+  });
   socket.on('damage', dmgObj => {
     props.dispatch(changeStat({
       statToChange: 'hp',

@@ -5,7 +5,6 @@ import {startCooldown} from '../actions/skill-actions.js';
 import {changeStat} from '../actions/user-actions.js';
 import termsProcessor from './terms-processor.js';
 import equipmentStatProcessor from './equipment-stat-processor.js';
-import effectStatProcessor from './effect-stat-processor.js';
 
 export default function healingSkillProcessor(skill, args, props) {
   if (props[skill.cost.stat] < skill.cost.value) return {funcsToCall: [newMessage], feedback: `You don't have enough ${skill.cost.stat.toUpperCase()} to use that.`};
@@ -19,7 +18,7 @@ export default function healingSkillProcessor(skill, args, props) {
     if (target.toLowerCase() === props.username.toLowerCase()) target = props.username;
   }
 
-  let damage = Math.round((props.mat + equipmentStatProcessor(props.equipment).mat + effectStatProcessor(props.effects).mat) * skill.matMultiplier) + skill.addHealing;
+  let damage = Math.round((props.mat + equipmentStatProcessor(props.equipment).mat) * skill.matMultiplier) + skill.addHealing;
   if (damage < 1) damage = 1;
 
   damage = -(Math.abs(damage));

@@ -5,6 +5,7 @@ export default function reducer(state={}, action) {
     let tempState = {...state};
     tempState[action.payload.effectName] = action.payload.effects;
     if (action.payload.expirationMessage) tempState[action.payload.effectName].expirationMessage = action.payload.expirationMessage;
+    if (action.payload.expireFunction) tempState[action.payload.effectName].expireFunction = action.payload.expireFunction;
     return tempState;
   }
   if (action.type === 'LOGIN_EFFECTS') return action.payload;
@@ -20,7 +21,10 @@ export default function reducer(state={}, action) {
         let remainingDuration = state[key].duration;
         remainingDuration--;
         if (remainingDuration < 1) delete tempState[key];
-        else tempState[key].duration = remainingDuration;
+        else {
+          tempState[key].expireFunction = state[key].expireFunction;
+          tempState[key].duration = remainingDuration;
+        }
       }
     }
     return tempState;

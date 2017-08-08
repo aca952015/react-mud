@@ -22,6 +22,17 @@ describe('Effects reducer', () => {
         }
       });
     });
+
+    it('should create an expireFunction property if there is one', () => {
+      expect(reducer({}, {type: 'ADD_EFFECT', payload: {effectName: 'infusion', effects: {atk: 3, mat: 3, duration: 1}, expireFunction: 'some function'}})).toEqual({
+        infusion: {
+          atk: 3,
+          mat: 3,
+          duration: 1,
+          expireFunction: 'some function'
+        }
+      });
+    });
   });
 
   describe('With an action of REMOVE_EFFECT', () => {

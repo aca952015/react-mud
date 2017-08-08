@@ -119,6 +119,8 @@ describe('skillHandler', () => {
     expirationMessage: 'You no longer feel a holy infusion of might.',
     amount: -(3),
     skillName: 'infusion',
+    applyFunction: clericSkills['infusion'].applyFunction,
+    expireFunction: clericSkills['infusion'].expireFunction,
     skillCost: {stat: 'mp', value: 3},
     generateSP: -(3),
     emitType: 'skill',
@@ -347,22 +349,6 @@ describe('skillHandler', () => {
 
   describe('With args on an enemy the user is fighting', () => {
     describe('With a damage skill', () => {
-      describe('With effects on', () => {
-        it('should update values accordingly', () => {
-          expect(skillHandler(props.skills['slash'], 'bat', {...props, effects: {infusion: {atk: 3, mat: 3}}})).toEqual({
-            ...response,
-            damage: 8,
-            combatLog: {
-              ...response.combatLog,
-              damage: 8
-            },
-            echoLog: {
-              ...response.echoLog,
-              damage: 8
-            }
-          });
-        });
-      });
       describe('With enough MP or SP to use it', () => {
         it('should return a skillHandler response', () => {
           expect(skillHandler(props.skills['slash'], 'bat', props)).toEqual(response);
