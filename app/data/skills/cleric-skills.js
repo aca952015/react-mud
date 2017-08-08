@@ -1,5 +1,7 @@
 'use strict';
 
+import {changeStat} from '../../actions/user-actions.js';
+
 export const clericSkills = {
   heal: {
     skillName: 'heal',
@@ -43,6 +45,67 @@ export const clericSkills = {
         duration: 2
       },
       expirationMessage: 'You no longer feel a holy infusion of might.'
+    },
+    applyFunction: function(dispatch) {
+      dispatch(changeStat({
+        statToChange: 'atk',
+        amount: -3
+      }));
+      dispatch(changeStat({
+        statToChange: 'mat',
+        amount: -3
+      }));
+    },
+    expireFunction: function(dispatch) {
+      dispatch(changeStat({
+        statToChange: 'atk',
+        amount: 3
+      }));
+      dispatch(changeStat({
+        statToChange: 'mat',
+        amount: 3
+      }));
+    }
+  },
+  'conviction': {
+    skillName: 'conviction',
+    level: 1,
+    cost: {
+      stat: 'mp',
+      value: 2
+    },
+    generateSP: 3,
+    onCooldown: false,
+    atkMultiplier: 0,
+    matMultiplier: 0,
+    addHealing: 0,
+    addDamage: 0,
+    playerEcho: ' apply an empowering conviction towards ',
+    roomEcho: ' applies an empowering conviction towards ',
+    skillTypes: ['effect', 'buff'],
+    addEffect: {
+      effectName: 'conviction',
+      effects: {
+        maxHP: 10,
+        duration: 2
+      },
+      expirationMessage: 'You no longer feel an empowering conviction.'
+    },
+    applyFunction: function(dispatch) {
+      dispatch(changeStat({
+        statToChange: 'maxHP',
+        amount: -10
+      }));
+    },
+    expireFunction: function(dispatch) {
+      dispatch(changeStat({
+        statToChange: 'maxHP',
+        amount: 10
+      }));
+      dispatch(changeStat({
+        statToChange: 'hp',
+        amount: 0
+      }));
     }
   },
   'searing light': {
