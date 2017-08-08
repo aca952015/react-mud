@@ -12,6 +12,7 @@ import {startCooldown, startGlobalCooldown} from '../../app/actions/skill-action
 import {enterCombat, slayEnemy, escapeCombat, addEffect} from '../../app/actions/combat-actions.js';
 import {changeStat} from '../../app/actions/user-actions.js';
 import {loginEffects} from '../../app/actions/login-actions.js';
+import {classSkills} from '../../app/data/class-skills.js';
 
 describe('combat client sockets', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
@@ -108,6 +109,7 @@ describe('combat client sockets', () => {
         effects: 'none',
         skillTypes: ['effect', 'buff'],
         skillCost: {'stat': 'mp', value: 3},
+        skillName: 'conviction',
         funcsToCall: [addEffect],
         enemy: 'player1',
         echoLog: {
@@ -119,6 +121,26 @@ describe('combat client sockets', () => {
       });
       player1.on('addEffect', payload => {
         expect(props.dispatch.calledWith(addEffect(payload))).toEqual(true);
+        done();
+      });
+    });
+
+    it('should not call applyFunction if there isn\'t one to call', done => {
+      player2.emit('skill', {
+        effectName: 'death',
+        effects: 'none',
+        funcsToCall: [],
+        skillTypes: ['effect', 'debuff'],
+        skillCost: {stat: 'mp', value: 3},
+        skillName: 'heal',
+        enemy: 'player1',
+        echoLog: {target: {friendly: 'player1'}},
+        combatLog: {target: {friendly: 'player1'}}
+      });
+
+      player1.on('addEffect', () => {
+        const spy = sinon.spy(classSkills['clericSkills']['conviction'], 'applyFunction');
+        expect(spy.called).toEqual(false);
         done();
       });
     });
