@@ -24,6 +24,8 @@ export default function effectSkillProcessor(skill, args, props) {
     effectName: skill.addEffect.effectName,
     effects: skill.addEffect.effects,
     expirationMessage: skill.addEffect.expirationMessage,
+    applyFunction: skill.applyFunction,
+    expireFunction: skill.expireFunction,
     amount: -(skill.generateSP),
     skillName: skill.skillName,
     skillCost: skill.cost,
@@ -62,6 +64,7 @@ export default function effectSkillProcessor(skill, args, props) {
     returnObj.funcsToCall.push(startCooldown);
     returnObj.funcsToCall.push(changeStat);
     returnObj.funcsToCall.push(addEffect);
+    skill.applyFunction(props.dispatch);
   }
 
   return returnObj;
