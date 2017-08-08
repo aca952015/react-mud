@@ -24,7 +24,7 @@ describe('Tick client listeners', () => {
       active: true,
       targets: [{id: 1, target: 'Some test thing'}]
     },
-    effects: {infusion: {atk: 3, mat: 3, duration: 1, expirationMessage: 'Test'}}
+    effects: {infusion: {atk: 3, mat: 3, duration: 1, expirationMessage: 'Test', expireFunction: sinon.spy()}}
   };
 
   beforeEach(done => {
@@ -73,6 +73,7 @@ describe('Tick client listeners', () => {
       player1.emit('triggerTick');
       player1.on('tick', () => {
         expect(props.dispatch.calledWith(newMessage({feedback: props.effects.infusion.expirationMessage}))).toEqual(true);
+        expect(props.effects.infusion.expireFunction.called).toEqual(true);
         done();
       });
     });
