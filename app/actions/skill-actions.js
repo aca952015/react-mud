@@ -32,3 +32,13 @@ export function setSkills(classSkills) {
 export function decrementEffectDurations() {
   return {type: 'DECREMENT_EFFECT_DURATIONS'};
 }
+
+export function refreshDuration(skill) {
+  return {
+    type: 'REFRESH_DURATION',
+    payload: {
+      effectName: skill.effectName,
+      duration: skill.duration
+    }
+  };
+}
