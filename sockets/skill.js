@@ -1,6 +1,12 @@
 'use strict';
 
 import slayEnemy from '../lib/slay-enemy.js';
+import {classSkills} from '../app/data/class-skills.js';
+
+const allSkills = Object.values(classSkills).reduce((acc, classObj) => {
+  acc = {...acc, ...classObj};
+  return acc;
+}, {});
 
 export default function skill(socket, roomData, mobsInCombat, alteredRooms, users) {
   socket.on('skill', skillObj => {
@@ -14,6 +20,22 @@ export default function skill(socket, roomData, mobsInCombat, alteredRooms, user
       socket.broadcast.to(socket.currentRoom).emit('generalMessage', {combatLog: skillObj.echoLog});
       if (target.hp < 1) return slayEnemy(target, roomData, alteredRooms, mobsInCombat, socket);
       return;
+    }
+
+    if (skillObj.skillTypes.includes('debuff')) {
+      if (!target) return socket.emit('slayEnemy', skillObj.enemy);
+      if (target.effects[skillObj.effectName] && target.effects[skillObj.effectName].duration) {
+        target.effects[skillObj.effectName].duration = skillObj.effects.duration;
+        socket.emit('generalMessage', {combatLog: skillObj.combatLog});
+        return socket.broadcast.to(socket.currentRoom).emit('generalMessage', {combatLog: skillObj.echoLog});
+      }
+
+      target.effects[skillObj.effectName] = skillObj.effects;
+      target.effects[skillObj.effectName].expireFunction = allSkills[skillObj.skillName].expireFunction;
+      allSkills[skillObj.skillName].applyFunction(target);
+
+      socket.emit('generalMessage', {combatLog: skillObj.combatLog});
+      return socket.broadcast.to(socket.currentRoom).emit('generalMessage', {combatLog: skillObj.echoLog});
     }
 
     target = users.find(user => user.username.toLowerCase() === skillObj.enemy.toLowerCase());
