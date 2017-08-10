@@ -9,6 +9,12 @@ export default function reducer(state={}, action) {
     return tempState;
   }
   if (action.type === 'LOGIN_EFFECTS') return action.payload;
+  if (action.type === 'REFRESH_DURATION') {
+    let tempState = JSON.parse(JSON.stringify(state));
+    tempState[action.payload.effectName].duration = action.payload.duration;
+    tempState[action.payload.effectName].expireFunction = state[action.payload.effectName].expireFunction;
+    return tempState;
+  }
   if (action.type === 'REMOVE_EFFECT') {
     let tempState = {...state};
     delete tempState[action.payload];
