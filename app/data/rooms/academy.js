@@ -35,7 +35,11 @@ export const academy = {
         exit: 'Movement Training Hall',
         locked: false
       }
-    }
+    },
+    items: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Combat Training Hall': {
     roomName: 'Combat Training Hall',
@@ -53,7 +57,11 @@ export const academy = {
         exit: 'Combat Basics',
         locked: false
       }
-    }
+    },
+    items: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Combat Basics': {
     roomName: 'Combat Basics',
@@ -63,7 +71,11 @@ export const academy = {
         exit: 'Combat Training Hall',
         locked: false
       }
-    }
+    },
+    items: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Skill Room': {
     roomName: 'Skill Room',
@@ -73,7 +85,11 @@ export const academy = {
         exit: 'Combat Training Hall',
         locked: false
       }
-    }
+    },
+    items: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
   'Movement Training Hall': {
     roomName: 'Movement Training Hall',
@@ -83,6 +99,10 @@ export const academy = {
         exit: 'Academy Foyer',
         locked: false
       }
-    }
+    },
+    items: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0
   },
 };
