@@ -12,6 +12,7 @@ export const nonCombatNPCs = {
     atk: 50,
     def: 50,
     mdf: 50,
-    nonCombat: true
+    nonCombat: true,
+    effects: {}
   }
 };

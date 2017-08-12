@@ -13,6 +13,7 @@ import initialConnect from './sockets/initial-connect.js';
 import serverSocketListeners from './sockets/server-socket-listeners.js';
 import mobTargetSelector from './sockets/mob-target-selector.js';
 import respawnItems from './lib/respawn-items.js';
+import decrementEffects from './lib/decrement-effects.js';
 import {roomData} from './app/data/rooms.js';
 
 dotenv.load();
@@ -34,6 +35,7 @@ app.use(webpackDevMiddleware(webpack(webpackConfig)));
 setInterval(() => {
   io.sockets.emit('tick');
   respawnItems(roomData, roomReset, alteredRooms);
+  decrementEffects(mobsInCombat);
 }, 30000);
 
 // Every 2 seconds, emit combat ticks. Users autoattack if they're in combat on

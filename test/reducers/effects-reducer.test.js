@@ -60,4 +60,15 @@ describe('Effects reducer', () => {
       expect(reducer({infusion: {duration: 1}}, {type: 'DECREMENT_EFFECT_DURATIONS'})).toEqual({});
     });
   });
+
+  describe('With an action of REFRESH_DURATION', () => {
+    it('should reset the duration of the current effect', () => {
+      expect(reducer({infusion: {duration: 1, expireFunction: 'someFunc'}}, {type: 'REFRESH_DURATION', payload: {effectName: 'infusion', duration: 2}})).toEqual({
+        infusion: {
+          duration: 2,
+          expireFunction: 'someFunc'
+        }
+      });
+    });
+  });
 });

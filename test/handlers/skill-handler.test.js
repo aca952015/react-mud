@@ -149,6 +149,42 @@ describe('skillHandler', () => {
     }
   };
 
+  const skill = warriorSkills['hobble'];
+  const debuffResponse = {
+    funcsToCall: [startCooldown, changeStat],
+    statToChange: 'sp',
+    effectName: skill.addEffect.effectName,
+    effects: skill.addEffect.effects,
+    amount: -(skill.generateSP),
+    skillName: skill.skillName,
+    skillCost: skill.cost,
+    generateSP: -(skill.generateSP),
+    emitType: 'skill',
+    skillTypes: skill.skillTypes,
+    enemy: props.combat.targets[0],
+    cooldownTimer: skill.cooldownTimer ? skill.cooldownTimer : undefined,
+    echoLog: {
+      from: {
+        friendly: props.username
+      },
+      interaction: skill.roomEcho,
+      target: {
+        enemy: props.combat.targets[0].short
+      },
+      punctuation: '.'
+    },
+    combatLog: {
+      from: {
+        friendly: 'You'
+      },
+      interaction: skill.playerEcho,
+      target: {
+        enemy: props.combat.targets[0].short
+      },
+      punctuation: '.'
+    }
+  };
+
   describe('If the user is not in combat', () => {
     describe('Using a damage skill', () => {
       it('should return feedback saying "You aren\'t in combat."', () => {
@@ -184,11 +220,33 @@ describe('skillHandler', () => {
       });
 
       describe('On the user', () => {
-        it('should return the effectResponse', () => {
-          expect(skillHandler(props.skills['infusion'], 'Dave', props)).toEqual({
-            ...effectResponse,
-            funcsToCall: [startCooldown, changeStat, addEffect]
+        describe('With the skill not already applied', () => {
+          it('should return the effectResponse', () => {
+            expect(skillHandler(props.skills['infusion'], 'Dave', props)).toEqual({
+              ...effectResponse,
+              funcsToCall: [startCooldown, changeStat, addEffect]
+            });
           });
+        });
+
+        describe('With a skill already applied', () => {
+          expect(skillHandler(props.skills['infusion'], 'Dave', {...props, effects: {death: false, infusion: {atk: 3, mat: 3, duration: 2}}}))
+          .toEqual(effectResponse);
+        });
+
+        describe('With a skill that doesn\'t have a duration', () => {
+          it('should not not call refreshDuration', () => {
+            expect(skillHandler(props.skills['infusion'], 'Dave', {...props, effects: {infusion: {atk: 3, mat: 3}}})).toEqual(effectResponse);
+          });
+        });
+      });
+    });
+
+    describe('Using a debuff skill', () => {
+      it('should respond that the user isn\'t in combat', () => {
+        expect(skillHandler(props.skills['hobble'], 'bat', {...props, combat: {active: false, targets: []}})).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You aren\'t in combat.'
         });
       });
     });
@@ -215,13 +273,30 @@ describe('skillHandler', () => {
         });
       });
     });
+
+    describe('Using a debuff', () => {
+      it('should return the debuffResponse', () => {
+        expect(skillHandler(props.skills['hobble'], undefined, props)).toEqual(debuffResponse);
+      });
+    });
   });
 
   describe('With args, but an enemy the user isn\'t fighting', () => {
-    it('should return feedback saying "You don\'t appear to be fighting that."', () => {
-      expect(skillHandler(props.skills['slash'], 'zombie', props)).toEqual({
-        funcsToCall: [newMessage],
-        feedback: 'You don\'t appear to be fighting that.'
+    describe('With a damage skill', () => {
+      it('should return feedback saying "You don\'t appear to be fighting that."', () => {
+        expect(skillHandler(props.skills['slash'], 'zombie', props)).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You don\'t appear to be fighting that.'
+        });
+      });
+    });
+
+    describe('With a debuff skill', () => {
+      it('should return feedback saying "You don\'t appear to be fighting that."', () => {
+        expect(skillHandler(props.skills['hobble'], 'zombie', props)).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You don\'t appear to be fighting that.'
+        });
       });
     });
   });
@@ -282,9 +357,34 @@ describe('skillHandler', () => {
     });
   });
 
+  describe('Debuffing a target', () => {
+    describe('Without enough resources', () => {
+      it('should return an error of not having MP', () => {
+        expect(skillHandler(props.skills['hobble'], undefined, {...props, mp: 0})).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You don\'t have enough MP to use that.'
+        });
+      });
+    });
+
+    describe('With everything being valid', () => {
+      describe('With no cooldown timer', () => {
+        it('should return the debuffResponse', () => {
+          expect(skillHandler(props.skills['hobble'], 'bat', props)).toEqual(debuffResponse);
+        });
+      });
+
+      describe('With a cooldown timer', () => {
+        it('should return the debuffResponse with a cooldown', () => {
+          expect(skillHandler({...props.skills['hobble'], cooldownTimer: 500}, undefined, props)).toEqual({...debuffResponse, cooldownTimer: 500});
+        });
+      });
+    });
+  });
+
   describe('Healing a target', () => {
     describe('Without enough resources', () => {
-      it('should return an error of not having enough SP', () => {
+      it('should return an error of not having enough MP', () => {
         expect(skillHandler(props.skills['heal'], undefined, {...props, mp: 0})).toEqual({
           funcsToCall: [newMessage],
           feedback: 'You don\'t have enough MP to use that.'

@@ -2,7 +2,7 @@
 
 import {newMessage} from '../actions/message-actions.js';
 import {enterCombat, slayEnemy, addEffect, escapeCombat} from '../actions/combat-actions.js';
-import {startCooldown, endCooldown, startGlobalCooldown, endGlobalCooldown} from '../actions/skill-actions.js';
+import {startCooldown, endCooldown, startGlobalCooldown, endGlobalCooldown, refreshDuration} from '../actions/skill-actions.js';
 import {changeStat} from '../actions/user-actions.js';
 import {loginEffects} from '../actions/login-actions.js';
 import combatProcessor from '../processors/combat-processor.js';
@@ -35,6 +35,9 @@ export default function combatHandlers(homeCtx) {
   });
   socket.on('addEffect', effectObj => {
     if (allSkills[effectObj.skillName].applyFunction) {
+      if (homeCtx.props.effects[effectObj.effectName] && homeCtx.props.effects[effectObj.effectName].duration) {
+        return props.dispatch(refreshDuration({effectName: effectObj.effectName, duration: effectObj.effects.duration}));
+      }
       allSkills[effectObj.skillName].applyFunction(props.dispatch);
       effectObj.expireFunction = allSkills[effectObj.skillName].expireFunction;
     }
