@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import {classSkills} from '../../app/data/class-skills.js';
 import {changeStat} from '../../app/actions/user-actions.js';
 
-const {clericSkills} = classSkills;
+const {clericSkills, warriorSkills} = classSkills;
 const dispatch = sinon.spy();
 
 describe('Cleric skills', () => {
@@ -31,6 +31,16 @@ describe('Cleric skills', () => {
     it('should call changeStat, changing maxHP by 10, as its expireFunction', () => {
       clericSkills['conviction'].expireFunction(dispatch);
       expect(dispatch.calledWith(changeStat({statToChange: 'maxHP', amount: 10}))).toEqual(true);
+    });
+  });
+});
+
+describe('Warrior skills', () => {
+  describe('Hobble', () => {
+    it('should change the target\'s atk by negative 2 as its applyFunction', () => {
+      const target = {atk: 5};
+      warriorSkills['hobble'].applyFunction(target);
+      expect(target.atk).toEqual(3);
     });
   });
 });
