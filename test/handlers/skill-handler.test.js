@@ -269,10 +269,21 @@ describe('skillHandler', () => {
   });
 
   describe('With args, but an enemy the user isn\'t fighting', () => {
-    it('should return feedback saying "You don\'t appear to be fighting that."', () => {
-      expect(skillHandler(props.skills['slash'], 'zombie', props)).toEqual({
-        funcsToCall: [newMessage],
-        feedback: 'You don\'t appear to be fighting that.'
+    describe('With a damage skill', () => {
+      it('should return feedback saying "You don\'t appear to be fighting that."', () => {
+        expect(skillHandler(props.skills['slash'], 'zombie', props)).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You don\'t appear to be fighting that.'
+        });
+      });
+    });
+
+    describe('With a debuff skill', () => {
+      it('should return feedback saying "You don\'t appear to be fighting that."', () => {
+        expect(skillHandler(props.skills['hobble'], 'zombie', props)).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You don\'t appear to be fighting that.'
+        });
       });
     });
   });
