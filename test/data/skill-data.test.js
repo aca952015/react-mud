@@ -42,5 +42,11 @@ describe('Warrior skills', () => {
       warriorSkills['hobble'].applyFunction(target);
       expect(target.atk).toEqual(3);
     });
+
+    it('should change the target\'s atk by positive 2 as its expireFunction', () => {
+      const target = {atk: 5};
+      warriorSkills['hobble'].expireFunction(target);
+      expect(target.atk).toEqual(7);
+    });
   });
 });
