@@ -149,6 +149,42 @@ describe('skillHandler', () => {
     }
   };
 
+  const skill = warriorSkills['hobble'];
+  const debuffResponse = {
+    funcsToCall: [startCooldown, changeStat],
+    statToChange: 'sp',
+    effectName: skill.addEffect.effectName,
+    effects: skill.addEffect.effects,
+    amount: -(skill.generateSP),
+    skillName: skill.skillName,
+    skillCost: skill.cost,
+    generateSP: -(skill.generateSP),
+    emitType: 'skill',
+    skillTypes: skill.skillTypes,
+    enemy: props.combat.targets[0],
+    cooldownTimer: skill.cooldownTimer ? skill.cooldownTimer : undefined,
+    echoLog: {
+      from: {
+        friendly: props.username
+      },
+      interaction: skill.roomEcho,
+      target: {
+        enemy: props.combat.targets[0].short
+      },
+      punctuation: '.'
+    },
+    combatLog: {
+      from: {
+        friendly: 'You'
+      },
+      interaction: skill.playerEcho,
+      target: {
+        enemy: props.combat.targets[0].short
+      },
+      punctuation: '.'
+    }
+  };
+
   describe('If the user is not in combat', () => {
     describe('Using a damage skill', () => {
       it('should return feedback saying "You aren\'t in combat."', () => {
@@ -192,6 +228,15 @@ describe('skillHandler', () => {
         });
       });
     });
+
+    describe('Using a debuff skill', () => {
+      it('should respond that the user isn\'t in combat', () => {
+        expect(skillHandler(props.skills['hobble'], 'bat', {...props, combat: {active: false, targets: []}})).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You aren\'t in combat.'
+        });
+      });
+    });
   });
 
   describe('Without arguments', () => {
@@ -213,6 +258,12 @@ describe('skillHandler', () => {
           ...effectResponse,
           funcsToCall: [startCooldown, changeStat, addEffect]
         });
+      });
+    });
+
+    describe('Using a debuff', () => {
+      it('should return the debuffResponse', () => {
+        expect(skillHandler(props.skills['hobble'], undefined, props)).toEqual(debuffResponse);
       });
     });
   });
