@@ -126,11 +126,13 @@ describe('combat client sockets', () => {
     });
 
     it('should not call applyFunction if there isn\'t one to call', done => {
+      const spy = sinon.spy(classSkills['clericSkills']['conviction'], 'applyFunction');
+
       player2.emit('skill', {
-        effectName: 'death',
+        effectName: 'someBuff',
         effects: 'none',
         funcsToCall: [],
-        skillTypes: ['effect', 'debuff'],
+        skillTypes: ['effect', 'buff'],
         skillCost: {stat: 'mp', value: 3},
         skillName: 'heal',
         enemy: 'player1',
@@ -139,7 +141,6 @@ describe('combat client sockets', () => {
       });
 
       player1.on('addEffect', () => {
-        const spy = sinon.spy(classSkills['clericSkills']['conviction'], 'applyFunction');
         expect(spy.called).toEqual(false);
         done();
       });
