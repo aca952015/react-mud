@@ -344,9 +344,20 @@ describe('skillHandler', () => {
     });
   });
 
+  describe('Debuffing a target', () => {
+    describe('Without enough resources', () => {
+      it('should return an error of not having MP', () => {
+        expect(skillHandler(props.skills['hobble'], undefined, {...props, mp: 0})).toEqual({
+          funcsToCall: [newMessage],
+          feedback: 'You don\'t have enough MP to use that.'
+        });
+      });
+    });
+  });
+
   describe('Healing a target', () => {
     describe('Without enough resources', () => {
-      it('should return an error of not having enough SP', () => {
+      it('should return an error of not having enough MP', () => {
         expect(skillHandler(props.skills['heal'], undefined, {...props, mp: 0})).toEqual({
           funcsToCall: [newMessage],
           feedback: 'You don\'t have enough MP to use that.'
