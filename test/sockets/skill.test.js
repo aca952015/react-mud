@@ -82,6 +82,81 @@ describe('skill', () => {
       });
     });
 
+    describe('With a debuff skill', () => {
+      describe('With an enemy not already affected', () => {
+        it('should apply the skill', done => {
+          player1.emit('kill', {target: 'zombie'});
+          player1.on('enterCombat', res => {
+            target = res;
+            player1.emit('skill', {
+              enemy: target,
+              effectName: 'hobble',
+              effects: {atk: -2, duration: 3},
+              skillName: 'hobble',
+              funcsToCall: [startCooldown],
+              skillCost: {
+                stat: 'mp',
+                value: 3
+              },
+              skillTypes: ['effect', 'debuff'],
+              echoLog: {},
+              combatLog: {}
+            });
+
+            player1.on('generalMessage', res => {
+              expect(res.combatLog).toEqual({});
+              done();
+            });
+          });
+        });
+      });
+
+      describe('With an enemy already affected by a skill with a duration', () => {
+        it('should refresh the duration', done => {
+          player1.emit('kill', {target: 'zombie'});
+          player1.on('enterCombat', res => {
+            target = res;
+            player1.emit('skill', {
+              enemy: target,
+              effectName: 'hobble',
+              effects: {atk: -2},
+              skillName: 'hobble',
+              funcsToCall: [startCooldown],
+              skillCost: {
+                stat: 'mp',
+                value: 3
+              },
+              skillTypes: ['effect', 'debuff'],
+              echoLog: {},
+              combatLog: {}
+            });
+
+            player1.on('generalMessage', () => {
+              player1.emit('skill', {
+                enemy: target,
+                effectName: 'hobble',
+                effects: {atk: -2},
+                skillName: 'hobble',
+                funcsToCall: [startCooldown],
+                skillCost: {
+                  stat: 'mp',
+                  value: 3
+                },
+                skillTypes: ['effect', 'debuff'],
+                echoLog: {},
+                combatLog: {}
+              });
+
+              player1.on('generalMessage', res => {
+                expect(res.combatLog).toEqual({});
+                done();
+              });
+            });
+          });
+        });
+      });
+    });
+
     describe('With a damage skill', () => {
       describe('Still alive after the skill', () => {
         it('should emit to the room a generalMessage with a combatLog', done => {
@@ -122,21 +197,42 @@ describe('skill', () => {
     });
 
     describe('With a target already dead', () => {
-      it('should return a slayEnemy event', done => {
-        player1.emit('skill', {
-          enemy: target,
-          skillCost: {
-            stat: 'mp',
-            value: 4
-          },
-          funcsToCall: [],
-          skillTypes: ['damage', 'physical'],
-          damage: 20,
-          echoLog: {}
+      describe('With a damage skill', () => {
+        it('should return a slayEnemy event', done => {
+          player1.emit('skill', {
+            enemy: target,
+            skillCost: {
+              stat: 'mp',
+              value: 4
+            },
+            funcsToCall: [],
+            skillTypes: ['damage', 'physical'],
+            damage: 20,
+            echoLog: {}
+          });
+          player1.on('slayEnemy', res => {
+            expect(res).toEqual(target);
+            done();
+          });
         });
-        player1.on('slayEnemy', res => {
-          expect(res).toEqual(target);
-          done();
+      });
+
+      describe('With a debuff skill', () => {
+        it('should return a slayEnemy event', done => {
+          player1.emit('skill', {
+            enemy: target,
+            skillCost: {
+              stat: 'mp',
+              value: 4
+            },
+            funcsToCall: [],
+            skillTypes: ['effect', 'debuff'],
+            echoLog: {}
+          });
+          player1.on('slayEnemy', res => {
+            expect(res).toEqual(target);
+            done();
+          });
         });
       });
     });
