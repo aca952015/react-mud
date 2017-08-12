@@ -220,10 +220,23 @@ describe('skillHandler', () => {
       });
 
       describe('On the user', () => {
-        it('should return the effectResponse', () => {
-          expect(skillHandler(props.skills['infusion'], 'Dave', props)).toEqual({
-            ...effectResponse,
-            funcsToCall: [startCooldown, changeStat, addEffect]
+        describe('With the skill not already applied', () => {
+          it('should return the effectResponse', () => {
+            expect(skillHandler(props.skills['infusion'], 'Dave', props)).toEqual({
+              ...effectResponse,
+              funcsToCall: [startCooldown, changeStat, addEffect]
+            });
+          });
+        });
+
+        describe('With a skill already applied', () => {
+          expect(skillHandler(props.skills['infusion'], 'Dave', {...props, effects: {death: false, infusion: {atk: 3, mat: 3, duration: 2}}}))
+          .toEqual(effectResponse);
+        });
+
+        describe('With a skill that doesn\'t have a duration', () => {
+          it('should not not call refreshDuration', () => {
+            expect(skillHandler(props.skills['infusion'], 'Dave', {...props, effects: {infusion: {atk: 3, mat: 3}}})).toEqual(effectResponse);
           });
         });
       });
