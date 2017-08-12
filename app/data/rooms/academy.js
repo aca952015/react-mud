@@ -58,7 +58,7 @@ export const academy = {
         locked: false
       }
     },
-    items: [],
+    items: [newItem('doodads', 'combat training directions')],
     mobs: [],
     itemResetTimer: 0,
     mobResetTimer: 0
