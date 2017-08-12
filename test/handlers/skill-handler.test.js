@@ -355,8 +355,16 @@ describe('skillHandler', () => {
     });
 
     describe('With everything being valid', () => {
-      it('should return the debuffResponse', () => {
-        expect(skillHandler(props.skills['hobble'], 'bat', props)).toEqual(debuffResponse);
+      describe('With no cooldown timer', () => {
+        it('should return the debuffResponse', () => {
+          expect(skillHandler(props.skills['hobble'], 'bat', props)).toEqual(debuffResponse);
+        });
+      });
+
+      describe('With a cooldown timer', () => {
+        it('should return the debuffResponse with a cooldown', () => {
+          expect(skillHandler({...props.skills['hobble'], cooldownTimer: 500}, undefined, props)).toEqual({...debuffResponse, cooldownTimer: 500});
+        });
       });
     });
   });
