@@ -39,7 +39,7 @@ export const academy = {
   },
   'Combat Training Hall': {
     roomName: 'Combat Training Hall',
-    desc: 'The combat hall.',
+    desc: 'A statue of an armored warrior stands in the center of an open space that branches out in all directions. The statue has a shield held prominently in front of it, with a sword drawn back, frozen in a perpetually ready state for combat. To the east, a hallway runs back to the academy foyer. The other exits are all made up of strong wooden doors, with two iron strips running across each. Set into the floor is a cellar door with an O-ring on it. A quiet, steady, muffled hum pervades the room.',
     exits: {
       east: {
         exit: 'Academy Foyer',
@@ -47,6 +47,20 @@ export const academy = {
       },
       north: {
         exit: 'Skill Room',
+        locked: false
+      },
+      west: {
+        exit: 'Combat Basics',
+        locked: false
+      }
+    }
+  },
+  'Combat Basics': {
+    roomName: 'Combat Basics',
+    desc: 'A room to train users how to use the kill command.',
+    exits: {
+      east: {
+        exit: 'Combat Training Hall',
         locked: false
       }
     }
