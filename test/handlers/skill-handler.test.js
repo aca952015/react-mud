@@ -353,6 +353,12 @@ describe('skillHandler', () => {
         });
       });
     });
+
+    describe('With everything being valid', () => {
+      it('should return the debuffResponse', () => {
+        expect(skillHandler(props.skills['hobble'], 'bat', props)).toEqual(debuffResponse);
+      });
+    });
   });
 
   describe('Healing a target', () => {
