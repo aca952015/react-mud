@@ -8,7 +8,7 @@ import newMob from '../../app/data/mobs.js';
 import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 import {newMessage} from '../../app/actions/message-actions.js';
-import {startCooldown, startGlobalCooldown} from '../../app/actions/skill-actions.js';
+import {startCooldown, startGlobalCooldown, refreshDuration} from '../../app/actions/skill-actions.js';
 import {enterCombat, slayEnemy, escapeCombat, addEffect} from '../../app/actions/combat-actions.js';
 import {changeStat} from '../../app/actions/user-actions.js';
 import {loginEffects} from '../../app/actions/login-actions.js';
@@ -28,7 +28,11 @@ describe('combat client sockets', () => {
       active: true,
       targets: [{id: 1, target: 'Some test thing'}]
     },
-    effects: {}
+    effects: {
+      'infusion': {
+        duration: 3
+      }
+    }
   };
 
   beforeEach(done => {
@@ -106,7 +110,8 @@ describe('combat client sockets', () => {
     it('should call props.dispatch with an addEffect of the payload', done => {
       player2.emit('skill', {
         effectName: 'test',
-        effects: 'none',
+        duration: 2,
+        effects: {duration: 2},
         skillTypes: ['effect', 'buff'],
         skillCost: {'stat': 'mp', value: 3},
         skillName: 'conviction',
@@ -142,6 +147,25 @@ describe('combat client sockets', () => {
 
       player1.on('addEffect', () => {
         expect(spy.called).toEqual(false);
+        done();
+      });
+    });
+
+    it('should call refreshDuration if the effect already exists', done => {
+      player2.emit('skill', {
+        effectName: 'infusion',
+        effects: {duration: 2},
+        funcsToCall: [],
+        skillTypes: ['effect', 'buff'],
+        skillCost: {stat: 'mp', value: 3},
+        skillName: 'infusion',
+        enemy: 'player1',
+        echoLog: {target: {friendly: 'player1'}},
+        combatLog: {target: {friendly: 'player1'}}
+      });
+
+      player1.on('addEffect', () => {
+        expect(props.dispatch.calledWith(refreshDuration({effectName: 'infusion', duration: 2}))).toEqual(true);
         done();
       });
     });
