@@ -43,7 +43,7 @@ export const academy = {
   },
   'Combat Training Hall': {
     roomName: 'Combat Training Hall',
-    desc: 'A statue of an armored warrior stands in the center of an open space that branches out in all directions. The statue has a shield held prominently in front of it, with a sword drawn back, frozen in a perpetually ready state for combat. To the east, a hallway runs back to the academy foyer. The other exits are all made up of strong wooden doors, with two iron strips running across each. Set into the floor is a cellar door with an O-ring on it. A quiet, steady, muffled hum pervades the room.',
+    desc: 'A statue of an armored warrior stands in the center of an open space that branches out in all directions. The statue has a shield held prominently in front of it, with a sword drawn back, frozen in a perpetually ready state for combat. To the east, a hallway runs back to the academy foyer. The other exits are all made up of strong wooden doors, with two iron strips running across each. Set into the floor is a cellar door with a ring pull on it. A quiet, steady, muffled hum pervades the room.',
     exits: {
       east: {
         exit: 'Academy Foyer',
@@ -65,10 +65,28 @@ export const academy = {
   },
   'Combat Basics': {
     roomName: 'Combat Basics',
-    desc: 'A room to train users how to use the kill command.',
+    desc: 'A steady, low-level hum reverberates around this stone room, its source indeterminable. There\'s a slightly electric, tingling sensation in the air, along with the faint scent of ozone. A few faded bloodstains have been painted against the floor and the patchwork of stones. To the East, an archway leads back out into the central combat training hall, while another archway leads to a room similar to this one to the North.',
     exits: {
       east: {
         exit: 'Combat Training Hall',
+        locked: false
+      },
+      north: {
+        exit: 'Room of Animation',
+        locked: false
+      }
+    },
+    items: [newItem('doodads', 'combat basics sign')],
+    mobs: [newMob('animated dummy')],
+    itemResetTimer: 0,
+    mobResetTimer: 0
+  },
+  'Room of Animation': {
+    roomName: 'Room of Animation',
+    desc: 'Many animated dummies',
+    exits: {
+      south: {
+        exit: 'Combat Basics',
         locked: false
       }
     },
