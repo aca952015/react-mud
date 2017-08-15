@@ -91,7 +91,7 @@ export const academy = {
       }
     },
     items: [],
-    mobs: [],
+    mobs: [newMob('animated dummy'), newMob('animated dummy'), newMob('animated dummy'), newMob('animated dummy')],
     itemResetTimer: 0,
     mobResetTimer: 0
   },
