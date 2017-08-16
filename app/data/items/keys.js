@@ -11,6 +11,16 @@ export const keys = {
     drink: null,
     description: 'This is a placeholder description for a gallows key.'
   },
+  'academy key': {
+    name: 'academy key',
+    short: 'the academy key',
+    type: 'items',
+    long: 'A key for unlocking the get from container room lies here.',
+    terms: ['key'],
+    category: 'keys',
+    drink: null,
+    description: 'This is a placeholder description for the academy key.'
+  },
   'secret key': {
     name: 'secret key',
     short: 'THE SECRET KEY',
