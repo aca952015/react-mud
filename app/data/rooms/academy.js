@@ -116,6 +116,10 @@ export const academy = {
       west: {
         exit: 'Academy Foyer',
         locked: false
+      },
+      east: {
+        exit: 'Get Room',
+        locked: false
       }
     },
     items: [],
@@ -123,4 +127,18 @@ export const academy = {
     itemResetTimer: 0,
     mobResetTimer: 0
   },
+  'Get Room': {
+    roomName: 'Get Room',
+    desc: 'The room where players learn how to get items.',
+    exits: {
+      west: {
+        exit: 'Movement Training Hall',
+        locked: false
+      }
+    },
+    items: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0
+  }
 };
