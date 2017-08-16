@@ -141,7 +141,7 @@ export const academy = {
         requiredKey: itemData['keys']['academy key']
       }
     },
-    items: [],
+    items: [newItem('keys', 'academy key')],
     mobs: [],
     itemResetTimer: 0,
     mobResetTimer: 0
