@@ -1,6 +1,6 @@
 'use strict';
 
-import newItem from '../items.js';
+import newItem, {itemData} from '../items.js';
 import newMob from '../mobs.js';
 
 export const academy = {
@@ -134,6 +134,26 @@ export const academy = {
       west: {
         exit: 'Movement Training Hall',
         locked: false
+      },
+      north: {
+        exit: 'Get From Container Room',
+        locked: true,
+        requiredKey: itemData['keys']['academy key']
+      }
+    },
+    items: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0
+  },
+  'Get From Container Room': {
+    roomName: 'Get From Container Room',
+    desc: 'The room where players learn how to get from containers.',
+    exits: {
+      south: {
+        exit: 'Get Room',
+        locked: true,
+        requiredKey: itemData['keys']['academy key']
       }
     },
     items: [],
