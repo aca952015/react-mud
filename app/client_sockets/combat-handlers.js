@@ -8,6 +8,8 @@ import {loginEffects} from '../actions/login-actions.js';
 import combatProcessor from '../processors/combat-processor.js';
 import {classSkills} from '../data/class-skills.js';
 
+// Because functions can't be transmitted via JSON (necessary for sockets), we need reference
+// to them again here.
 const allSkills = {
   ...classSkills['warriorSkills'],
   ...classSkills['clericSkills']
@@ -34,13 +36,14 @@ export default function combatHandlers(homeCtx) {
     props.dispatch(enterCombat(target));
   });
   socket.on('addEffect', effectObj => {
-    if (allSkills[effectObj.skillName].applyFunction) {
-      if (homeCtx.props.effects[effectObj.effectName] && homeCtx.props.effects[effectObj.effectName].duration) {
-        return props.dispatch(refreshDuration({effectName: effectObj.effectName, duration: effectObj.effects.duration}));
-      }
-      allSkills[effectObj.skillName].applyFunction(props.dispatch);
-      effectObj.expireFunction = allSkills[effectObj.skillName].expireFunction;
+    // If the user already has the effect (and it has a duration), refresh the duration
+    if (homeCtx.props.effects[effectObj.effectName] && homeCtx.props.effects[effectObj.effectName].duration) {
+      return props.dispatch(refreshDuration({effectName: effectObj.effectName, duration: effectObj.effects.duration}));
     }
+    // Otherwise, apply the effects of the skill's applyFunction and set the expireFunction
+    // for a future callback.
+    allSkills[effectObj.skillName].applyFunction(props.dispatch);
+    effectObj.expireFunction = allSkills[effectObj.skillName].expireFunction;
     props.dispatch(addEffect(effectObj));
   });
   socket.on('damage', dmgObj => {
@@ -48,6 +51,8 @@ export default function combatHandlers(homeCtx) {
       statToChange: 'hp',
       amount: dmgObj.damage
     }));
+
+    // Sometimes the user can take damage from sources other than an enemy
     if (dmgObj.enemy) {
       props.dispatch(newMessage({
         combatLog: {
@@ -86,12 +91,19 @@ export default function combatHandlers(homeCtx) {
       }));
       combatProcessor(socket, homeCtx.props);
     }
+    // If the user is not in combat and has SP, it needs to decay on each combat tick.
     if (!homeCtx.props.combat.active && homeCtx.props.sp > 0) props.dispatch(changeStat({
       statToChange: 'sp',
       amount: 4
     }));
   });
   socket.on('startCooldown', skill => {
+    // Skills need to deduct the cost from the user's stats, but also increase their SP.
+    // e.g., a skill costs 4 MP, but also provides 5 SP upon use. These need to be
+    // separate calls, so they are both dispatched here.
+    // The reason this logic is handled here is because the socket only receives a startCooldown
+    // event if the server needed to check for a target first. Otherwise this logic would happen
+    // as part of the commandHandler process on the command-input container.
     props.dispatch(changeStat({
       statToChange: skill.statToDeduct,
       amount: skill.deductAmount

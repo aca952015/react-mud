@@ -130,27 +130,6 @@ describe('combat client sockets', () => {
       });
     });
 
-    it('should not call applyFunction if there isn\'t one to call', done => {
-      const spy = sinon.spy(classSkills['clericSkills']['conviction'], 'applyFunction');
-
-      player2.emit('skill', {
-        effectName: 'someBuff',
-        effects: 'none',
-        funcsToCall: [],
-        skillTypes: ['effect', 'buff'],
-        skillCost: {stat: 'mp', value: 3},
-        skillName: 'heal',
-        enemy: 'player1',
-        echoLog: {target: {friendly: 'player1'}},
-        combatLog: {target: {friendly: 'player1'}}
-      });
-
-      player1.on('addEffect', () => {
-        expect(spy.called).toEqual(false);
-        done();
-      });
-    });
-
     it('should call refreshDuration if the effect already exists', done => {
       player2.emit('skill', {
         effectName: 'infusion',
