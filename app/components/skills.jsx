@@ -4,9 +4,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const Skills = props => {
-  // Create a hash map with keys of levels and values of arrays of all skills for that level
-  const skillsSortedByLevel = Object.values(props.skills).reduce((acc, skill, i, arr) => {
-    if (!acc[skill.level] && skill.level > 0) acc[skill.level] = arr.filter(skillObj => skillObj.level === skill.level);
+  const skillsSortedByLevel = Object.values(props.skills).reduce((acc, skill) => {
+    if (!acc[skill.level] && skill.level > 0) acc[skill.level] = [skill];
+    else acc[skill.level].push(skill);
     return acc;
   }, {});
 
