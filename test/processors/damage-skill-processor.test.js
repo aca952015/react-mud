@@ -11,7 +11,7 @@ import {changeStat} from '../../app/actions/user-actions.js';
 import newMob from '../../app/data/mobs.js';
 import newItem from '../../app/data/items.js';
 
-describe('skillHandler', () => {
+describe('skillHandler with a damage skill', () => {
   const props = {
     skills: {
       ...warriorSkills,
