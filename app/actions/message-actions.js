@@ -7,16 +7,16 @@ export function newMessage(message) {
   };
 }
 
-export function updateInput(value) {
+export function updateCommandIndex(value) {
   return {
-    type: 'UPDATE_INPUT',
+    type: 'UPDATE_COMMAND_INDEX',
     payload: value
   };
 }
 
-export function updateCommandIndex(value) {
+export function updateInput(value) {
   return {
-    type: 'UPDATE_COMMAND_INDEX',
+    type: 'UPDATE_INPUT',
     payload: value
   };
 }
