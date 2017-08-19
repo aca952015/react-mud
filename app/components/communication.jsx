@@ -22,14 +22,14 @@ export const Communication = props => {
   return <p className="communication">
     <span className="source">{theFrom}</span>
     <span className="comm-type">{props.message.commType}</span>
-    {props.message.target ? <span>
+    {props.message.target && <span>
       <span className="source">{props.message.target}</span>
       {thirdParty ? <span className="comm-type">.</span> : <span className="comm-type">, </span>}
-    </span> : null}
-    {selfWhisper ? null : <span>
-      <span className="comm-type">{thirdParty ? null : quotes}</span>
+    </span>}
+    {!selfWhisper && <span>
+      <span className="comm-type">{!thirdParty && quotes}</span>
       <span>{props.message.text}</span>
-      <span className="comm-type">{thirdParty ? null : quotes}</span>
+      <span className="comm-type">{!thirdParty && quotes}</span>
     </span>}
   </p>;
 };
