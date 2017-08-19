@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 export const Feedback = props => {
   // If there's a target, check if it's you. If so, replace the name with "you".
-  let target = props.message.target ?
+  const target = props.message.target ?
                props.message.target.toLowerCase() === props.username.toLowerCase() ? 'you' : props.message.target
                : null;
 
