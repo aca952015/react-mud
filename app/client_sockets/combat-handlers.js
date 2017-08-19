@@ -16,8 +16,8 @@ const allSkills = {
 };
 
 export default function combatHandlers(homeCtx) {
-  let socket = homeCtx.socket;
-  let props = homeCtx.props;
+  const socket = homeCtx.socket;
+  const props = homeCtx.props;
 
   socket.on('enterCombat', target => {
     if (homeCtx.props.combat.targets.find(mob => mob.id === target.id)) return props.dispatch(newMessage({feedback: `You're already fighting ${target.short}!`}));
@@ -52,7 +52,7 @@ export default function combatHandlers(homeCtx) {
       amount: dmgObj.damage
     }));
 
-    // Sometimes the user can take damage from sources other than an enemy
+    // Sometimes the user can take damage from sources other than an enemy.
     if (dmgObj.enemy) {
       props.dispatch(newMessage({
         combatLog: {
