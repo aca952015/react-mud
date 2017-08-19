@@ -7,7 +7,7 @@ export const CombatLog = props => {
   const combatLog = props.message.combatLog;
   const friendlyTarget = combatLog.target.friendly;
   if (friendlyTarget  && friendlyTarget.toLowerCase() === props.username.toLowerCase()) combatLog.target.friendly = 'you';
-  let damageHighlightClass = combatLog.target.friendly && combatLog.from.friendly ? 'healing' : 'damage';
+  const damageHighlightClass = combatLog.target.friendly && combatLog.from.friendly ? 'healing' : 'damage';
 
   return <div className="combat-log">
     <p>
