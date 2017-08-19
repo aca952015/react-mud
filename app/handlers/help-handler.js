@@ -7,9 +7,9 @@ export default function helpHandler(command, args) {
   let helpObj, feedback = '';
   if (!args) helpObj = helpFile['help'];
   if (args) {
-    let regEx = new RegExp(`^${args}`, 'i');
-    let helpTopics = Object.keys(helpFile);
-    let targetedTopic = helpTopics.find(topic => topic.match(regEx));
+    const regEx = new RegExp(`^${args}`, 'i');
+    const helpTopics = Object.keys(helpFile);
+    const targetedTopic = helpTopics.find(topic => topic.match(regEx));
     helpObj = helpFile[targetedTopic];
   }
 
