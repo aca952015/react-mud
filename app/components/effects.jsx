@@ -6,6 +6,9 @@ import PropTypes from 'prop-types';
 export const Effects = props => {
   const ignoreProperties = ['duration', 'expirationMessage', 'expireFunction', 'applyFunction'];
 
+  // effectBlocks will ultimately be a table-like structure to show current effects, remaining ticks,
+  // and what stats are affected by that effect. allEffects is used to create each effect block that
+  // gets stored in the effectBlocks array.
   const effectBlocks = Object.keys(props.effects).map((effectName, i) => {
     const allEffects = Object.keys(props.effects[effectName]).reduce((acc, effectStat, j) => {
       if (!ignoreProperties.includes(effectStat)) {
