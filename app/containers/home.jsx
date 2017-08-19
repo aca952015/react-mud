@@ -42,7 +42,7 @@ export class Home extends Component {
   }
   componentDidMount() {
     this.socket = io('/');
-    socketHandlers(this); // There are a lot of socket listeners, so they are handled in their own file.
+    socketHandlers(this);
 
     // Upon closing the tab, remove user from combat with all mobs, save the character on the server's
     // database, then emit a disconnect event for the server to handle.
