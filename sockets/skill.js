@@ -58,7 +58,7 @@ export default function skill(socket, roomData, mobsInCombat, alteredRooms, user
       statToDeduct: skillObj.skillCost.stat,
       deductAmount: skillObj.skillCost.value,
       statToChange: 'sp',
-      amount: skillObj.generateSP
+      amount: skillObj.amount
     });
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {combatLog: skillObj.echoLog});
     if (skillObj.skillTypes.includes('healing')) return target.emit('damage', {damage: skillObj.damage});

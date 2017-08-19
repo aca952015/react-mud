@@ -37,7 +37,6 @@ describe('skillHandler with a debuff skill', () => {
     amount: -(skill.generateSP),
     skillName: skill.skillName,
     skillCost: skill.cost,
-    generateSP: -(skill.generateSP),
     emitType: 'skill',
     skillTypes: skill.skillTypes,
     enemy: props.combat.targets[0],

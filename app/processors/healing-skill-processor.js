@@ -29,7 +29,6 @@ export default function healingSkillProcessor(skill, args, props) {
     amount: -(skill.generateSP),
     skillName: skill.skillName,
     skillCost: skill.cost,
-    generateSP: -(skill.generateSP),
     emitType: 'skill',
     skillTypes: skill.skillTypes,
     damage,

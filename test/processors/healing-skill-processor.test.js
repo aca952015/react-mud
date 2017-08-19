@@ -42,7 +42,6 @@ describe('skillHandler', () => {
     },
     statToChange: 'sp',
     amount: -3,
-    generateSP: -3,
     skillTypes: props.skills.heal.skillTypes,
     damage: -3,
     cooldownTimer: undefined,

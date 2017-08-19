@@ -44,7 +44,6 @@ describe('skillHandler', () => {
     applyFunction: clericSkills['infusion'].applyFunction,
     expireFunction: clericSkills['infusion'].expireFunction,
     skillCost: {stat: 'mp', value: 3},
-    generateSP: -(3),
     emitType: 'skill',
     skillTypes: ['effect', 'buff'],
     enemy: props.username,
