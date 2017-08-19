@@ -8,13 +8,14 @@ export const Communication = props => {
   // If the user is a third party to a whisper, they do not need a comma and quotes.
   // If the message is a say and the user is saying, set theFrom to be 'You '.
   // Give quotes a variable because the editor highlights strangely otherwise.
-  let selfWhisper = props.message.commType === ' whispers something quietly.';
-  let thirdParty = props.message.commType === ' whispers something to ';
+  const selfWhisper = props.message.commType === ' whispers something quietly.';
+  const thirdParty = props.message.commType === ' whispers something to ';
+
   let ghostCheck = props.message.from.split('The ghost of ')[1];
   if (ghostCheck) ghostCheck = ghostCheck.toLowerCase() === props.username.toLowerCase();
-  let theFrom = props.message.from.toLowerCase() === props.username.toLowerCase() || ghostCheck ? 'You' : props.message.from;
 
-  let quotes = '"';
+  const theFrom = props.message.from.toLowerCase() === props.username.toLowerCase() || ghostCheck ? 'You' : props.message.from;
+  const quotes = '"';
 
   // If there's a target, show it. Use the above variables to decide on correct grammar.
   // If quotes are necessary, based on the above variables, insert them.
