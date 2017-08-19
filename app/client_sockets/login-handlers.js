@@ -6,8 +6,8 @@ import {newMessage} from '../actions/message-actions.js';
 import {changeRoom} from '../actions/move-actions.js';
 
 export default function loginHandlers(homeCtx) {
-  let socket = homeCtx.socket;
-  let props = homeCtx.props;
+  const socket = homeCtx.socket;
+  const props = homeCtx.props;
   // On initially connecting, send the user to the Login Room, then give them some
   // default user data and equipment to prevent errors.
   socket.on('initialConnect', char => {
