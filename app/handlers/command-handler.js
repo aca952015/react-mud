@@ -18,50 +18,13 @@ import loginHandler from './login-handler.js';
 import quitHandler from './quit-handler.js';
 import skillHandler from './skill-handler.js';
 import skillAndTargetsProcessor from '../processors/skill-and-targets-processor.js';
+import {commandShorthand} from '../data/command-shorthand.js';
+import {deathFunctions} from '../data/death-functions.js';
 import {newMessage} from '../actions/message-actions.js';
 
 export default function commandHandler(command, args, props) {
   // Disable commands other than "new" and character name if logging in
   if (props.currentRoom === 'Login Room') return loginHandler(command, args, props);
-
-  const commandShorthand = {
-    'e': 'east',
-    'w': 'west',
-    'n': 'north',
-    's': 'south',
-    'd': 'down',
-    'u': 'up',
-    'l': 'look',
-    'i': 'inventory',
-    'inv': 'inventory',
-    'ex': 'examine',
-    'eq': 'equipment',
-    'rm': 'remove',
-    'desc': 'description',
-    'eff': 'effects'
-  };
-
-  const deathFunctions = [
-    'say',
-    'whisper',
-    'east',
-    'north',
-    'west',
-    'south',
-    'up',
-    'down',
-    'look',
-    'who',
-    'help',
-    'inventory',
-    'examine',
-    'equipment',
-    'description',
-    'resurrect',
-    'quit',
-    'skills',
-    'effects'
-  ];
 
   const helperFunctions = {
     'say': communicationHandler,
