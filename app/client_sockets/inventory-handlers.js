@@ -3,8 +3,8 @@
 import {dropItem, getItem, dropAll, getAll} from '../actions/inventory-actions.js';
 
 export default function inventoryHandlers(homeCtx) {
-  let socket = homeCtx.socket;
-  let props = homeCtx.props;
+  const socket = homeCtx.socket;
+  const props = homeCtx.props;
 
   socket.on('forceDrop', item => props.dispatch(dropItem({item})));
   socket.on('forceGet', item => props.dispatch(getItem(item)));
