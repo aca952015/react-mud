@@ -8,7 +8,7 @@ export default function termsProcessor(searchArray, split) {
   // is targeting the leather helm. If the user has 2 leather helms, GET 2.HE would be recognized
   // as the second leather helm.
   let foundStuff;
-  let regEx = split.length > 1 ? new RegExp(`^${split[1]}`, 'i') : new RegExp(`^${split[0]}`, 'i');
+  const regEx = split.length > 1 ? new RegExp(`^${split[1]}`, 'i') : new RegExp(`^${split[0]}`, 'i');
 
   if (split.length > 1) {
     foundStuff = searchArray.filter(item => {
