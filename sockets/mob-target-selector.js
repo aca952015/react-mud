@@ -24,7 +24,8 @@ export default function mobTargetSelector(mobsInCombat, users) {
       enemy: mobsInCombat[i],
       damage
     });
-    let mob = mobsInCombat[i];
+    
+    const mob = mobsInCombat[i];
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
       combatLog: {
         from: {
