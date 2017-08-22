@@ -1,18 +1,18 @@
 'use strict';
 
 export default function reducer(state={}, action) {
-  if (action.type === 'LOGIN_EQUIPMENT') return action.payload;
-  if (action.type === 'WEAR_EQUIPMENT') {
-    // Since we can't use rest spread operators to directly reference a variable
-    // property, we create a copy and reference it that way.
-    let newState = {...state};
-    newState[action.payload.slot] = action.payload;
-    return newState;
+  switch(action.type) {
+    case 'LOGIN_EQUIPMENT': return action.payload;
+    case 'REMOVE_ITEM': {
+      const newState = {...state};
+      newState[action.payload.slot] = null;
+      return newState;
+    }
+    case 'WEAR_EQUIPMENT': {
+      const newState = {...state};
+      newState[action.payload.slot] = action.payload;
+      return newState;
+    }
+    default: return state;
   }
-  if (action.type === 'REMOVE_ITEM') {
-    let newState = {...state};
-    newState[action.payload.slot] = null;
-    return newState;
-  }
-  return {...state};
 }
