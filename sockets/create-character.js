@@ -20,14 +20,13 @@ export default function createCharacter(socket) {
       ...user,
       username: character.newUsername
     };
-    const loginEquipment = equipment;
 
     const char = new Character(tempCharacter);
     char.hashPassword(password)
     .then(_char => _char.save())
     .then(_char => {
       socket.emit('generalMessage', {feedback: 'Character created.'});
-      socket.emit('loginSuccessful', {loginUser: {...loginUser, _id: _char._id}, loginEquipment, effects: tempCharacter.effects});
+      socket.emit('loginSuccessful', {loginUser: {...loginUser, _id: _char._id}, loginEquipment: equipment, effects: tempCharacter.effects});
     })
     .catch(err => socket.emit('generalMessage', {feedback: err}));
   });
