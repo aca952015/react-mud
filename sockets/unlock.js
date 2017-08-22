@@ -32,7 +32,7 @@ export default function unlock(socket, roomData) {
     const oppositeExit = targetExits[opposites[keyInfo.direction]];
     oppositeExit.locked = !oppositeExit.locked;
 
-    const action = oppositeExit.locked ? 'unlock' : 'lock';
+    const action = oppositeExit.locked ? 'lock' : 'unlock';
 
     socket.emit('generalMessage', {feedback: `You ${action} the door ${lockDirections[keyInfo.direction]}.`});
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} ${action}s the door ${lockDirections[keyInfo.direction]}.`});
