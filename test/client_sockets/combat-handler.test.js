@@ -12,7 +12,6 @@ import {startCooldown, startGlobalCooldown, refreshDuration} from '../../app/act
 import {enterCombat, slayEnemy, escapeCombat, addEffect} from '../../app/actions/combat-actions.js';
 import {changeStat} from '../../app/actions/user-actions.js';
 import {loginEffects} from '../../app/actions/login-actions.js';
-import {classSkills} from '../../app/data/class-skills.js';
 
 describe('combat client sockets', () => {
   let player1, player2, url = 'http://0.0.0.0:5000';
