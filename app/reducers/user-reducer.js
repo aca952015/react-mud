@@ -9,36 +9,39 @@ import slayEnemy from './lib/user_reducer/slay-enemy.js';
 import tickRegen from './lib/user_reducer/tick-regen.js';
 
 export default function reducer(state={}, action) {
-  if (action.type === 'ADD_DESCRIPTION_PARAGRAPH') {
-    let description = state.description[0] === 'No description set.' ? [action.payload] : [...state.description, action.payload];
-    return {...state, description};
+  switch(action.type) {
+    case 'ADD_DESCRIPTION_PARAGRAPH': {
+      const description = state.description[0] === 'No description set.' ? [action.payload] : [...state.description, action.payload];
+      return {...state, description};
+    }
+    case 'ADD_TO_CONTAINER': return addToContainer(state, action);
+    case 'CHANGE_ROOM': return {...state, currentRoom: action.payload};
+    case 'CHANGE_STAT': return changeStat(state, action);
+    case 'CLEAR_DESCRIPTION': return {...state, description: ['No description set.']};
+    case 'DROP_ALL': return {...state, inventory: []};
+    case 'DROP_ITEM': return dropItem(state, action);
+    case 'ENTER_COMBAT': return {...state, combat: {active: true, targets: [...state.combat.targets, action.payload]}};
+    case 'ESCAPE_COMBAT': return {...state, combat: {active: false, targets: []}};
+    case 'FULL_RESTORE': return {...state, hp: state.maxHP, mp: state.maxMP};
+    case 'GET_ALL': return getAll(state, action);
+    case 'GET_FROM_CONTAINER': return getFromContainer(state, action);
+    case 'GET_ITEM': return {...state, inventory: [...state.inventory, action.payload]};
+    case 'LOGIN_USER': return action.payload;
+    case 'PUT_ALL': {
+      // The container's contents must be updated via concatenation and creating a copy so as to
+      // not mutate state using push.
+      const newContainer = action.payload.container;
+      newContainer.container.contains = newContainer.container.contains.concat(action.payload.itemArray);
+      return {...state, inventory: [newContainer]};
+    }
+    case 'QUIETLY_ADD_ITEM': return {...state, inventory: [...state.inventory, action.payload]};
+    case 'SLAY_ENEMY': return slayEnemy(state, action);
+    case 'TICK_REGEN': return tickRegen(state);
+    case 'TRUNCATE_DESCRIPTION': {
+      let description = state.description.slice(0, state.description.length - 1);
+      if (description.length < 1) description = ['No description set.'];
+      return {...state, description};
+    }
+    default: return state;
   }
-  if (action.type === 'ADD_TO_CONTAINER') return addToContainer(state, action);
-  if (action.type === 'CHANGE_ROOM') return {...state, currentRoom: action.payload};
-  if (action.type === 'CHANGE_STAT') return changeStat(state, action);
-  if (action.type === 'CLEAR_DESCRIPTION') return {...state, description: ['No description set.']};
-  if (action.type === 'DROP_ALL') return {...state, inventory: []};
-  if (action.type === 'DROP_ITEM') return dropItem(state, action);
-  if (action.type === 'ENTER_COMBAT') return {...state, combat: {active: true, targets: [...state.combat.targets, action.payload]}};
-  if (action.type === 'ESCAPE_COMBAT') return {...state, combat: {active: false, targets: []}};
-  if (action.type === 'FULL_RESTORE') return {...state, hp: state.maxHP, mp: state.maxMP};
-  if (action.type === 'GET_ALL') return getAll(state, action);
-  if (action.type === 'GET_FROM_CONTAINER') return getFromContainer(state, action);
-  if (action.type === 'GET_ITEM' || action.type === 'QUIETLY_ADD_ITEM') return {...state, inventory: [...state.inventory, action.payload]};
-  if (action.type === 'LOGIN_USER') return action.payload;
-  if (action.type === 'PUT_ALL') {
-    // The container's contents must be updated via concatenation and creating a copy so as to
-    // not mutate state using push.
-    let newContainer = action.payload.container;
-    newContainer.container.contains = newContainer.container.contains.concat(action.payload.itemArray);
-    return {...state, inventory: [newContainer]};
-  }
-  if (action.type === 'SLAY_ENEMY') return slayEnemy(state, action);
-  if (action.type === 'TICK_REGEN') return tickRegen(state);
-  if (action.type === 'TRUNCATE_DESCRIPTION') {
-    let description = state.description.slice(0, state.description.length - 1);
-    if (description.length < 1) description = ['No description set.'];
-    return {...state, description};
-  }
-  return {...state};
 }
