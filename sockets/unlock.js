@@ -1,7 +1,7 @@
 'use strict';
 
 export default function unlock(socket, roomData) {
-  let opposites = {
+  const opposites = {
     'east': 'west',
     'west': 'east',
     'up': 'down',
@@ -9,7 +9,7 @@ export default function unlock(socket, roomData) {
     'south': 'north',
     'north': 'south'
   };
-  let lockDirections = {
+  const lockDirections = {
     'east': 'to the east',
     'west': 'to the west',
     'up': 'above',
@@ -19,21 +19,20 @@ export default function unlock(socket, roomData) {
   };
 
   socket.on('lock', keyInfo => {
-    let exit = roomData[socket.currentRoom].exits[keyInfo.direction];
+    const exit = roomData[socket.currentRoom].exits[keyInfo.direction];
     if (!exit) return socket.emit('generalMessage', {feedback: 'I don\'t see that exit here.'});
     if (!exit.requiredKey) return socket.emit('generalMessage', {feedback: 'That exit has nothing to lock.'});
 
-    let correctKey = keyInfo.inventory.find(item => item.name === exit.requiredKey.name);
+    const correctKey = keyInfo.inventory.find(item => item.name === exit.requiredKey.name);
     if (!correctKey) return socket.emit('generalMessage', {feedback: 'You don\'t have the correct key to do that.'});
 
     exit.locked = !exit.locked;
-    let targetRoom = roomData[socket.currentRoom].exits[keyInfo.direction].exit;
-    let targetExits = roomData[targetRoom].exits;
-    let oppositeExit = targetExits[opposites[keyInfo.direction]];
+    const targetRoom = roomData[socket.currentRoom].exits[keyInfo.direction].exit;
+    const targetExits = roomData[targetRoom].exits;
+    const oppositeExit = targetExits[opposites[keyInfo.direction]];
     oppositeExit.locked = !oppositeExit.locked;
 
-    let action = 'lock';
-    if (!oppositeExit.locked) action = 'unlock';
+    const action = oppositeExit.locked ? 'unlock' : 'lock';
 
     socket.emit('generalMessage', {feedback: `You ${action} the door ${lockDirections[keyInfo.direction]}.`});
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {feedback: `${socket.username} ${action}s the door ${lockDirections[keyInfo.direction]}.`});
