@@ -6,11 +6,11 @@ export default function kill(socket, roomData, mobsInCombat) {
   socket.on('kill', targetObject => {
     if (!targetObject.target) return socket.emit('generalMessage', {feedback: 'Kill what?'});
     targetObject.target = targetObject.target.toLowerCase();
-    let target = termsProcessor(roomData[socket.currentRoom].mobs, targetObject.target.split('.'));
+    const target = termsProcessor(roomData[socket.currentRoom].mobs, targetObject.target.split('.'));
 
     if (!target) return socket.emit('generalMessage', {feedback: 'I don\'t see that enemy here.'});
     if (target.nonCombat) return socket.emit('generalMessage', {feedback: 'You can\'t attack them.'});
-    
+
     socket.emit('enterCombat', target);
     target.combat = {
       active: true,
