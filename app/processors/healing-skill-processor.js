@@ -29,7 +29,6 @@ export default function healingSkillProcessor(skill, args, props) {
     amount: -(skill.generateSP),
     skillName: skill.skillName,
     skillCost: skill.cost,
-    generateSP: -(skill.generateSP),
     emitType: 'skill',
     skillTypes: skill.skillTypes,
     damage,
@@ -61,6 +60,8 @@ export default function healingSkillProcessor(skill, args, props) {
     }
   };
 
+  // If the user is targeting themselves, stat changes, cooldowns, and costs can be
+  // handled client-side with just messages passed to 
   if (target === props.username) {
     props.dispatch(changeStat({
       statToChange: skill.cost.stat,

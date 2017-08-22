@@ -31,7 +31,6 @@ export default function effectSkillProcessor(skill, args, props) {
     amount: -(skill.generateSP),
     skillName: skill.skillName,
     skillCost: skill.cost,
-    generateSP: -(skill.generateSP),
     emitType: 'skill',
     skillTypes: skill.skillTypes,
     enemy: target,
@@ -58,6 +57,9 @@ export default function effectSkillProcessor(skill, args, props) {
     }
   };
 
+  // If the user is targeting themselves, then skill costs, cooldowns, stat changes,
+  // and effects can all be handled client-side, with messages just being emitted
+  // to others.
   if (target === props.username) {
     if (!props.effects[skill.addEffect.effectName]) {
       props.dispatch(changeStat({

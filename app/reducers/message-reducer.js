@@ -8,14 +8,16 @@ export const initialState = {
 };
 
 export default function reducer(state=initialState, action) {
-  if (action.type === 'NEW_MESSAGE') return {...state, messages: [...state.messages, action.payload]};
-  if (action.type === 'UPDATE_INPUT') return {...state, input: action.payload};
-  if (action.type === 'UPDATE_COMMAND_INDEX') return {...state, commandIndex: state.commandIndex + action.payload};
-  if (action.type === 'UPDATE_PREV_COMMANDS') return {...state, prevCommands: [...state.prevCommands, action.payload]};
-  if (action.type === 'TRUNCATE_PREV_COMMANDS') {
-    let newCommands = state.prevCommands;
-    newCommands.shift();
-    return {...state, prevCommands: newCommands};
+  switch(action.type) {
+    case 'NEW_MESSAGE': return {...state, messages: [...state.messages, action.payload]};
+    case 'UPDATE_COMMAND_INDEX': return {...state, commandIndex: state.commandIndex + action.payload};
+    case 'UPDATE_INPUT': return {...state, input: action.payload};
+    case 'UPDATE_PREV_COMMANDS': return {...state, prevCommands: [...state.prevCommands, action.payload]};
+    case 'TRUNCATE_PREV_COMMANDS': {
+      const newCommands = state.prevCommands.concat();
+      newCommands.shift();
+      return {...state, prevCommands: newCommands};
+    }
+    default: return state;
   }
-  return {...state};
 }

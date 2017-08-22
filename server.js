@@ -31,7 +31,7 @@ app.use(express.static(`${__dirname}/build`));
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 
 // Every 30 seconds, emit a "tick" event. Respawn items and mobs that need to be
-// respawned, if necessary.
+// respawned, if necessary. Decrement effect durations on all mobs.
 setInterval(() => {
   io.sockets.emit('tick');
   respawnItems(roomData, roomReset, alteredRooms);

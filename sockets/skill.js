@@ -3,6 +3,9 @@
 import slayEnemy from '../lib/slay-enemy.js';
 import {classSkills} from '../app/data/class-skills.js';
 
+// Functions cannot be transmitted via JSON, necessary for sockets.
+// Instead, they pick up their references here, then use the skill name to get
+// the appropriate function.
 const allSkills = Object.values(classSkills).reduce((acc, classObj) => {
   acc = {...acc, ...classObj};
   return acc;
@@ -18,7 +21,7 @@ export default function skill(socket, roomData, mobsInCombat, alteredRooms, user
       target.hp -= skillObj.damage;
       socket.emit('generalMessage', {combatLog: skillObj.combatLog});
       socket.broadcast.to(socket.currentRoom).emit('generalMessage', {combatLog: skillObj.echoLog});
-      if (target.hp < 1) return slayEnemy(target, roomData, alteredRooms, mobsInCombat, socket);
+      if (target.hp < 1) slayEnemy(target, roomData, alteredRooms, mobsInCombat, socket);
       return;
     }
 
@@ -52,14 +55,20 @@ export default function skill(socket, roomData, mobsInCombat, alteredRooms, user
     }
 
     socket.emit('generalMessage', {combatLog: skillObj.combatLog});
+
+    // There are funcsToCall if the user targeted themselves or otherwise didn't need
+    // the server to check for targets first, in which case we only need to emit the
+    // proper messages. If there aren't funcsToCall, then the server needed to check
+    // for appropriate targets before a skill goes on cooldown or uses up resources.
     if (!skillObj.funcsToCall.length) socket.emit('startCooldown', {
       skillName: skillObj.skillName,
       cooldownTimer: skillObj.cooldownTimer,
       statToDeduct: skillObj.skillCost.stat,
       deductAmount: skillObj.skillCost.value,
       statToChange: 'sp',
-      amount: skillObj.generateSP
+      amount: skillObj.amount
     });
+    
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {combatLog: skillObj.echoLog});
     if (skillObj.skillTypes.includes('healing')) return target.emit('damage', {damage: skillObj.damage});
 

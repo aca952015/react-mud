@@ -12,7 +12,7 @@ export default function removeHandler(command, args, props) {
   // Get a list of only items that are actually equipped. For example, if
   // the user is only wearing a helm and boots, don't push undefined or null
   // into the array.
-  let equips = Object.keys(props.equipment).reduce((acc, slot) => {
+  const equips = Object.keys(props.equipment).reduce((acc, slot) => {
     if (props.equipment[slot]) acc.push(props.equipment[slot]);
     return acc;
   }, []);
@@ -23,7 +23,7 @@ export default function removeHandler(command, args, props) {
   if (args === 'all') {
     if (!equips.length) return {funcsToCall: [newMessage], feedback: 'You aren\'t wearing anything to remove.'};
     equips.forEach(item => {
-      let result = generateRemoveObject(item);
+      const result = generateRemoveObject(item);
 
       result.funcsToCall.forEach(func => props.dispatch(func(result)));
       props.socket.emit(result.emitType, result);
@@ -33,7 +33,7 @@ export default function removeHandler(command, args, props) {
   }
 
   // If the argument was a particular item, we can return the commandHandler object as normal.
-  let item = termsProcessor(equips, args.split('.'));
+  const item = termsProcessor(equips, args.split('.'));
   if (!item) return {funcsToCall: [newMessage], feedback: 'You aren\'t wearing that.'};
 
   return generateRemoveObject(item);

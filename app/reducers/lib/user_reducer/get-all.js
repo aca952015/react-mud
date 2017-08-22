@@ -10,12 +10,11 @@ export default function getAll(state, action) {
   // It's a very slow time complexity, but it does properly update a container's
   // contents without mutating state.
   if (action.container) {
-    let newContainer = action.container;
+    const newContainer = action.container;
     action.payload.forEach(item => {
-      let prevItems = action.container.container.contains.slice(0, action.container.container.contains.indexOf(item));
-      let endItems = action.container.container.contains.slice(action.container.container.contains.indexOf(item) + 1);
-      let newContains = prevItems.concat(endItems);
-      newContainer.container.contains = newContains;
+      const prevItems = action.container.container.contains.slice(0, action.container.container.contains.indexOf(item));
+      const endItems = action.container.container.contains.slice(action.container.container.contains.indexOf(item) + 1);
+      newContainer.container.contains = prevItems.concat(endItems);
     });
     let newInventory = state.inventory;
     newInventory[state.inventory.indexOf(state.inventory.find(container => container.id === newContainer.id))] = newContainer;

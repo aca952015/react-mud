@@ -3,18 +3,20 @@
 import {classSkills} from '../data/class-skills.js';
 
 export default function reducer(state={...classSkills['warriorSkills'], ...classSkills['clericSkills']}, action) {
-  if (action.type === 'SET_SKILLS') return {...classSkills[action.payload]};
-  if (action.type === 'ON_COOLDOWN') {
-    let newState = {...state};
-    newState[action.payload].onCooldown = true;
-    return newState;
+  switch(action.type) {
+    case 'END_GLOBAL_COOLDOWN': return {...state, globalCooldown: false};
+    case 'OFF_COOLDOWN': {
+      const newState = {...state};
+      newState[action.payload].onCooldown = false;
+      return newState;
+    }
+    case 'ON_COOLDOWN': {
+      const newState = {...state};
+      newState[action.payload].onCooldown = true;
+      return newState;
+    }
+    case 'SET_SKILLS': return {...classSkills[action.payload]};
+    case 'START_GLOBAL_COOLDOWN': return {...state, globalCooldown: true};
+    default: return state;
   }
-  if (action.type === 'OFF_COOLDOWN') {
-    let newState = {...state};
-    newState[action.payload].onCooldown = false;
-    return newState;
-  }
-  if (action.type === 'START_GLOBAL_COOLDOWN') return {...state, globalCooldown: true};
-  if (action.type === 'END_GLOBAL_COOLDOWN') return {...state, globalCooldown: false};
-  return {...state};
 }

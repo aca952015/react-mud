@@ -18,7 +18,7 @@ export default function dropHandler(command, args, props) {
     };
   }
 
-  let droppedItem = termsProcessor(props.inventory, args.split('.'));
+  const droppedItem = termsProcessor(props.inventory, args.split('.'));
   if (!droppedItem) return {funcsToCall: [newMessage], feedback: 'You don\'t seem to be carrying that.'};
   return {
     emitType: 'drop',

@@ -6,7 +6,7 @@ export default function addToContainer(state, action) {
   const containerIndex = state.inventory.indexOf(action.payload.container);
 
   // Create a copy of the container using .concat and add the item into the container's contents.
-  let newContainer = action.payload.container;
+  const newContainer = action.payload.container;
   newContainer.container.contains = newContainer.container.contains.concat(action.payload.item);
 
   // Replace the old container with the new container.

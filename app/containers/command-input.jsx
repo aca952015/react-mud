@@ -49,16 +49,11 @@ export class CommandInput extends Component {
     // If the user hits up or down, they're trying to cycle through previous commands.
     if (event.keyCode === 38 || event.keyCode === 40) {
       if (!this.props.prevCommands.length) return;
-      // If they hit down and they're on the last command entered, clear out the input.
-      // Otherwise, decrement the index and show that command.
       if (event.keyCode === 40) {
         if (this.props.commandIndex === 1) this.props.dispatch(updateInput(''));
         if (this.props.commandIndex > 0) this.props.dispatch(updateCommandIndex(-1));
       }
       if (event.keyCode === 38) {
-        // If they hit up, increment the index. If they go over the number of indexes
-        // available, go back to the previous index. Otherwise, show that command.
-
         // I'm not happy with the use of Promise.resolves here, as they're effectively
         // fixing async issues without actually waiting for some sort of response.
         // They're really just fancy setTimeouts at this point, which is not great.
@@ -84,12 +79,11 @@ export class CommandInput extends Component {
       // Don't push to the prevCommands array while in the Login Room so that passwords
       // are not recorded.
       if (this.props.currentRoom !== 'Login Room') {
-        let currCommand = this.props.input.toLowerCase();
-        let lastCommand = this.props.prevCommands.length ? this.props.prevCommands[this.props.prevCommands.length - 1].toLowerCase() : null;
+        const currCommand = this.props.input.toLowerCase();
+        const lastCommand = this.props.prevCommands.length ? this.props.prevCommands[this.props.prevCommands.length - 1].toLowerCase() : null;
         if ((!lastCommand || currCommand !== lastCommand) && this.props.input) this.props.dispatch(updatePrevCommands(this.props.input));
       }
 
-      // If there are more than 20 prevCommands, truncate the array.
       if (this.props.prevCommands.length > 20) this.props.dispatch(truncatePrevCommands());
 
       // Since the command just entered will now be the last command and the user will have
@@ -102,19 +96,10 @@ export class CommandInput extends Component {
       // commandHandler will return an object, typically with a number of functions
       // to pass to this.props.dispatch and potentially with something that needs
       // to be emitted to the server to handle.
-      let result = commandHandler(command, args, this.props);
+      const result = commandHandler(command, args, this.props);
 
-      // Without the check for funcsToCall, checking length will error out. Sometimes
-      // there are no funcsToCall, so this conditional checks for both.
       if (result.funcsToCall && result.funcsToCall.length) result.funcsToCall.forEach(func => this.props.dispatch(func(result)));
-
-      // If the emitType is quit, additionally save the character to the database before firing
-      // any other functions.
       if (result.emitType === 'quit') this.saveCharacter();
-
-      // If the skillHandler was invoked, start the global cooldown and end it 2 seconds later.
-      // If the skill has a longer cooldown than the global cooldown, start that specific skill's
-      // cooldown and end it when the skill's cooldownTimer ends.
       if (result.funcsToCall && result.funcsToCall.includes(startCooldown)) {
         this.props.dispatch(startGlobalCooldown());
         setTimeout(() => this.props.dispatch(endGlobalCooldown()), 2000);

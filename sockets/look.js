@@ -12,8 +12,7 @@ export default function look(socket, users, roomInfo) {
       socket.emit('generalMessage', {feedback: target.description});
     }
 
-    // Create a variable for easier reference to these various arrays and properties
-    let room = {
+    const room = {
       roomName: socket.currentRoom,
       desc: roomInfo[socket.currentRoom].desc,
       exits: roomInfo[socket.currentRoom].exits,
@@ -25,12 +24,12 @@ export default function look(socket, users, roomInfo) {
     let occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
     .map(user => user.username);
 
-    let mobs = roomInfo[socket.currentRoom].mobs;
+    const mobs = roomInfo[socket.currentRoom].mobs;
 
     // If the user entered LOOK <target> or LOOK IN <container>...
     if (args.target) {
       args.target = args.target.toLowerCase();
-      let splitArgs = args.target.split('.');
+      const splitArgs = args.target.split('.');
 
       let lookTarget = termsProcessor(mobs, splitArgs);
 
@@ -58,7 +57,7 @@ export default function look(socket, users, roomInfo) {
       lookTarget = occupants.find(player => player.toLowerCase() === args.target);
 
       if (lookTarget) {
-        let player = users.find(user => user.username === lookTarget);
+        const player = users.find(user => user.username === lookTarget);
         socket.broadcast.to(socket.currentRoom).emit('generalMessage', {
           from: socket.effects.death ? `The ghost of ${socket.username}` : socket.username,
           interaction: ' looks at ',
@@ -81,6 +80,7 @@ export default function look(socket, users, roomInfo) {
       return socket.emit('generalMessage', {feedback: 'I don\'t see that here.'});
     }
 
+    // This section is only reached if the user entered "LOOK" without a target.
     occupants = users.filter(user => user.username && user.currentRoom === socket.currentRoom && user.username !== socket.username)
     .map(user => {
       if (user.effects.death) return `The ghost of ${user.username}`;

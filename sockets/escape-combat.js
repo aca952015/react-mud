@@ -2,7 +2,7 @@
 
 export default function escapeCombat(io, socket, mobsInCombat) {
   socket.on('escapeCombat', () => {
-    let mobsFightingUser = mobsInCombat.filter(mob => mob.combat.targets.includes(socket.username));
+    const mobsFightingUser = mobsInCombat.filter(mob => mob.combat.targets.includes(socket.username));
     mobsFightingUser.forEach(mob => {
       mob.combat.targets.splice(mob.combat.targets.indexOf(socket.username), 1);
       if (!mob.combat.targets.length) {

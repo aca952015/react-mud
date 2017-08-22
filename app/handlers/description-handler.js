@@ -25,7 +25,7 @@ export default function descriptionHandler(command, args, props) {
   // current description.
   if (splitArgs[0] === '+') {
     if (splitArgs.length < 2) return {funcsToCall: [newMessage], feedback: 'What did you want to add to your description? (format: DESC + {paragraph})'};
-    let playerDescription = props.description[0] === 'No description set.' ? [splitArgs.slice(1).join(' ')] : [...props.description, splitArgs.slice(1).join(' ')];
+    const playerDescription = props.description[0] === 'No description set.' ? [splitArgs.slice(1).join(' ')] : [...props.description, splitArgs.slice(1).join(' ')];
     return {
       funcsToCall: [newMessage, addDescriptionParagraph],
       playerDescription,

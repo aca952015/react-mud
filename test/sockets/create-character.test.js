@@ -38,4 +38,12 @@ describe('createCharacter', () => {
       done();
     });
   });
+
+  it('should return an error message if the right fields aren\'t passed', done => {
+    player1.emit('createCharacter', {newUsername: '', password: ''});
+    player1.on('generalMessage', res => {
+      expect(res.feedback.message).toEqual('character validation failed: username: Path `username` is required.');
+      done();
+    });
+  });
 });

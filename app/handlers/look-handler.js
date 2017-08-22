@@ -11,12 +11,12 @@ export default function lookHandler(command, args, props) {
   // If no args, LOOK is processed by the server
   // If IN is not the first argument, LOOK <target> is processed by the server
   // If IN is the first argument, the player could be looking in a container they're carrying
-  let splitArgs = args.split(' ');
+  const splitArgs = args.split(' ');
   if (splitArgs[0] !== 'in') return {emitType: 'look', target: args};
   if (splitArgs.length < 2) return {funcsToCall: [newMessage], feedback: 'Look in what? (format: LOOK IN <container>)'};
-  let dotNotation = splitArgs[1].split('.');
+  const dotNotation = splitArgs[1].split('.');
 
-  let container = termsProcessor(props.inventory, dotNotation);
+  const container = termsProcessor(props.inventory, dotNotation);
 
   // If the player is looking in a container they're carrying, handle the logic client-side.
   if (container) {

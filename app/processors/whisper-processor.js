@@ -1,11 +1,15 @@
 'use strict';
 
+// Not gonna' lie, this function is pretty convoluted and could very certainly be improved
+// with a good refactor. However, as it works the way I want it to and I don't anticipate
+// needing to change it any time soon, I'll only come back to it if it turns out I need
+// to make major changes anyhow.
 export default function whisperProcessor(result, username) {
   let post = {};
   // If the message is to yourself, toYourself is true.
   // If the user is a third party to a user whispering to themselves, sameTarget is true.
   // If the speaker is a ghost, get the speaker's name
-  let ghostTarget = result.target.split('The ghost of ')[1];
+  const ghostTarget = result.target.split('The ghost of ')[1];
   let toYourself = result.target.toLowerCase() === username.toLowerCase();
   if (!toYourself && ghostTarget) toYourself = ghostTarget.toLowerCase() === username.toLowerCase();
   let ghostCheck = result.from.split('The ghost of ')[1];
