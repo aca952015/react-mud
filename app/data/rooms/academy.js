@@ -32,7 +32,7 @@ export const academy = {
         locked: false
       },
       east: {
-        exit: 'Movement Training Hall',
+        exit: 'Movement Hall',
         locked: false
       }
     },
@@ -97,7 +97,7 @@ export const academy = {
   },
   'Skill Room': {
     roomName: 'Skill Room',
-    desc: 'A room to train users in how to use skills.',
+    desc: 'A heavy wooden door, with iron strips running across it, guards the only entrance and exit for this room. A sloped, stone roof echoes gently with the sound of rain outside. The air is much fresher than in the combat training hall, with a light breeze seeping in through cracks in the stone walls. A quiet, low-level, constant hum seems to sound from nowhere, reverberating around the room gently.',
     exits: {
       south: {
         exit: 'Combat Training Hall',
@@ -105,12 +105,12 @@ export const academy = {
       }
     },
     items: [],
-    mobs: [],
+    mobs: [newMob('animated dummy'), newMob('animated dummy')],
     itemResetTimer: 0,
     mobResetTimer: 0
   },
-  'Movement Training Hall': {
-    roomName: 'Movement Training Hall',
+  'Movement Hall': {
+    roomName: 'Movement Hall',
     desc: 'The movement hall.',
     exits: {
       west: {
@@ -132,7 +132,7 @@ export const academy = {
     desc: 'The room where players learn how to get items.',
     exits: {
       west: {
-        exit: 'Movement Training Hall',
+        exit: 'Movement Hall',
         locked: false
       },
       north: {
