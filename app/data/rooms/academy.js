@@ -83,7 +83,7 @@ export const academy = {
   },
   'Room of Animation': {
     roomName: 'Room of Animation',
-    desc: 'Many animated dummies',
+    desc: 'The crackle of magic echoes through this room as occasional sparks of purple light pop into view, then fade away. The tingle of static pervades everywhere, yet somehow manages to never discharge. Stone blocks line the walls, floor, and ceiling, coming together in a dome shape. Various scraps of battered and beaten equipment lie around the room, occasionally tugging at each other with little arcs of magical energy. The only exit lies back to the South.',
     exits: {
       south: {
         exit: 'Combat Basics',
