@@ -154,7 +154,23 @@ export const academy = {
         exit: 'Get Room',
         locked: true,
         requiredKey: itemData['keys']['academy key']
+      },
+      east: {
+        exit: 'Equipment Room',
+        locked: false
       }
+    },
+    items: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0
+  },
+  'Equipment Room': {
+    roomName: 'Equipment Room',
+    desc: 'The room where players learn how to use equipment.',
+    exits: {
+      west: 'Get From Container Room',
+      locked: false
     },
     items: [],
     mobs: [],
