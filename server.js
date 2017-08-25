@@ -14,6 +14,7 @@ import serverSocketListeners from './sockets/server-socket-listeners.js';
 import mobTargetSelector from './sockets/mob-target-selector.js';
 import respawnItems from './lib/respawn-items.js';
 import decrementEffects from './lib/decrement-effects.js';
+import enemyDamageSkill from './lib/enemy-damage-skill.js';
 import {roomData} from './app/data/rooms.js';
 
 dotenv.load();
@@ -43,6 +44,7 @@ setInterval(() => {
 setInterval(() => {
   io.sockets.emit('combatTick');
   mobTargetSelector(mobsInCombat, users);
+  enemyDamageSkill(mobsInCombat, users, io);
 }, 2000);
 
 const users = [];
