@@ -11,6 +11,8 @@ export const academyMobs = {
     maxHP: 10,
     atk: 1,
     def: 0,
-    mdf: 0
+    mdf: 0,
+    effects: {},
+    skills: {}
   }
 };

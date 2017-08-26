@@ -111,7 +111,7 @@ export const academy = {
   },
   'Movement Hall': {
     roomName: 'Movement Hall',
-    desc: 'The movement hall.',
+    desc: 'Wooden floors, beginning to warp near the walls from moisture damage, stretch out in all directions. A slightly moldy smell occasionally wafts through this large, open space. To the East, the hall narrows down into an open doorway leading into a smaller chamber, while to the West, the floor leads into the foyer of the academy.',
     exits: {
       west: {
         exit: 'Academy Foyer',
