@@ -61,7 +61,7 @@ describe('Login handler client listeners', () => {
     closeServer();
     done();
   });
-  
+
   describe('initialConnect', () => {
     let player3;
 
@@ -85,7 +85,7 @@ describe('Login handler client listeners', () => {
 
   describe('loginSuccessful', () => {
     describe('While in the Login Room', () => {
-      it('should dispatch endCreation, setCreationStep to 0, set the user\'s equipment and user stats, then teleport to the Nexus', done => {
+      it('should dispatch endCreation, setCreationStep to 0, set the user\'s equipment and user stats, then teleport to the Academy Entrance', done => {
         player1.emit('createCharacter', {...user, newUsername: 'Bob', password: 'banana', equipment});
         player1.on('loginSuccessful', res => {
           expect(props.dispatch.calledWith(endCreation())).toEqual(true);
@@ -93,7 +93,7 @@ describe('Login handler client listeners', () => {
           expect(props.dispatch.calledWith(loginUser({loginUser: res.loginUser}))).toEqual(true);
           expect(props.dispatch.calledWith(loginEquipment({loginEquipment: res.loginEquipment}))).toEqual(true);
           expect(props.dispatch.calledWith(loginEffects({loginEffects: res.effects}))).toEqual(true);
-          expect(props.dispatch.calledWith(changeRoom('Nexus'))).toEqual(true);
+          expect(props.dispatch.calledWith(changeRoom('Academy Entrance'))).toEqual(true);
           done();
         });
       });
