@@ -30,5 +30,15 @@ export const doodads = {
     category: 'doodads',
     drink: null,
     description: 'To initiate combat with an enemy, use the KILL command (help KILL for more information). You can also type HELP COMBAT for more detailed information.'
+  },
+  'movement hall directions': {
+    name: 'movement hall directions',
+    short: 'a simple wooden sign',
+    type: 'doodad',
+    long: 'A sign hangs on the wall here, with some directions scrawled across it.',
+    terms: ['sign', 'directions'],
+    category: 'doodads',
+    drink: null,
+    description: 'EAST, you can learn more about interacting with the world around you, including how to GET items, UNLOCK doors, and other useful commands.'
   }
 };
