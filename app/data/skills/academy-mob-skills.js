@@ -6,7 +6,7 @@ export const academyMobSkills = {
     cooldownTime: 2,
     cooldownRemaining: 1,
     atkMultiplier: 1,
-    matMultiplier: 0,
+    matMultiplier: 1,
     addHealing: 0,
     addDamage: 0,
     roomEcho: ' lets loose a heavy bash, dealing ',
