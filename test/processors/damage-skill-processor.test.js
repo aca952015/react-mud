@@ -132,7 +132,14 @@ describe('skillHandler with a damage skill', () => {
           ...props,
           equipment: {
             ...props.equipment,
-            'main hand': newItem('weapons', 'holy mace')
+            'main hand': newItem('weapons', 'holy mace'),
+            'head': {
+              ...newItem('equipment', 'leather helm'),
+              stats: {
+                mdf: 5,
+                def: 5
+              }
+            }
           },
           combat: {
             active: true,

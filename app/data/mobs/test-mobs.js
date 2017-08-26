@@ -1,5 +1,7 @@
 'use strict';
 
+import {mobSkills} from '../mob-skills.js';
+
 export const testMobs = {
   'bat': {
     name: 'bat',
@@ -12,7 +14,10 @@ export const testMobs = {
     atk: 5,
     def: 0,
     mdf: 0,
-    effects: {}
+    effects: {},
+    skills: {
+      'bash': mobSkills['bash']
+    }
   },
   'armored zombie': {
     name: 'armored zombie',
@@ -25,6 +30,7 @@ export const testMobs = {
     atk: 2,
     def: 3,
     mdf: 0,
-    effects: {}
+    effects: {},
+    skills: {}
   }
 };
