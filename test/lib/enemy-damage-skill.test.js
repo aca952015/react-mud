@@ -26,7 +26,13 @@ describe('EnemyDamageSkill', () => {
     currentRoom: 'Nexus',
     emit: sinon.spy()
   }];
-  const io = sinon.stub();
+  const io = {
+    sockets: {
+      to: () => {
+        return {emit: sinon.stub()};
+      }
+    }
+  };
 
   describe('With an ability that is on cooldown', () => {
     it('should decrement the skill\'s cooldownRemaining, then return nothing', () => {
@@ -39,6 +45,13 @@ describe('EnemyDamageSkill', () => {
     it('should return undefined', () => {
       const noUsers = [];
       expect(enemyDamageSkill(mobsInCombat, noUsers, io)).toEqual(undefined);
+    });
+  });
+
+  describe('For a physical skill', () => {
+    it('should deal 5 damage on a target with no equipment', () => {
+      enemyDamageSkill(mobsInCombat, users, io);
+      expect(users[0].emit.calledWith('damage', {damage: 5})).toEqual(true);
     });
   });
 });
