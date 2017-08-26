@@ -54,4 +54,23 @@ describe('EnemyDamageSkill', () => {
       expect(users[0].emit.calledWith('damage', {damage: 5})).toEqual(true);
     });
   });
+
+  describe('For a magical skill', () => {
+    it('should deal 6 damage on a target with no equipment', () => {
+      mobsInCombat[0].skills.bash.skillTypes = ['damage', 'magical'];
+      mobsInCombat[0].skills.bash.cooldownRemaining = 0;
+      mobsInCombat[0].mat = 6;
+      enemyDamageSkill(mobsInCombat, users, io);
+      expect(users[0].emit.calledWith('damage', {damage: 6})).toEqual(true);
+    });
+  });
+
+  describe('For a skill that does less than 1 damage', () => {
+    it('should deal 1 damage', () => {
+      mobsInCombat[0].skills.bash.cooldownRemaining = 0;
+      mobsInCombat[0].mat = 0;
+      enemyDamageSkill(mobsInCombat, users, io);
+      expect(users[0].emit.calledWith('damage', {damage: 1})).toEqual(true);
+    });
+  });
 });
