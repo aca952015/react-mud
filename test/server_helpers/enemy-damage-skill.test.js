@@ -73,4 +73,12 @@ describe('EnemyDamageSkill', () => {
       expect(users[0].emit.calledWith('damage', {damage: 1})).toEqual(true);
     });
   });
+
+  describe('With a mob that has no skills', () => {
+    it('should return from the function', () => {
+      users[0].emit = sinon.spy();
+      enemyDamageSkill([newMob('armored zombie')], users, io);
+      expect(users[0].emit.called).toEqual(false);
+    });
+  });
 });
