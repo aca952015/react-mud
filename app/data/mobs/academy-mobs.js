@@ -1,5 +1,7 @@
 'use strict';
 
+import {mobSkills} from '../mob-skills.js';
+
 export const academyMobs = {
   'animated dummy': {
     name: 'animated dummy',
@@ -13,6 +15,8 @@ export const academyMobs = {
     def: 0,
     mdf: 0,
     effects: {},
-    skills: {}
+    skills: {
+      'bash': mobSkills['bash']
+    }
   }
 };
