@@ -15,7 +15,7 @@ export const Room = props => {
   return <div className="room">
     <h3>{room.roomName}</h3>
     <p>{room.desc}</p>
-    {items.length && <ul className="items">{items}</ul>}
+    {items.length >  0 && <ul className="items">{items}</ul>}
     <ul className="exits">Exits: [ {exits} ]</ul>
   </div>;
 };
