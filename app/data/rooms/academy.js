@@ -132,7 +132,7 @@ export const academy = {
     desc: 'A heavy door stands between this room and the one to the North, an intricately shaped keyhole resting just beneath a large knocker on the right side. Wooden boards cover the floor, through some have begun to twist and warp from moisture damage. Stone walls stretch up towards the ceiling, a latticework of beams that have been reinforced with steel joints. To the West, a doorway opens up into a larget chamber.',
     exits: {
       north: {
-        exit: 'Get From Container Room',
+        exit: 'Confined Room',
         locked: true,
         requiredKey: itemData['keys']['academy key']
       },
@@ -146,13 +146,14 @@ export const academy = {
     itemResetTimer: 0,
     mobResetTimer: 0
   },
-  'Get From Container Room': {
-    roomName: 'Get From Container Room',
+  'Confined Room': {
+    roomName: 'Confined Room',
     desc: 'The room where players learn how to get from containers.',
     exits: {
       east: {
         exit: 'Equipment Room',
-        locked: false
+        locked: true,
+        requiredKey: itemData['keys']['container key']
       },
       south: {
         exit: 'Small Room',
@@ -160,7 +161,16 @@ export const academy = {
         requiredKey: itemData['keys']['academy key']
       }
     },
-    items: [],
+    items: [
+      {
+        ...newItem('containers', 'backpack'),
+        container: {
+          holds: ['items', 'equipment', 'weapons'],
+          contains: [newItem('keys', 'container key')]
+        }
+      },
+      newItem('doodads', 'container sign')
+    ],
     mobs: [],
     itemResetTimer: 0,
     mobResetTimer: 0
@@ -170,8 +180,9 @@ export const academy = {
     desc: 'The room where players learn how to use equipment.',
     exits: {
       west: {
-        exit: 'Get From Container Room',
-        locked: false
+        exit: 'Confined Room',
+        locked: true,
+        requiredKey: itemData['keys']['container key']
       }
     },
     items: [],
