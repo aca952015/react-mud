@@ -41,6 +41,16 @@ export const doodads = {
     drink: null,
     description: 'In order to get into the next room, you will need to get a key from a backpack on the floor. If it isn\'t there, just wait a couple minutes, and it should respawn. Try HELP GET to learn how to get items from a container.'
   },
+  'equipment sign': {
+    name: 'equipment sign',
+    short: 'equipment sign',
+    type: 'doodad',
+    long: 'A sign hangs on the wall here, with some directions scrawled across it.',
+    terms: ['sign', 'directions'],
+    category: 'doodads',
+    drink: null,
+    description: 'In order to equip an item you\'ve picked up, use the WEAR command. Try HELP WEAR for more information. You can also pick up many items at once using GET ALL.'
+  },
   'get sign': {
     name: 'get sign',
     short: 'a simple wooden sign',

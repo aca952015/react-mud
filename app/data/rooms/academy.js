@@ -191,6 +191,7 @@ export const academy = {
       }
     },
     items: [
+      newItem('doodads', 'equipment sign'),
       newItem('equipment', 'leather helm'),
       newItem('equipment', 'leather pauldrons'),
       newItem('equipment', 'leather breastplate'),
