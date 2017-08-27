@@ -1,7 +1,7 @@
 'use strict';
 
 import {newMessage} from '../actions/message-actions.js';
-import {startCooldown} from '../actions/skill-actions.js';
+import {startCooldown, refreshDuration} from '../actions/skill-actions.js';
 import {changeStat} from '../actions/user-actions.js';
 import {addEffect} from '../actions/combat-actions.js';
 import termsProcessor from './terms-processor.js';
@@ -14,8 +14,10 @@ export default function effectSkillProcessor(skill, args, props) {
   else {
     target = termsProcessor(props.combat.targets, args.split('.'));
     if (target && !skill.skillTypes.includes('debuff')) return {funcsToCall: [newMessage], feedback: 'You can\'t use that on enemies.'};
-    target = `${args[0].toUpperCase()}${args.slice(1).toLowerCase()}`;
-    if (target.toLowerCase() === props.username.toLowerCase()) target = props.username;
+    else {
+      target = `${args[0].toUpperCase()}${args.slice(1).toLowerCase()}`;
+      if (target.toLowerCase() === props.username.toLowerCase()) target = props.username;
+    }
   }
 
   const returnObj = {
@@ -24,10 +26,11 @@ export default function effectSkillProcessor(skill, args, props) {
     effectName: skill.addEffect.effectName,
     effects: skill.addEffect.effects,
     expirationMessage: skill.addEffect.expirationMessage,
+    applyFunction: skill.applyFunction,
+    expireFunction: skill.expireFunction,
     amount: -(skill.generateSP),
     skillName: skill.skillName,
     skillCost: skill.cost,
-    generateSP: -(skill.generateSP),
     emitType: 'skill',
     skillTypes: skill.skillTypes,
     enemy: target,
@@ -54,14 +57,24 @@ export default function effectSkillProcessor(skill, args, props) {
     }
   };
 
+  // If the user is targeting themselves, then skill costs, cooldowns, stat changes,
+  // and effects can all be handled client-side, with messages just being emitted
+  // to others.
   if (target === props.username) {
-    props.dispatch(changeStat({
-      statToChange: skill.cost.stat,
-      amount: skill.cost.value
-    }));
-    returnObj.funcsToCall.push(startCooldown);
-    returnObj.funcsToCall.push(changeStat);
-    returnObj.funcsToCall.push(addEffect);
+    if (!props.effects[skill.addEffect.effectName]) {
+      props.dispatch(changeStat({
+        statToChange: skill.cost.stat,
+        amount: skill.cost.value
+      }));
+      returnObj.funcsToCall.push(startCooldown);
+      returnObj.funcsToCall.push(changeStat);
+      returnObj.funcsToCall.push(addEffect);
+      skill.applyFunction(props.dispatch);
+    } else {
+      if (props.effects[skill.addEffect.effectName].duration) {
+        props.dispatch(refreshDuration({effectName: skill.addEffect.effectName, duration: skill.addEffect.effects.duration}));
+      }
+    }
   }
 
   return returnObj;

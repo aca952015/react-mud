@@ -5,14 +5,14 @@ import {roomData} from '../app/data/rooms.js';
 
 export default function quit(socket) {
   socket.on('quit', () => {
-    let room = {
+    const room = {
       roomName: 'Login Room',
       desc: roomData['Login Room'].desc,
       exits: roomData['Login Room'].exits,
       items: roomData['Login Room'].items
     };
-    let mobs = null;
-    let occupants = [];
+    const mobs = null;
+    const occupants = [];
     socket.currentRoom = 'Login Room';
     socket.leave(socket.currentRoom);
     socket.join('Login Room');

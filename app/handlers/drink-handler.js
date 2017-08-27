@@ -9,11 +9,11 @@ export default function drinkHandler(command, args, props) {
   if (!args) return {funcsToCall: [newMessage], feedback: 'Drink what?'};
   args = args.toLowerCase();
 
-  let itemToDrink = termsProcessor(props.inventory, args.split('.'));
+  const itemToDrink = termsProcessor(props.inventory, args.split('.'));
   if (!itemToDrink) return {funcsToCall: [newMessage], feedback: 'You aren\'t carrying that.'};
   if (!itemToDrink.drink) return {funcsToCall: [newMessage], feedback: 'That isn\'t drinkable.'};
 
-  let drinkEffects = itemData['potions'][itemToDrink.name].drink;
+  const drinkEffects = itemData['potions'][itemToDrink.name].drink;
 
   return {
     funcsToCall: [newMessage, drinkEffects.effect, quietlyAddItem, dropItem],

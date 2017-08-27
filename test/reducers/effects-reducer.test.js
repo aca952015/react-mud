@@ -22,6 +22,17 @@ describe('Effects reducer', () => {
         }
       });
     });
+
+    it('should create an expireFunction property if there is one', () => {
+      expect(reducer({}, {type: 'ADD_EFFECT', payload: {effectName: 'infusion', effects: {atk: 3, mat: 3, duration: 1}, expireFunction: 'some function'}})).toEqual({
+        infusion: {
+          atk: 3,
+          mat: 3,
+          duration: 1,
+          expireFunction: 'some function'
+        }
+      });
+    });
   });
 
   describe('With an action of REMOVE_EFFECT', () => {
@@ -47,6 +58,17 @@ describe('Effects reducer', () => {
 
     it('should remove effects if it\'s the last tick', () => {
       expect(reducer({infusion: {duration: 1}}, {type: 'DECREMENT_EFFECT_DURATIONS'})).toEqual({});
+    });
+  });
+
+  describe('With an action of REFRESH_DURATION', () => {
+    it('should reset the duration of the current effect', () => {
+      expect(reducer({infusion: {duration: 1, expireFunction: 'someFunc'}}, {type: 'REFRESH_DURATION', payload: {effectName: 'infusion', duration: 2}})).toEqual({
+        infusion: {
+          duration: 2,
+          expireFunction: 'someFunc'
+        }
+      });
     });
   });
 });

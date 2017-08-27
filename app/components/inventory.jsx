@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import duplicatesProcessor from '../processors/duplicates-processor.js';
 
 export const Inventory = props => {
-  let inventoryInfo = duplicatesProcessor(props.inventory, 'short');
+  const inventoryInfo = duplicatesProcessor(props.inventory, 'short');
 
   let inventory = inventoryInfo.map((item, i) => <li key={i}>{item}</li>);
   if (!inventory.length) inventory = <li>Nothing</li>;

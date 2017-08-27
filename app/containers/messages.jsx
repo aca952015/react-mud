@@ -27,6 +27,7 @@ export default class Messages extends Component {
     // moved down or locked in place. The user can scroll through previous messages
     // without having the scrollbar automatically scroll to the bottom, which is checked
     // by comparing scrollHeight and scrollTop.
+    // TODO: Does not currently function correctly on slower connections (mobile devices, e.g.)
     this.initialHeight = this.messageList.scrollHeight;
   }
   componentWillUpdate() {
@@ -41,21 +42,21 @@ export default class Messages extends Component {
     // what type of message needs to be rendered and calls the appropriate presentational component(s).
     const messages = this.props.messages.map((message, index) => {
       return <li key={index}>
-        {message.playerInput ? <PlayerInput message={message}/> : null}
-        {message.playerDescription ? <PlayerDescription description={message.playerDescription}/> : null}
-        {message.feedback || message.interaction ? <Feedback username={this.props.username} message={message}/> : null}
-        {message.room ? <Room message={message}/> : null}
-        {message.occupants ? <Occupants message={message}/> : null}
-        {message.mobs ? <Mobs message={message}/> : null}
-        {message.skills ? <Skills skills={message.skills}/> : null}
-        {message.effects ? <Effects effects={message.effects}/> : null}
-        {message.combatLog ? <CombatLog username={this.props.username} message={message}/> : null}
-        {message.containedItems ? <Containers message={message}/> : null}
-        {message.onlineUsers ? <OnlineUsers message={message}/> : null}
-        {message.commType ? <Communication username={this.props.username} message={message}/> : null}
-        {message.helpObj ? <HelpFile helpObj={message.helpObj}/> : null}
-        {message.inventory ? <Inventory inventory={message.inventory}/> : null}
-        {message.equipment ? <Equipment name={message.name} equipment={message.equipment}/> : null}
+        {message.playerInput && <PlayerInput message={message}/>}
+        {message.playerDescription && <PlayerDescription description={message.playerDescription}/>}
+        {(message.feedback || message.interaction) && <Feedback username={this.props.username} message={message}/>}
+        {message.room && <Room message={message}/>}
+        {message.occupants && <Occupants message={message}/>}
+        {message.mobs && <Mobs message={message}/>}
+        {message.skills && <Skills skills={message.skills}/>}
+        {message.effects && <Effects effects={message.effects}/>}
+        {message.combatLog && <CombatLog username={this.props.username} message={message}/>}
+        {message.containedItems && <Containers message={message}/>}
+        {message.onlineUsers && <OnlineUsers message={message}/>}
+        {message.commType && <Communication username={this.props.username} message={message}/>}
+        {message.helpObj && <HelpFile helpObj={message.helpObj}/>}
+        {message.inventory && <Inventory inventory={message.inventory}/>}
+        {message.equipment && <Equipment name={message.name} equipment={message.equipment}/>}
       </li>;
     });
     return <div ref={messageList => this.messageList = messageList} onScroll={() => this.props.changeEnterStatus(false)} className="messages">

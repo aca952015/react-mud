@@ -4,8 +4,8 @@ import {removeEffect, fullRestore} from '../actions/combat-actions.js';
 import {changeStat} from '../actions/user-actions.js';
 
 export default function rezzHandler(homeCtx) {
-  let socket = homeCtx.socket;
-  let props = homeCtx.props;
+  const socket = homeCtx.socket;
+  const props = homeCtx.props;
 
   socket.on('resurrect', () => {
     props.dispatch(fullRestore());
@@ -14,7 +14,8 @@ export default function rezzHandler(homeCtx) {
       amount: Math.round(homeCtx.props.maxHP / 2)
     }));
     props.dispatch(removeEffect('death'));
-    let transmittedEffects = {...homeCtx.props.effects};
+
+    const transmittedEffects = {...homeCtx.props.effects};
     delete transmittedEffects.death;
     socket.emit('updateEffects', transmittedEffects);
   });

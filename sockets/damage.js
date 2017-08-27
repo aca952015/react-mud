@@ -6,9 +6,11 @@ export default function damage(socket, roomData, mobsInCombat, alteredRooms) {
   socket.on('damage', dmgObj => {
     // When the user emits a damage event, find the targeted mob. If it's already
     // been killed (say, by another player), return a slayEnemy event.
-    let target = roomData[socket.currentRoom].mobs.find(mob => mob.id === dmgObj.enemy.id);
+    const target = roomData[socket.currentRoom].mobs.find(mob => mob.id === dmgObj.enemy.id);
     if (!target) return socket.emit('slayEnemy', dmgObj.enemy);
+
     target.hp -= dmgObj.damage;
+
     socket.emit('generalMessage', {
       combatLog: {
         from: {
@@ -37,6 +39,7 @@ export default function damage(socket, roomData, mobsInCombat, alteredRooms) {
         punctuation: '.'
       }
     });
+
     if (target.hp < 1) slayEnemy(target, roomData, alteredRooms, mobsInCombat, socket);
   });
 }

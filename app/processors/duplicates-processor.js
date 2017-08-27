@@ -17,11 +17,8 @@ export default function duplicatesProcessor(itemArray, property) {
   // As an example, [{health potion}, {mana potion}, {health potion}] would display as:
   // (2) a red potion
   // a blue potion
-  return itemArray.map(item => {
-    let string = item[property];
-    if (counts[item.name] > 1) string = `(${counts[item.name]}) ${string}`;
-    return string;
-  }).reduce((acc, ele) => {
+  return itemArray.map(item => counts[item.name] > 1 ? `(${counts[item.name]}) ${item[property]}` : item[property])
+  .reduce((acc, ele) => {
     if (!acc.includes(ele)) acc.push(ele);
     return acc;
   }, []);

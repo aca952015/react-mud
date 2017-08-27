@@ -11,7 +11,7 @@ import moveProcessor from '../../app/processors/move-processor.js';
 import {changeRoom} from '../../app/actions/move-actions.js';
 
 describe('Move client listeners', () => {
-  let player1, player2, url = 'http://0.0.0.0:5000';
+  let player1, player2, player3, url = 'http://0.0.0.0:5000';
 
   let props = {
     username: 'player1',
@@ -30,7 +30,9 @@ describe('Move client listeners', () => {
   beforeEach(done => {
     player1 = io.connect(url, ioOptions);
     player2 = io.connect(url, ioOptions);
+    player3 = io.connect(url, ioOptions);
     player2.on('connect', () => {
+      player3.emit('teleport', 'Nexus');
       player1.emit('changeName', 'player1');
       player1.emit('teleport', 'Nexus');
       player2.emit('changeName', 'player2');
@@ -51,6 +53,7 @@ describe('Move client listeners', () => {
     .then(() => {
       player1.disconnect();
       player2.disconnect();
+      player3.disconnect();
       done();
     });
   });
@@ -71,11 +74,23 @@ describe('Move client listeners', () => {
   });
 
   describe('movementLeave', () => {
-    it('should dispatch a newMessage with a from and feedback', done => {
-      player2.emit('move', {direction: 'down'});
-      player1.on('movementLeave', res => {
-        expect(props.dispatch.calledWith(newMessage({from: res.username, feedback: ` moves ${res.direction}.`}))).toEqual(true);
-        done();
+    describe('With a username (as expected)', () => {
+      it('should dispatch a newMessage with a from and feedback', done => {
+        player2.emit('move', {direction: 'down'});
+        player1.on('movementLeave', res => {
+          expect(props.dispatch.calledWith(newMessage({from: res.username, feedback: ` moves ${res.direction}.`}))).toEqual(true);
+          done();
+        });
+      });
+    });
+
+    describe('Without a username (unexpected)', () => {
+      it('should do absolutely nothing', done => {
+        player3.emit('move', {direction: 'down'});
+        player1.on('movementLeave', () => {
+          expect(props.dispatch.calledWith(newMessage({from: 'Player3', feedback: ' moves down.'}))).toEqual(false);
+          done();
+        });
       });
     });
   });

@@ -5,14 +5,16 @@ import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 
 describe('Whisper', () => {
-  let player1, player2, alien, url = 'http://0.0.0.0:5000';
+  let player1, player2, player3, alien, url = 'http://0.0.0.0:5000';
   require('../lib/test-server.js');
 
   beforeEach(done => {
     player1 = io.connect(url, ioOptions);
     player2 = io.connect(url, ioOptions);
+    player3 = io.connect(url, ioOptions);
     alien = io.connect(url, ioOptions);
     alien.on('connect', () => {
+      player3.emit('changeName', '');
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
       player1.emit('teleport', 'Nexus');
@@ -26,6 +28,7 @@ describe('Whisper', () => {
   afterEach(done => {
     player1.disconnect();
     player2.disconnect();
+    player3.disconnect();
     alien.disconnect();
     done();
   });

@@ -15,7 +15,7 @@ export const initialState = {
   def: 0,
   mat: 2,
   mdf: 0,
-  currentRoom: 'Nexus',
+  currentRoom: 'Login Room',
   combat: {
     active: false,
     targets: []

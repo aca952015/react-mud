@@ -2,6 +2,7 @@
 
 import {testMobs} from './mobs/test-mobs.js';
 import {nonCombatNPCs} from './mobs/non-combat-npcs.js';
+import {academyMobs} from './mobs/academy-mobs.js';
 
 class Mob {
   constructor(properties) {
@@ -27,5 +28,6 @@ export default function newMob(mobName) {
 
 const mobData = {
   ...testMobs,
-  ...nonCombatNPCs
+  ...nonCombatNPCs,
+  ...academyMobs
 };

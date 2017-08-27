@@ -6,8 +6,8 @@ import {newMessage} from '../actions/message-actions.js';
 import {changeRoom} from '../actions/move-actions.js';
 
 export default function loginHandlers(homeCtx) {
-  let socket = homeCtx.socket;
-  let props = homeCtx.props;
+  const socket = homeCtx.socket;
+  const props = homeCtx.props;
   // On initially connecting, send the user to the Login Room, then give them some
   // default user data and equipment to prevent errors.
   socket.on('initialConnect', char => {
@@ -19,7 +19,7 @@ export default function loginHandlers(homeCtx) {
 
   // Once the server has sent a loginSuccessful event, update the username, equipment,
   // description, and various saved data on the client and the server. If it's a new
-  // character, they will have been in the Login Room, so teleport them to the Nexus.
+  // character, they will have been in the Login Room, so teleport them to the Academy Entrance.
   // Otherwise, teleport them to whatever room they were in when they logged off.
   socket.on('loginSuccessful', char => {
     socket.emit('changeName', char.loginUser.username);
@@ -33,8 +33,8 @@ export default function loginHandlers(homeCtx) {
     props.dispatch(loginEffects({loginEffects: char.effects}));
     props.dispatch(escapeCombat());
     if (homeCtx.props.currentRoom === 'Login Room') {
-      props.dispatch(changeRoom('Nexus'));
-      socket.emit('teleport', 'Nexus');
+      props.dispatch(changeRoom('Academy Entrance'));
+      socket.emit('teleport', 'Academy Entrance');
       return socket.emit('move', {direction: 'login'});
     }
     props.dispatch(changeRoom(homeCtx.props.currentRoom));

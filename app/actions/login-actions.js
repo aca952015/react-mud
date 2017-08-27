@@ -1,9 +1,5 @@
 'use strict';
 
-export function incrementCreationStep() {
-  return {type: 'INCREMENT_CREATION_STEP'};
-}
-
 export function createNew() {
   return {type: 'NEW_CHARACTER'};
 }
@@ -12,17 +8,14 @@ export function endCreation() {
   return {type: 'CHARACTER_COMPLETE'};
 }
 
+export function incrementCreationStep() {
+  return {type: 'INCREMENT_CREATION_STEP'};
+}
+
 export function loginEffects(effects) {
   return {
     type: 'LOGIN_EFFECTS',
     payload: effects.loginEffects
-  };
-}
-
-export function loginUser(char) {
-  return {
-    type: 'LOGIN_USER',
-    payload: char.loginUser
   };
 }
 
@@ -33,10 +26,17 @@ export function loginEquipment(equipment) {
   };
 }
 
-export function setUsername(username) {
+export function loginUser(char) {
   return {
-    type: 'SET_USERNAME',
-    payload: username.newUsername
+    type: 'LOGIN_USER',
+    payload: char.loginUser
+  };
+}
+
+export function setCreationStep(step) {
+  return {
+    type: 'SET_CREATION_STEP',
+    payload: step.step
   };
 }
 
@@ -47,9 +47,9 @@ export function setFirstPassword(password) {
   };
 }
 
-export function setCreationStep(step) {
+export function setUsername(username) {
   return {
-    type: 'SET_CREATION_STEP',
-    payload: step.step
+    type: 'SET_USERNAME',
+    payload: username.newUsername
   };
 }
