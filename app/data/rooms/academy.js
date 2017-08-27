@@ -148,7 +148,7 @@ export const academy = {
   },
   'Confined Room': {
     roomName: 'Confined Room',
-    desc: 'The room where players learn how to get from containers.',
+    desc: 'This space is relatively small, the ceiling having a sharp slope down until it meets the floor, with no intervening wall on that side. The wooden floors are gnarled and warped, with a small hole leading down into darkness near the corner. A simple door stands to the East, a keyhole set in place on the right hand side. A sturdier, heavier door leads back to the South.',
     exits: {
       east: {
         exit: 'Equipment Room',
@@ -171,6 +171,11 @@ export const academy = {
       },
       newItem('doodads', 'container sign')
     ],
+    examines: [{
+      name: 'hole',
+      terms: ['hole'],
+      description: 'A small hole, the size of a coin, leads down into pitch blackness. The edges are jagged, as if something chewed away at the wood.'
+    }],
     mobs: [],
     itemResetTimer: 0,
     mobResetTimer: 0
