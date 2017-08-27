@@ -182,7 +182,7 @@ export const academy = {
   },
   'Equipment Room': {
     roomName: 'Equipment Room',
-    desc: 'The room where players learn how to use equipment.',
+    desc: 'A storage space, almost more a closet than a room, sits here. With solid stone walls all around and a low roof, the only light that enters is from the West when the door is open. The air is stale and dry, a haze of dust floating around and settling against everything.',
     exits: {
       west: {
         exit: 'Confined Room',
@@ -190,7 +190,14 @@ export const academy = {
         requiredKey: itemData['keys']['container key']
       }
     },
-    items: [],
+    items: [
+      newItem('equipment', 'leather helm'),
+      newItem('equipment', 'leather pauldrons'),
+      newItem('equipment', 'leather breastplate'),
+      newItem('equipment', 'leather leggings'),
+      newItem('equipment', 'leather boots'),
+      newItem('weapons', 'broad sword')
+    ],
     mobs: [],
     itemResetTimer: 0,
     mobResetTimer: 0
