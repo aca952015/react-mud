@@ -141,7 +141,7 @@ export const academy = {
         locked: false
       }
     },
-    items: [newItem('keys', 'academy key'), newItem('doodad', 'get sign')],
+    items: [newItem('keys', 'academy key'), newItem('doodads', 'get sign')],
     mobs: [],
     itemResetTimer: 0,
     mobResetTimer: 0
