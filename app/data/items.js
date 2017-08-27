@@ -5,6 +5,7 @@ import {keys} from './items/keys.js';
 import {potions} from './items/potions.js';
 import {containers} from './items/containers.js';
 import {weapons} from './items/weapons.js';
+import {doodads} from './items/doodads.js';
 
 class Item {
   constructor(properties) {
@@ -29,5 +30,6 @@ export const itemData = {
   equipment,
   keys,
   potions,
-  weapons
+  weapons,
+  doodads
 };

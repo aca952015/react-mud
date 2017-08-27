@@ -7,7 +7,8 @@ import termsProcessor from '../processors/terms-processor.js';
 export default function getHandler(command, args, props) {
   const invalidTypes = {
     'corpse': true,
-    'liquid': true
+    'liquid': true,
+    'doodad': true
   };
 
   if (!args) return {funcsToCall: [newMessage], feedback: 'Get what?'};
