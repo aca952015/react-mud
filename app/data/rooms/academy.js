@@ -169,7 +169,8 @@ export const academy = {
           contains: [newItem('keys', 'container key')]
         }
       },
-      newItem('doodads', 'container sign')
+      newItem('doodads', 'container sign'),
+      newItem('doodads', 'examines sign')
     ],
     examines: [{
       name: 'hole',
