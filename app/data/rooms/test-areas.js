@@ -6,6 +6,7 @@ import newMob from '../mobs.js';
 export const testAreas = {
   'Nexus': {
     roomName: 'Nexus',
+    roomTitle: 'Nexus',
     desc: 'Welcome to the nexus. Type HELP to get a list of commands available.',
     exits: {
       up: {
@@ -64,6 +65,7 @@ export const testAreas = {
   },
   'Secret Room': {
     roomName: 'Secret Room',
+    roomTitle: 'Secret Room',
     desc: 'This room is a secret. You shouldn\'t be here.',
     exits: {
       down: {
@@ -79,6 +81,7 @@ export const testAreas = {
   },
   'Town Square': {
     roomName: 'Town Square',
+    roomTitle: 'Town Square',
     desc: 'This is the town square.',
     exits: {
       up: {
@@ -98,6 +101,7 @@ export const testAreas = {
   },
   'Gallows': {
     roomName: 'Gallows',
+    roomTitle: 'Gallows',
     desc: 'People are hanged here.',
     exits: {
       west: {
