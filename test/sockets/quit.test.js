@@ -40,6 +40,7 @@ describe('Quit socket listener', () => {
       expect(res.mobs).toEqual(null);
       expect(res.room).toEqual({
         roomName: 'Login Room',
+        roomTitle: 'Welcome to Tempest',
         desc: roomData['Login Room'].desc,
         exits: roomData['Login Room'].exits,
         items: roomData['Login Room'].items

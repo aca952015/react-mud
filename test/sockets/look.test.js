@@ -55,7 +55,7 @@ describe('look', () => {
       it('should show player1 the room\'s description and occupants of player2', done => {
         player1.emit('look', {target: undefined});
         player1.on('generalMessage', res => {
-          expect(res.room.roomName).toEqual('Login Room');
+          expect(res.room.roomTitle).toEqual('Welcome to Tempest');
           expect(res.room.desc).toEqual(roomData['Login Room'].desc);
           expect(res.room.exits).toEqual(roomData['Login Room'].exits);
           expect(res.room.examines).toEqual(null);

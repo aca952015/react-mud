@@ -12,7 +12,7 @@ describe('<Room />', () => {
     props = {
       message: {
         room: {
-          roomName: 'Test room',
+          roomTitle: 'Test room',
           desc: 'Test room desc',
           exits: {
             up: {
@@ -25,7 +25,7 @@ describe('<Room />', () => {
       }
     };
     room = shallow(<Room {...props} />);
-    expect(room.find('h3').text()).toEqual(props.message.room.roomName);
+    expect(room.find('h3').text()).toEqual(props.message.room.roomTitle);
     expect(room.find('p').text()).toEqual(props.message.room.desc);
     expect(room.find('li').text()).toEqual('up');
     expect(room.find('ul').last().text()).toEqual('Exits: [ up ]');
@@ -35,7 +35,7 @@ describe('<Room />', () => {
     props = {
       message: {
         room: {
-          roomName: 'Test room',
+          roomTitle: 'Test room',
           desc: 'Test room desc',
           exits: {
             up: {
@@ -61,7 +61,7 @@ describe('<Room />', () => {
     props = {
       message: {
         room: {
-          roomName: 'Test room',
+          roomTitle: 'Test room',
           desc: 'Test room desc',
           exits: {
             up: {
@@ -82,7 +82,7 @@ describe('<Room />', () => {
     props = {
       message: {
         room: {
-          roomName: 'Test room',
+          roomTitle: 'Test room',
           desc: 'Test desc',
           exits: {},
           items: []
@@ -98,7 +98,7 @@ describe('<Room />', () => {
     props = {
       message: {
         room: {
-          roomName: 'Test room',
+          roomTitle: 'Test room',
           desc: 'Test room desc',
           exits: {
             up: {

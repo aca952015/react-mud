@@ -179,7 +179,7 @@ export const academy = {
         }
       },
       newItem('doodads', 'container sign'),
-      newItem('doodads', 'examines sign')
+      newItem('doodads', 'examine sign')
     ],
     examines: [{
       name: 'hole',

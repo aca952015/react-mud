@@ -21,6 +21,7 @@ export default function movement(socket, users, roomInfo) {
       socket.join(socket.currentRoom);
       const room = {
         roomName: socket.currentRoom,
+        roomTitle: roomInfo[socket.currentRoom].roomTitle,
         desc: tempRoom.desc,
         exits: tempRoom.exits,
         items: tempRoom.items

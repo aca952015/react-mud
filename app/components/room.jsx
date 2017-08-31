@@ -13,7 +13,7 @@ export const Room = props => {
   const exits = Object.keys(room.exits).map((exit, i) => <li key={i}>{room.exits[exit].locked && '('}{exit}{room.exits[exit].locked && ')'}</li>);
 
   return <div className="room">
-    <h3>{room.roomName}</h3>
+    <h3>{room.roomTitle}</h3>
     <p>{room.desc}</p>
     {items.length >  0 && <ul className="items">{items}</ul>}
     <ul className="exits">Exits: [ {exits} ]</ul>

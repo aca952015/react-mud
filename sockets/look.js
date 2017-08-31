@@ -14,6 +14,7 @@ export default function look(socket, users, roomInfo) {
 
     const room = {
       roomName: socket.currentRoom,
+      roomTitle: roomInfo[socket.currentRoom].roomTitle,
       desc: roomInfo[socket.currentRoom].desc,
       exits: roomInfo[socket.currentRoom].exits,
       items: roomInfo[socket.currentRoom].items,

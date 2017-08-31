@@ -7,6 +7,7 @@ export default function quit(socket) {
   socket.on('quit', () => {
     const room = {
       roomName: 'Login Room',
+      roomTitle: roomData['Login Room'].roomTitle,
       desc: roomData['Login Room'].desc,
       exits: roomData['Login Room'].exits,
       items: roomData['Login Room'].items
