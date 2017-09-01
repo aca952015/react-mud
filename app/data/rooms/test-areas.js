@@ -4,18 +4,18 @@ import newItem, {itemData} from '../items.js';
 import newMob from '../mobs.js';
 
 export const testAreas = {
-  'Nexus': {
-    roomName: 'Nexus',
+  'Test - Nexus': {
+    roomName: 'Test - Nexus',
     roomTitle: 'Nexus',
     desc: 'Welcome to the nexus. Type HELP to get a list of commands available.',
     exits: {
       up: {
-        exit: 'Secret Room',
+        exit: 'Test - Secret Room',
         locked: true,
         requiredKey: itemData['keys']['secret key']
       },
       down: {
-        exit: 'Town Square',
+        exit: 'Test - Town Square',
         locked: false
       }
     },
@@ -63,13 +63,13 @@ export const testAreas = {
     itemResetTimer: 0,
     mobResetTimer: 0
   },
-  'Secret Room': {
-    roomName: 'Secret Room',
+  'Test - Secret Room': {
+    roomName: 'Test - Secret Room',
     roomTitle: 'Secret Room',
     desc: 'This room is a secret. You shouldn\'t be here.',
     exits: {
       down: {
-        exit: 'Nexus',
+        exit: 'Test - Nexus',
         locked: true,
         requiredKey: itemData['keys']['secret key']
       }
@@ -79,17 +79,17 @@ export const testAreas = {
     itemResetTimer: 0,
     mobResetTimer: 0
   },
-  'Town Square': {
-    roomName: 'Town Square',
+  'Test - Town Square': {
+    roomName: 'Test - Town Square',
     roomTitle: 'Town Square',
     desc: 'This is the town square.',
     exits: {
       up: {
-        exit: 'Nexus',
+        exit: 'Test - Nexus',
         locked: false
       },
       east: {
-        exit: 'Gallows',
+        exit: 'Test - Gallows',
         locked: true,
         requiredKey: itemData['keys']['gallows key']
       }
@@ -99,13 +99,13 @@ export const testAreas = {
     itemResetTimer: 0,
     mobResetTimer: 0
   },
-  'Gallows': {
-    roomName: 'Gallows',
+  'Test - Gallows': {
+    roomName: 'Test - Gallows',
     roomTitle: 'Gallows',
     desc: 'People are hanged here.',
     exits: {
       west: {
-        exit: 'Town Square',
+        exit: 'Test - Town Square',
         locked: true,
         requiredKey: itemData['keys']['gallows key']
       }

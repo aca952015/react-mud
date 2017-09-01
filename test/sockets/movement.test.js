@@ -15,8 +15,8 @@ describe('movement', () => {
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
-      player1.emit('teleport', 'Nexus');
-      player2.emit('teleport', 'Nexus');
+      player1.emit('teleport', 'Test - Nexus');
+      player2.emit('teleport', 'Test - Nexus');
       player2.emit('updateSocket');
       player2.on('updateComplete', () => done());
     });
@@ -48,7 +48,7 @@ describe('movement', () => {
     it('should emit a move event with the new room name', done => {
       player1.emit('move', {direction: 'down'});
       player1.on('move', res => {
-        expect(res).toEqual('Town Square');
+        expect(res).toEqual('Test - Town Square');
         done();
       });
     });
@@ -57,7 +57,7 @@ describe('movement', () => {
       it('should emit a generalMessage event with feedback, occupants, mobs, and room', done => {
         player1.emit('move', {direction: 'down'});
         player1.on('generalMessage', res => {
-          let townSquare = roomData['Town Square'];
+          let townSquare = roomData['Test - Town Square'];
           expect(res.feedback).toEqual('You move down.');
           expect(res.occupants).toEqual([]);
           expect(res.room.name).toEqual(townSquare.name);
@@ -74,7 +74,7 @@ describe('movement', () => {
       beforeEach(done => {
         player3 = io.connect(url, ioOptions);
         player3.on('connect', () => {
-          player3.emit('teleport', 'Nexus');
+          player3.emit('teleport', 'Test - Nexus');
           player3.emit('changeName', 'player3');
           player3.emit('updateEffects', {death: true});
           player3.emit('updateSocket');
@@ -115,7 +115,7 @@ describe('movement', () => {
         beforeEach(done => {
           player3 = io.connect(url, ioOptions);
           player3.on('connect', () => {
-            player3.emit('teleport', 'Nexus');
+            player3.emit('teleport', 'Test - Nexus');
             player3.emit('changeName', 'player3');
             player3.emit('updateEffects', {death: true});
             player3.emit('updateSocket');

@@ -16,8 +16,8 @@ describe('Kill', () => {
     player1.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
-      player1.emit('teleport', 'Nexus');
-      player2.emit('teleport', 'Nexus');
+      player1.emit('teleport', 'Test - Nexus');
+      player2.emit('teleport', 'Test - Nexus');
       player2.emit('updateSocket');
       player2.on('updateComplete', () => done());
     });

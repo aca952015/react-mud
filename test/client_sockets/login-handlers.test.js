@@ -34,9 +34,9 @@ describe('Login handler client listeners', () => {
     player2 = io.connect(url, ioOptions);
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
-      player1.emit('teleport', 'Nexus');
+      player1.emit('teleport', 'Test - Nexus');
       player2.emit('changeName', 'player2');
-      player2.emit('teleport', 'Nexus');
+      player2.emit('teleport', 'Test - Nexus');
       player2.emit('updateSocket');
       player2.on('updateComplete', () => {
         socketHandlers({
@@ -93,7 +93,7 @@ describe('Login handler client listeners', () => {
           expect(props.dispatch.calledWith(loginUser({loginUser: res.loginUser}))).toEqual(true);
           expect(props.dispatch.calledWith(loginEquipment({loginEquipment: res.loginEquipment}))).toEqual(true);
           expect(props.dispatch.calledWith(loginEffects({loginEffects: res.effects}))).toEqual(true);
-          expect(props.dispatch.calledWith(changeRoom('Academy Entrance'))).toEqual(true);
+          expect(props.dispatch.calledWith(changeRoom('Academy - Academy Entrance'))).toEqual(true);
           done();
         });
       });
@@ -103,7 +103,7 @@ describe('Login handler client listeners', () => {
       let player4;
       beforeEach(done => {
         player4 = io.connect('http://0.0.0.0:5000', ioOptions);
-        props = {...props, currentRoom: 'Town Square'};
+        props = {...props, currentRoom: 'Test - Town Square'};
         player4.on('connect', () => {
           socketHandlers({socket: player4, props});
           done();
@@ -118,7 +118,7 @@ describe('Login handler client listeners', () => {
       it('should call changeRoom with the proper room', done => {
         player4.emit('createCharacter', {...user, newUsername: 'Davy', password: 'banana', equipment});
         player4.on('loginSuccessful', () => {
-          expect(props.dispatch.calledWith(changeRoom('Town Square'))).toEqual(true);
+          expect(props.dispatch.calledWith(changeRoom('Test - Town Square'))).toEqual(true);
           done();
         });
       });

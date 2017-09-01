@@ -5,7 +5,7 @@ import movementHandler from '../../app/handlers/movement-handler.js';
 
 describe('movementHandler', () => {
   let props = {
-    currentRoom: 'Nexus',
+    currentRoom: 'Test - Nexus',
     combat: {
       targets: null,
       active: false
