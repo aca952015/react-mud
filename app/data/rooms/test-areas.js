@@ -61,7 +61,8 @@ export const testAreas = {
     }],
     mobs: [newMob('bat'), newMob('bat'), newMob('armored zombie'), newMob('healer')],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Test - Secret Room': {
     roomName: 'Test - Secret Room',
@@ -97,7 +98,8 @@ export const testAreas = {
     items: [newItem('keys', 'useless key'), newItem('containers', 'backpack')],
     mobs: [newMob('bat'), newMob('bat')],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Test - Gallows': {
     roomName: 'Test - Gallows',
@@ -118,6 +120,7 @@ export const testAreas = {
     }],
     mobs: [],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   }
 };
