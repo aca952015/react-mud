@@ -21,15 +21,15 @@ const alteredRooms = [];
 process.env.TESTING = true;
 
 io.sockets.on('connection', function(socket) {
-  initialConnect(socket);
+  socket.currentRoom = 'Test - Nexus';
+  socket.join('Test - Nexus');
   socket.on('disconnect', () => users.splice(users.indexOf(users.find(user => user.username === socket.username)), 1));
-  socket.currentRoom = 'Nexus';
-  socket.join('Nexus');
+  initialConnect(socket);
   socket.on('changeName', name => {
     if (name === 'alien') {
-      socket.currentRoom = 'Town Square';
-      socket.leave('Nexus');
-      socket.join('Town Square');
+      socket.currentRoom = 'Test - Town Square';
+      socket.leave('Test - Nexus');
+      socket.join('Test - Town Square');
     }
     socket.username = name;
     users.push(socket);

@@ -12,7 +12,7 @@ describe('teleport', () => {
     player1 = io.connect('http://0.0.0.0:5000', ioOptions);
     player2 = io.connect('http://0.0.0.0:5000', ioOptions);
     player2.emit('changeName', 'player2');
-    player2.emit('teleport', 'Nexus');
+    player2.emit('teleport', 'Test - Nexus');
     player2.emit('updateSocket');
     player2.on('updateComplete', () => {
       done();
@@ -31,11 +31,11 @@ describe('teleport', () => {
   });
 
   it('should emit the new room\'s occupants, roomData, and mobs', done => {
-    player1.emit('teleport', 'Nexus');
+    player1.emit('teleport', 'Test - Nexus');
     player1.on('generalMessage', res => {
-      expect(res.mobs).toEqual(roomData['Nexus'].mobs);
+      expect(res.mobs).toEqual(roomData['Test - Nexus'].mobs);
 
-      let room = roomData['Nexus'];
+      const room = roomData['Test - Nexus'];
       delete room.mobs;
       expect({...res.room, itemResetTimer: 0, mobResetTimer: 0}).toEqual(room);
       expect(res.occupants).toEqual(['player2']);
@@ -50,7 +50,7 @@ describe('teleport', () => {
       player3 = io.connect('http://0.0.0.0:5000', ioOptions);
       player3.on('connect', () => {
         player3.emit('changeName', 'player3');
-        player3.emit('teleport', 'Gallows');
+        player3.emit('teleport', 'Test - Gallows');
         player3.emit('updateEffects', {death: true});
         player3.emit('updateSocket');
         player3.on('updateComplete', () => done());
@@ -63,7 +63,7 @@ describe('teleport', () => {
     });
 
     it('should show ghosts if there are any', done => {
-      player1.emit('teleport', 'Gallows');
+      player1.emit('teleport', 'Test - Gallows');
       player1.on('generalMessage', res => {
         expect(res.occupants).toEqual(['The ghost of player3']);
         done();

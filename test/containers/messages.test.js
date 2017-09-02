@@ -41,7 +41,7 @@ describe('<Messages />', () => {
     props = {
       messages: [{
         room: {
-          roomName: 'Test room',
+          roomTitle: 'Test room',
           desc: 'This is the test room.',
           exits: {
             up: {

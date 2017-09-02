@@ -31,9 +31,9 @@ describe('Inventory handler client listeners', () => {
     player2 = io.connect(url, ioOptions);
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
-      player1.emit('teleport', 'Nexus');
+      player1.emit('teleport', 'Test - Nexus');
       player2.emit('changeName', 'player2');
-      player2.emit('teleport', 'Nexus');
+      player2.emit('teleport', 'Test - Nexus');
       player2.emit('updateSocket');
       player2.on('updateComplete', () => {
         socketHandlers({
@@ -58,7 +58,7 @@ describe('Inventory handler client listeners', () => {
     closeServer();
     done();
   });
-  
+
   describe('forceDrop', () => {
     it('should dispatch dropItem with the ID returned', done => {
       player1.emit('move', {direction: 'down'});

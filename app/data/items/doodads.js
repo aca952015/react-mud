@@ -43,13 +43,23 @@ export const doodads = {
   },
   'equipment sign': {
     name: 'equipment sign',
-    short: 'equipment sign',
+    short: 'a simple wooden sign',
     type: 'doodad',
     long: 'A sign hangs on the wall here, with some directions scrawled across it.',
     terms: ['sign', 'directions'],
     category: 'doodads',
     drink: null,
     description: 'In order to equip an item you\'ve picked up, use the WEAR command. Try HELP WEAR for more information. You can also pick up many items at once using GET ALL.'
+  },
+  'examine sign': {
+    name: 'examine sign',
+    short: 'a small sign',
+    type: 'doodad',
+    long: 'A small sign hangs on the wall above a simple wooden sign.',
+    terms: ['sign', 'small'],
+    category: 'doodads',
+    drink: null,
+    description: 'Some rooms have "hidden" things you can look at, usually hinted at in the description. In this room, try LOOK HOLE.'
   },
   'get sign': {
     name: 'get sign',

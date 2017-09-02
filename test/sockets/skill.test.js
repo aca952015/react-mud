@@ -18,14 +18,14 @@ describe('skill', () => {
       player2.emit('changeName', 'player2');
       player2.emit('updateEquipment', equipment);
       player2.emit('updateEffects', {});
-      player3.emit('teleport', 'Nexus');
+      player3.emit('teleport', 'Test - Nexus');
       player3.emit('changeName', 'player3');
       player3.emit('updateEquipment', equipment);
       player3.emit('updateEffects', {});
       player1.emit('changeName', 'player1');
       player1.emit('updateEquipment', equipment);
       player1.emit('updateEffects', {});
-      player1.emit('teleport', 'Nexus');
+      player1.emit('teleport', 'Test - Nexus');
       player1.emit('updateSocket');
       player1.on('updateComplete', () => done());
     });
@@ -163,7 +163,7 @@ describe('skill', () => {
           player1.emit('kill', {target: 'zombie'});
           player1.on('enterCombat', res => {
             target = res;
-            player2.emit('teleport', 'Nexus');
+            player2.emit('teleport', 'Test - Nexus');
             player2.emit('updateSocket');
             player2.on('updateComplete', () => {
               player1.emit('skill', {enemy: target, skillTypes: ['physical', 'damage'], damage: 5, echoLog: {}});
@@ -326,7 +326,7 @@ describe('skill', () => {
 
   describe('With a dead target', () => {
     beforeEach(done => {
-      player2.emit('teleport', 'Nexus');
+      player2.emit('teleport', 'Test - Nexus');
       player2.emit('updateEffects', {death: true});
       player2.emit('updateSocket');
       player2.on('updateComplete', () => done());
