@@ -37,7 +37,7 @@ describe('teleport', () => {
 
       const room = roomData['Test - Nexus'];
       delete room.mobs;
-      expect({...res.room, itemResetTimer: 0, mobResetTimer: 0}).toEqual(room);
+      expect({...res.room, itemResetTimer: 0, mobResetTimer: 0, lockedExitTimer: 0}).toEqual(room);
       expect(res.occupants).toEqual(['player2']);
       done();
     });

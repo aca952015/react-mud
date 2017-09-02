@@ -1,6 +1,6 @@
 'use strict';
 
-export default function unlock(socket, roomData) {
+export default function unlock(socket, roomData, alteredRooms) {
   const opposites = {
     'east': 'west',
     'west': 'east',
@@ -31,6 +31,7 @@ export default function unlock(socket, roomData) {
     const targetExits = roomData[targetRoom].exits;
     const oppositeExit = targetExits[opposites[keyInfo.direction]];
     oppositeExit.locked = !oppositeExit.locked;
+    if (!exit.locked) alteredRooms.push(socket.currentRoom);
 
     const action = oppositeExit.locked ? 'lock' : 'unlock';
 

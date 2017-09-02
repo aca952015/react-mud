@@ -18,7 +18,8 @@ export const academy = {
     examines: [],
     mobs: [],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Academy - Academy Foyer': {
     roomName: 'Academy - Academy Foyer',
@@ -41,7 +42,8 @@ export const academy = {
     items: [],
     mobs: [],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Academy - Combat Training Hall': {
     roomName: 'Academy - Combat Training Hall',
@@ -64,7 +66,8 @@ export const academy = {
     items: [newItem('doodads', 'combat training directions')],
     mobs: [],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Academy - Combat Basics': {
     roomName: 'Academy - Combat Basics',
@@ -83,7 +86,8 @@ export const academy = {
     items: [newItem('doodads', 'combat basics sign')],
     mobs: [newMob('animated dummy')],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Academy - Room of Animation': {
     roomName: 'Academy - Room of Animation',
@@ -98,7 +102,8 @@ export const academy = {
     items: [],
     mobs: [newMob('animated dummy'), newMob('animated dummy'), newMob('animated dummy'), newMob('animated dummy')],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Academy - Skill Room': {
     roomName: 'Academy - Skill Room',
@@ -113,7 +118,8 @@ export const academy = {
     items: [],
     mobs: [newMob('animated dummy'), newMob('animated dummy')],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Academy - Movement Hall': {
     roomName: 'Academy - Movement Hall',
@@ -132,7 +138,8 @@ export const academy = {
     items: [newItem('doodads', 'movement hall directions')],
     mobs: [],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Academy - Get Room': {
     roomName: 'Academy - Get Room',
@@ -152,7 +159,8 @@ export const academy = {
     items: [newItem('keys', 'academy key'), newItem('doodads', 'get sign')],
     mobs: [],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Academy - Get From Container Room': {
     roomName: 'Academy - Get From Container Room',
@@ -188,7 +196,8 @@ export const academy = {
     }],
     mobs: [],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Academy - Equipment Room': {
     roomName: 'Academy - Equipment Room',
@@ -212,6 +221,7 @@ export const academy = {
     ],
     mobs: [],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   }
 };

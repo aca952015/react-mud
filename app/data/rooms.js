@@ -14,6 +14,7 @@ export const roomData = {
     items: [],
     mobs: [],
     itemResetTimer: 0,
-    mobResetTimer: 0
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   }
 };
