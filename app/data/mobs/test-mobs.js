@@ -17,7 +17,8 @@ export const testMobs = {
     effects: {},
     skills: {
       'bash': mobSkills['bash']
-    }
+    },
+    drops: []
   },
   'armored zombie': {
     name: 'armored zombie',
@@ -31,6 +32,11 @@ export const testMobs = {
     def: 3,
     mdf: 0,
     effects: {},
-    skills: {}
+    skills: {},
+    drops: [{
+      category: 'potions',
+      name: 'health potion',
+      chance: 0.5
+    }]
   }
 };
