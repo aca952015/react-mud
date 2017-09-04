@@ -17,6 +17,11 @@ export const academyMobs = {
     effects: {},
     skills: {
       'bash': mobSkills['bash']
-    }
+    },
+    drops: [{
+      category: 'potions',
+      name: 'health potion',
+      chance: 0.5
+    }]
   }
 };
