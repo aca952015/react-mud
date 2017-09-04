@@ -1,55 +1,117 @@
 'use strict';
 
+import newItem from '../data/items.js';
+
 export default function itemRespawnProcessor(originalArray, currentArray) {
-  // Get a count of every item or mob that should be in the room
-  // Since items have a category, but mobs do not, account for that
-  const originalCounts = originalArray.reduce((acc, item) => {
-    acc[item.name] = {
-      count: acc[item.name] ? acc[item.name].count + 1 : 1,
-      category: item.category ? item.category : null
-    };
+  const processor = {
+    itemsToRespawn: [],
+    itemsToRemove: []
+  };
+
+  const originalItems = originalArray.reduce((acc, item) => {
+    if (acc[item.name]) acc[item.name].push(item);
+    else acc[item.name] = [item];
+
     return acc;
   }, {});
 
-  // Get a count of every item or mob that's currently in the room
-  // Since items have a category, but mobs do not, account for that
-  const currentCounts = currentArray.reduce((acc, item) => {
-    acc[item.name] = {
-      count: acc[item.name] ? acc[item.name].count + 1 : 1,
-      category: item.category ? item.category : null
-    };
+  const currentItems = currentArray.reduce((acc, item) => {
+    if (acc[item.name]) acc[item.name].push(item);
+    else acc[item.name] = [item];
+
     return acc;
   }, {});
 
-  const itemsToRespawn = [];
+  for (const item in originalItems) {
+    const currentItemArray = currentItems[item];
+    const originalItemArray = originalItems[item];
 
-  // For each item that should be in the room, check if it currently exists in the room.
-  for (const item in originalCounts) {
-    const currentItemCounts = currentCounts[item];
-    const originalItemCounts = originalCounts[item].count;
-
-    // If there are currently none of the item, we need to respawn all the items originally
-    // there. For example, if the room originally had 3 leather helms and now has none,
-    // we need to respawn 3 leather helms.
-    if (!currentItemCounts) {
-      for (let i = 0; i < originalItemCounts; i++) {
-        if (originalCounts[item].category) itemsToRespawn.push({category: originalCounts[item].category, name: item});
-        else itemsToRespawn.push({name: item});
+    if (!currentItemArray) {
+      for (let i = 0; i < originalItemArray.length; i++) {
+        const itemToRespawn = {category: originalItems[item][i].category, name: item};
+        if (originalItems[item][i].container) {
+          itemToRespawn.respawnContents = originalItems[item][i].container.contains;
+        }
+        processor.itemsToRespawn.push(itemToRespawn);
       }
       continue;
     }
 
-    // If the item does exist in the room, check if the correct number of them exist.
-    // If not, respawn the difference between what should be there and what is there.
-    // For example, if the room originally had 3 leather helms and the room currently has 2,
-    // 1 leather helm needs to be respawned.
-    if (currentItemCounts.count !== originalItemCounts) {
-      for (let i = 0; i < originalItemCounts - currentItemCounts.count; i++) {
-        if (originalCounts[item].category) itemsToRespawn.push({category: originalCounts[item].category, name: item});
-        else itemsToRespawn.push({name: item});
+    // If there are some of an item in the room, but some are missing, check if
+    // what we need to restore is a container. If so, then we need to match the
+    // missing container's contents to the missing container.
+    // As an example, if the room is supposed to have 3 backpacks that each hold
+    // a health potion, but two of them are missing, then we need to know that
+    // not only do we need to respawn 2 backpacks, but each backpack is supposed
+    // to have a health potion.
+    // Another example: If the room is supposed to have 3 backpacks, one holding
+    // a key, one holding a health potion, and one holding a sword, and the one
+    // with the health potion and the one with the sword are missing, then we
+    // need to make sure we respawn two backpacks: one with a health potion and one
+    // with a sword.
+    // If the item isn't a container, then it's significantly simpler and we can just
+    // respawn copies of each item equal to the number missing. e.g., if there are
+    // supposed to be 3 leather helms, and 2 are missing, we just respawn 2 leather
+    // helms.
+    if (currentItemArray.length !== originalItemArray.length) {
+      if (currentItemArray[0].container) {
+        for (let i = 0; i < originalItemArray.length; i++) {
+          for (let j = 0; j < currentItemArray.length; j++) {
+            // If we find a container currently in the room that has the correct contents,
+            // we mark the original array's contains as "empty" to denote that we don't
+            // need to respawn it.
+            if (JSON.stringify(currentItemArray[j].container.contains) === JSON.stringify(originalItemArray[i].container.contains)) {
+              originalItemArray[i].containers.contains = [];
+              break;
+            }
+          }
+
+          // If we didn't "empty" the contents of the current item in the original array,
+          // then it needs to be respawned.
+          if (originalItemArray[i].containers.contains.length) {
+            processor.itemsToRespawn.push({
+              category: originalItems[item][i].category,
+              respawnContents: originalItemArray[i].container.contains,
+              name: item
+            });
+          }
+        }
+      } else {
+        for (let i = 0; i < originalItemArray.length - currentItemArray.length; i++) {
+          processor.itemsToRespawn.push({category: originalItems[item][i].category, name: item});
+        }
+      }
+      continue;
+    }
+
+    // If the correct number of items exists in the room, it might still be the case
+    // that container contents don't match. As an example, if there are supposed to be
+    // 2 backpacks in the room, each with a health potion, and there are 2 backpacks in
+    // the room, but one is missing its health potion, we need to respawn that backpack
+    // with a health potion inside it. However, we also want to maintain the current
+    // contents of that backpack.
+    // We also need to remove the original container with missing contents so as not to create
+    // duplicates.
+    // As an example, if a backpack is supposed to have a health potion inside it, but it
+    // has two mana potions, we want to remove that backpack, but spawn one that has two
+    // mana potions and a health potion inside it.
+    // This check ONLY needs to be made in the case of containers, however. The previous
+    // two conditional clauses will handle all other items.
+    if (currentItemArray[0].container) {
+      for (let i = 0; i < originalItemArray.length; i++) {
+        const itemProcessor = itemRespawnProcessor(originalItemArray[i].container.contains, currentItemArray[i].container.contains);
+        itemProcessor.itemsToRespawn = itemProcessor.itemsToRespawn.map(_item => newItem(_item.category, _item.name));
+        if (itemProcessor.itemsToRespawn.length) {
+          processor.itemsToRespawn.push({
+            category: originalItems[item][i].category,
+            respawnContents: itemProcessor.itemsToRespawn.concat(currentItemArray[i].container.contains),
+            name: item
+          });
+          processor.itemsToRemove.push({id: currentItemArray[i].id});
+        }
       }
     }
   }
 
-  return itemsToRespawn;
+  return processor;
 }
