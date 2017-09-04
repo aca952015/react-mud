@@ -33,6 +33,10 @@ export const testMobs = {
     mdf: 0,
     effects: {},
     skills: {},
-    drops: []
+    drops: [{
+      category: 'potions',
+      name: 'health potion',
+      chance: 0.5
+    }]
   }
 };
