@@ -1,7 +1,5 @@
 'use strict';
 
-import newItem from '../data/items.js';
-
 export default function itemRespawnProcessor(originalArray, currentArray) {
   const processor = {
     itemsToRespawn: [],
@@ -30,7 +28,7 @@ export default function itemRespawnProcessor(originalArray, currentArray) {
       for (let i = 0; i < originalItemArray.length; i++) {
         const itemToRespawn = {category: originalItems[item][i].category, name: item};
         if (originalItems[item][i].container) {
-          itemToRespawn.respawnContents = originalItems[item][i].container.contains;
+          itemToRespawn.respawnContents = itemRespawnProcessor(originalItems[item][i].container.contains, []).itemsToRespawn;
         }
         processor.itemsToRespawn.push(itemToRespawn);
       }
@@ -57,21 +55,14 @@ export default function itemRespawnProcessor(originalArray, currentArray) {
       if (currentItemArray[0].container) {
         for (let i = 0; i < originalItemArray.length; i++) {
           for (let j = 0; j < currentItemArray.length; j++) {
-            // If we find a container currently in the room that has the correct contents,
-            // we mark the original array's contains as "empty" to denote that we don't
-            // need to respawn it.
-            if (JSON.stringify(currentItemArray[j].container.contains) === JSON.stringify(originalItemArray[i].container.contains)) {
-              originalItemArray[i].containers.contains = [];
+            const itemProcessor = itemRespawnProcessor(originalItemArray[i].container.contains, currentItemArray[j].container.contains);
+            if (!itemProcessor.itemsToRespawn.length) {
+              currentItemArray[j].container.contains = [];
               break;
             }
-          }
-
-          // If we didn't "empty" the contents of the current item in the original array,
-          // then it needs to be respawned.
-          if (originalItemArray[i].containers.contains.length) {
             processor.itemsToRespawn.push({
               category: originalItems[item][i].category,
-              respawnContents: originalItemArray[i].container.contains,
+              respawnContents: itemProcessor.itemsToRespawn,
               name: item
             });
           }
@@ -100,11 +91,11 @@ export default function itemRespawnProcessor(originalArray, currentArray) {
     if (currentItemArray[0].container) {
       for (let i = 0; i < originalItemArray.length; i++) {
         const itemProcessor = itemRespawnProcessor(originalItemArray[i].container.contains, currentItemArray[i].container.contains);
-        itemProcessor.itemsToRespawn = itemProcessor.itemsToRespawn.map(_item => newItem(_item.category, _item.name));
         if (itemProcessor.itemsToRespawn.length) {
+          const currentItems = currentItemArray[i].container.contains.map(_item => ({category: _item.category, name: _item.name}));
           processor.itemsToRespawn.push({
             category: originalItems[item][i].category,
-            respawnContents: itemProcessor.itemsToRespawn.concat(currentItemArray[i].container.contains),
+            respawnContents: itemProcessor.itemsToRespawn.concat(currentItems),
             name: item
           });
           processor.itemsToRemove.push({id: currentItemArray[i].id});
