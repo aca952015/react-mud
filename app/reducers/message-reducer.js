@@ -9,7 +9,11 @@ export const initialState = {
 
 export default function reducer(state=initialState, action) {
   switch(action.type) {
-    case 'NEW_MESSAGE': return {...state, messages: [...state.messages, action.payload]};
+    case 'NEW_MESSAGE': {
+      let messages = state.messages.concat(action.payload);
+      if (messages.length > 50) messages = messages.slice(messages.length - 50);
+      return {...state, messages};
+    }
     case 'UPDATE_COMMAND_INDEX': return {...state, commandIndex: state.commandIndex + action.payload};
     case 'UPDATE_INPUT': return {...state, input: action.payload};
     case 'UPDATE_PREV_COMMANDS': return {...state, prevCommands: [...state.prevCommands, action.payload]};

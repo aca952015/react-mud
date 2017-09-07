@@ -53,6 +53,7 @@ export default function pickUpItem(socket, roomData, alteredRooms) {
       validItems.forEach(item => container.container.contains.splice(container.container.contains.indexOf(item), 1));
       socket.emit('getAll', {itemArray: validItems});
       socket.emit('generalMessage', {feedback: `You get everything you can from ${container.short}.`});
+      if (!alteredRooms.includes(socket.currentRoom)) alteredRooms.push(socket.currentRoom);
       return socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` gets everything they can from ${container.short}.`});
     }
 
@@ -63,6 +64,7 @@ export default function pickUpItem(socket, roomData, alteredRooms) {
     socket.emit('forceGet', item);
     socket.emit('generalMessage', {feedback: `You pick up ${item.short} from ${container.short}.`});
     container.container.contains.splice(container.container.contains.indexOf(item), 1);
+    if (!alteredRooms.includes(socket.currentRoom)) alteredRooms.push(socket.currentRoom);
     socket.broadcast.to(socket.currentRoom).emit('generalMessage', {from: socket.username, feedback: ` gets ${item.short} from ${container.short}.`});
   });
 }
