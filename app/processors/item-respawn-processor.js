@@ -60,6 +60,9 @@ export default function itemRespawnProcessor(originalArray, currentArray) {
               currentItemArray[j].container.contains = [];
               break;
             }
+            if (!currentItemArray[j].container.contains.length && !processor.itemsToRemove.find(_item => _item.id === currentItemArray[j].id)) {
+              processor.itemsToRemove.push({id: currentItemArray[j].id});
+            }
             processor.itemsToRespawn.push({
               category: originalItems[item][i].category,
               respawnContents: itemProcessor.itemsToRespawn,

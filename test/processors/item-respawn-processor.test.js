@@ -204,7 +204,7 @@ describe('item respawn processor', () => {
                   name: backpackWithPotion2.name
                 }
               ],
-              itemsToRemove: []
+              itemsToRemove: [{id: backpackWithPotion4.id}]
             });
           });
         });
@@ -236,7 +236,7 @@ describe('item respawn processor', () => {
                   name: backpackWithSword.name
                 }
               ],
-              itemsToRemove: []
+              itemsToRemove: [{id: backpackWithPotion4.id}]
             });
           });
         });
