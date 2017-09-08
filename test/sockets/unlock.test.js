@@ -6,6 +6,7 @@ import ioOptions from '../lib/io-options.js';
 import newItem from '../../app/data/items.js';
 
 describe('Unlock', () => {
+  const TEST_ROOM = 'Test - Nexus';
   let player1, player2, url = 'http://0.0.0.0:5000';
   require('../lib/test-server.js');
 
@@ -15,8 +16,8 @@ describe('Unlock', () => {
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
-      player1.emit('teleport', 'Nexus');
-      player2.emit('teleport', 'Nexus');
+      player1.emit('teleport', TEST_ROOM);
+      player2.emit('teleport', TEST_ROOM);
       player2.emit('updateSocket');
       player2.on('updateComplete', () => done());
     });

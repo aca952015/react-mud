@@ -8,6 +8,7 @@ export default function teleport(socket, users, roomInfo) {
 
     const roomData = {
       roomName: socket.currentRoom,
+      roomTitle: roomInfo[socket.currentRoom].roomTitle,
       desc: roomInfo[socket.currentRoom].desc,
       exits: roomInfo[socket.currentRoom].exits,
       items: roomInfo[socket.currentRoom].items,

@@ -6,12 +6,12 @@ import ioOptions from '../lib/io-options.js';
 import closeServer from '../lib/test-server.js';
 
 describe('Drop item', () => {
-  let socket, socket2;
+  let socket, socket2, url = 'http://0.0.0.0:5000';
   require('../lib/test-server.js');
 
   beforeEach(done => {
-    socket = io.connect('http://0.0.0.0:5000', ioOptions);
-    socket2 = io.connect('http://0.0.0.0:5000', ioOptions);
+    socket = io.connect(url, ioOptions);
+    socket2 = io.connect(url, ioOptions);
     socket2.on('connect', () => {
       done();
     });

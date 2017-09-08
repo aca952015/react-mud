@@ -7,6 +7,7 @@ import newMob from '../../app/data/mobs.js';
 import newItem from '../../app/data/items.js';
 
 describe('mobTargetSelector', () => {
+  const TEST_ROOM = 'Test - Nexus';
   let player1, player2;
   let bat = newMob('bat');
   let equipment = {
@@ -24,8 +25,8 @@ describe('mobTargetSelector', () => {
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
-      player1.emit('teleport', 'Nexus');
-      player2.emit('teleport', 'Nexus');
+      player1.emit('teleport', TEST_ROOM);
+      player2.emit('teleport', TEST_ROOM);
       player2.emit('updateSocket');
       player2.on('updateComplete', () => player1.emit('kill', {target: 'bat'}));
     });

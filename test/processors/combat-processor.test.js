@@ -32,7 +32,7 @@ describe('combatProcessor', () => {
     player1 = io.connect('http://0.0.0.0:5000', ioOptions);
     player1.on('connect', () => {
       player1.emit('changeName', 'player1');
-      player1.emit('teleport', 'Nexus');
+      player1.emit('teleport', 'Test - Nexus');
       player1.emit('updateSocket');
       player1.on('updateComplete', () => done());
     });

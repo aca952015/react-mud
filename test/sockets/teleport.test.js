@@ -6,13 +6,14 @@ import ioOptions from '../lib/io-options.js';
 import {roomData} from '../../app/data/rooms.js';
 
 describe('teleport', () => {
-  let player1, player2;
+  const TEST_ROOM = 'Test - Nexus';
+  let player1, player2, url = 'http://0.0.0.0:5000';
 
   beforeEach(done => {
-    player1 = io.connect('http://0.0.0.0:5000', ioOptions);
-    player2 = io.connect('http://0.0.0.0:5000', ioOptions);
+    player1 = io.connect(url, ioOptions);
+    player2 = io.connect(url, ioOptions);
     player2.emit('changeName', 'player2');
-    player2.emit('teleport', 'Nexus');
+    player2.emit('teleport', TEST_ROOM);
     player2.emit('updateSocket');
     player2.on('updateComplete', () => {
       done();
@@ -31,13 +32,13 @@ describe('teleport', () => {
   });
 
   it('should emit the new room\'s occupants, roomData, and mobs', done => {
-    player1.emit('teleport', 'Nexus');
+    player1.emit('teleport', TEST_ROOM);
     player1.on('generalMessage', res => {
-      expect(res.mobs).toEqual(roomData['Nexus'].mobs);
+      expect(res.mobs).toEqual(roomData[TEST_ROOM].mobs);
 
-      let room = roomData['Nexus'];
+      const room = roomData[TEST_ROOM];
       delete room.mobs;
-      expect({...res.room, itemResetTimer: 0, mobResetTimer: 0}).toEqual(room);
+      expect({...res.room, itemResetTimer: 0, mobResetTimer: 0, lockedExitTimer: 0}).toEqual(room);
       expect(res.occupants).toEqual(['player2']);
       done();
     });
@@ -47,10 +48,10 @@ describe('teleport', () => {
     let player3;
 
     beforeEach(done => {
-      player3 = io.connect('http://0.0.0.0:5000', ioOptions);
+      player3 = io.connect(url, ioOptions);
       player3.on('connect', () => {
         player3.emit('changeName', 'player3');
-        player3.emit('teleport', 'Gallows');
+        player3.emit('teleport', 'Test - Gallows');
         player3.emit('updateEffects', {death: true});
         player3.emit('updateSocket');
         player3.on('updateComplete', () => done());
@@ -63,7 +64,7 @@ describe('teleport', () => {
     });
 
     it('should show ghosts if there are any', done => {
-      player1.emit('teleport', 'Gallows');
+      player1.emit('teleport', 'Test - Gallows');
       player1.on('generalMessage', res => {
         expect(res.occupants).toEqual(['The ghost of player3']);
         done();

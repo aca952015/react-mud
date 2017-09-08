@@ -8,10 +8,20 @@ describe('message reducer', () => {
   });
 
   describe('With a NEW_MESSAGE action', () => {
-    it('should return the current state, with the messages array updated with the payload', () => {
-      expect(reducer(undefined, {type: 'NEW_MESSAGE', payload: 'New message'})).toEqual({
-        ...initialState,
-        messages: ['New message']
+    describe('With less than 50 messages', () => {
+      it('should return the current state, with the messages array updated with the payload', () => {
+        expect(reducer(undefined, {type: 'NEW_MESSAGE', payload: 'New message'})).toEqual({
+          ...initialState,
+          messages: ['New message']
+        });
+      });
+    });
+
+    describe('With more than 50 messages', () => {
+      it('should truncate messages to the 50 most recent messages', () => {
+        expect(reducer({messages: Array(50)}, {type: 'NEW_MESSAGE', payload: 'New message'})).toEqual({
+          messages: [...Array(49), 'New message']
+        });
       });
     });
   });

@@ -45,7 +45,7 @@ export default function serverSocketListeners(io, socket, users, roomData, mobsI
   resurrect(socket, roomData);
   saveCharacter(socket, users);
   teleport(socket, users, roomData);
-  unlock(socket, roomData);
+  unlock(socket, roomData, alteredRooms);
   wearItem(socket);
   whisper(io, socket, users);
   skill(socket, roomData, mobsInCombat, alteredRooms, users);

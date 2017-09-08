@@ -5,16 +5,17 @@ import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 
 describe('resurrect', () => {
-  let player1, player2;
+  const TEST_ROOM = 'Test - Nexus';
+  let player1, player2, url = 'http://0.0.0.0:5000';
 
   beforeEach(done => {
-    player1 = io.connect('http://0.0.0.0:5000', ioOptions);
-    player2 = io.connect('http://0.0.0.0:5000', ioOptions);
+    player1 = io.connect(url, ioOptions);
+    player2 = io.connect(url, ioOptions);
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
-      player1.emit('teleport', 'Nexus');
-      player2.emit('teleport', 'Nexus');
+      player1.emit('teleport', TEST_ROOM);
+      player2.emit('teleport', TEST_ROOM);
       player1.emit('updateEffects', {death: true});
       player1.emit('updateSocket');
       player1.on('updateComplete', () => done());
@@ -34,7 +35,7 @@ describe('resurrect', () => {
 
   describe('If a healer isn\'t in the room', () => {
     beforeEach(done => {
-      player1.emit('teleport', 'Gallows');
+      player1.emit('teleport', 'Test - Gallows');
       player1.emit('updateSocket');
       player1.on('updateComplete', () => done());
     });

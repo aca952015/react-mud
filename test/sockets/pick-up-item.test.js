@@ -6,6 +6,7 @@ import ioOptions from '../lib/io-options.js';
 import newItem, {itemData} from '../../app/data/items.js';
 
 describe('pickUpItem', () => {
+  const TEST_ROOM = 'Test - Nexus';
   let player1, player2, url = 'http://0.0.0.0:5000';
   require('../lib/test-server.js');
 
@@ -15,8 +16,8 @@ describe('pickUpItem', () => {
     player2.on('connect', () => {
       player2.emit('changeName', 'player2');
       player1.emit('changeName', 'player1');
-      player1.emit('teleport', 'Nexus');
-      player2.emit('teleport', 'Nexus');
+      player1.emit('teleport', TEST_ROOM);
+      player2.emit('teleport', TEST_ROOM);
       player2.emit('updateSocket');
       player2.on('updateComplete', () => done());
     });
@@ -240,7 +241,7 @@ describe('pickUpItem', () => {
 
       describe('With no items in the room', () => {
         beforeEach(done => {
-          player1.emit('teleport', 'Gallows');
+          player1.emit('teleport', 'Test - Gallows');
           player1.emit('updateSocket');
           player1.on('updateComplete', () => {
             player1.emit('pickUpItem', {item: 'all'});
