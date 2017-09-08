@@ -6,14 +6,14 @@ import ioOptions from '../lib/io-options.js';
 import newItem from '../../app/data/items.js';
 
 describe('give', () => {
-  let player1, player2, alien;
+  let player1, player2, alien, url = 'http://0.0.0.0:5000';
   let giveObj = {item: newItem('potions', 'health potion')};
   require('../lib/test-server.js');
 
   beforeEach(done => {
-    player1 = io.connect('http://0.0.0.0:5000', ioOptions);
-    player2 = io.connect('http://0.0.0.0:5000', ioOptions);
-    alien = io.connect('http://0.0.0.0:5000', ioOptions);
+    player1 = io.connect(url, ioOptions);
+    player2 = io.connect(url, ioOptions);
+    alien = io.connect(url, ioOptions);
     alien.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
@@ -99,7 +99,7 @@ describe('give', () => {
       describe('To a ghost', () => {
         let player3;
         beforeEach(done => {
-          player3 = io.connect('http://0.0.0.0:5000', ioOptions);
+          player3 = io.connect(url, ioOptions);
           player3.on('connect', () => {
             player3.emit('changeName', 'player3');
             player3.emit('updateEffects', {death: true});
@@ -127,7 +127,7 @@ describe('give', () => {
       describe('To a ghost', () => {
         let player3;
         beforeEach(done => {
-          player3 = io.connect('http://0.0.0.0:5000', ioOptions);
+          player3 = io.connect(url, ioOptions);
           player3.on('connect', () => {
             player3.emit('changeName', 'player3');
             player3.emit('updateEffects', {death: true});

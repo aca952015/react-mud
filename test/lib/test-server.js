@@ -9,6 +9,8 @@ import serverSocketListeners from '../../sockets/server-socket-listeners.js';
 import mobTargetSelector from '../../sockets/mob-target-selector.js';
 import {roomData} from '../../app/data/rooms.js';
 
+const TEST_ROOM = 'Test - Nexus';
+
 dotenv.load();
 
 mongoose.Promise = Promise;
@@ -21,14 +23,14 @@ const alteredRooms = [];
 process.env.TESTING = true;
 
 io.sockets.on('connection', function(socket) {
-  socket.currentRoom = 'Test - Nexus';
-  socket.join('Test - Nexus');
+  socket.currentRoom = TEST_ROOM;
+  socket.join(TEST_ROOM);
   socket.on('disconnect', () => users.splice(users.indexOf(users.find(user => user.username === socket.username)), 1));
   initialConnect(socket);
   socket.on('changeName', name => {
     if (name === 'alien') {
       socket.currentRoom = 'Test - Town Square';
-      socket.leave('Test - Nexus');
+      socket.leave(TEST_ROOM);
       socket.join('Test - Town Square');
     }
     socket.username = name;

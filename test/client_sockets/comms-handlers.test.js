@@ -10,6 +10,7 @@ import {newMessage} from '../../app/actions/message-actions.js';
 import whisperProcessor from '../../app/processors/whisper-processor.js';
 
 describe('Comms handler socket listeners', () => {
+  const TEST_ROOM = 'Test - Nexus';
   let player1, player2, url = 'http://0.0.0.0:5000';
 
   let props = {
@@ -31,9 +32,9 @@ describe('Comms handler socket listeners', () => {
     player2 = io.connect(url, ioOptions);
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
-      player1.emit('teleport', 'Test - Nexus');
+      player1.emit('teleport', TEST_ROOM);
       player2.emit('changeName', 'player2');
-      player2.emit('teleport', 'Test - Nexus');
+      player2.emit('teleport', TEST_ROOM);
       player2.emit('updateSocket');
       player2.on('updateComplete', () => {
         socketHandlers({

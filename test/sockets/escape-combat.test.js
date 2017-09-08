@@ -5,6 +5,7 @@ import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 
 describe('escape combat', () => {
+  const TEST_ROOM = 'Test - Nexus';
   let player1, player2, url = 'http://0.0.0.0:5000';
 
   beforeEach(done => {
@@ -13,8 +14,8 @@ describe('escape combat', () => {
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
-      player1.emit('teleport', 'Test - Nexus');
-      player2.emit('teleport', 'Test - Nexus');
+      player1.emit('teleport', TEST_ROOM);
+      player2.emit('teleport', TEST_ROOM);
       player2.emit('updateSocket');
       player2.on('updateComplete', () => done());
     });

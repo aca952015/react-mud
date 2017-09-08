@@ -8,6 +8,7 @@ import newMob from '../../app/data/mobs.js';
 import {itemData} from '../../app/data/items.js';
 
 describe('look', () => {
+  const TEST_ROOM = 'Test - Nexus';
   let player1, player2, url = 'http://0.0.0.0:5000';
   require('../lib/test-server.js');
 
@@ -17,8 +18,8 @@ describe('look', () => {
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
       player1.emit('changeDescription', {playerDescription: ['player1 desc']});
-      player1.emit('teleport', 'Test - Nexus');
-      player2.emit('teleport', 'Test - Nexus');
+      player1.emit('teleport', TEST_ROOM);
+      player2.emit('teleport', TEST_ROOM);
       player2.emit('changeName', 'player2');
       player2.emit('changeDescription', {playerDescription: ['player2 desc']});
       player2.emit('updateEquipment', {
@@ -68,7 +69,7 @@ describe('look', () => {
       it('should return examines in the res.room object', done => {
         player1.emit('look', {target: undefined});
         player1.on('generalMessage', res => {
-          expect(res.room.examines).toEqual(roomData['Test - Nexus'].examines);
+          expect(res.room.examines).toEqual(roomData[TEST_ROOM].examines);
           expect(res.occupants).toEqual(['player2']);
           done();
         });
@@ -82,7 +83,7 @@ describe('look', () => {
         player3 = io.connect('http://0.0.0.0:5000', ioOptions);
         player3.on('connect', () => {
           player3.emit('updateEffects', {death: true});
-          player3.emit('teleport', 'Test - Nexus');
+          player3.emit('teleport', TEST_ROOM);
           player3.emit('changeName', 'player3');
           player3.emit('updateEquipment', {
             head: null
@@ -167,7 +168,7 @@ describe('look', () => {
           player3 = io.connect('http://0.0.0.0:5000', ioOptions);
           player3.on('connect', () => {
             player3.emit('changeName', 'player3');
-            player3.emit('teleport', 'Test - Nexus');
+            player3.emit('teleport', TEST_ROOM);
             player3.emit('updateEffects', {death: true});
             player3.emit('updateSocket');
             player3.on('updateComplete', () => done());
@@ -263,7 +264,7 @@ describe('look', () => {
         player3 = io.connect('http://0.0.0.0:5000', ioOptions);
         player3.on('connect', () => {
           player3.emit('changeName', 'player3');
-          player3.emit('teleport', 'Test - Nexus');
+          player3.emit('teleport', TEST_ROOM);
           player3.emit('updateEffects', {death: true});
           player3.emit('updateSocket');
           player3.on('updateComplete', () => done());
@@ -291,7 +292,7 @@ describe('look', () => {
       it('should show player1 the examine description', done => {
         player1.emit('look', {target: 'zt'});
         player1.on('generalMessage', res => {
-          expect(res.feedback).toEqual(roomData['Test - Nexus'].examines[0].description);
+          expect(res.feedback).toEqual(roomData[TEST_ROOM].examines[0].description);
           done();
         });
       });
@@ -301,7 +302,7 @@ describe('look', () => {
       it('should show player1 the examine description', done => {
         player1.emit('look', {target: 'ztest'});
         player1.on('generalMessage', res => {
-          expect(res.feedback).toEqual(roomData['Test - Nexus'].examines[0].description);
+          expect(res.feedback).toEqual(roomData[TEST_ROOM].examines[0].description);
           done();
         });
       });
@@ -313,7 +314,7 @@ describe('look', () => {
       it('should show "player1 looks at <examine name>."', done => {
         player1.emit('look', {target: 'ztest'});
         player2.on('generalMessage', res => {
-          expect(res.feedback).toEqual(` looks at ${roomData['Test - Nexus'].examines[0].name}.`);
+          expect(res.feedback).toEqual(` looks at ${roomData[TEST_ROOM].examines[0].name}.`);
           expect(res.from).toEqual('player1');
           done();
         });
@@ -326,7 +327,7 @@ describe('look', () => {
         player3 = io.connect('http://0.0.0.0:5000', ioOptions);
         player3.on('connect', () => {
           player3.emit('changeName', 'player3');
-          player3.emit('teleport', 'Test - Nexus');
+          player3.emit('teleport', TEST_ROOM);
           player3.emit('updateEffects', {death: true});
           player3.emit('updateSocket');
           player3.on('updateComplete', () => done());

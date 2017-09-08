@@ -11,6 +11,7 @@ import moveProcessor from '../../app/processors/move-processor.js';
 import {changeRoom} from '../../app/actions/move-actions.js';
 
 describe('Move client listeners', () => {
+  const TEST_ROOM = 'Test - Nexus';
   let player1, player2, player3, url = 'http://0.0.0.0:5000';
 
   let props = {
@@ -32,11 +33,11 @@ describe('Move client listeners', () => {
     player2 = io.connect(url, ioOptions);
     player3 = io.connect(url, ioOptions);
     player2.on('connect', () => {
-      player3.emit('teleport', 'Test - Nexus');
+      player3.emit('teleport', TEST_ROOM);
       player1.emit('changeName', 'player1');
-      player1.emit('teleport', 'Test - Nexus');
+      player1.emit('teleport', TEST_ROOM);
       player2.emit('changeName', 'player2');
-      player2.emit('teleport', 'Test - Nexus');
+      player2.emit('teleport', TEST_ROOM);
       player2.emit('updateSocket');
       player2.on('updateComplete', () => {
         socketHandlers({
