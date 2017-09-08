@@ -6,6 +6,7 @@ import ioOptions from '../lib/io-options';
 import {roomData} from '../../app/data/rooms.js';
 
 describe('movement', () => {
+  const TEST_ROOM = 'Test - Nexus';
   let player1, player2, url = 'http://0.0.0.0:5000';
   require('../lib/test-server.js');
 
@@ -15,8 +16,8 @@ describe('movement', () => {
     player2.on('connect', () => {
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
-      player1.emit('teleport', 'Test - Nexus');
-      player2.emit('teleport', 'Test - Nexus');
+      player1.emit('teleport', TEST_ROOM);
+      player2.emit('teleport', TEST_ROOM);
       player2.emit('updateSocket');
       player2.on('updateComplete', () => done());
     });
@@ -74,7 +75,7 @@ describe('movement', () => {
       beforeEach(done => {
         player3 = io.connect(url, ioOptions);
         player3.on('connect', () => {
-          player3.emit('teleport', 'Test - Nexus');
+          player3.emit('teleport', TEST_ROOM);
           player3.emit('changeName', 'player3');
           player3.emit('updateEffects', {death: true});
           player3.emit('updateSocket');
@@ -115,7 +116,7 @@ describe('movement', () => {
         beforeEach(done => {
           player3 = io.connect(url, ioOptions);
           player3.on('connect', () => {
-            player3.emit('teleport', 'Test - Nexus');
+            player3.emit('teleport', TEST_ROOM);
             player3.emit('changeName', 'player3');
             player3.emit('updateEffects', {death: true});
             player3.emit('updateSocket');

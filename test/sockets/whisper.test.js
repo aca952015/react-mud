@@ -5,6 +5,7 @@ import closeServer from '../lib/test-server.js';
 import ioOptions from '../lib/io-options.js';
 
 describe('Whisper', () => {
+  const TEST_ROOM = 'Test - Nexus';
   let player1, player2, player3, alien, url = 'http://0.0.0.0:5000';
   require('../lib/test-server.js');
 
@@ -17,8 +18,8 @@ describe('Whisper', () => {
       player3.emit('changeName', '');
       player1.emit('changeName', 'player1');
       player2.emit('changeName', 'player2');
-      player1.emit('teleport', 'Test - Nexus');
-      player2.emit('teleport', 'Test - Nexus');
+      player1.emit('teleport', TEST_ROOM);
+      player2.emit('teleport', TEST_ROOM);
       player2.emit('updateSocket');
       alien.emit('changeName', 'alien');
       player2.on('updateComplete', () => done());
