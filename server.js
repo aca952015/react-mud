@@ -14,6 +14,7 @@ import serverSocketListeners from './sockets/server-socket-listeners.js';
 import mobTargetSelector from './sockets/mob-target-selector.js';
 import respawnItems from './lib/respawn-items.js';
 import decrementEffects from './lib/decrement-effects.js';
+import decayItems from './lib/decay-items.js';
 import enemyDamageSkill from './lib/enemy-damage-skill.js';
 import {roomData} from './app/data/rooms.js';
 
@@ -37,6 +38,7 @@ setInterval(() => {
   io.sockets.emit('tick');
   respawnItems(roomData, roomReset, alteredRooms);
   decrementEffects(mobsInCombat);
+  decayItems(roomData, io);
 }, 30000);
 
 // Every 2 seconds, emit combat ticks. Users autoattack if they're in combat on
