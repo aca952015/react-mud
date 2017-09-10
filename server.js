@@ -12,6 +12,7 @@ const webpackConfig = require('./webpack.config.js');
 import initialConnect from './sockets/initial-connect.js';
 import serverSocketListeners from './sockets/server-socket-listeners.js';
 import mobTargetSelector from './sockets/mob-target-selector.js';
+import mobsHeal from './lib/mobs-heal.js';
 import respawnItems from './lib/respawn-items.js';
 import decrementEffects from './lib/decrement-effects.js';
 import decayItems from './lib/decay-items.js';
@@ -36,6 +37,7 @@ app.use(webpackDevMiddleware(webpack(webpackConfig)));
 // respawned, if necessary. Decrement effect durations on all mobs.
 setInterval(() => {
   io.sockets.emit('tick');
+  mobsHeal(mobsInCombat);
   respawnItems(roomData, roomReset, alteredRooms);
   decrementEffects(mobsInCombat);
   decayItems(roomData, io);
