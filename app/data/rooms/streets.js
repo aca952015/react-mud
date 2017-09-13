@@ -10,6 +10,14 @@ export const streets = {
         exit: 'Academy - Academy Entrance',
         locked: false
       },
+      east: {
+        exit: 'Streets - Aylan Street E1',
+        locked: false
+      },
+      west: {
+        exit: 'Streets - Aylan Street W1',
+        locked: false
+      }
     },
     items: [],
     examines: [],
@@ -18,4 +26,38 @@ export const streets = {
     mobResetTimer: 0,
     lockedExitTimer: 0
   },
+  'Streets - Aylan Street E1': {
+    roomName: 'Streets - Aylan Street E1',
+    roomTitle: 'East Aylan Street',
+    desc: '',
+    exits: {
+      west: {
+        exit: 'Streets - Academy Entrance',
+        locked: false
+      }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
+  },
+  'Streets - Aylan Street W1': {
+    roomName: 'Streets - Aylan Street W1',
+    roomTitle: 'West Aylan Street',
+    desc: '',
+    exits: {
+      east: {
+        exit: 'Streets - Academy Entrance',
+        locked: false
+      }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
+  }
 };
