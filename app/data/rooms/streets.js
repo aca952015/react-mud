@@ -14,6 +14,10 @@ export const streets = {
         exit: 'Streets - Aylan Street E1',
         locked: false
       },
+      south: {
+        exit: 'Streets - Elblum Street S1',
+        locked: false
+      },
       west: {
         exit: 'Streets - Aylan Street W1',
         locked: false
@@ -25,6 +29,38 @@ export const streets = {
     itemResetTimer: 0,
     mobResetTimer: 0,
     lockedExitTimer: 0
+  },
+  'Streets - Elblum Street S1': {
+    roomName: 'Streets - Elblum Street S1',
+    roomTitle: 'Elblum Street',
+    desc: '',
+    exits: {
+      north: {
+        exit: 'Streets - Academy Entrance',
+        locked: false
+      },
+      south: {
+        exit: 'Streets - Elblum Street S2',
+        locked: false
+      }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
+  },
+  'Streets - Elblum Street S2': {
+    roomName: 'Streets - Elblum Street S2',
+    roomTitle: 'Elblum Street',
+    desc: '',
+    exits: {
+      north: {
+        exit: 'Streets - Elblum Street S1',
+        locked: false
+      }
+    }
   },
   'Streets - Aylan Street E1': {
     roomName: 'Streets - Aylan Street E1',
