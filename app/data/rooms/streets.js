@@ -59,6 +59,21 @@ export const streets = {
       north: {
         exit: 'Streets - Elblum Street S1',
         locked: false
+      },
+      south: {
+        exit: 'Streets - Town Square',
+        locked: false
+      }
+    }
+  },
+  'Streets - Town Square': {
+    roomName: 'Streets - Town Square',
+    roomTitle: 'Town Square',
+    desc: '',
+    exits: {
+      north: {
+        exit: 'Streets - Elblum Street S2',
+        locked: false
       }
     }
   },
