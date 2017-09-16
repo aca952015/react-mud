@@ -82,6 +82,10 @@ export const streets = {
     roomTitle: 'East Aylan Street',
     desc: '',
     exits: {
+      east: {
+        exit: 'Streets - Aylan Street E2',
+        locked: false
+      },
       west: {
         exit: 'Streets - Academy Entrance',
         locked: false
@@ -93,6 +97,38 @@ export const streets = {
     itemResetTimer: 0,
     mobResetTimer: 0,
     lockedExitTimer: 0
+  },
+  'Streets - Aylan Street E2': {
+    roomName: 'Streets - Aylan Street E2',
+    roomTitle: 'East Aylan Street',
+    desc: '',
+    exits: {
+      east: {
+        exit: 'Streets - Temple of the Beast Entrance',
+        locked: false
+      },
+      west: {
+        exit: 'Streets - Aylan Street E1',
+        locked: false
+      }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
+  },
+  'Streets - Temple of the Beast Entrance': {
+    roomName: 'Streets - Temple of the Beast Entrance',
+    roomTitle: 'Before the Temple of the Beast',
+    desc: '',
+    exits: {
+      west: {
+        exit: 'Streets - Aylan Street E2',
+        locked: false
+      }
+    }
   },
   'Streets - Aylan Street W1': {
     roomName: 'Streets - Aylan Street W1',
