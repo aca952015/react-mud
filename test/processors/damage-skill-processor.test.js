@@ -27,7 +27,7 @@ describe('skillHandler with a damage skill', () => {
     mp: 5,
     combat: {
       active: true,
-      targets: [newMob('bat')]
+      targets: [newMob('bat', 'Test - Nexus')]
     },
     username: 'Dave',
     dispatch: sinon.spy()
@@ -125,7 +125,7 @@ describe('skillHandler with a damage skill', () => {
     });
 
     describe('With a magical skill', () => {
-      let bat = newMob('bat');
+      let bat = newMob('bat', 'Test - Nexus');
 
       it('should amplify a damaging skill\'s damage', () => {
         expect(skillHandler(props.skills['searing light'], 'bat', {
@@ -172,7 +172,7 @@ describe('skillHandler with a damage skill', () => {
   });
 
   describe('Against an enemy with high def', () => {
-    let zombie = newMob('armored zombie');
+    let zombie = newMob('armored zombie', 'Test - Nexus');
     it('should return a response with 1 damage', () => {
       expect(skillHandler(props.skills['slash'], 'zom', {...props, combat: {...props.combat, targets: [zombie]}})).toEqual({
         ...response,
@@ -186,7 +186,7 @@ describe('skillHandler with a damage skill', () => {
 
   describe('Against an enemy with high mdf', () => {
     describe('With enough resources to cast', () => {
-      let zombie = newMob('armored zombie');
+      let zombie = newMob('armored zombie', 'Test - Nexus');
       zombie.mdf = 30;
       it('should return a response with 1 damage', () => {
         expect(skillHandler(props.skills['searing light'], 'zombie', {...props, combat: {...props.combat, targets: [zombie]}})).toEqual({

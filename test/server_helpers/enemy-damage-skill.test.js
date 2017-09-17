@@ -6,7 +6,7 @@ import newMob from '../../app/data/mobs.js';
 
 describe('EnemyDamageSkill', () => {
   const mobsInCombat = [{
-    ...newMob('bat'),
+    ...newMob('bat', 'Test - Nexus'),
     combat: {
       active: true,
       targets: ['player1']
@@ -77,7 +77,7 @@ describe('EnemyDamageSkill', () => {
   describe('With a mob that has no skills', () => {
     it('should return from the function', () => {
       users[0].emit = sinon.spy();
-      enemyDamageSkill([newMob('armored zombie')], users, io);
+      enemyDamageSkill([newMob('armored zombie', 'Test - Nexus')], users, io);
       expect(users[0].emit.called).toEqual(false);
     });
   });

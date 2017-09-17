@@ -59,7 +59,7 @@ export const testAreas = {
       terms: ['ztest'],
       description: 'Really? Ztest? You thought to try looking at this?'
     }],
-    mobs: [newMob('bat'), newMob('bat'), newMob('armored zombie'), newMob('healer')],
+    mobs: [newMob('bat', 'Test - Nexus'), newMob('bat', 'Test - Nexus'), newMob('armored zombie', 'Test - Nexus'), newMob('healer', 'Test - Nexus')],
     itemResetTimer: 0,
     mobResetTimer: 0,
     lockedExitTimer: 0
@@ -96,7 +96,7 @@ export const testAreas = {
       }
     },
     items: [newItem('keys', 'useless key'), newItem('containers', 'backpack')],
-    mobs: [newMob('bat'), newMob('bat')],
+    mobs: [newMob('bat', 'Test - Town Square'), newMob('bat', 'Test - Town Square')],
     itemResetTimer: 0,
     mobResetTimer: 0,
     lockedExitTimer: 0

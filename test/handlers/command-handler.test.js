@@ -72,7 +72,7 @@ describe('CommandHandler', () => {
           atk: 2,
           combat: {
             active: true,
-            targets: [newMob('bat')]
+            targets: [newMob('bat', 'Test - Nexus')]
           },
           username: 'Dave'
         };

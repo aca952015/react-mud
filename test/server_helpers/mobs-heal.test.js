@@ -6,7 +6,7 @@ import newMob from '../../app/data/mobs.js';
 describe('mobsHeal', () => {
   describe('With a mob that has more than 1000 HP', () => {
     it('should heal that mob for 50 HP', () => {
-      const bigHPMob = newMob('bat');
+      const bigHPMob = newMob('bat', 'Test - Nexus');
       const currentHP = bigHPMob.hp + 0;
       bigHPMob.maxHP = 1500;
 
@@ -17,7 +17,7 @@ describe('mobsHeal', () => {
 
   describe('With a mob that has less than 1000 HP', () => {
     it('should heal that mob for 5% of its max HP', () => {
-      const bat = newMob('bat');
+      const bat = newMob('bat', 'Test - Nexus');
       bat.hp = 1;
 
       mobsHeal([bat]);
@@ -27,7 +27,7 @@ describe('mobsHeal', () => {
 
   describe('With a mob restoring more health than its max', () => {
     it('should heal the mob to full', () => {
-      const bigHPBat = newMob('bat');
+      const bigHPBat = newMob('bat', 'Test - Nexus');
       bigHPBat.maxHP = 100;
       bigHPBat.hp = 99;
 

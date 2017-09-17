@@ -13,7 +13,7 @@ describe('skillAndTargetsProcessor', () => {
     },
     combat: {
       active: true,
-      targets: [newMob('bat')]
+      targets: [newMob('bat', 'Test - Nexus')]
     }
   };
 

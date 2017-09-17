@@ -91,7 +91,7 @@ describe('<CommandInput />', () => {
 
   describe('If a skill is called', () => {
     it('should dispatch startGlobalCooldown', () => {
-      const skillProps = {...props, input: 'slash', combat: {active: true, targets: [newMob('bat')]}};
+      const skillProps = {...props, input: 'slash', combat: {active: true, targets: [newMob('bat', 'Test - Nexus')]}};
       commandInput = shallow(<CommandInput {...skillProps} />);
       commandInput.find('input').simulate('keyUp', {keyCode: 13});
       expect(skillProps.dispatch.calledWith(startGlobalCooldown())).toEqual(true);
@@ -109,7 +109,7 @@ describe('<CommandInput />', () => {
               cooldownTimer: 500
             }
           },
-          combat: {active: true, targets: [newMob('bat')]
+          combat: {active: true, targets: [newMob('bat', 'Test - Nexus')]
           }
         };
         commandInput = shallow(<CommandInput {...timerSkillProps} />);

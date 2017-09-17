@@ -161,7 +161,7 @@ describe('<Messages />', () => {
   it('should render only a Mobs child with a mobs message', () => {
     props = {
       messages: [{
-        mobs: [newMob('bat')]
+        mobs: [newMob('bat', 'Test - Nexus')]
       }]
     };
     const undefineds = nodes.filter(node => node !== 'Mobs');
