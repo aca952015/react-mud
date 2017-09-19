@@ -32,7 +32,7 @@ export const streets = {
   },
   'Streets - Elblum Street S1': {
     roomName: 'Streets - Elblum Street S1',
-    roomTitle: 'Elblum Street',
+    roomTitle: 'North Elblum Street',
     desc: '',
     exits: {
       north: {
@@ -53,7 +53,7 @@ export const streets = {
   },
   'Streets - Elblum Street S2': {
     roomName: 'Streets - Elblum Street S2',
-    roomTitle: 'Elblum Street',
+    roomTitle: 'North Elblum Street',
     desc: '',
     exits: {
       north: {
@@ -64,7 +64,13 @@ export const streets = {
         exit: 'Streets - Town Square',
         locked: false
       }
-    }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Streets - Town Square': {
     roomName: 'Streets - Town Square',
@@ -74,8 +80,77 @@ export const streets = {
       north: {
         exit: 'Streets - Elblum Street S2',
         locked: false
+      },
+      south: {
+        exit: 'Streets - Elblum Street S3',
+        locked: false
       }
-    }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
+  },
+  'Streets - Elblum Street S3': {
+    roomName: 'Streets - Elblum Street S3',
+    roomTitle: 'South Elblum Street',
+    desc: '',
+    exits: {
+      north: {
+        exit: 'Streets - Town Square',
+        locked: false
+      },
+      south: {
+        exit: 'Streets - Elblum Street S4',
+        locked: false
+      }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
+  },
+  'Streets - Elblum Street S4': {
+    roomName: 'Streets - Elblum Street S4',
+    roomTitle: 'South Elblum Street',
+    desc: '',
+    exits: {
+      north: {
+        exit: 'Streets - Elblum Street S3',
+        locked: false
+      },
+      south: {
+        exit: 'Streets - Mage Guild Entrance',
+        locked: false
+      }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
+  },
+  'Streets - Mage Guild Entrance': {
+    roomName: 'Streets - Mage Guild Entrance',
+    roomTitle: 'Entrance to the Mage Guild',
+    desc: '',
+    exits: {
+      north: {
+        exit: 'Streets - Elblum Street S4',
+        locked: false
+      }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Streets - Aylan Street E1': {
     roomName: 'Streets - Aylan Street E1',
