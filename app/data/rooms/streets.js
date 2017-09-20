@@ -81,8 +81,50 @@ export const streets = {
         exit: 'Streets - Elblum Street S2',
         locked: false
       },
+      east: {
+        exit: 'Streets - Silth Street E1',
+        locked: false
+      },
       south: {
         exit: 'Streets - Elblum Street S3',
+        locked: false
+      }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
+  },
+  'Streets - Silth Street E1': {
+    roomName: 'Streets - Silth Street E1',
+    roomTitle: 'East Silth Street',
+    desc: '',
+    exits: {
+      east: {
+        exit: 'Streets - Silth Street E2',
+        locked: false
+      },
+      west: {
+        exit: 'Streets - Town Square',
+        locked: false
+      }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
+  },
+  'Streets - Silth Street E2': {
+    roomName: 'Streets - Silth Street E2',
+    roomTitle: 'East Silth Street',
+    desc: '',
+    exits: {
+      west: {
+        exit: 'Streets - Silth Street E1',
         locked: false
       }
     },
