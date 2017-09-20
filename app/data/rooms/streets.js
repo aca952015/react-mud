@@ -245,7 +245,13 @@ export const streets = {
         exit: 'Streets - Aylan Street E2',
         locked: false
       }
-    }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
   },
   'Streets - Aylan Street W1': {
     roomName: 'Streets - Aylan Street W1',
