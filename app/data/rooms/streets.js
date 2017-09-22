@@ -185,6 +185,48 @@ export const streets = {
       north: {
         exit: 'Streets - Elblum Street S4',
         locked: false
+      },
+      east: {
+        exit: 'Streets - Flarus Street E1',
+        locked: false
+      }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
+  },
+  'Streets - Flarus Street E1': {
+    roomName: 'Streets - Flarus Street E1',
+    roomTitle: 'East Flarus Street',
+    desc: '',
+    exits: {
+      east: {
+        exit: 'Streets - Flarus Street E2',
+        locked: false
+      },
+      west: {
+        exit: 'Streets - Mage Guild Entrance',
+        locked: false
+      }
+    },
+    items: [],
+    examines: [],
+    mobs: [],
+    itemResetTimer: 0,
+    mobResetTimer: 0,
+    lockedExitTimer: 0
+  },
+  'Streets - Flarus Street E2': {
+    roomName: 'Streets - Flarus Street E2',
+    roomTitle: 'East Flarus Street',
+    desc: '',
+    exits: {
+      west: {
+        exit: 'Streets - Flarus Street E1',
+        locked: false
       }
     },
     items: [],
