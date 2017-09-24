@@ -228,7 +228,7 @@ describe('look', () => {
       it('should show the bat\'s description', done => {
         player1.emit('look', {target: 'b'});
         player1.on('generalMessage', res => {
-          expect(res.feedback).toEqual(newMob('bat').description);
+          expect(res.feedback).toEqual(newMob('bat', 'Test - Nexus').description);
           expect(res.equipment).toEqual(undefined);
           done();
         });
@@ -239,7 +239,7 @@ describe('look', () => {
       it('should show the bat\'s description', done => {
         player1.emit('look', {target: 'bat'});
         player1.on('generalMessage', res => {
-          expect(res.feedback).toEqual(newMob('bat').description);
+          expect(res.feedback).toEqual(newMob('bat', 'Test - Nexus').description);
           done();
         });
       });
@@ -252,7 +252,7 @@ describe('look', () => {
         player1.emit('look', {target: 'bat'});
         player2.on('generalMessage', res => {
           expect(res.from).toEqual('player1');
-          expect(res.feedback).toEqual(` looks at ${newMob('bat').short}.`);
+          expect(res.feedback).toEqual(` looks at ${newMob('bat', 'Test - Nexus').short}.`);
           done();
         });
       });
@@ -365,7 +365,7 @@ describe('look', () => {
       it('should show the mob\'s description', done => {
         player1.emit('look', {target: '2.bat'});
         player1.on('generalMessage', res => {
-          expect(res.feedback).toEqual(newMob('bat').description);
+          expect(res.feedback).toEqual(newMob('bat', 'Test - Nexus').description);
           done();
         });
       });

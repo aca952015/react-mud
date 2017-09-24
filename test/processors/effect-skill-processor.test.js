@@ -27,7 +27,7 @@ describe('skillHandler', () => {
     mp: 5,
     combat: {
       active: true,
-      targets: [newMob('bat')]
+      targets: [newMob('bat', 'Test - Nexus')]
     },
     username: 'Dave',
     dispatch: sinon.spy()
@@ -114,7 +114,7 @@ describe('skillHandler', () => {
   describe('In combat', () => {
     describe('On an enemy', () => {
       it('should return feedback saying "You can\'t use that on enemies."', () =>  {
-        expect(skillHandler(props.skills['infusion'], 'bat', {...props, combat: {active: true, targets: [newMob('bat')]}})).toEqual({
+        expect(skillHandler(props.skills['infusion'], 'bat', {...props, combat: {active: true, targets: [newMob('bat', 'Test - Nexus')]}})).toEqual({
           funcsToCall: [newMessage],
           feedback: 'You can\'t use that on enemies.'
         });

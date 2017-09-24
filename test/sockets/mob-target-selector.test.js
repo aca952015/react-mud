@@ -9,7 +9,7 @@ import newItem from '../../app/data/items.js';
 describe('mobTargetSelector', () => {
   const TEST_ROOM = 'Test - Nexus';
   let player1, player2;
-  let bat = newMob('bat');
+  let bat = newMob('bat', 'Test - Nexus');
   let equipment = {
     head: null,
     shoulders: null,

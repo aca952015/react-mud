@@ -73,7 +73,7 @@ describe('combat client sockets', () => {
       it('should return the mob being attacked', done => {
         player1.emit('kill', {target: 'bat'});
         player1.on('enterCombat', res => {
-          let bat = newMob('bat');
+          let bat = newMob('bat', 'Test - Nexus');
           bat.id = res.id;
           props.combat.targets.push(res);
           expect(res).toEqual(bat);
@@ -320,7 +320,7 @@ describe('combat client sockets', () => {
               },
               combat: {
                 active: true,
-                targets: [newMob('bat')]
+                targets: [newMob('bat', 'Test - Nexus')]
               }
             }
           });

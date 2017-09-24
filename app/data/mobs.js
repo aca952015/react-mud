@@ -5,25 +5,26 @@ import {nonCombatNPCs} from './mobs/non-combat-npcs.js';
 import {academyMobs} from './mobs/academy-mobs.js';
 
 class Mob {
-  constructor(properties) {
+  constructor(properties, currentRoom) {
     // Because Object.assign(), for in loops, and various other standard ways of
     // using constructors only create a shallow copy, we can't use them to properly
     // instantiate new objects from mobData (since there are nested objects and arrays).
     // Stringifying, then parsing it is a quick hack to give us a deep clone.
-    let someObj = JSON.parse(JSON.stringify(properties));
-    someObj.id = Math.floor(Math.random() * 1000000000);
+    const mobObj = JSON.parse(JSON.stringify(properties));
+    mobObj.id = Math.floor(Math.random() * 1000000000);
 
     // All mobs start out of combat with no targets
-    someObj.combat = {
+    mobObj.combat = {
       active: false,
       targets: []
     };
-    return someObj;
+    mobObj.currentRoom = currentRoom;
+    return mobObj;
   }
 }
 
-export default function newMob(mobName) {
-  return new Mob(mobData[mobName]);
+export default function newMob(mobName, currentRoom) {
+  return new Mob(mobData[mobName], currentRoom);
 }
 
 const mobData = {
