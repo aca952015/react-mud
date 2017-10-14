@@ -13,4 +13,16 @@ export const academyMobSkills = {
     postMessage: ' damage to ',
     skillTypes: ['damage', 'physical']
   },
+  'heal': {
+    skillName: 'heal',
+    cooldownTime: 2,
+    cooldownRemaining: 1,
+    atkMultiplier: 1,
+    matMultiplier: 1,
+    addHealing: 0,
+    addDamage: 0,
+    roomEcho: ' channels their energy, restoring ',
+    postMessage: ' health to ',
+    skillTypes: ['healing', 'magical']
+  }
 };

@@ -13,6 +13,10 @@ export const academy = {
         exit: 'Academy - Academy Foyer',
         locked: false
       },
+      south: {
+        exit: 'Streets - Academy Entrance',
+        locked: false
+      }
     },
     items: [newItem('doodads', 'academy entrance sign')],
     examines: [],
@@ -84,7 +88,7 @@ export const academy = {
       }
     },
     items: [newItem('doodads', 'combat basics sign')],
-    mobs: [newMob('animated dummy')],
+    mobs: [newMob('animated dummy', 'Academy - Combat Basics')],
     itemResetTimer: 0,
     mobResetTimer: 0,
     lockedExitTimer: 0
@@ -100,7 +104,12 @@ export const academy = {
       }
     },
     items: [],
-    mobs: [newMob('animated dummy'), newMob('animated dummy'), newMob('animated dummy'), newMob('animated dummy')],
+    mobs: [
+      newMob('animated dummy', 'Academy - Room of Animation'),
+      newMob('animated dummy', 'Academy - Room of Animation'),
+      newMob('animated dummy', 'Academy - Room of Animation'),
+      newMob('animated dummy', 'Academy - Room of Animation')
+    ],
     itemResetTimer: 0,
     mobResetTimer: 0,
     lockedExitTimer: 0
@@ -116,7 +125,7 @@ export const academy = {
       }
     },
     items: [],
-    mobs: [newMob('animated dummy'), newMob('animated dummy')],
+    mobs: [newMob('animated dummy', 'Academy - Skill Room'), newMob('animated dummy', 'Academy - Skill Room')],
     itemResetTimer: 0,
     mobResetTimer: 0,
     lockedExitTimer: 0

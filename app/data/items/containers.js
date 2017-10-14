@@ -27,7 +27,9 @@ export const containers = {
     container: {
       holds: ['items', 'equipment', 'weapons'],
       contains: []
-    }
+    },
+    decaying: true,
+    decayTimer: 5
   },
   'glass flask': {
     name: 'glass flask',

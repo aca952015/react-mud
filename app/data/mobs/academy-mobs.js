@@ -12,11 +12,13 @@ export const academyMobs = {
     hp: 10,
     maxHP: 10,
     atk: 1,
+    mat: 1,
     def: 0,
     mdf: 0,
     effects: {},
     skills: {
-      'bash': mobSkills['bash']
+      'bash': mobSkills['bash'],
+      'heal': mobSkills['heal']
     },
     drops: [{
       category: 'potions',

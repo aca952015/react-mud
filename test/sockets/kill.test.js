@@ -10,7 +10,7 @@ describe('Kill', () => {
 
   let player1, player2, url = 'http://0.0.0.0:5000';
   require('../lib/test-server.js');
-  let bat = newMob('bat');
+  let bat = newMob('bat', 'Test - Nexus');
 
   beforeEach(done => {
     player1 = io.connect(url, ioOptions);

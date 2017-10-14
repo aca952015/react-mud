@@ -22,7 +22,7 @@ describe('skillHandler with a debuff skill', () => {
     mp: 5,
     combat: {
       active: true,
-      targets: [newMob('bat')]
+      targets: [newMob('bat', 'Test - Nexus')]
     },
     username: 'Dave',
     dispatch: sinon.spy()

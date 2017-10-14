@@ -12,9 +12,11 @@ const webpackConfig = require('./webpack.config.js');
 import initialConnect from './sockets/initial-connect.js';
 import serverSocketListeners from './sockets/server-socket-listeners.js';
 import mobTargetSelector from './sockets/mob-target-selector.js';
+import mobsHeal from './lib/mobs-heal.js';
 import respawnItems from './lib/respawn-items.js';
 import decrementEffects from './lib/decrement-effects.js';
-import enemyDamageSkill from './lib/enemy-damage-skill.js';
+import decayItems from './lib/decay-items.js';
+import enemyUseSkill from './lib/enemy-use-skill.js';
 import {roomData} from './app/data/rooms.js';
 
 dotenv.load();
@@ -35,8 +37,10 @@ app.use(webpackDevMiddleware(webpack(webpackConfig)));
 // respawned, if necessary. Decrement effect durations on all mobs.
 setInterval(() => {
   io.sockets.emit('tick');
+  mobsHeal(mobsInCombat);
   respawnItems(roomData, roomReset, alteredRooms);
   decrementEffects(mobsInCombat);
+  decayItems(roomData, io);
 }, 30000);
 
 // Every 2 seconds, emit combat ticks. Users autoattack if they're in combat on
@@ -44,7 +48,7 @@ setInterval(() => {
 setInterval(() => {
   io.sockets.emit('combatTick');
   mobTargetSelector(mobsInCombat, users);
-  enemyDamageSkill(mobsInCombat, users, io);
+  enemyUseSkill(mobsInCombat, users, io);
 }, 2000);
 
 const users = [];

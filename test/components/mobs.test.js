@@ -8,7 +8,7 @@ import {Mobs} from '../../app/components/mobs.jsx';
 describe('<Mobs />', () => {
   let props = {
     message: {
-      mobs: [newMob('bat')]
+      mobs: [newMob('bat', 'Test - Nexus')]
     }
   };
 
