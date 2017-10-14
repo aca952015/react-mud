@@ -2,10 +2,12 @@
 
 import {testAreas} from './rooms/test-areas.js';
 import {academy} from './rooms/academy.js';
+import {streets} from './rooms/streets.js';
 
 export const roomData = {
   ...testAreas,
   ...academy,
+  ...streets,
   'Login Room': {
     roomName: 'Login Room',
     roomTitle: 'Welcome to Tempest',

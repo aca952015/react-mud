@@ -13,6 +13,10 @@ export const academy = {
         exit: 'Academy - Academy Foyer',
         locked: false
       },
+      south: {
+        exit: 'Streets - Academy Entrance',
+        locked: false
+      }
     },
     items: [newItem('doodads', 'academy entrance sign')],
     examines: [],
